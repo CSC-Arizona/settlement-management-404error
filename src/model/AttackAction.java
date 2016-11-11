@@ -23,9 +23,15 @@ public class AttackAction implements Action {
 		//if adjacent fight, else move towards target
 		if((x == 1 || x == 0) && (y == 1 || y == 0)){
 			//TODO: add actual combat system
-			target.setHealth(target.getHealth()-1);
 			if(target.getHealth() <= 0)
 				return true;
+			int damage = 1+performer.getSkills().getCombatLevel();
+			target.setHealth(target.getHealth()-damage);
+			performer.getSkills().addCombatXP(damage);
+			if(target.getHealth() <= 0){
+				target.setHealth(0);
+				return true;
+			}
 			else
 				return false;
 		} else {
