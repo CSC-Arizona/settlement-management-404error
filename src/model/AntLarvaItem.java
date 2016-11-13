@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * AntLarvaItem is dropped when an AntTunnelBlock is destroyed. It can
+ * be eaten for hp.
+ * 
+ * @author Katherine Walters
+ */
 public class AntLarvaItem extends Item {
 
 	private final static int attackMod = 1;

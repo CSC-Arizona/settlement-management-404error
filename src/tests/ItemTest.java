@@ -9,6 +9,12 @@ import model.IronItem;
 import model.StoneItem;
 import model.WoodItem;
 
+/**
+ * ItemTest covers all of the functionality of the Item constructor and 
+ * the resource items (AntLarvaItem, IronItem, StoneItem, and WoodItem).
+ * 
+ * @author Katherine Walters
+ */
 public class ItemTest {
 
 	@Test

@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * Item is an abstract class that can be extended by any items that can be held
+ * in an Inventory. This encompasses resources, armor, and weapons.
+ * 
+ * @author Katherine Walters
+ */
 public abstract class Item {
 	
     private boolean edible;

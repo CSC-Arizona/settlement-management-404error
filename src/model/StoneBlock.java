@@ -3,6 +3,11 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * StoneBlock yields StoneItem when it is destroyed.
+ * 
+ * @author Katherine Walters
+ */
 public class StoneBlock extends BuildingBlock {
 
 	private final static int durability = 8;

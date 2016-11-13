@@ -2,6 +2,12 @@ package model;
 
 import java.util.List;
 
+/**
+ * BuildingBlock is an abstract class that is extended by all the different kinds of blocks
+ * that make up a Map.
+ * 
+ * @author Katherine Walters
+ */
 public abstract class BuildingBlock {
 	
 	// durability represents the amount of time(?) required to destroy the block

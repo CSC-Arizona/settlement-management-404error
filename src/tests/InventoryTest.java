@@ -9,6 +9,11 @@ import model.Inventory;
 import model.StoneItem;
 import model.WoodItem;
 
+/**
+ * InventoryTest covers the functionality of the Inventory class.
+ * 
+ * @author Katherine Walters
+ */
 public class InventoryTest {
 
 	@Test

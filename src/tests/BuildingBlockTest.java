@@ -21,6 +21,11 @@ import model.StoneItem;
 import model.TreeRootBlock;
 import model.WoodItem;
 
+/**
+ * BuildingBlockTest tests the functionality of all of the BuildingBlocks.
+ * 
+ * @author Katherine Walters
+ */
 public class BuildingBlockTest {
 
 	@Test

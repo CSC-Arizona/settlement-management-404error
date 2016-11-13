@@ -3,6 +3,11 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * IronOreBlock yields IronItem when it is destroyed.
+ * 
+ * @author Katherine Walters
+ */
 public class IronOreBlock extends BuildingBlock {
 
 	private final static int durability = 10;
