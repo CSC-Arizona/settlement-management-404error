@@ -21,6 +21,7 @@ public abstract class Actor implements Drawable {
 	private Queue<Action> queue;
 	private Action currentAction;
 	private Skills skills;
+	private Inventory inventory;
 	//TODO: give each actor an inventory once available
 	
 	/**
@@ -33,6 +34,7 @@ public abstract class Actor implements Drawable {
 		this.position = position;
 		this.idle = true;
 		this.queue = new LinkedList<Action>();
+		this.inventory = new Inventory();
 		skills = new Skills();
 	}
 	
@@ -90,7 +92,12 @@ public abstract class Actor implements Drawable {
 	public Skills getSkills() {
 		return skills;
 	}
-	
-	
+
+	/**
+	 * @return the inventory
+	 */
+	public Inventory getInventory() {
+		return inventory;
+	}
 
 }
