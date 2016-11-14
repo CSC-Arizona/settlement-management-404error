@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,9 +14,9 @@ public class AntTunnelBlock extends BuildingBlock {
 
 	private final static int durability = 7;
 	private List<Item> itemsInBlock;
-	
+	public final static String id = "Ant tunnel";
 	public AntTunnelBlock() {
-		super(durability, true, true);
+		super(durability, true, true, Color.BLACK, id);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new AntLarvaItem());
 	}

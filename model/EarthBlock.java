@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.List;
 
 /**
@@ -11,11 +12,12 @@ import java.util.List;
 public class EarthBlock extends BuildingBlock {
 
 	private final static int durability = 3;
+	public final static String id = "Earth";
 	
 	public EarthBlock() {
-		super(durability, true, false);
+		super(durability, true, false, new Color(222,210,140), id);
 	}
-
+	
 	@Override
 	public List<Item> lootBlock() {
 		return null;

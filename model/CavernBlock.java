@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.List;
 
 /**
@@ -12,9 +13,10 @@ import java.util.List;
 public class CavernBlock extends BuildingBlock {
 
 	private final static int durability = 0;
+	public final static String id = "Cavern";
 	
 	public CavernBlock() {
-		super(durability, false, true);
+		super(durability, false, true, Color.GRAY, id);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.awt.Color;
 
 /**
  * AirBlock represents any blank space above ground that is visible.. I'm not sure 
@@ -11,9 +12,10 @@ import java.util.List;
 public class AirBlock extends BuildingBlock {
 
 	private final static int durability = 0;
+	public final static String id = "Air";
 	
 	public AirBlock() {
-		super(durability, false, true);
+		super(durability, false, true, new Color(206, 237, 240), id);
 	}
 
 	@Override

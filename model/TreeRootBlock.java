@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,9 +15,10 @@ public class TreeRootBlock extends BuildingBlock {
 
 	private List<Item> itemsInBlock;
 	private final static int durability = 5;
+	public final static String id = "Tree root";
 	
 	public TreeRootBlock() {
-		super(durability, true, false);
+		super(durability, true, false, Color.GREEN, id);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new WoodItem());
 	}

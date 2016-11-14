@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.List;
 
 /**
@@ -11,9 +12,10 @@ import java.util.List;
 public class LavaBlock extends BuildingBlock {
 
 	private final static int durability = 0;
-
+	public final static String id = "Lava";
+	
 	public LavaBlock() {
-		super(durability, false, false);
+		super(durability, false, false, Color.RED, id);
 	}
 
 	@Override
