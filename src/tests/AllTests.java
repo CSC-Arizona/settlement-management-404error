@@ -8,7 +8,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * @author Jonathon Davis
+ * @author metro
  *
  */
 @RunWith(Suite.class)
