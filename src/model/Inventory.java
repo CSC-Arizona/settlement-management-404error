@@ -3,6 +3,8 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Items.Item;
+
 /**
  * Inventory holds a collection of Items as a List. It implements a weight limit on the 
  * collection, so only a certain amount of items can be added to the inventory.

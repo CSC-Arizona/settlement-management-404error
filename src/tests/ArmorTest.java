@@ -5,15 +5,15 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import model.GreatChestPlate;
-import model.GreatShield;
-import model.IronChestPlate;
-import model.IronShield;
-import model.StoneChestPlate;
-import model.StoneShield;
-import model.UltraSword;
-import model.WoodChestPlate;
-import model.WoodShield;
+import model.Items.GreatChestPlate;
+import model.Items.GreatShield;
+import model.Items.IronChestPlate;
+import model.Items.IronShield;
+import model.Items.StoneChestPlate;
+import model.Items.StoneShield;
+import model.Items.UltraSword;
+import model.Items.WoodChestPlate;
+import model.Items.WoodShield;
 
 //Author: Maxwell Faridian
 //This class tests the construction of Armor items
