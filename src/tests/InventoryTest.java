@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import model.AntLarvaItem;
 import model.Inventory;
-import model.StoneItem;
-import model.WoodItem;
+import model.Items.AntLarvaItem;
+import model.Items.StoneItem;
+import model.Items.WoodItem;
 
 /**
  * InventoryTest covers the functionality of the Inventory class.

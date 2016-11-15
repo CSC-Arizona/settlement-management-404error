@@ -7,19 +7,19 @@ import java.util.List;
 
 import org.junit.Test;
 
-import model.AirBlock;
-import model.AntLarvaItem;
-import model.AntTunnelBlock;
-import model.CavernBlock;
-import model.EarthBlock;
-import model.IronItem;
-import model.IronOreBlock;
-import model.Item;
-import model.LavaBlock;
-import model.StoneBlock;
-import model.StoneItem;
-import model.TreeRootBlock;
-import model.WoodItem;
+import model.BuildingBlocks.AirBlock;
+import model.BuildingBlocks.AntTunnelBlock;
+import model.BuildingBlocks.CavernBlock;
+import model.BuildingBlocks.EarthBlock;
+import model.BuildingBlocks.IronOreBlock;
+import model.BuildingBlocks.LavaBlock;
+import model.BuildingBlocks.StoneBlock;
+import model.BuildingBlocks.TreeRootBlock;
+import model.Items.AntLarvaItem;
+import model.Items.IronItem;
+import model.Items.Item;
+import model.Items.StoneItem;
+import model.Items.WoodItem;
 
 /**
  * BuildingBlockTest tests the functionality of all of the BuildingBlocks.

@@ -4,17 +4,17 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import model.AntLarvaItem;
-import model.BasicIronAxe;
-import model.BasicStoneAxe;
-import model.BasicSword;
-import model.FortifiedIronAxe;
-import model.FortifiedStoneAxe;
-import model.IronItem;
-import model.LureAxe;
-import model.StoneItem;
-import model.UltraSword;
-import model.WoodItem;
+import model.Items.AntLarvaItem;
+import model.Items.BasicIronAxe;
+import model.Items.BasicStoneAxe;
+import model.Items.BasicSword;
+import model.Items.FortifiedIronAxe;
+import model.Items.FortifiedStoneAxe;
+import model.Items.IronItem;
+import model.Items.LureAxe;
+import model.Items.StoneItem;
+import model.Items.UltraSword;
+import model.Items.WoodItem;
 
 /**
  * ItemTest covers all of the functionality of the Item constructor and 
