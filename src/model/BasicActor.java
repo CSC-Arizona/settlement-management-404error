@@ -16,12 +16,5 @@ public class BasicActor extends Actor {
 		super(health,location);
 	}
 
-	/* (non-Javadoc)
-	 * @see model.Drawable#draw()
-	 */
-	@Override
-	public BufferedImage draw() {
-		return null;
-	}
 
 }
