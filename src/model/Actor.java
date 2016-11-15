@@ -13,7 +13,7 @@ import java.util.Queue;
  * @author Jonathon Davis
  *
  */
-public abstract class Actor implements Drawable {
+public abstract class Actor {
 	
 	private int health;
 	private Point position;
