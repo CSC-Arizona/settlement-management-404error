@@ -36,7 +36,7 @@ public class BuildingBlockTest {
 
 	@Test
 	public void tryingToGetSomeMapCodeCoverage() {
-		Map m = new Map(100, 100, 0, 0);
+		Map m = new Map(100, 100, 0, 0,10);
 	}
 	
 	@Test
