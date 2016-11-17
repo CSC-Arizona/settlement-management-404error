@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Items.AppleItem;
 import model.Items.AppleSeedItem;
 import model.Items.Item;
 
