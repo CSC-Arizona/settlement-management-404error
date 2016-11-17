@@ -31,11 +31,11 @@ package model.Items;
  * Reinforced Crate (6 wood, 2 stone): 50lb weight capacity
  * Metal Crate (6 wood, 2 stone, 2 iron): 70lb weight capacity
  * 
- * Furniture
- * Bed: 4 wood, 2 stone, a lot of ant larva
- * Better bed?
- * Couch (for entertainment room): 4 wood, 1 stone, ant larva
- * Other furniture?
+ * Furniture (doesn't need to extend item, but you do want capacity for actors, get required materials function)
+ * Planting plot extends furniture
+ * Bed: 4 wood, 2 stone, 4 wheat stems
+ * Couch (for entertainment room): 4 wood, 1 stone, 4 wheat stems 
+ * Pool table
  * 
  */
 public abstract class Item {
