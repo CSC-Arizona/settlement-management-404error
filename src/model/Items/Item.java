@@ -26,6 +26,17 @@ package model.Items;
  * Iron Chest Plate: 4 iron
  * Great Chest Plate: 2 wood, 2 stone, 3 iron
  * 
+ * Crates For Storing Items
+ * Basic Crate (6 wood): 30lb weight capacity
+ * Reinforced Crate (6 wood, 2 stone): 50lb weight capacity
+ * Metal Crate (6 wood, 2 stone, 2 iron): 70lb weight capacity
+ * 
+ * Furniture
+ * Bed: 4 wood, 2 stone, a lot of ant larva
+ * Better bed?
+ * Couch (for entertainment room): 4 wood, 1 stone, ant larva
+ * Other furniture?
+ * 
  */
 public abstract class Item {
 	
