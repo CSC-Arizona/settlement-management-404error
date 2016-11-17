@@ -41,8 +41,8 @@ public class Map {
 
 	private BuildingBlock[][] map;
 
-	public Map(int totalHeight, int totalWidth, int dirtDepth, int stoneDepth) {
-		random = new Random();
+	public Map(int totalHeight, int totalWidth, int dirtDepth, int stoneDepth, int seed) {
+		random = new Random(seed);
 
 		this.totalHeight = totalHeight;
 		this.dirtDepth = dirtDepth;
@@ -85,18 +85,18 @@ public class Map {
 				map[i][j] = new EarthBlock();
 			}
 			if (randomEdge <= 2) {
-				if (Math.random() < 0.8) {
+				if (random.nextDouble() < 0.8) {
 					randomEdge += 1;
 				} else {
-					if (Math.random() < 0.6) {
+					if (random.nextDouble() < 0.6) {
 						randomEdge -= 1;
 					}
 				}
 			} else {
-				if (Math.random() < 0.2) {
+				if (random.nextDouble() < 0.2) {
 					randomEdge += 1;
 				} else {
-					if (Math.random() < 0.6) {
+					if (random.nextDouble() < 0.6) {
 						randomEdge -= 1;
 					}
 				}
@@ -177,7 +177,7 @@ public class Map {
 				for (int k = Y; k < airHeight; k++) {
 					map[k][X] = new EarthBlock();
 				}
-				double testValue = Math.random();
+				double testValue = random.nextDouble();
 				if (testValue < 0.5) {
 					X += 1;
 					Y -= 1;
@@ -199,7 +199,7 @@ public class Map {
 				for (int k = Y; k < airHeight; k++) {
 					map[k][X] = new EarthBlock();
 				}
-				double testValue = Math.random();
+				double testValue = random.nextDouble();
 				if (testValue < 0.5) {
 					X += 1;
 					Y += 1;

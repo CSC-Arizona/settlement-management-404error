@@ -27,7 +27,7 @@ public class BasicGUI extends JFrame {
 	private int mapDirtDepth = 10;
 	private int mapStoneDepth = 30;
 
-	private Map map = new Map(mapHeight, mapWidth, mapDirtDepth, mapStoneDepth);
+	private Map map = new Map(mapHeight, mapWidth, mapDirtDepth, mapStoneDepth, (int)(Math.random()*10000));
 
 	private int width = 1000;
 	private int height = 700;
