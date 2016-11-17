@@ -17,10 +17,10 @@ import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.GoldOreBlock;
 import model.BuildingBlocks.IronOreBlock;
 import model.BuildingBlocks.LavaBlock;
-import model.BuildingBlocks.LeafBlock;
+import model.BuildingBlocks.AppleTreeLeafBlock;
 import model.BuildingBlocks.StoneBlock;
 import model.BuildingBlocks.TreeRootBlock;
-import model.BuildingBlocks.WoodBlock;
+import model.BuildingBlocks.AppleTreeTrunkBlock;
 import model.Items.AntLarvaItem;
 import model.Items.IronItem;
 import model.Items.Item;
@@ -36,12 +36,12 @@ public class BuildingBlockTest {
 
 	@Test
 	public void tryingToGetSomeMapCodeCoverage() {
-		Map m = new Map(100, 100, 0, 0);
+		Map m = new Map(100, 100, 10, 10);
 	}
 	
 	@Test
 	public void testLeafBLock() {
-		LeafBlock lb = new LeafBlock();
+		AppleTreeLeafBlock lb = new AppleTreeLeafBlock();
 		assertFalse(lb.isOccupiable());
 		assertTrue(lb.isDestroyable());
 		assertEquals(new LinkedList(), lb.lootBlock());
@@ -71,7 +71,7 @@ public class BuildingBlockTest {
 	
 	@Test
 	public void testWoodBlock() {
-		WoodBlock wb = new WoodBlock();
+		AppleTreeTrunkBlock wb = new AppleTreeTrunkBlock();
 		assertFalse(wb.isOccupiable());
 		assertTrue(wb.isDestroyable());
 		assertEquals(new WoodItem().getClass(), wb.lootBlock().get(0).getClass());

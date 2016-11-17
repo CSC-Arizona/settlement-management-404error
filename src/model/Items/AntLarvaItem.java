@@ -3,7 +3,7 @@ package model.Items;
 
 /**
  * AntLarvaItem is dropped when an AntTunnelBlock is destroyed. It can
- * be eaten for hp.
+ * be eaten for hp or cooked into an AntLarvaPieItem.
  * 
  * @author Katherine Walters
  */
