@@ -12,9 +12,9 @@ import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.GoldOreBlock;
 import model.BuildingBlocks.IronOreBlock;
 import model.BuildingBlocks.LavaBlock;
-import model.BuildingBlocks.LeafBlock;
+import model.BuildingBlocks.AppleTreeLeafBlock;
 import model.BuildingBlocks.StoneBlock;
-import model.BuildingBlocks.WoodBlock;
+import model.BuildingBlocks.AppleTreeTrunkBlock;
 
 /**
  * Constructs a random map with various geographical features
@@ -237,7 +237,7 @@ public class Map {
 				// add trunk
 				for (int j = 0; j < treeHeight; j++) {
 					if (treeY - j >= 0) {
-						map[treeY - j][treeX] = new WoodBlock();
+						map[treeY - j][treeX] = new AppleTreeTrunkBlock();
 					}
 				}
 
@@ -264,7 +264,7 @@ public class Map {
 							if (newLeafY >= 0) {
 								if (map[newLeafY][newLeafX].getID().equals(
 										AirBlock.id)) {
-									map[newLeafY][newLeafX] = new LeafBlock();
+									map[newLeafY][newLeafX] = new AppleTreeLeafBlock();
 									availableSpaces.add(new Integer[] {
 											newLeafY, newLeafX });
 								}
