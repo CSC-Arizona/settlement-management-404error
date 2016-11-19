@@ -1,9 +1,11 @@
-package model;
+package model.Actors;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import model.Inventory;
 
 /**
  * 
@@ -16,9 +18,9 @@ import java.util.Queue;
 public abstract class Actor {
 	
 	private int health;
-	private Point position;
+	private Position position;
 	private boolean idle;
-	private Queue<Action> queue;
+	private LinkedList<Action> queue;
 	private Action currentAction;
 	private Skills skills;
 	private Inventory inventory;
@@ -29,7 +31,7 @@ public abstract class Actor {
 	 * @param health The current health of the actor
 	 * @param position The current position of the actor
 	 */
-	public Actor(int health, Point position){
+	public Actor(int health, Position position){
 		this.health = health;
 		this.position = position;
 		this.idle = true;
@@ -44,6 +46,14 @@ public abstract class Actor {
 	 */
 	public void addToActionQueue(Action action){
 		queue.add(action);
+	}
+	
+	/**
+	 * Adds an action to the front of the queue as it is a priority
+	 * @param action Action to be Performed
+	 */
+	public void priorityAddToActionQueue(Action action){
+		queue.addFirst(action);
 	}
 	
 	/**
@@ -75,14 +85,14 @@ public abstract class Actor {
 	/**
 	 * @return the position
 	 */
-	public Point getPosition() {
+	public Position getPosition() {
 		return position;
 	}
 
 	/**
 	 * @param position the position to set
 	 */
-	public void setPosition(Point position) {
+	public void setPosition(Position position) {
 		this.position = position;
 	}
 
