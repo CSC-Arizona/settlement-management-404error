@@ -51,9 +51,29 @@ public class Map {
 		this.totalWidth = totalWidth;
 		constructMap();
 	}
+	
+	public Map(BuildingBlock[][] map){
+		this.totalHeight = map.length;
+		this.totalWidth = map[0].length;
+		this.map = map;
+	}
 
 	public BuildingBlock getBuildingBlock(int row, int col) {
 		return map[row][col];
+	}
+
+	/**
+	 * @return the totalHeight
+	 */
+	public int getTotalHeight() {
+		return totalHeight;
+	}
+
+	/**
+	 * @return the totalWidth
+	 */
+	public int getTotalWidth() {
+		return totalWidth;
 	}
 
 	private void constructMap() {

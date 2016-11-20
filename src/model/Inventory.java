@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import model.Items.Item;
  * 
  * @author Katherine Walters
  */
-public class Inventory {
+public class Inventory implements Iterable<Item> {
 
 	private final double MAXWEIGHT = 100.0;
 	private double weight;
@@ -59,5 +60,13 @@ public class Inventory {
 	 */
 	public double getWeightCarried() {
 		return weight;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
+	 */
+	@Override
+	public Iterator<Item> iterator() {
+		return items.iterator();
 	}
 }

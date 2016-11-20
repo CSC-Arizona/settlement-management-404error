@@ -4,39 +4,35 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Furniture.Bed;
-import model.Furniture.Couch;
 import model.Furniture.Furniture;
-import model.Furniture.PoolTable;
 import model.Items.Item;
-import model.Items.WoodItem;
 
 /**
- * The EntertainmentRoom contains 2 Couches and 1 PoolTable. An upgrade basically 
- * adds an additional PoolTable and increases the max occupancy by 3. With two upgrades
- * allowed, a fully upgraded EntertainmentRoom will contain three PoolTables and Two Couches,
- * And have a max occupancy of 14.
+ * The BedRoom contains 3 Beds and has an initial max occupancy of six. An upgrade 
+ * basically adds an additional HealingBed and increases the MaxOccupancy by 2. The
+ * width of the BedRoom is 12 and the number of upgrades allowed is three, so at full
+ * upgraded status there will be one Bed per 2 squares in the room.
  * 
  * @author Katherine Walters
  */
-public class EntertainmentRoom extends Room{
+public class BedRoom extends Room {
 
 	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
-
-	public EntertainmentRoom() {
-		super(2, 13, 8, 2);
+	
+	public BedRoom() {
+		super(2, 12, 6, 3);
 		this.furniture = new LinkedList<>();
-		furniture.add(new PoolTable());
-		furniture.add(new Couch());
-		furniture.add(new Couch());
+		for (int i = 0; i < 3; i++)
+		    this.furniture.add(new Bed());
 		this.requiredBuildingMaterials = new LinkedList<>();
 		for (Furniture f : furniture) {
 			for (Item i : f.getRequiredMaterials())
 				this.requiredBuildingMaterials.add(i);
 		}
 		this.requiredUpgradeMaterials = new LinkedList<>();
-		for (Item b : new PoolTable().getRequiredMaterials())
+		for (Item b : new Bed().getRequiredMaterials())
 		    requiredUpgradeMaterials.add(b);
 	}
 
@@ -52,9 +48,6 @@ public class EntertainmentRoom extends Room{
 
 	@Override
 	public int increaseCapacityBy() {
-		return 3;
+		return 2;
 	}
-	
-	
-
 }
