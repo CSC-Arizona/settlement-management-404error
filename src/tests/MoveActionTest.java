@@ -26,6 +26,7 @@ import model.BuildingBlocks.EarthBlock;
 public class MoveActionTest {
 	
 	public Map generateMap(int[][] map){
+		GameMap gm = new GameMap();
 		BuildingBlock[][] mapTypes = new BuildingBlock[map.length][map[0].length];
 		for (int i = 0; i < mapTypes.length; i++) {
 			for (int j = 0; j < mapTypes[i].length; j++) {
@@ -64,5 +65,26 @@ public class MoveActionTest {
 		assertEquals(2,test.getPosition().getRow());
 		assertEquals(4,test.getPosition().getCol());
 	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testNonMoveAction(){
+		int[][] mapGen = new int[][]	{{0,0,0,0,0},
+										{0,0,0,0,0},
+										{0,0,0,0,0},
+										{0,0,0,0,0},
+										{0,0,0,0,0}};
+		GameMap.map = generateMap(mapGen);
+		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
+		test.addToActionQueue(new MoveAction(new Position(2,4)));
+		
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(1,test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(1,test.getPosition().getCol());
+	}
+	
+	
 
 }

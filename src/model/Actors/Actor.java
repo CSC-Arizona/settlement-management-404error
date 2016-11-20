@@ -24,8 +24,8 @@ public abstract class Actor {
 	private Action currentAction;
 	private Skills skills;
 	private Inventory inventory;
-	//TODO: give each actor an inventory once available
-	
+	private boolean alive;
+
 	/**
 	 * Creates a new actor
 	 * @param health The current health of the actor
@@ -37,6 +37,7 @@ public abstract class Actor {
 		this.idle = true;
 		this.queue = new LinkedList<Action>();
 		this.inventory = new Inventory();
+		this.setAlive(true);
 		skills = new Skills();
 	}
 	
@@ -108,6 +109,20 @@ public abstract class Actor {
 	 */
 	public Inventory getInventory() {
 		return inventory;
+	}
+	
+	/**
+	 * @return the alive
+	 */
+	public boolean isAlive() {
+		return alive;
+	}
+
+	/**
+	 * @param alive the alive to set
+	 */
+	public void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 
 }

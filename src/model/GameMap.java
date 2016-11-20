@@ -3,8 +3,6 @@
  */
 package model;
 
-import java.awt.Dimension;
-
 import model.BuildingBlocks.BuildingBlock;
 
 /**
@@ -12,7 +10,7 @@ import model.BuildingBlocks.BuildingBlock;
  * @author Jonathon Davis
  *
  */
-public class GameMap {
+public final class GameMap {
 	public static Map map;
 
 	public static int mapHeight(){

@@ -49,10 +49,7 @@ public class MoveAction implements Action {
 	private void calculatePath(Position currentPos, Node currentNode) {
 		int row = currentPos.getRow(), col = currentPos.getCol();
 		// Check to make sure this is in the bounds of the map
-		if (row < 0 || col < 0 || row >= GameMap.mapHeight() || col >= GameMap.mapWidth())
-			return;
-		// Check to make sure this is a valid block
-		if (!GameMap.getBlock(row, col).getID().equals("Air"))
+		if (row < 0 || col < 0 || row >= GameMap.mapHeight() || col >= GameMap.mapWidth() || !GameMap.getBlock(row, col).getID().equals("Air"))
 			return;
 		// check to make sure there is a valid block to stand on
 		if (row + 1 < GameMap.mapHeight() && !GameMap.getBlock(row+1, col).getID().equals("Air")) {

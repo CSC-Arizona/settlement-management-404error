@@ -15,6 +15,7 @@ public class PlayerControlledActor extends Actor {
 	
 	private int fatigue, hunger, happiness;
 	private static final int threshold = 1000;
+	private static final int death_threshold = 1100;
 	private LinkedList<PlayerControlledActor> allActors;
 	
 	public PlayerControlledActor(int health, Position location){
@@ -35,13 +36,27 @@ public class PlayerControlledActor extends Actor {
 		fatigue += 1;
 		hunger += 1;
 		happiness += 1;
-		if(fatigue >= threshold)
-			this.priorityAddToActionQueue(new FatigueAction());
-		else if (hunger >= threshold)
+		if(hunger >= threshold)
 			this.priorityAddToActionQueue(new HungerAction());
-		else if (happiness >= threshold)
-			this.priorityAddToActionQueue(new HapinessAction());
+		if(hunger >= death_threshold){
+			allActors.remove(this);
+			this.setAlive(false);
+		}
 		super.update();
+	}
+
+	/**
+	 * @return the hunger
+	 */
+	public int getHunger() {
+		return hunger;
+	}
+
+	/**
+	 * @param hunger the hunger to set
+	 */
+	public void setHunger(int hunger) {
+		this.hunger = hunger;
 	}
 	
 	
