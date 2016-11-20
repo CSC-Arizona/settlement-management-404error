@@ -31,3 +31,12 @@ Task Sequence for Creating a Room:
 	check chosenRoom.getRequiredMaterials (which checks ea furniture pieces required materials)
 	gather required materials from the store room if not in inventory
 	build room
+	
+Rooms to build
+	bedroom <- bed
+	infirmary <- healing bed
+	entertainment room <- pool table & couch
+	store room <- 4 chests
+	kitchen/mill production room <- fireplace on which the dragons breath, milling machine
+	farm room <- 4 plant plots of type furniture w/ instance variable of sprout rate
+	

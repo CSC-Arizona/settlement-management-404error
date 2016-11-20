@@ -3,38 +3,36 @@ package model.Room;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Furniture.Bed;
 import model.Furniture.Furniture;
 import model.Items.Item;
-import model.Items.WoodItem;
 
 /**
- * The EntertainmentRoom contains 2 Couches and 1 PoolTable. An upgrade basically 
- * adds an additional PoolTable and increases the max occupancy by 3. With two upgrades
- * allowed, a fully upgraded EntertainmentRoom will contain three PoolTables and Two Couches,
- * And have a max occupancy of 14.
+ * The StoreRoom contains 4 small Chests and has an initial max occupancy of three. 
+ * The first upgrade upgrades the 4 small Chests into 4 medium Chests and the second
+ * upgrades them into 4 large Chests. There is a 2 upgrade limit on each StoreRoom, 
+ * and each time it upgrades it increases the max occupancy by 1. There shouldn't need 
+ * to be many agents in this Room anyways, as it's just a drop-off/pick-up point.
  * 
  * @author Katherine Walters
  */
-public class EntertainmentRoom extends Room{
+public class StoreRoom extends Room{
 
 	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
-
-	public EntertainmentRoom() {
-		super(2, 13, 8, 2);
+	
+	public StoreRoom() {
+		super(2, 8, 3, 2);
 		this.furniture = new LinkedList<>();
-		furniture.add(new PoolTable());
-		furniture.add(new Couch());
-		furniture.add(new Couch());
+		for (int i = 0; i < 4; i++)
+		    this.furniture.add(new Chest());
 		this.requiredBuildingMaterials = new LinkedList<>();
 		for (Furniture f : furniture) {
 			for (Item i : f.getRequiredMaterials())
 				this.requiredBuildingMaterials.add(i);
 		}
 		this.requiredUpgradeMaterials = new LinkedList<>();
-		for (Item b : new PoolTable().getRequiredMaterials())
+		for (Item b : new Chest().getRequiredMaterials())
 		    requiredUpgradeMaterials.add(b);
 	}
 
@@ -50,9 +48,6 @@ public class EntertainmentRoom extends Room{
 
 	@Override
 	public int increaseCapacityBy() {
-		return 3;
+		return 1;
 	}
-	
-	
-
 }
