@@ -1,7 +1,7 @@
 /**
  * 
  */
-package model;
+package model.Actors;
 
 /**
  * @author Jonathon Davis

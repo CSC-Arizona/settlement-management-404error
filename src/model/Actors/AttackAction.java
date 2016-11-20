@@ -1,4 +1,4 @@
-package model;
+package model.Actors;
 
 /**
  * @author Jonathon Davis
@@ -17,8 +17,8 @@ public class AttackAction implements Action {
 	@Override
 	public boolean execute(Actor performer) {
 		// test to see that the two actors are adjacent (no fighting across the map)
-		int x = Math.abs(performer.getPosition().x - target.getPosition().x);
-		int y = Math.abs(performer.getPosition().y - target.getPosition().y);
+		int x = Math.abs(performer.getPosition().getCol() - target.getPosition().getCol());
+		int y = Math.abs(performer.getPosition().getRow() - target.getPosition().getRow());
 		
 		//if adjacent fight, else move towards target
 		if((x == 1 || x == 0) && (y == 1 || y == 0)){

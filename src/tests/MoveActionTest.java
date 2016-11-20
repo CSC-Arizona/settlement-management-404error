@@ -9,9 +9,15 @@ import java.awt.Point;
 
 import org.junit.Test;
 
-import model.Actor;
-import model.BasicActor;
-import model.MoveAction;
+import model.GameMap;
+import model.Map;
+import model.Actors.Actor;
+import model.Actors.MoveAction;
+import model.Actors.PlayerControlledActor;
+import model.Actors.Position;
+import model.BuildingBlocks.AirBlock;
+import model.BuildingBlocks.BuildingBlock;
+import model.BuildingBlocks.EarthBlock;
 
 /**
  * @author Jonathon Davis
@@ -19,75 +25,66 @@ import model.MoveAction;
  */
 public class MoveActionTest {
 	
-	@Test
-	public void moveTest(){
-		Actor tester = new BasicActor(10,new Point(10,10));
-		Point location = new Point(15,20);
-		tester.addToActionQueue(new MoveAction(location));
-		
-		assertEquals(10,tester.getPosition().x);
-		assertEquals(10,tester.getPosition().y);
-		tester.update();
-		assertEquals(11,tester.getPosition().x);
-		assertEquals(11,tester.getPosition().y);
-		tester.update();
-		assertEquals(12,tester.getPosition().x);
-		assertEquals(12,tester.getPosition().y);
-		tester.update();
-		assertEquals(13,tester.getPosition().x);
-		assertEquals(13,tester.getPosition().y);
-		tester.update();
-		assertEquals(14,tester.getPosition().x);
-		assertEquals(14,tester.getPosition().y);
-		tester.update();
-		assertEquals(15,tester.getPosition().x);
-		assertEquals(15,tester.getPosition().y);
-		tester.update();
-		assertEquals(15,tester.getPosition().x);
-		assertEquals(16,tester.getPosition().y);
-		tester.update();
-		assertEquals(15,tester.getPosition().x);
-		assertEquals(17,tester.getPosition().y);
-		tester.update();
-		assertEquals(15,tester.getPosition().x);
-		assertEquals(18,tester.getPosition().y);
-		tester.update();
-		assertEquals(15,tester.getPosition().x);
-		assertEquals(19,tester.getPosition().y);
-		tester.update();
-		assertEquals(15,tester.getPosition().x);
-		assertEquals(20,tester.getPosition().y);
-		tester.update();
-		tester.update();
-		tester.update();
-		tester.update();
-		assertEquals(15,tester.getPosition().x);
-		assertEquals(20,tester.getPosition().y);
+	public Map generateMap(int[][] map){
+		GameMap gm = new GameMap();
+		BuildingBlock[][] mapTypes = new BuildingBlock[map.length][map[0].length];
+		for (int i = 0; i < mapTypes.length; i++) {
+			for (int j = 0; j < mapTypes[i].length; j++) {
+				if(map[i][j] == 0)
+					mapTypes[i][j] = new AirBlock();
+				else
+					mapTypes[i][j] = new EarthBlock();
+			}
+		}
+		return new Map(mapTypes);
 	}
 	
 	@Test
-	public void moveTest2(){
-		Actor tester = new BasicActor(10,new Point(10,10));
-		Point location = new Point(5,15);
-		tester.addToActionQueue(new MoveAction(location));
+	public void testMoveAction(){
+		int[][] mapGen = new int[][]	{{0,0,0,0,0},
+										{0,0,0,0,0},
+										{1,1,1,1,0},
+										{0,0,1,1,1},
+										{0,0,0,0,0}};
+		GameMap.map = generateMap(mapGen);
+		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
+		test.addToActionQueue(new MoveAction(new Position(2,4)));
 		
-		assertEquals(10,tester.getPosition().x);
-		assertEquals(10,tester.getPosition().y);
-		tester.update();
-		assertEquals(9,tester.getPosition().x);
-		assertEquals(11,tester.getPosition().y);
-		tester.update();
-		assertEquals(8,tester.getPosition().x);
-		assertEquals(12,tester.getPosition().y);
-		tester.update();
-		assertEquals(7,tester.getPosition().x);
-		assertEquals(13,tester.getPosition().y);
-		tester.update();
-		assertEquals(6,tester.getPosition().x);
-		assertEquals(14,tester.getPosition().y);
-		tester.update();
-		assertEquals(5,tester.getPosition().x);
-		assertEquals(15,tester.getPosition().y);
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(1,test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(2,test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(3,test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(2,test.getPosition().getRow());
+		assertEquals(4,test.getPosition().getCol());
 	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testNonMoveAction(){
+		int[][] mapGen = new int[][]	{{0,0,0,0,0},
+										{0,0,0,0,0},
+										{0,0,0,0,0},
+										{0,0,0,0,0},
+										{0,0,0,0,0}};
+		GameMap.map = generateMap(mapGen);
+		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
+		test.addToActionQueue(new MoveAction(new Position(2,4)));
+		
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(1,test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(1,test.getPosition().getCol());
+	}
+	
+	
 
 }
