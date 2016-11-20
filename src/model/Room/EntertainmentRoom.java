@@ -4,7 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Furniture.Bed;
+import model.Furniture.Couch;
 import model.Furniture.Furniture;
+import model.Furniture.PoolTable;
 import model.Items.Item;
 import model.Items.WoodItem;
 

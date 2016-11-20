@@ -4,7 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Furniture.Furniture;
+import model.Items.Crate;
+import model.Items.IronItem;
 import model.Items.Item;
+import model.Items.StoneItem;
 
 /**
  * The StoreRoom contains 4 small Chests and has an initial max occupancy of three. 
@@ -25,15 +28,12 @@ public class StoreRoom extends Room{
 		super(2, 8, 3, 2);
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 4; i++)
-		    this.furniture.add(new Chest());
+		    this.furniture.add(new Crate());
 		this.requiredBuildingMaterials = new LinkedList<>();
 		for (Furniture f : furniture) {
 			for (Item i : f.getRequiredMaterials())
 				this.requiredBuildingMaterials.add(i);
 		}
-		this.requiredUpgradeMaterials = new LinkedList<>();
-		for (Item b : new Chest().getRequiredMaterials())
-		    requiredUpgradeMaterials.add(b);
 	}
 
 	@Override
@@ -43,6 +43,16 @@ public class StoreRoom extends Room{
 
 	@Override
 	public List<Item> getRequiredUpgradeMaterials() {
+		requiredUpgradeMaterials = new LinkedList<>();
+		if (this.getUpgradesAllowed() == 2) {
+			for (int i = 0; i < 8; i++)
+				requiredUpgradeMaterials.add(new StoneItem());
+		} else if (this.getUpgradesAllowed() == 1) {
+			for (int i = 0; i < 8; i++)
+				requiredUpgradeMaterials.add(new IronItem());
+		} else {
+			
+		}
 		return requiredUpgradeMaterials;
 	}
 
