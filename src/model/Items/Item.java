@@ -34,9 +34,10 @@ package model.Items;
  * Furniture (doesn't need to extend item, but you do want capacity for actors, get required materials function)
  * Planting plot extends furniture
  * Bed: 4 wood, 2 stone, 4 wheat stems
+ * Healing Bed: 4 wood, 2 stone, 5 wheat stems, 1 iron
  * Couch (for entertainment room): 4 wood, 1 stone, 4 wheat stems 
- * Pool table
- * 
+ * Pool table: 4 wood, 3 stone, 1 iron
+ * Fireplace (for kitchen): 4 stone, 2 iron
  */
 public abstract class Item {
 	
