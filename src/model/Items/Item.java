@@ -38,6 +38,9 @@ package model.Items;
  * Couch (for entertainment room): 4 wood, 1 stone, 4 wheat stems 
  * Pool table: 4 wood, 3 stone, 1 iron
  * Fireplace (for kitchen): 4 stone, 2 iron
+ * Milling Machine: 2 stone, 2 iron
+ * Wheat Plant Plot: 2 Wheat Kernels, 2 Ant Larva 
+ * Apple Tree Plant Plot: 2 Apple Seeds, 2 Ant Larva
  */
 public abstract class Item {
 	

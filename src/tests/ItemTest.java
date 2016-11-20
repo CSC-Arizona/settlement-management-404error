@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import model.Items.AntLarvaItem;
+import model.Items.AppleItem;
+import model.Items.AppleSeedItem;
 import model.Items.BasicIronAxe;
 import model.Items.BasicStoneAxe;
 import model.Items.BasicSword;
@@ -14,6 +16,9 @@ import model.Items.IronItem;
 import model.Items.LureAxe;
 import model.Items.StoneItem;
 import model.Items.UltraSword;
+import model.Items.WheatItem;
+import model.Items.WheatKernelItem;
+import model.Items.WheatStemItem;
 import model.Items.WoodItem;
 
 /**
@@ -122,5 +127,53 @@ public class ItemTest {
 	    assertEquals(0, us.getHealthPoints());
 	    assertEquals(39.0, us.getWeight(), 0.00001);
 	}
+	
+	@Test
+	public void testAppleItem() {
+	    AppleItem ai = new AppleItem();
+	    assertTrue(ai.getIsEdible());
+	    assertEquals(2, ai.getAttackModifier());
+	    assertEquals(5, ai.getHealthPoints());
+	    assertEquals(1.0, ai.getWeight(), 0.00001);
+	}
+	
+	@Test
+	public void testAppleSeedItem() {
+	    AppleSeedItem asi = new AppleSeedItem();
+	    assertFalse(asi.getIsEdible());
+	    assertEquals(1, asi.getAttackModifier());
+	    assertEquals(0, asi.getHealthPoints());
+	    assertEquals(.2, asi.getWeight(), 0.00001);
+	}
+	
+	@Test
+	public void testWheatItem() {
+	    WheatItem wi = new WheatItem();
+	    assertTrue(wi.getIsEdible());
+	    assertEquals(1, wi.getAttackModifier());
+	    assertEquals(1, wi.getHealthPoints());
+	    assertEquals(1, wi.getWeight(), 0.00001);
+	}
+	
+	@Test
+	public void testWheatKernelItem() {
+	    WheatKernelItem wki = new WheatKernelItem();
+	    assertTrue(wki.getIsEdible());
+	    assertEquals(1, wki.getAttackModifier());
+	    assertEquals(1, wki.getHealthPoints());
+	    assertEquals(1, wki.getWeight(), 0.00001);
+	}
+	
+	@Test
+	public void testWheatStemItem() {
+	    WheatStemItem wsi = new WheatStemItem();
+	    assertFalse(wsi.getIsEdible());
+	    assertEquals(1, wsi.getAttackModifier());
+	    assertEquals(0, wsi.getHealthPoints());
+	    assertEquals(1, wsi.getWeight(), 0.00001);
+	}
+	
+	
+	
 
 }
