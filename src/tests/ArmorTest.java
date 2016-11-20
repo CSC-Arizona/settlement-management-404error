@@ -11,9 +11,9 @@ import model.Items.IronChestPlate;
 import model.Items.IronShield;
 import model.Items.StoneChestPlate;
 import model.Items.StoneShield;
-import model.Items.UltraSword;
 import model.Items.WoodChestPlate;
 import model.Items.WoodShield;
+import model.Weapons.UltraSword;
 
 //Author: Maxwell Faridian
 //This class tests the construction of Armor items

@@ -1,5 +1,6 @@
-package model.Items;
+package model.Weapons;
 
+import model.Items.Item;
 
 //Author: Maxwell Faridian
 //This class defines the Ultra Sword weapon, which is the strongest weapon in the game

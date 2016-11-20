@@ -7,19 +7,19 @@ import org.junit.Test;
 import model.Items.AntLarvaItem;
 import model.Items.AppleItem;
 import model.Items.AppleSeedItem;
-import model.Items.BasicIronAxe;
-import model.Items.BasicStoneAxe;
-import model.Items.BasicSword;
-import model.Items.FortifiedIronAxe;
-import model.Items.FortifiedStoneAxe;
 import model.Items.IronItem;
-import model.Items.LureAxe;
 import model.Items.StoneItem;
-import model.Items.UltraSword;
 import model.Items.WheatItem;
 import model.Items.WheatKernelItem;
 import model.Items.WheatStemItem;
 import model.Items.WoodItem;
+import model.Weapons.BasicIronAxe;
+import model.Weapons.BasicStoneAxe;
+import model.Weapons.BasicSword;
+import model.Weapons.FortifiedIronAxe;
+import model.Weapons.FortifiedStoneAxe;
+import model.Weapons.LureAxe;
+import model.Weapons.UltraSword;
 
 /**
  * ItemTest covers all of the functionality of the Item constructor and 

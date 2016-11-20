@@ -1,5 +1,6 @@
-package model.Items;
+package model.Weapons;
 
+import model.Items.Item;
 
 //Author: Maxwell Faridian
 //This class defines the Basic Sword weapon
