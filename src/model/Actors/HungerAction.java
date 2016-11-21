@@ -20,6 +20,7 @@ public class HungerAction implements Action {
 	@Override
 	public int execute(Actor performer) {
 		Iterator<Item> i = performer.getInventory().iterator();
+		// Look through the inventory for food, if there is some, eat it
 		while(i.hasNext()){
 			Item item = i .next();
 			if(item.getIsEdible()){

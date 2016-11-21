@@ -1,9 +1,6 @@
 package model.Actors;
 
-import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.util.LinkedList;
-import java.util.Queue;
 
 import model.Inventory;
 
@@ -68,21 +65,26 @@ public abstract class Actor {
 	 * Perform once per tick, the Actor performs the next action
 	 */
 	public void update() {
+		// if idle get a new action
 		if (idle)
 			if (queue.size() > 0)
 				currentAction = queue.peek();
 			else
 				return;
+		// Store the result of the execution
 		int result = currentAction.execute(this);
+		//if the Action was Completed or Cancelled, poll the action out of the queue
 		if (result == Action.COMPLETED || result == Action.CANCELL) {
 			idle = true;
 			queue.poll();
 		} else if (result == Action.DELAY) {
+			// if the Action needs to be delayed, execute the next action
 			idle = true;
 			Action attemptedAction = queue.poll();
 			update();
 			queue.addFirst(attemptedAction);
 		} else {
+			// if the Action is still in progress then set idle to false
 			idle = false;
 		}
 	}
