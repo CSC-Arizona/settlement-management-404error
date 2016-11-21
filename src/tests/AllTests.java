@@ -7,15 +7,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import model.Actors.GatherAction;
-
 /**
  * @author Jonathon Davis
  *
  */
 @RunWith(Suite.class)
 @SuiteClasses({ ArmorTest.class, AttackActionTest.class, BuildingBlockTest.class, InventoryTest.class, ItemTest.class,
-		MoveActionTest.class, HungerTest.class, GatherActionTest.class })
+		MoveActionTest.class, HungerTest.class, GatherActionTest.class, FurnitureTest.class, WeaponTest.class, MapTest.class })
 public class AllTests {
 
 }

@@ -17,7 +17,6 @@ import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.IronOreBlock;
-import model.Items.Item;
 
 /**
  * @author Jonathon Davis
@@ -70,11 +69,7 @@ public class GatherActionTest {
 			assertEquals(3,test.getPosition().getCol());
 		}
 		
-		int amount = 0;
-		
-		for(Item i : test.getInventory()){
-			amount++;
-		}
+		int amount = test.getInventory().size();
 		
 		assertEquals(amount,testBlock.lootBlock().size());
 		assertEquals("Air",GameMap.getBlock(1, 4).getID());
