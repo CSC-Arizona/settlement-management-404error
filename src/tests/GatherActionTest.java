@@ -10,6 +10,7 @@ import org.junit.Test;
 import model.GameMap;
 import model.Map;
 import model.Actors.GatherAction;
+import model.Actors.MoveAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
@@ -76,6 +77,38 @@ public class GatherActionTest {
 		}
 		
 		assertEquals(amount,testBlock.lootBlock().size());
+	}
+	
+	@Test
+	public void testDelay(){
+		int[][] mapGen = new int[][]	{{0,0,0,1,1},
+										{0,0,0,1,2},
+										{0,1,1,1,1},
+										{1,0,0,1,1},
+										{1,1,1,1,1}};
+		GameMap.map = generateMap(mapGen);
+		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
+		test.addToActionQueue(new GatherAction(new Position(1,4)));
+		test.addToActionQueue(new MoveAction(new Position(3,2)));
+		
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(1,test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(2,test.getPosition().getRow());
+		assertEquals(0,test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(3,test.getPosition().getRow());
+		assertEquals(1,test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(3,test.getPosition().getRow());
+		assertEquals(2,test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(3,test.getPosition().getRow());
+		assertEquals(2,test.getPosition().getCol());
 	}
 
 }
