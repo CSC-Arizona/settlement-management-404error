@@ -25,6 +25,7 @@ import model.Items.AntLarvaItem;
 import model.Items.IronItem;
 import model.Items.Item;
 import model.Items.StoneItem;
+import model.Items.WheatKernelItem;
 import model.Items.WoodItem;
 
 /**
@@ -36,7 +37,13 @@ public class BuildingBlockTest {
 
 	@Test
 	public void tryingToGetSomeMapCodeCoverage() {
-		Map m = new Map(100, 100, 0, 0,10);
+		int mapHeight = 150;
+		int mapWidth = 1000;
+		int mapDirtDepth = 30;
+		int mapStoneDepth = 50;
+
+		Map map = new Map(mapHeight, mapWidth, mapDirtDepth, mapStoneDepth,
+				(int) (Math.random() * 10000));
 	}
 	
 	@Test
@@ -44,9 +51,9 @@ public class BuildingBlockTest {
 		AppleTreeLeafBlock lb = new AppleTreeLeafBlock();
 		assertFalse(lb.isOccupiable());
 		assertTrue(lb.isDestroyable());
-		assertEquals(new LinkedList(), lb.lootBlock());
+		assertEquals(8, lb.lootBlock().size());
 		assertEquals(1, lb.getDurability());
-		assertEquals(new Color(84, 232, 67), lb.getColor());
+		assertEquals(new Color(242, 58, 58), lb.getColor());
 	}
 	
 	@Test
@@ -54,7 +61,8 @@ public class BuildingBlockTest {
 		GrassBlock bb = new GrassBlock();
 		assertFalse(bb.isOccupiable());
 		assertTrue(bb.isDestroyable());
-		assertEquals(new LinkedList(), bb.lootBlock());
+		assertEquals(1, bb.lootBlock().size());
+		WheatKernelItem i = (WheatKernelItem) bb.lootBlock().get(0);
 		assertEquals(1, bb.getDurability());
 		assertEquals(new Color(0, 87, 3), bb.getColor());
 	}
