@@ -6,15 +6,20 @@ import java.util.List;
 
 import model.Items.Item;
 
-public class BushBlock extends BuildingBlock {
+/**
+ * @author Ethan Ward
+ *
+ */
+public class MushroomFruitBlock extends BuildingBlock {
 
 	private List<Item> itemsInBlock;
 	private final static int durability = 1;
-	public final static String id = "Bush";
+	public final static String id = "Mushroom fruit";
 	
-	public BushBlock() {
-		super(durability, true, false, new Color(0, 87, 3), id);
+	public MushroomFruitBlock() {
+		super(durability, true, false, new Color(72, 249, 229), id);
 		itemsInBlock = new LinkedList<>();
+
 	}
 
 	@Override

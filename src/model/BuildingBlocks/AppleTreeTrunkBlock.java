@@ -19,6 +19,7 @@ public class AppleTreeTrunkBlock extends BuildingBlock {
 	private final static int durability = 5;
 	public final static String id = "Wood";
 	
+	
 	public AppleTreeTrunkBlock() {
 		super(durability, true, false, new Color(174, 144, 55), id);
 		itemsInBlock = new LinkedList<>();

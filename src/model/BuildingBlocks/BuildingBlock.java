@@ -69,4 +69,5 @@ public abstract class BuildingBlock {
 	 * or null if it drops nothing.
 	 */
 	abstract public List<Item> lootBlock();
+	
 }

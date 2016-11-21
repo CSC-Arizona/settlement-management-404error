@@ -15,6 +15,7 @@ public class AirBlock extends BuildingBlock {
 
 	private final static int durability = 0;
 	public final static String id = "Air";
+	private boolean occupiable = true;
 	
 	public AirBlock() {
 		super(durability, false, true, new Color(206, 237, 240), id);

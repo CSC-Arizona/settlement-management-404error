@@ -11,7 +11,7 @@ import org.junit.Test;
 import model.Map;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.AntTunnelBlock;
-import model.BuildingBlocks.BushBlock;
+import model.BuildingBlocks.GrassBlock;
 import model.BuildingBlocks.CavernBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.GoldOreBlock;
@@ -51,7 +51,7 @@ public class BuildingBlockTest {
 	
 	@Test
 	public void testBushBlock() {
-		BushBlock bb = new BushBlock();
+		GrassBlock bb = new GrassBlock();
 		assertFalse(bb.isOccupiable());
 		assertTrue(bb.isDestroyable());
 		assertEquals(new LinkedList(), bb.lootBlock());

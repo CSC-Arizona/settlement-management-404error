@@ -27,8 +27,8 @@ public class StoreRoom extends Room{
 	public StoreRoom() {
 		super(2, 8, 3, 2);
 		this.furniture = new LinkedList<>();
-		for (int i = 0; i < 4; i++)
-		    this.furniture.add(new Crate());
+		//for (int i = 0; i < 4; i++)
+		 //   this.furniture.add(new Crate());
 		this.requiredBuildingMaterials = new LinkedList<>();
 		for (Furniture f : furniture) {
 			for (Item i : f.getRequiredMaterials())

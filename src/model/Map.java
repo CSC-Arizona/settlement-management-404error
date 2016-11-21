@@ -2,19 +2,18 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TreeMap;
 
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.AntTunnelBlock;
 import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.BushBlock;
+import model.BuildingBlocks.GrassBlock;
 import model.BuildingBlocks.CavernBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.GoldOreBlock;
 import model.BuildingBlocks.IronOreBlock;
 import model.BuildingBlocks.LavaBlock;
-import model.BuildingBlocks.AppleTreeLeafBlock;
 import model.BuildingBlocks.StoneBlock;
-import model.BuildingBlocks.AppleTreeTrunkBlock;
 
 /**
  * Constructs a random map with various geographical features
@@ -32,16 +31,21 @@ public class Map {
 	private int totalWidth;
 	private Random random;
 
+	private ArrayList<AppleTree> trees;
+	private ArrayList<Integer[]> cavernFloorBlocks;
+
 	private double ironFrequency = 0.01;
 	private double goldFrequency = 0.001;
 	private double mountainFrequency = 0.03;
 	private double treeFrequency = 0.05;
-	private double bushFrequency = 0.05;
+	private double grassFrequency = 0.1;
+	private double caveFrequency = 0.005;
 	private int numberOfAntColonies = 2;
 
 	private BuildingBlock[][] map;
 
-	public Map(int totalHeight, int totalWidth, int dirtDepth, int stoneDepth, int seed) {
+	public Map(int totalHeight, int totalWidth, int dirtDepth, int stoneDepth,
+			int seed) {
 		random = new Random(seed);
 
 		this.totalHeight = totalHeight;
@@ -51,8 +55,8 @@ public class Map {
 		this.totalWidth = totalWidth;
 		constructMap();
 	}
-	
-	public Map(BuildingBlock[][] map){
+
+	public Map(BuildingBlock[][] map) {
 		this.totalHeight = map.length;
 		this.totalWidth = map[0].length;
 		this.map = map;
@@ -88,6 +92,8 @@ public class Map {
 		addAntColonies();
 		addTrees();
 		addBushes();
+		addCaves();
+		addMushrooms();
 	}
 
 	private void addAir() {
@@ -238,66 +244,18 @@ public class Map {
 	}
 
 	private void addTrees() {
+		trees = new ArrayList<AppleTree>();
 		int totalTrees = (int) (treeFrequency * totalWidth);
 
 		for (int i = 0; i < totalTrees; i++) {
-			int treeX = random.nextInt(totalWidth);
-			int treeHeight = random.nextInt(4) + 2;
-
-			// move up until we are no longer underground
-			int treeY = airHeight;
-			while (!map[treeY][treeX].getID().equals(AirBlock.id)) {
-				treeY -= 1;
-				if (treeY < 0)
-					break;
-			}
-
-			if (map[treeY + 1][treeX].getID().equals(EarthBlock.id)) {
-
-				// add trunk
-				for (int j = 0; j < treeHeight; j++) {
-					if (treeY - j >= 0) {
-						map[treeY - j][treeX] = new AppleTreeTrunkBlock();
-					}
-				}
-
-				// add leaves
-				int leafCount = random.nextInt(20) + 20;
-				ArrayList<Integer[]> availableSpaces = new ArrayList<Integer[]>();
-				availableSpaces
-						.add(new Integer[] { treeY - treeHeight, treeX });
-				int[] offsets = new int[] { -1, 0, 1 };
-				for (int j = 0; j < leafCount; j++) {
-					Integer[] basePos = availableSpaces.get(random
-							.nextInt(availableSpaces.size()));
-
-					int o1 = offsets[random.nextInt(3)];
-					int o2 = offsets[random.nextInt(3)];
-
-					if (!(Math.abs(o1) == 1 && Math.abs(o2) == 1)) {
-						int newLeafY = basePos[0] + o1;
-						int newLeafX = basePos[1] + o2;
-						int dist = Math.abs(treeY - treeHeight - newLeafY)
-								+ (treeX - newLeafX);
-						if (dist <= 3 && (newLeafY <= (treeY - treeHeight + 1))) {
-							newLeafX = Math.floorMod(newLeafX, totalWidth);
-							if (newLeafY >= 0) {
-								if (map[newLeafY][newLeafX].getID().equals(
-										AirBlock.id)) {
-									map[newLeafY][newLeafX] = new AppleTreeLeafBlock();
-									availableSpaces.add(new Integer[] {
-											newLeafY, newLeafX });
-								}
-							}
-						}
-					}
-				}
-			}
+			AppleTree tree = new AppleTree(totalWidth, airHeight, map, random);
+			tree.addToMap();
+			trees.add(tree);
 		}
 	}
 
 	private void addBushes() {
-		int totalBushes = (int) (bushFrequency * totalWidth);
+		int totalBushes = (int) (grassFrequency * totalWidth);
 
 		for (int i = 0; i < totalBushes; i++) {
 			int bushX = random.nextInt(totalWidth);
@@ -311,7 +269,7 @@ public class Map {
 			}
 			if (map[bushY + 1][bushX].getID().equals(EarthBlock.id)) {
 				if (map[bushY][bushX].getID().equals(AirBlock.id)) {
-					map[bushY][bushX] = new BushBlock();
+					map[bushY][bushX] = new GrassBlock();
 				}
 			}
 
@@ -352,8 +310,124 @@ public class Map {
 				}
 			}
 
-			// TODO: add tunnels / chambers
+			for (int j = 0; j < random.nextInt(3) + 1; j++) {
+				addAntTunnel(startX);
+			}
 
 		}
 	}
+
+	private void addAntTunnel(int startX) {
+		int tunnelSize = random.nextInt(200) + 400;
+		int tunnelX = startX;
+		int tunnelY = airHeight - 1;
+		int[] offsetsX = new int[] { -1, 0, 1 };
+		int[] offsetsY = new int[] { 1, 1, -1, 0, 1 };
+		int newTunnelX;
+		int newTunnelY;
+		int directionX = 0;
+		int directionY = 0;
+		boolean inChamber = false;
+		for (int j = 0; j < tunnelSize; j++) {
+			if (inChamber) {
+				newTunnelX = tunnelX + offsetsX[random.nextInt(3)];
+				newTunnelY = tunnelY + offsetsY[random.nextInt(5)];
+				newTunnelX = Math.floorMod(newTunnelX, totalWidth);
+				if (newTunnelY > 0
+						&& newTunnelY >= airHeight
+						&& (map[newTunnelY][newTunnelX].getID().equals(
+								EarthBlock.id) || map[newTunnelY][newTunnelX]
+								.getID().equals(CavernBlock.id))
+						&& (map[newTunnelY - 1][newTunnelX].getID()
+								.equals(EarthBlock.id))) {
+
+					map[newTunnelY][newTunnelX] = new CavernBlock();
+					tunnelX = newTunnelX;
+					tunnelY = newTunnelY;
+				}
+				if (random.nextDouble() < 0.01) {
+					inChamber = false;
+					directionX = offsetsX[random.nextInt(3)];
+					directionY = offsetsY[random.nextInt(5)];
+				}
+			} else {
+				newTunnelX = tunnelX + directionX;
+				newTunnelY = tunnelY + directionY;
+				newTunnelX = Math.floorMod(newTunnelX, totalWidth);
+				if (newTunnelY > 0
+						&& newTunnelY >= airHeight
+						&& (map[newTunnelY][newTunnelX].getID().equals(
+								EarthBlock.id) || map[newTunnelY][newTunnelX]
+								.getID().equals(CavernBlock.id))
+						&& (map[newTunnelY - 1][newTunnelX].getID()
+								.equals(EarthBlock.id))) {
+
+					map[newTunnelY][newTunnelX] = new CavernBlock();
+					tunnelX = newTunnelX;
+					tunnelY = newTunnelY;
+				}
+				if (random.nextDouble() < 0.1) {
+					inChamber = true;
+				}
+			}
+
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void addCaves() {
+		cavernFloorBlocks = new ArrayList<Integer[]>();
+		int totalCaves = (int) (caveFrequency * totalWidth);
+
+		for (int i = 0; i < totalCaves; i++) {
+			double a = 10 * (random.nextDouble() + 1);
+			double b = 3 * (random.nextDouble() + 1);
+
+			int originX = random.nextInt(totalWidth);
+			int originY = random.nextInt(stoneDepth / 2) + airHeight
+					+ dirtDepth + stoneDepth / 2;
+
+			for (double t = 0.0; t <= Math.PI; t += 0.01) {
+				int x = originX + (int) (a * Math.cos(t));
+				int y1 = originY
+						+ (int) (b * Math.sin(t) + 4 * random.nextDouble());
+				int y2 = originY
+						- (int) (b * Math.sin(t) + 4 * random.nextDouble());
+
+				x = Math.floorMod(x, totalWidth);
+
+				if (y1 < totalHeight) {
+					if (!map[y1+1][x].getID().equals(LavaBlock.id))
+					cavernFloorBlocks.add(new Integer[] { y1+1, x });
+				}
+
+				for (int y = originY; y < y1; y++) {
+					if (!map[y][x].getID().equals(LavaBlock.id)) {
+						map[y][x] = new CavernBlock();
+					}
+				}
+
+				for (int y = originY; y > y2; y--) {
+					if (!map[y][x].getID().equals(LavaBlock.id)) {
+						map[y][x] = new CavernBlock();
+					}
+				}
+			}
+
+		}
+
+	}
+
+	private void addMushrooms() {
+		for (int i = 0; i < 10; i++) {
+			Integer[] cavernFloorBlock = cavernFloorBlocks.get(random
+					.nextInt(cavernFloorBlocks.size()));
+			Mushroom mushroom = new Mushroom(totalWidth, map, random,
+					cavernFloorBlock);
+			mushroom.addToMap();
+		}
+	}
+	
 }

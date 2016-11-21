@@ -21,7 +21,7 @@ public class AppleTreeLeafBlock extends BuildingBlock {
 	public final static String id = "Leaf";
 	
 	public AppleTreeLeafBlock() {
-		super(durability, true, false, new Color(84, 232, 67), id);
+		super(durability, true, false, new Color(242, 58, 58), id);
 		itemsInBlock = new LinkedList<>();
 		for (int a = 0; a < 3; a++)
 		    itemsInBlock.add(new AppleItem());
