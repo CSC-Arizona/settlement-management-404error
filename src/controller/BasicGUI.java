@@ -7,8 +7,11 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
@@ -16,8 +19,10 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import model.Map;
 
@@ -30,6 +35,8 @@ import model.Map;
 public class BasicGUI extends JFrame {
 
 	private DrawingPanel drawingPanel;
+	private JLabel coordinateField;
+	private JLabel mouseOverField;
 
 	private int mapHeight = 150;
 	private int mapWidth = 1000;
@@ -56,21 +63,40 @@ public class BasicGUI extends JFrame {
 		view.setVisible(true);
 	}
 
+	private void setCoordinateDisplay() {
+		coordinateField.setText("Coordinates: (" + visibleCornerY + ", "
+				+ visibleCornerX + ")");
+	}
+
+	private void setMouseOverDisplay(String id) {
+		mouseOverField.setText("Selected: " + id);
+	}
+
 	public BasicGUI() {
-        Box box = new Box(BoxLayout.Y_AXIS);
-        box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        box.add(Box.createVerticalGlue());
-        
+		Box box = new Box(BoxLayout.Y_AXIS);
+		box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		box.add(Box.createVerticalGlue());
+
+		coordinateField = new JLabel();
+		setCoordinateDisplay();
+		box.add(coordinateField);
+
+		mouseOverField = new JLabel();
+		setMouseOverDisplay("");
+		box.add(mouseOverField);
+
 		drawingPanel = new DrawingPanel();
 
-		drawingPanel.setPreferredSize(new Dimension(windowWidth, 2*windowHeight/3));
-		
+		drawingPanel.setPreferredSize(new Dimension(windowWidth,
+				2 * windowHeight / 3));
+
 		box.add(drawingPanel);
-        
-        add(box);
-        pack();
-        		
+
+		add(box);
+		pack();
+
 		this.addKeyListener(new MyKeyListener());
+		drawingPanel.addMouseMotionListener(new MyMotionListener());
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -146,7 +172,7 @@ public class BasicGUI extends JFrame {
 				}
 				break;
 			}
-			System.out.println(visibleCornerY + " " + visibleCornerX);
+			setCoordinateDisplay();
 			repaint();
 		}
 
@@ -158,5 +184,25 @@ public class BasicGUI extends JFrame {
 
 	}
 
+	private class MyMotionListener implements MouseMotionListener {
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			Point coords = e.getPoint();
+			
+			int x = coords.x / blockSizeX + visibleCornerX;
+			x = Math.floorMod(x, mapWidth);
+			int y = coords.y / blockSizeY + visibleCornerY;
+			
+			setMouseOverDisplay(map.getBuildingBlock(y, x).getID());
+			
+		}
+	}
 
 }

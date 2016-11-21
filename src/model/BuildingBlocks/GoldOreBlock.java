@@ -12,7 +12,7 @@ public class GoldOreBlock extends BuildingBlock {
 
 	private final static int durability = 10;
 	private List<Item> itemsInBlock;
-	public final static String id = "Iron ore";
+	public final static String id = "Gold ore";
 
 	public GoldOreBlock() {
 		super(durability, true, false, new Color(255, 223, 0), id);
