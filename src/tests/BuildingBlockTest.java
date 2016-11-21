@@ -1,29 +1,28 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.junit.Test;
 
-import model.Map;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.AntTunnelBlock;
-import model.BuildingBlocks.GrassBlock;
+import model.BuildingBlocks.AppleTreeLeafBlock;
+import model.BuildingBlocks.AppleTreeTrunkBlock;
 import model.BuildingBlocks.CavernBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.GoldOreBlock;
+import model.BuildingBlocks.GrassBlock;
 import model.BuildingBlocks.IronOreBlock;
 import model.BuildingBlocks.LavaBlock;
-import model.BuildingBlocks.AppleTreeLeafBlock;
 import model.BuildingBlocks.StoneBlock;
 import model.BuildingBlocks.TreeRootBlock;
-import model.BuildingBlocks.AppleTreeTrunkBlock;
 import model.Items.AntLarvaItem;
 import model.Items.IronItem;
-import model.Items.Item;
 import model.Items.StoneItem;
 import model.Items.WheatKernelItem;
 import model.Items.WoodItem;
@@ -34,17 +33,6 @@ import model.Items.WoodItem;
  * @author Katherine Walters
  */
 public class BuildingBlockTest {
-
-	@Test
-	public void tryingToGetSomeMapCodeCoverage() {
-		int mapHeight = 150;
-		int mapWidth = 1000;
-		int mapDirtDepth = 30;
-		int mapStoneDepth = 50;
-
-		Map map = new Map(mapHeight, mapWidth, mapDirtDepth, mapStoneDepth,
-				(int) (Math.random() * 10000));
-	}
 	
 	@Test
 	public void testLeafBLock() {

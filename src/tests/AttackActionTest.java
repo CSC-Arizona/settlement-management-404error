@@ -5,22 +5,18 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Point;
-
 import org.junit.Test;
 
 import model.GameMap;
 import model.Map;
 import model.Actors.Actor;
 import model.Actors.AttackAction;
-import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.IronOreBlock;
-import model.Items.Item;
 
 /**
  * @author Jonathon Davis

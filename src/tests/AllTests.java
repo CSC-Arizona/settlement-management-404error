@@ -13,7 +13,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ ArmorTest.class, AttackActionTest.class, BuildingBlockTest.class, InventoryTest.class, ItemTest.class,
-		MoveActionTest.class, HungerTest.class, GatherActionTest.class })
+		MoveActionTest.class, HungerTest.class, GatherActionTest.class, FurnitureTest.class, WeaponTest.class, MapTest.class })
 public class AllTests {
 
 }
