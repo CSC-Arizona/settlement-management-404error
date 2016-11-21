@@ -4,6 +4,7 @@
 package model.Actors;
 
 /**
+ * A position on the map, uses row col coordinates
  * @author Jonathon Davis
  *
  */
@@ -29,6 +30,9 @@ public class Position implements Comparable<Position> {
 		return col;
 	}
 
+	/**
+	 * Compare the two positions for storing in data structures
+	 */
 	public int compareTo(Position o) {
 		if (row != o.row)
 			if (row < o.row)

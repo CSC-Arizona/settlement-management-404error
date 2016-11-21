@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import model.Actors.GatherAction;
 
 /**
- * @author metro
+ * @author Jonathon Davis
  *
  */
 @RunWith(Suite.class)

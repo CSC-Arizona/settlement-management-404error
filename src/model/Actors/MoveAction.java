@@ -3,12 +3,13 @@
  */
 package model.Actors;
 
-import java.awt.Point;
 import java.util.TreeMap;
 
 import model.GameMap;
 
 /**
+ * Creates a move action where the Actor attempts 
+ * to move towards the location
  * @author Jonathon Davis
  */
 public class MoveAction implements Action {
@@ -34,10 +35,19 @@ public class MoveAction implements Action {
 		}
 	}
 
+	/**
+	 * Creates a move Action, the path will not be calculated until
+	 * The action is executed, so creating many MoveActions will not
+	 * Waste too much extra memory
+	 * @param desiredDestination The desiredDestination the actor wishes to reach
+	 */
 	public MoveAction(Position desiredDestination) {
 		this.desiredDestination = desiredDestination;
 	}
 
+	/**
+	 * Calculates the path between two actors
+	 */
 	private void calculatePath() {
 		visited = new TreeMap<>();
 		Position destination = new Position(desiredDestination.getRow(), desiredDestination.getCol());
@@ -45,6 +55,11 @@ public class MoveAction implements Action {
 		calculatePath(destination, firstNode);
 	}
 
+	/**
+	 * Recursively finds the shortest path from one node and all others
+	 * @param currentPos The current Position
+	 * @param currentNode The current Node
+	 */
 	private void calculatePath(Position currentPos, Node currentNode) {
 		int row = currentPos.getRow(), col = currentPos.getCol();
 		// Check to make sure this is in the bounds of the map

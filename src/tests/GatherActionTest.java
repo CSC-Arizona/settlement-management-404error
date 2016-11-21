@@ -77,6 +77,7 @@ public class GatherActionTest {
 		}
 		
 		assertEquals(amount,testBlock.lootBlock().size());
+		assertEquals("Air",GameMap.getBlock(1, 4).getID());
 	}
 	
 	@Test
