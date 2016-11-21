@@ -3,23 +3,31 @@ package tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.util.List;
+import java.util.ListIterator;
+
 import org.junit.Test;
 
-import model.Items.GreatChestPlate;
-import model.Items.GreatShield;
-import model.Items.IronChestPlate;
-import model.Items.IronShield;
-import model.Items.StoneChestPlate;
-import model.Items.StoneShield;
-import model.Items.UltraSword;
-import model.Items.WoodChestPlate;
-import model.Items.WoodShield;
+import model.Armor.GreatChestPlate;
+import model.Armor.GreatShield;
+import model.Armor.IronChestPlate;
+import model.Armor.IronShield;
+import model.Armor.StoneChestPlate;
+import model.Armor.StoneShield;
+import model.Armor.WoodChestPlate;
+import model.Armor.WoodShield;
+import model.Items.IronItem;
+import model.Items.Item;
+import model.Items.StoneItem;
+import model.Items.WoodItem;
 
 //Author: Maxwell Faridian
 //This class tests the construction of Armor items
 public class ArmorTest {
 	
-	//TODO: Write test cases for armor classes
+	private WoodItem wi = new WoodItem();
+	private StoneItem si = new StoneItem();
+	private IronItem ii = new IronItem();
 	
 	@Test
 	public void testWoodShield() {
@@ -29,6 +37,11 @@ public class ArmorTest {
 	    assertEquals(10, ws.getDefenseModifier());
 	    assertEquals(0, ws.getHealthPoints());
 	    assertEquals(9.0, ws.getWeight(), 0.00001);
+	    List<Item> wsList = ws.getRequiredMaterials();
+	    ListIterator<Item> li = wsList.listIterator();
+	    assertEquals(wi.getClass(), li.next().getClass());
+		assertEquals(wi.getClass(), li.next().getClass());
+		assertEquals(wi.getClass(), li.next().getClass());
 	}
 	
 	@Test
@@ -39,6 +52,11 @@ public class ArmorTest {
 	    assertEquals(12, ss.getDefenseModifier());
 	    assertEquals(0, ss.getHealthPoints());
 	    assertEquals(15.0, ss.getWeight(), 0.00001);
+	    List<Item> ssList = ss.getRequiredMaterials();
+	    ListIterator<Item> li = ssList.listIterator();
+	    assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
 	}
 	
 	@Test
@@ -49,6 +67,11 @@ public class ArmorTest {
 	    assertEquals(14, is.getDefenseModifier());
 	    assertEquals(0, is.getHealthPoints());
 	    assertEquals(21.0, is.getWeight(), 0.00001);
+	    List<Item> isList = is.getRequiredMaterials();
+	    ListIterator<Item> li = isList.listIterator();
+	    assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
 	}
 	
 	@Test
@@ -59,6 +82,12 @@ public class ArmorTest {
 	    assertEquals(16, gs.getDefenseModifier());
 	    assertEquals(0, gs.getHealthPoints());
 	    assertEquals(22.0, gs.getWeight(), 0.00001);
+	    List<Item> gsList = gs.getRequiredMaterials();
+	    ListIterator<Item> li = gsList.listIterator();
+	    assertEquals(wi.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
 	}
 	
 	@Test
@@ -69,6 +98,12 @@ public class ArmorTest {
 	    assertEquals(12, wcp.getDefenseModifier());
 	    assertEquals(0, wcp.getHealthPoints());
 	    assertEquals(9.0, wcp.getWeight(), 0.00001);
+	    List<Item> wcpList = wcp.getRequiredMaterials();
+	    ListIterator<Item> li = wcpList.listIterator();
+	    assertEquals(wi.getClass(), li.next().getClass());
+		assertEquals(wi.getClass(), li.next().getClass());
+		assertEquals(wi.getClass(), li.next().getClass());
+		assertEquals(wi.getClass(), li.next().getClass());
 	}
 	
 	@Test
@@ -79,6 +114,12 @@ public class ArmorTest {
 	    assertEquals(14, scp.getDefenseModifier());
 	    assertEquals(0, scp.getHealthPoints());
 	    assertEquals(20.0, scp.getWeight(), 0.00001);
+	    List<Item> scpList = scp.getRequiredMaterials();
+	    ListIterator<Item> li = scpList.listIterator();
+	    assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
 	}
 	
 	@Test
@@ -89,6 +130,12 @@ public class ArmorTest {
 	    assertEquals(16, icp.getDefenseModifier());
 	    assertEquals(0, icp.getHealthPoints());
 	    assertEquals(28.0, icp.getWeight(), 0.00001);
+	    List<Item> icpList = icp.getRequiredMaterials();
+	    ListIterator<Item> li = icpList.listIterator();
+	    assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
 	}
 	
 	@Test
@@ -99,6 +146,15 @@ public class ArmorTest {
 	    assertEquals(18, gcp.getDefenseModifier());
 	    assertEquals(0, gcp.getHealthPoints());
 	    assertEquals(30.0, gcp.getWeight(), 0.00001);
+	    List<Item> gcpList = gcp.getRequiredMaterials();
+	    ListIterator<Item> li = gcpList.listIterator();
+	    assertEquals(wi.getClass(), li.next().getClass());
+	    assertEquals(wi.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
 	}
 	
 

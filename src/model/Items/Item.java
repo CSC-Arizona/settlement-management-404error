@@ -7,6 +7,8 @@ package model.Items;
  * @author Katherine Walters
  * 
  * Maxwell Faridian: Any item can be used as a weapon, but we also have specific weapons that can be built
+ * 
+ * Weapons
  * Basic Stone Axe: 2 wood and 1 stone
  * Fortified Stone Axe: 2 wood, 2 stone
  * Basic Iron Axe: 2 wood, 1 stone, 1 iron
@@ -26,11 +28,6 @@ package model.Items;
  * Iron Chest Plate: 4 iron
  * Great Chest Plate: 2 wood, 2 stone, 3 iron
  * 
- * Crates For Storing Items
- * Basic Crate (6 wood): 30lb weight capacity
- * Reinforced Crate (6 wood, 2 stone): 50lb weight capacity
- * Metal Crate (6 wood, 2 stone, 2 iron): 70lb weight capacity
- * 
  * Furniture (doesn't need to extend item, but you do want capacity for actors, get required materials function)
  * Planting plot extends furniture
  * Bed: 4 wood, 2 stone, 4 wheat stems
@@ -38,6 +35,12 @@ package model.Items;
  * Couch (for entertainment room): 4 wood, 1 stone, 4 wheat stems 
  * Pool table: 4 wood, 3 stone, 1 iron
  * Fireplace (for kitchen): 4 stone, 2 iron
+ * Milling Machine: 2 stone, 2 iron
+ * Wheat Plant Plot: 2 Wheat Kernels, 2 Ant Larva 
+ * Apple Tree Plant Plot: 2 Apple Seeds, 2 Ant Larva
+ * Basic Crate (6 wood): 30lb weight capacity
+ * Reinforced Crate (6 wood, 2 stone): 50lb weight capacity
+ * Metal Crate (6 wood, 2 stone, 2 iron): 70lb weight capacity
  */
 public abstract class Item {
 	

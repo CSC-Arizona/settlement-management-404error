@@ -19,7 +19,13 @@ public abstract class Furniture {
 		this.capacity += increasedCapacity;
 	}
 	
+	//This method returns the capacity of the particular furniture item
+	public int getCapacity() {
+		return this.capacity;
+	}
+	
 	//This method returns a List of items that are needed in order to build a specific piece of furniture
 	abstract public List<Item> getRequiredMaterials(); 
+	
 
 }
