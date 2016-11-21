@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -14,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,6 +27,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import model.Map;
+import model.Actors.Actor;
+import model.Actors.PlayerControlledActor;
+import model.Actors.Position;
 
 /**
  * Display a map
@@ -35,8 +40,9 @@ import model.Map;
 public class BasicGUI extends JFrame {
 
 	private DrawingPanel drawingPanel;
-	private JLabel coordinateField;
-	private JLabel mouseOverField;
+	private JLabel windowCoordinatesLabel;
+	private JLabel mouseDescriptionLabel;
+	private JLabel mouseCoordinatesLabel;
 
 	private int mapHeight = 150;
 	private int mapWidth = 1000;
@@ -44,7 +50,7 @@ public class BasicGUI extends JFrame {
 	private int mapStoneDepth = 50;
 
 	private Map map = new Map(mapHeight, mapWidth, mapDirtDepth, mapStoneDepth,
-			(int) (Math.random() * 10000));
+			9123123);
 
 	private int windowWidth = 1000;
 	private int windowHeight = 700;
@@ -52,8 +58,8 @@ public class BasicGUI extends JFrame {
 	private int visibleWidth = 50;
 	private int visibleHeight = 50;
 
-	private int visibleCornerY = 20;
-	private int visibleCornerX = 5;
+	private int visibleCornerY = 35;
+	private int visibleCornerX = (mapWidth - visibleWidth / 2);
 
 	private int blockSizeY = windowHeight / visibleHeight;
 	private int blockSizeX = windowWidth / visibleWidth;
@@ -63,13 +69,18 @@ public class BasicGUI extends JFrame {
 		view.setVisible(true);
 	}
 
-	private void setCoordinateDisplay() {
-		coordinateField.setText("Coordinates: (" + visibleCornerY + ", "
-				+ visibleCornerX + ")");
+	private void setWindowCoordinateLabel() {
+		windowCoordinatesLabel.setText("Window coordinates: (" + visibleCornerY
+				+ ", " + visibleCornerX + ")");
 	}
 
-	private void setMouseOverDisplay(String id) {
-		mouseOverField.setText("Selected: " + id);
+	private void setMouseCoordinatesLabel(int x, int y) {
+		mouseCoordinatesLabel.setText("Mouse coordinates: (" + x + ", " + y
+				+ ")");
+	}
+
+	private void setMouseDescriptionLabel(String id) {
+		mouseDescriptionLabel.setText("<html>Selected: " + id);
 	}
 
 	public BasicGUI() {
@@ -77,13 +88,25 @@ public class BasicGUI extends JFrame {
 		box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		box.add(Box.createVerticalGlue());
 
-		coordinateField = new JLabel();
-		setCoordinateDisplay();
-		box.add(coordinateField);
+		JPanel labelPanel = new JPanel();
 
-		mouseOverField = new JLabel();
-		setMouseOverDisplay("");
-		box.add(mouseOverField);
+		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
+
+		windowCoordinatesLabel = new JLabel();
+		setWindowCoordinateLabel();
+		labelPanel.add(windowCoordinatesLabel);
+
+		mouseCoordinatesLabel = new JLabel();
+		setMouseCoordinatesLabel(-1, -1);
+		labelPanel.add(mouseCoordinatesLabel);
+
+		mouseDescriptionLabel = new JLabel();
+		setMouseDescriptionLabel("");
+		labelPanel.add(mouseDescriptionLabel);
+
+		labelPanel.setPreferredSize(new Dimension(windowWidth, 200));
+
+		box.add(labelPanel);
 
 		drawingPanel = new DrawingPanel();
 
@@ -133,6 +156,17 @@ public class BasicGUI extends JFrame {
 					g2.drawRect(j * blockSizeX, i * blockSizeY, blockSizeX,
 							blockSizeY);
 
+					List<Actor> actors = map.getBuildingBlock(row, col)
+							.getActors();
+					if (actors != null) {
+						int size = actors.size();
+						if (size != 0) {
+							g2.drawString(Integer.toString(size), j
+									* blockSizeX + blockSizeX / 2, (i + 1)
+									* blockSizeY);
+						}
+					}
+
 				}
 			}
 		}
@@ -172,7 +206,7 @@ public class BasicGUI extends JFrame {
 				}
 				break;
 			}
-			setCoordinateDisplay();
+			setWindowCoordinateLabel();
 			repaint();
 		}
 
@@ -195,13 +229,29 @@ public class BasicGUI extends JFrame {
 		@Override
 		public void mouseMoved(MouseEvent e) {
 			Point coords = e.getPoint();
-			
+
 			int x = coords.x / blockSizeX + visibleCornerX;
 			x = Math.floorMod(x, mapWidth);
 			int y = coords.y / blockSizeY + visibleCornerY;
-			
-			setMouseOverDisplay(map.getBuildingBlock(y, x).getID());
-			
+
+			String mouseDescription = map.getBuildingBlock(y, x).getID();
+
+			List<Actor> actors = map.getBuildingBlock(y, x).getActors();
+			if (actors != null) {
+				int size = actors.size();
+				for (int i = 0; i < size; i++) {
+					mouseDescription += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Actor "
+							+ i;
+					mouseDescription += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Health: "
+							+ actors.get(i).getHealth();
+				}
+			}
+
+			mouseDescription += "</html>";
+
+			setMouseDescriptionLabel(mouseDescription);
+			setMouseCoordinatesLabel(y, x);
+
 		}
 	}
 

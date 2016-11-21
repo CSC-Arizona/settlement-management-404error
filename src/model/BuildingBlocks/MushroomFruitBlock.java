@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Actors.Actor;
 import model.Items.Item;
 
 /**
@@ -15,7 +16,7 @@ public class MushroomFruitBlock extends BuildingBlock {
 	private List<Item> itemsInBlock;
 	private final static int durability = 1;
 	public final static String id = "Mushroom fruit";
-	
+
 	public MushroomFruitBlock() {
 		super(durability, true, false, new Color(72, 249, 229), id);
 		itemsInBlock = new LinkedList<>();
@@ -27,4 +28,18 @@ public class MushroomFruitBlock extends BuildingBlock {
 		return itemsInBlock;
 	}
 
+	@Override
+	public boolean addActor(Actor actor) {
+		return false;
+	}
+
+	@Override
+	public boolean removeActor(Actor actor) {
+		return false;
+	}
+
+	@Override
+	public List<Actor> getActors() {
+		return null;
+	}
 }

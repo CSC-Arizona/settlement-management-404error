@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.TreeMap;
 
+import model.Actors.PlayerControlledActor;
+import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.AntTunnelBlock;
 import model.BuildingBlocks.BuildingBlock;
@@ -41,6 +43,7 @@ public class Map {
 	private double grassFrequency = 0.1;
 	private double caveFrequency = 0.005;
 	private int numberOfAntColonies = 2;
+	private int numberOfPlayerActors = 7;
 
 	private BuildingBlock[][] map;
 
@@ -65,8 +68,8 @@ public class Map {
 	public BuildingBlock getBuildingBlock(int row, int col) {
 		return map[row][col];
 	}
-	
-	public void setBuildingBlock(int row, int col, BuildingBlock newBlock){
+
+	public void setBuildingBlock(int row, int col, BuildingBlock newBlock) {
 		map[row][col] = newBlock;
 	}
 
@@ -98,6 +101,7 @@ public class Map {
 		addBushes();
 		addCaves();
 		addMushrooms();
+		addPlayerActors();
 	}
 
 	private void addAir() {
@@ -431,6 +435,28 @@ public class Map {
 			Mushroom mushroom = new Mushroom(totalWidth, map, random,
 					cavernFloorBlock);
 			mushroom.addToMap();
+		}
+	}
+
+	private void addPlayerActors() {
+		int count = 0;
+		while (count < numberOfPlayerActors) {
+			int x = random.nextInt(20) - 10;
+			int y = airHeight;
+			x = Math.floorMod(x, totalWidth);
+
+			while (!map[y][x].getID().equals(AirBlock.id)) {
+				y -= 1;
+				if (y < 0)
+					break;
+			}
+
+			if (y >= 0 && map[y][x].isOccupiable()) {
+				if (map[y][x].addActor(new PlayerControlledActor(100,
+						new Position(y, x)))) {
+					count += 1;
+				}
+			}
 		}
 	}
 

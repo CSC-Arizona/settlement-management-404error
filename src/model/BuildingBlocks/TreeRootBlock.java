@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Actors.Actor;
 import model.Items.Item;
 import model.Items.WoodItem;
 
@@ -29,6 +30,22 @@ public class TreeRootBlock extends BuildingBlock {
 	@Override
 	public List<Item> lootBlock() {
 		return itemsInBlock;
+	}
+
+
+	@Override
+	public boolean addActor(Actor actor) {
+		return false;
+	}
+
+	@Override
+	public boolean removeActor(Actor actor) {
+		return false;
+	}
+	
+	@Override
+	public List<Actor> getActors() {
+		return null;
 	}
 
 }
