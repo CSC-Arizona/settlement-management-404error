@@ -399,8 +399,8 @@ public class Map {
 				x = Math.floorMod(x, totalWidth);
 
 				if (y1 < totalHeight) {
-					if (!map[y1+1][x].getID().equals(LavaBlock.id))
-					cavernFloorBlocks.add(new Integer[] { y1+1, x });
+					if (!map[y1 + 1][x].getID().equals(LavaBlock.id))
+						cavernFloorBlocks.add(new Integer[] { y1 + 1, x });
 				}
 
 				for (int y = originY; y < y1; y++) {
@@ -429,5 +429,5 @@ public class Map {
 			mushroom.addToMap();
 		}
 	}
-	
+
 }
