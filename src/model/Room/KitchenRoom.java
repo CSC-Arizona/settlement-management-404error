@@ -3,7 +3,10 @@ package model.Room;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Actors.Position;
+import model.Furniture.Fireplace;
 import model.Furniture.Furniture;
+import model.Furniture.MillingMachine;
 import model.Items.Item;
 
 /**
@@ -20,19 +23,20 @@ public class KitchenRoom extends Room {
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
-	public KitchenRoom() {
-		super(2, 6, 3, 1);
+	public KitchenRoom(Position p) {
+		super(2, 6, 3, 1, p);
 		this.furniture = new LinkedList<>();
-	    //this.furniture.add(new FirePlace());
-	    //this.furniture.add(new MillingMachine());
+
+	    this.furniture.add(new Fireplace());
+	    this.furniture.add(new MillingMachine());
 		this.requiredBuildingMaterials = new LinkedList<>();
 		for (Furniture f : furniture) {
 			for (Item i : f.getRequiredMaterials())
 				this.requiredBuildingMaterials.add(i);
 		}
-		this.requiredUpgradeMaterials = new LinkedList<>();
-		//for (Item b : new FirePlace().getRequiredMaterials())
-		 //   requiredUpgradeMaterials.add(b);
+
+		for (Item b : new Fireplace().getRequiredMaterials())
+		    requiredUpgradeMaterials.add(b);
 	}
 
 	@Override

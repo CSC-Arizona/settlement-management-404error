@@ -3,6 +3,7 @@ package model.Room;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Actors.Position;
 import model.Furniture.Furniture;
 import model.Furniture.Ladder;
 import model.Items.Item;
@@ -12,8 +13,8 @@ public class VerticalTunnel extends Room {
 	private List<Furniture> reqFurniture;
 	private List<Item> reqItems;
 
-	public VerticalTunnel() {
-		super(2, 1, 20, 0);
+	public VerticalTunnel(Position p) {
+		super(2, 1, 20, 0, p);
         reqFurniture = new LinkedList<>();
         reqFurniture.add(new Ladder());
         reqFurniture.add(new Ladder());

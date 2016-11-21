@@ -3,8 +3,9 @@ package model.Room;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Actors.Position;
+import model.Furniture.BasicCrate;
 import model.Furniture.Furniture;
-import model.Items.Crate;
 import model.Items.IronItem;
 import model.Items.Item;
 import model.Items.StoneItem;
@@ -24,11 +25,12 @@ public class StoreRoom extends Room{
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
-	public StoreRoom() {
-		super(2, 8, 3, 2);
+	public StoreRoom(Position p) {
+		super(2, 8, 3, 2, p);
 		this.furniture = new LinkedList<>();
-		//for (int i = 0; i < 4; i++)
-		 //   this.furniture.add(new Crate());
+
+		for (int i = 0; i < 4; i++)
+		    this.furniture.add(new BasicCrate());
 		this.requiredBuildingMaterials = new LinkedList<>();
 		for (Furniture f : furniture) {
 			for (Item i : f.getRequiredMaterials())

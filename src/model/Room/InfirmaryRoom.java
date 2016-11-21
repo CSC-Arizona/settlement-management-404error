@@ -3,6 +3,7 @@ package model.Room;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Actors.Position;
 import model.Furniture.Furniture;
 import model.Furniture.HealingBed;
 import model.Items.Item;
@@ -25,8 +26,8 @@ public class InfirmaryRoom extends Room {
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
-	public InfirmaryRoom() {
-		super(2, 4, 8, 2);
+	public InfirmaryRoom(Position p) {
+		super(2, 4, 8, 2, p);
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 2; i++)
 		    this.furniture.add(new HealingBed());

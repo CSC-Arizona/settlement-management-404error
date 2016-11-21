@@ -2,6 +2,7 @@ package model.Room;
 
 import java.util.List;
 
+import model.Actors.Position;
 import model.Items.Item;
 
 /**
@@ -37,13 +38,22 @@ public abstract class Room {
 	private int roomCapacity;
 	private int upgradesAllowed;
 	private int numAgentsInRoom;
+	private Position pos;
 	
-	public Room(int requiredHeight, int requiredWidth, int roomCapacity, int upgradesAllowed) {
+	public Room(int requiredHeight, int requiredWidth, int roomCapacity, int upgradesAllowed, Position pos) {
 		this.requiredHeight = requiredHeight;
 		this.requiredWidth = requiredWidth;
 		this.roomCapacity = roomCapacity;
 		this.upgradesAllowed = upgradesAllowed;
+		this.pos = pos;
 		this.numAgentsInRoom = 0;
+	}
+	
+	/*
+	 * returns the Position of the Room
+	 */
+	public Position getPosition() {
+		return pos;
 	}
 	
 	/*

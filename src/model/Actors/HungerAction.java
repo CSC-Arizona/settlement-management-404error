@@ -18,7 +18,7 @@ public class HungerAction implements Action {
 	 * @see model.Actors.Action#execute(model.Actors.Actor)
 	 */
 	@Override
-	public boolean execute(Actor performer) {
+	public int execute(Actor performer) {
 		Iterator<Item> i = performer.getInventory().iterator();
 		while(i.hasNext()){
 			Item item = i .next();
@@ -26,10 +26,10 @@ public class HungerAction implements Action {
 				i.remove();
 				PlayerControlledActor actor = (PlayerControlledActor) performer;
 				actor.setHunger(actor.getHunger() - 500);
-				return true;
+				return Action.COMPLETED;
 			}
 		}
-		return false;
+		return Action.CANCELL;
 	}
 
 }
