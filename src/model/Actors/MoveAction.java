@@ -36,7 +36,6 @@ public class MoveAction implements Action {
 
 	public MoveAction(Position desiredDestination) {
 		this.desiredDestination = desiredDestination;
-		calculatePath();
 	}
 
 	private void calculatePath() {
@@ -72,18 +71,24 @@ public class MoveAction implements Action {
 	 * @see model.Action#execute(model.Actor)
 	 */
 	@Override
-	public boolean execute(Actor performer) {
+	public int execute(Actor performer) {
+		if(visited == null)
+			calculatePath();
+		if(performer.getPosition().equals(desiredDestination))
+			return Action.COMPLETED;
 		Position currentPosition = new Position(performer.getPosition().getRow(), performer.getPosition().getCol());
 		if (visited.containsKey(currentPosition))
 			performer.setPosition(visited.get(currentPosition).prev.position);
 		else {
+			/* TODO: implement once Map can be changed
 			calculatePath();
 			if (visited.containsKey(currentPosition))
 				performer.setPosition(visited.get(currentPosition).prev.position);
 			else
-				throw new IllegalArgumentException();
+			*/
+				return Action.CANCELL;
 		}
-		return performer.getPosition().equals(desiredDestination);
+		return (performer.getPosition().equals(desiredDestination))?Action.COMPLETED:Action.MADE_PROGRESS;
 	}
 
 }

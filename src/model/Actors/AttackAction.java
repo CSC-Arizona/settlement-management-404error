@@ -15,7 +15,7 @@ public class AttackAction implements Action {
 	 * @see model.Action#execute(model.Actor)
 	 */
 	@Override
-	public boolean execute(Actor performer) {
+	public int execute(Actor performer) {
 		// test to see that the two actors are adjacent (no fighting across the map)
 		int x = Math.abs(performer.getPosition().getCol() - target.getPosition().getCol());
 		int y = Math.abs(performer.getPosition().getRow() - target.getPosition().getRow());
@@ -24,16 +24,16 @@ public class AttackAction implements Action {
 		if((x == 1 || x == 0) && (y == 1 || y == 0)){
 			//TODO: add actual combat system
 			if(target.getHealth() <= 0)
-				return true;
+				return Action.COMPLETED;
 			int damage = 1+performer.getSkills().getCombatLevel();
 			target.setHealth(target.getHealth()-damage);
 			performer.getSkills().addCombatXP(damage);
 			if(target.getHealth() <= 0){
 				target.setHealth(0);
-				return true;
+				return Action.COMPLETED;
 			}
 			else
-				return false;
+				return Action.MADE_PROGRESS;
 		} else {
 			return new MoveAction(target.getPosition()).execute(performer);
 		}

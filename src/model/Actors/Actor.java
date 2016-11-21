@@ -16,7 +16,7 @@ import model.Inventory;
  *
  */
 public abstract class Actor {
-	
+
 	private int health;
 	private Position position;
 	private boolean idle;
@@ -28,10 +28,13 @@ public abstract class Actor {
 
 	/**
 	 * Creates a new actor
-	 * @param health The current health of the actor
-	 * @param position The current position of the actor
+	 * 
+	 * @param health
+	 *            The current health of the actor
+	 * @param position
+	 *            The current position of the actor
 	 */
-	public Actor(int health, Position position){
+	public Actor(int health, Position position) {
 		this.health = health;
 		this.position = position;
 		this.idle = true;
@@ -40,35 +43,50 @@ public abstract class Actor {
 		this.setAlive(true);
 		skills = new Skills();
 	}
-	
+
 	/**
 	 * Adds a new action to this workers personal worker queue
-	 * @param action The action this worker needs to perform
+	 * 
+	 * @param action
+	 *            The action this worker needs to perform
 	 */
-	public void addToActionQueue(Action action){
+	public void addToActionQueue(Action action) {
 		queue.add(action);
 	}
-	
+
 	/**
 	 * Adds an action to the front of the queue as it is a priority
-	 * @param action Action to be Performed
+	 * 
+	 * @param action
+	 *            Action to be Performed
 	 */
-	public void priorityAddToActionQueue(Action action){
+	public void priorityAddToActionQueue(Action action) {
 		queue.addFirst(action);
 	}
-	
+
 	/**
 	 * Perform once per tick, the Actor performs the next action
 	 */
-	public void update(){
-		if(idle)
-			if(queue.size() > 0)
-				currentAction = queue.poll();
+	public void update() {
+		if (idle)
+			if (queue.size() > 0)
+				currentAction = queue.peek();
 			else
 				return;
-		idle = currentAction.execute(this);
+		int result = currentAction.execute(this);
+		if (result == Action.COMPLETED || result == Action.CANCELL) {
+			idle = true;
+			queue.poll();
+		} else if (result == Action.DELAY) {
+			idle = true;
+			Action attemptedAction = queue.poll();
+			update();
+			queue.addFirst(attemptedAction);
+		} else {
+			idle = false;
+		}
 	}
-	
+
 	/**
 	 * @return the health
 	 */
@@ -77,7 +95,8 @@ public abstract class Actor {
 	}
 
 	/**
-	 * @param health the health to set
+	 * @param health
+	 *            the health to set
 	 */
 	public void setHealth(int health) {
 		this.health = health;
@@ -91,7 +110,8 @@ public abstract class Actor {
 	}
 
 	/**
-	 * @param position the position to set
+	 * @param position
+	 *            the position to set
 	 */
 	public void setPosition(Position position) {
 		this.position = position;
@@ -110,7 +130,7 @@ public abstract class Actor {
 	public Inventory getInventory() {
 		return inventory;
 	}
-	
+
 	/**
 	 * @return the alive
 	 */
@@ -119,7 +139,8 @@ public abstract class Actor {
 	}
 
 	/**
-	 * @param alive the alive to set
+	 * @param alive
+	 *            the alive to set
 	 */
 	public void setAlive(boolean alive) {
 		this.alive = alive;

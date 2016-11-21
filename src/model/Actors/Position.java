@@ -23,24 +23,10 @@ public class Position implements Comparable<Position> {
 	}
 
 	/**
-	 * @param row the row to set
-	 */
-	public void setRow(int row) {
-		this.row = row;
-	}
-
-	/**
 	 * @return the col
 	 */
 	public int getCol() {
 		return col;
-	}
-
-	/**
-	 * @param col the col to set
-	 */
-	public void setCol(int col) {
-		this.col = col;
 	}
 
 	public int compareTo(Position o) {
@@ -55,6 +41,10 @@ public class Position implements Comparable<Position> {
 			return 1;
 		else
 			return 0;
+	}
+
+	public boolean equals(Position obj) {
+		return (this.row == obj.row && this.col == obj.col);
 	}
 
 }
