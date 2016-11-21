@@ -25,4 +25,8 @@ public final class GameMap {
 		return map.getBuildingBlock(row, col);
 	}
 	
+	public static void setBuildingBlock(int row, int col, BuildingBlock newBlock){
+		map.setBuildingBlock(row, col, newBlock);
+	}
+	
 }

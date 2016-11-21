@@ -65,6 +65,10 @@ public class Map {
 	public BuildingBlock getBuildingBlock(int row, int col) {
 		return map[row][col];
 	}
+	
+	public void setBuildingBlock(int row, int col, BuildingBlock newBlock){
+		map[row][col] = newBlock;
+	}
 
 	/**
 	 * @return the totalHeight

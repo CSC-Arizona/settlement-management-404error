@@ -4,6 +4,7 @@
 package model.Actors;
 
 import model.GameMap;
+import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.Items.Item;
 
@@ -42,7 +43,7 @@ public class GatherAction implements Action {
 				durability = block.getDurability();
 			durability--;
 			if (durability <= 0) {
-				// remove the block;
+				GameMap.setBuildingBlock(position.getRow(), position.getCol(), new AirBlock());
 				if (block.lootBlock() != null)
 					for (Item i : block.lootBlock())
 						performer.getInventory().addItem(i);
