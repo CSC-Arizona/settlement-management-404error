@@ -5,33 +5,33 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Point;
-
 import org.junit.Test;
 
 import model.GameMap;
 import model.Map;
-import model.Actors.Actor;
-import model.Actors.MoveAction;
+import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
+import model.BuildingBlocks.IronOreBlock;
+import model.Items.Item;
 
 /**
  * @author Jonathon Davis
  *
  */
-public class MoveActionTest {
+public class GatherActionTest {
 	
 	public Map generateMap(int[][] map){
-		GameMap gm = new GameMap();
 		BuildingBlock[][] mapTypes = new BuildingBlock[map.length][map[0].length];
 		for (int i = 0; i < mapTypes.length; i++) {
 			for (int j = 0; j < mapTypes[i].length; j++) {
 				if(map[i][j] == 0)
 					mapTypes[i][j] = new AirBlock();
+				else if (map[i][j] == 2)
+					mapTypes[i][j] = new IronOreBlock();
 				else
 					mapTypes[i][j] = new EarthBlock();
 			}
@@ -40,15 +40,15 @@ public class MoveActionTest {
 	}
 	
 	@Test
-	public void testMoveAction(){
+	public void testMoveAndGatherAction(){
 		int[][] mapGen = new int[][]	{{0,0,0,0,0},
-										{0,0,0,0,0},
-										{1,1,1,1,0},
-										{0,0,1,1,1},
-										{0,0,0,0,0}};
+										{0,0,0,0,2},
+										{1,1,1,1,1},
+										{1,1,1,1,1},
+										{1,1,1,1,1}};
 		GameMap.map = generateMap(mapGen);
 		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
-		test.addToActionQueue(new MoveAction(new Position(2,4)));
+		test.addToActionQueue(new GatherAction(new Position(1,4)));
 		
 		assertEquals(1,test.getPosition().getRow());
 		assertEquals(1,test.getPosition().getCol());
@@ -61,30 +61,21 @@ public class MoveActionTest {
 		assertEquals(1,test.getPosition().getRow());
 		assertEquals(3,test.getPosition().getCol());
 		
-		test.update();
-		assertEquals(2,test.getPosition().getRow());
-		assertEquals(4,test.getPosition().getCol());
-	}
-	
-	@Test
-	public void testNonMoveAction(){
-		int[][] mapGen = new int[][]	{{0,0,0,0,0},
-										{0,0,0,0,0},
-										{0,0,0,0,0},
-										{0,0,0,0,0},
-										{0,0,0,0,0}};
-		GameMap.map = generateMap(mapGen);
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
-		test.addToActionQueue(new MoveAction(new Position(2,4)));
+		IronOreBlock testBlock = new IronOreBlock();
+		int durability = testBlock.getDurability();
+		for(int i = 0; i < durability; i++){
+			test.update();
+			assertEquals(1,test.getPosition().getRow());
+			assertEquals(3,test.getPosition().getCol());
+		}
 		
-		assertEquals(1,test.getPosition().getRow());
-		assertEquals(1,test.getPosition().getCol());
+		int amount = 0;
 		
-		test.update();
-		assertEquals(1,test.getPosition().getRow());
-		assertEquals(1,test.getPosition().getCol());
+		for(Item i : test.getInventory()){
+			amount++;
+		}
+		
+		assertEquals(amount,testBlock.lootBlock().size());
 	}
-	
-	
 
 }
