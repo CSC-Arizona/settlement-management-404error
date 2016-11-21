@@ -13,6 +13,7 @@ import model.Furniture.Bed;
 import model.Furniture.Couch;
 import model.Furniture.Fireplace;
 import model.Furniture.HealingBed;
+import model.Furniture.Ladder;
 import model.Furniture.MetalCrate;
 import model.Furniture.MillingMachine;
 import model.Furniture.PoolTable;
@@ -231,6 +232,18 @@ public class FurnitureTest {
 		assertEquals(wki.getClass(), li.next().getClass());
 		assertEquals(ali.getClass(), li.next().getClass());
 		assertEquals(ali.getClass(), li.next().getClass());
+	}
+	
+	@Test
+	public void testLadder() {
+		Ladder l = new Ladder();
+		assertEquals(10, l.getCapacity());
+		l.increaseCapacityBy(1);
+		assertEquals(11, l.getCapacity());
+		List<Item> ladderList = l.getRequiredMaterials();
+		ListIterator<Item> li = ladderList.listIterator();
+		assertEquals(wi.getClass(), li.next().getClass());
+		assertEquals(wi.getClass(), li.next().getClass());
 	}
 	
 }
