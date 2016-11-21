@@ -3,6 +3,7 @@ package model.Room;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Actors.Position;
 import model.Furniture.Bed;
 import model.Furniture.Couch;
 import model.Furniture.Furniture;
@@ -24,8 +25,8 @@ public class EntertainmentRoom extends Room{
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 
-	public EntertainmentRoom() {
-		super(2, 13, 8, 2);
+	public EntertainmentRoom(Position p) {
+		super(2, 13, 8, 2, p);
 		this.furniture = new LinkedList<>();
 		furniture.add(new PoolTable());
 		furniture.add(new Couch());

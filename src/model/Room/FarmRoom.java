@@ -3,6 +3,7 @@ package model.Room;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Actors.Position;
 import model.BuildingBlocks.AppleTreeLeafBlock;
 import model.BuildingBlocks.AppleTreeTrunkBlock;
 import model.BuildingBlocks.BuildingBlock;
@@ -21,8 +22,8 @@ public class FarmRoom extends Room {
 	private int state;
 	private List<BuildingBlock> plantedBlocks;
 	
-	public FarmRoom() {
-		super(2, 8, 4, 0);
+	public FarmRoom(Position p) {
+		super(2, 8, 4, 0, p);
 		state = 0;
 		plantedBlocks = new LinkedList<>();
 	}
