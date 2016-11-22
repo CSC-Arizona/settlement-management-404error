@@ -13,7 +13,6 @@ import model.Room.FarmRoom;
 import model.Room.HorizontalTunnel;
 import model.Room.InfirmaryRoom;
 import model.Room.KitchenRoom;
-import model.Room.Room;
 import model.Room.StoreRoom;
 import model.Room.VerticalTunnel;
 
