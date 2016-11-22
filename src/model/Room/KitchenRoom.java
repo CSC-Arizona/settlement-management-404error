@@ -34,7 +34,7 @@ public class KitchenRoom extends Room {
 			for (Item i : f.getRequiredMaterials())
 				this.requiredBuildingMaterials.add(i);
 		}
-
+        this.requiredUpgradeMaterials = new LinkedList<>();
 		for (Item b : new Fireplace().getRequiredMaterials())
 		    requiredUpgradeMaterials.add(b);
 	}

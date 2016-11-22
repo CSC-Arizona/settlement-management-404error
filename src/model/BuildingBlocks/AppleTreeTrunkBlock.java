@@ -23,7 +23,7 @@ public class AppleTreeTrunkBlock extends BuildingBlock {
 	
 	
 	public AppleTreeTrunkBlock() {
-		super(durability, true, true, new Color(174, 144, 55), id);
+		super(durability, true, false, new Color(174, 144, 55), id);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new WoodItem());
 		actorsInBlock = new LinkedList<>();

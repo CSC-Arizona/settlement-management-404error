@@ -20,7 +20,7 @@ public class GrassBlock extends BuildingBlock {
 	public final static String id = "Grass";
 
 	public GrassBlock() {
-		super(durability, true, true, new Color(0, 87, 3), id);
+		super(durability, true, false, new Color(0, 87, 3), id);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new WheatKernelItem());
 		actorsInBlock = new LinkedList<>();
