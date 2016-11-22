@@ -1,20 +1,14 @@
-package controller;
+package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.util.List;
 
 import javax.swing.Box;
@@ -23,50 +17,42 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
+import controller.Controller;
 import model.Map;
 import model.Actors.Actor;
-import model.Actors.PlayerControlledActor;
-import model.Actors.Position;
 
-/**
- * Display a map
- * 
- * @author Ethan Ward
- *
- */
-public class BasicGUI extends JFrame {
+public class BasicView extends JFrame {
 
+	private Map map;
 	private DrawingPanel drawingPanel;
+	private JLabel timeLabel;
 	private JLabel windowCoordinatesLabel;
 	private JLabel mouseDescriptionLabel;
 	private JLabel mouseCoordinatesLabel;
 
-	private int mapHeight = 150;
-	private int mapWidth = 1000;
-	private int mapDirtDepth = 30;
-	private int mapStoneDepth = 50;
-
-	private Map map = new Map(mapHeight, mapWidth, mapDirtDepth, mapStoneDepth,
-			9123123);
-
+	private int mapWidth;
+	private int mapHeight;
 	private int windowWidth = 1000;
 	private int windowHeight = 700;
 
 	private int visibleWidth = 50;
-	private int visibleHeight = 50;
+	private int visibleHeight = 30;
 
 	private int visibleCornerY = 35;
 	private int visibleCornerX = (mapWidth - visibleWidth / 2);
-
-	private int blockSizeY = windowHeight / visibleHeight;
+	private int labelPanelHeight = 200;
+	private int blockSizeY = (windowHeight - labelPanelHeight) / visibleHeight;
 	private int blockSizeX = windowWidth / visibleWidth;
 
-	public static void main(String[] args) {
-		BasicGUI view = new BasicGUI();
-		view.setVisible(true);
+	private Controller controller;
+
+	public void setTimeLabel(int time, boolean paused) {
+		if (paused) {
+			timeLabel.setText("Time: " + time + " (paused)");
+		} else {
+			timeLabel.setText("Time: " + time);
+		}
 	}
 
 	private void setWindowCoordinateLabel() {
@@ -83,7 +69,12 @@ public class BasicGUI extends JFrame {
 		mouseDescriptionLabel.setText("<html>Selected: " + id);
 	}
 
-	public BasicGUI() {
+	public BasicView(Controller controller, Map map, int mapHeight, int mapWidth) {
+		this.controller = controller;
+		this.map = map;
+		this.mapWidth = mapWidth;
+		this.mapHeight = mapHeight;
+
 		Box box = new Box(BoxLayout.Y_AXIS);
 		box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		box.add(Box.createVerticalGlue());
@@ -91,6 +82,9 @@ public class BasicGUI extends JFrame {
 		JPanel labelPanel = new JPanel();
 
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
+
+		timeLabel = new JLabel();
+		labelPanel.add(timeLabel);
 
 		windowCoordinatesLabel = new JLabel();
 		setWindowCoordinateLabel();
@@ -104,7 +98,8 @@ public class BasicGUI extends JFrame {
 		setMouseDescriptionLabel("");
 		labelPanel.add(mouseDescriptionLabel);
 
-		labelPanel.setPreferredSize(new Dimension(windowWidth, 200));
+		labelPanel
+				.setPreferredSize(new Dimension(windowWidth, labelPanelHeight));
 
 		box.add(labelPanel);
 
@@ -128,7 +123,6 @@ public class BasicGUI extends JFrame {
 		setSize(windowWidth, windowHeight);
 
 		repaint();
-
 	}
 
 	private class DrawingPanel extends JPanel {
@@ -204,8 +198,18 @@ public class BasicGUI extends JFrame {
 				if (visibleCornerX >= mapWidth) {
 					visibleCornerX = 0;
 				}
+
+				break;
+			case KeyEvent.VK_SPACE:
+				if (controller.isPaused()) {
+					controller.startTimer();
+				} else {
+					controller.stopTimer();
+				}
+				setTimeLabel(controller.getTime(), controller.isPaused());
 				break;
 			}
+
 			setWindowCoordinateLabel();
 			repaint();
 		}
