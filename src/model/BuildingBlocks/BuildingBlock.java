@@ -3,6 +3,7 @@ package model.BuildingBlocks;
 import java.awt.Color;
 import java.util.List;
 
+import model.Actors.Actor;
 import model.Items.Item;
 
 /**
@@ -64,9 +65,17 @@ public abstract class BuildingBlock {
 		return id;
 	}
 
+
 	/*
 	 * returns a list of the items the BuildingBlock drops if it is destroyed,
 	 * or null if it drops nothing.
 	 */
 	abstract public List<Item> lootBlock();
+	
+	abstract public boolean addActor(Actor actor);
+	
+	abstract public boolean removeActor(Actor actor);
+	
+	abstract public List<Actor> getActors();
+	
 }

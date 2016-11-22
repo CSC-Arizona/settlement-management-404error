@@ -3,6 +3,7 @@ package model.BuildingBlocks;
 import java.awt.Color;
 import java.util.List;
 
+import model.Actors.Actor;
 import model.Items.Item;
 
 /**
@@ -22,6 +23,21 @@ public class EarthBlock extends BuildingBlock {
 	
 	@Override
 	public List<Item> lootBlock() {
+		return null;
+	}
+
+	@Override
+	public boolean addActor(Actor actor) {
+		return false;
+	}
+
+	@Override
+	public boolean removeActor(Actor actor) {
+		return false;
+	}
+	
+	@Override
+	public List<Actor> getActors() {
 		return null;
 	}
 

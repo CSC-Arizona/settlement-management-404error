@@ -5,31 +5,29 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Actors.Actor;
-import model.Items.IronItem;
 import model.Items.Item;
 
 /**
- * IronOreBlock yields IronItem when it is destroyed.
- * 
- * @author Katherine Walters
+ * @author Ethan Ward
+ *
  */
-public class IronOreBlock extends BuildingBlock {
+public class MushroomFruitBlock extends BuildingBlock {
 
-	private final static int durability = 10;
 	private List<Item> itemsInBlock;
-	public final static String id = "Iron ore";
-	
-	public IronOreBlock() {
-		super(durability, true, false, Color.BLACK, id);
-        itemsInBlock = new LinkedList<>();
-        itemsInBlock.add(new IronItem());
+	private final static int durability = 1;
+	public final static String id = "Mushroom fruit";
+
+	public MushroomFruitBlock() {
+		super(durability, true, false, new Color(72, 249, 229), id);
+		itemsInBlock = new LinkedList<>();
+
 	}
 
 	@Override
 	public List<Item> lootBlock() {
 		return itemsInBlock;
 	}
-	
+
 	@Override
 	public boolean addActor(Actor actor) {
 		return false;
@@ -39,10 +37,9 @@ public class IronOreBlock extends BuildingBlock {
 	public boolean removeActor(Actor actor) {
 		return false;
 	}
-	
+
 	@Override
 	public List<Actor> getActors() {
 		return null;
 	}
-
 }

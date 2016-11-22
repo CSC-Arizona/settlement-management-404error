@@ -6,27 +6,22 @@ import java.util.List;
 
 import model.Actors.Actor;
 import model.Items.Item;
-import model.Items.WoodItem;
 
 /**
- * AppleTreeTrunkBlock is the bottom part of apple trees. When it is destroyed, it 
- * drops a WoodItem.
  * 
  * @author Ethan Ward
  */
-public class AppleTreeTrunkBlock extends BuildingBlock {
+public class MushroomBlock extends BuildingBlock {
 
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsInBlock;
 	private final static int durability = 5;
-	public final static String id = "Wood";
+	public final static String id = "Mushroom";
 	
 	
-	public AppleTreeTrunkBlock() {
-		super(durability, true, true, new Color(174, 144, 55), id);
+	public MushroomBlock() {
+		super(durability, true, true, new Color(173, 33, 183), id);
 		itemsInBlock = new LinkedList<>();
-		itemsInBlock.add(new WoodItem());
-		actorsInBlock = new LinkedList<>();
 	}
 
 	@Override

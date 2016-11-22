@@ -26,6 +26,7 @@ public class KitchenRoom extends Room {
 	public KitchenRoom(Position p) {
 		super(2, 6, 3, 1, p);
 		this.furniture = new LinkedList<>();
+
 	    this.furniture.add(new Fireplace());
 	    this.furniture.add(new MillingMachine());
 		this.requiredBuildingMaterials = new LinkedList<>();
@@ -33,7 +34,7 @@ public class KitchenRoom extends Room {
 			for (Item i : f.getRequiredMaterials())
 				this.requiredBuildingMaterials.add(i);
 		}
-		this.requiredUpgradeMaterials = new LinkedList<>();
+
 		for (Item b : new Fireplace().getRequiredMaterials())
 		    requiredUpgradeMaterials.add(b);
 	}

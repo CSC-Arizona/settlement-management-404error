@@ -69,4 +69,8 @@ public class Inventory implements Iterable<Item> {
 	public Iterator<Item> iterator() {
 		return items.iterator();
 	}
+
+	public int size() {
+		return items.size();
+	}
 }

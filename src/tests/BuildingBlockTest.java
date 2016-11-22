@@ -1,30 +1,30 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.junit.Test;
 
-import model.Map;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.AntTunnelBlock;
-import model.BuildingBlocks.BushBlock;
+import model.BuildingBlocks.AppleTreeLeafBlock;
+import model.BuildingBlocks.AppleTreeTrunkBlock;
 import model.BuildingBlocks.CavernBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.GoldOreBlock;
+import model.BuildingBlocks.GrassBlock;
 import model.BuildingBlocks.IronOreBlock;
 import model.BuildingBlocks.LavaBlock;
-import model.BuildingBlocks.AppleTreeLeafBlock;
 import model.BuildingBlocks.StoneBlock;
 import model.BuildingBlocks.TreeRootBlock;
-import model.BuildingBlocks.AppleTreeTrunkBlock;
 import model.Items.AntLarvaItem;
 import model.Items.IronItem;
-import model.Items.Item;
 import model.Items.StoneItem;
+import model.Items.WheatKernelItem;
 import model.Items.WoodItem;
 
 /**
@@ -33,11 +33,6 @@ import model.Items.WoodItem;
  * @author Katherine Walters
  */
 public class BuildingBlockTest {
-
-	@Test
-	public void tryingToGetSomeMapCodeCoverage() {
-		Map m = new Map(100, 100, 0, 0,10);
-	}
 	
 	@Test
 	public void testLeafBLock() {
@@ -45,16 +40,18 @@ public class BuildingBlockTest {
 		assertFalse(lb.isOccupiable());
 		assertTrue(lb.isDestroyable());
 		assertEquals(new LinkedList().getClass(), lb.lootBlock().getClass());
+		assertEquals(8, lb.lootBlock().size());
 		assertEquals(1, lb.getDurability());
-		assertEquals(new Color(84, 232, 67), lb.getColor());
+		assertEquals(new Color(242, 58, 58), lb.getColor());
 	}
 	
 	@Test
 	public void testBushBlock() {
-		BushBlock bb = new BushBlock();
+		GrassBlock bb = new GrassBlock();
 		assertFalse(bb.isOccupiable());
 		assertTrue(bb.isDestroyable());
-		assertEquals(new LinkedList(), bb.lootBlock());
+		assertEquals(1, bb.lootBlock().size());
+		WheatKernelItem i = (WheatKernelItem) bb.lootBlock().get(0);
 		assertEquals(1, bb.getDurability());
 		assertEquals(new Color(0, 87, 3), bb.getColor());
 	}

@@ -6,26 +6,23 @@ import java.util.List;
 
 import model.Actors.Actor;
 import model.Items.Item;
-import model.Items.WoodItem;
+import model.Items.WheatKernelItem;
 
 /**
- * AppleTreeTrunkBlock is the bottom part of apple trees. When it is destroyed, it 
- * drops a WoodItem.
- * 
- * @author Ethan Ward
+ * Grass blocks drop wheat kernels (and other things? material to make clothes?)
+ *
  */
-public class AppleTreeTrunkBlock extends BuildingBlock {
+public class GrassBlock extends BuildingBlock {
 
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsInBlock;
-	private final static int durability = 5;
-	public final static String id = "Wood";
-	
-	
-	public AppleTreeTrunkBlock() {
-		super(durability, true, true, new Color(174, 144, 55), id);
+	private final static int durability = 1;
+	public final static String id = "Grass";
+
+	public GrassBlock() {
+		super(durability, true, true, new Color(0, 87, 3), id);
 		itemsInBlock = new LinkedList<>();
-		itemsInBlock.add(new WoodItem());
+		itemsInBlock.add(new WheatKernelItem());
 		actorsInBlock = new LinkedList<>();
 	}
 
@@ -33,7 +30,7 @@ public class AppleTreeTrunkBlock extends BuildingBlock {
 	public List<Item> lootBlock() {
 		return itemsInBlock;
 	}
-
+	
 	@Override
 	public boolean addActor(Actor actor) {
 		actorsInBlock.add(actor);
