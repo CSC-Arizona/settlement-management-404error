@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.TreeMap;
 
+import model.Actors.Actor;
+import model.Actors.MoveAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
@@ -35,6 +37,7 @@ public class Map {
 
 	private ArrayList<AppleTree> trees;
 	private ArrayList<Integer[]> cavernFloorBlocks;
+	private ArrayList<Actor> actors;
 
 	private double ironFrequency = 0.01;
 	private double goldFrequency = 0.001;
@@ -438,25 +441,61 @@ public class Map {
 		}
 	}
 
+	private int[] getRandomOccupiablePosition(int centerX, int range) {
+		int x = random.nextInt(range) - range / 2;
+		int y = airHeight;
+		x = Math.floorMod(x, totalWidth);
+
+		while (!map[y][x].getID().equals(AirBlock.id)) {
+			y -= 1;
+			if (y < 0)
+				return new int[] { -1, -1 };
+		}
+		if (y >= 0 && map[y][x].isOccupiable()
+				&& map[y + 1][x].getID().equals(EarthBlock.id)) {
+			return new int[] { y, x };
+		}
+		return new int[] { -1, -1 };
+	}
+
 	private void addPlayerActors() {
+		actors = new ArrayList<Actor>();
+
 		int count = 0;
 		while (count < numberOfPlayerActors) {
-			int x = random.nextInt(20) - 10;
-			int y = airHeight;
-			x = Math.floorMod(x, totalWidth);
+			int[] actorPosition = getRandomOccupiablePosition(0, 20);
 
-			while (!map[y][x].getID().equals(AirBlock.id)) {
-				y -= 1;
-				if (y < 0)
-					break;
-			}
+			int y = actorPosition[0];
+			int x = actorPosition[1];
 
-			if (y >= 0 && map[y][x].isOccupiable()) {
-				if (map[y][x].addActor(new PlayerControlledActor(100,
-						new Position(y, x)))) {
+			if (x != -1) {
+				Actor actor = new PlayerControlledActor(100, new Position(y, x));
+				
+				// add a random position to move to (temporary)
+				int[] goalPosition = getRandomOccupiablePosition(0, 20);
+				if (goalPosition[0] != -1) {
+					Position position = new Position(goalPosition[0],
+							goalPosition[1]);
+					MoveAction action = new MoveAction(position);
+					actor.addToActionQueue(action);
+				}
+				
+				if (map[y][x].addActor(actor)) {
+					actors.add(actor);
 					count += 1;
 				}
 			}
+
+		}
+	}
+
+	public void updateActors(int timeDelta) {
+		for (Actor actor : actors) {
+			Position oldPosition = actor.getPosition();
+			map[oldPosition.getRow()][oldPosition.getCol()].removeActor(actor);
+			actor.update();
+			Position newPosition = actor.getPosition();
+			map[newPosition.getRow()][newPosition.getCol()].addActor(actor);
 		}
 	}
 
