@@ -44,7 +44,7 @@ public class BuildingBlockTest {
 		AppleTreeLeafBlock lb = new AppleTreeLeafBlock();
 		assertFalse(lb.isOccupiable());
 		assertTrue(lb.isDestroyable());
-		assertEquals(new LinkedList(), lb.lootBlock());
+		assertEquals(new LinkedList().getClass(), lb.lootBlock().getClass());
 		assertEquals(1, lb.getDurability());
 		assertEquals(new Color(84, 232, 67), lb.getColor());
 	}

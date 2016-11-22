@@ -7,6 +7,8 @@ import java.util.List;
 import model.Items.Item;
 import model.Items.WheatItem;
 //import model.Items.WheatStem;
+import model.Items.WheatKernelItem;
+import model.Items.WheatStemItem;
 
 public class WheatBlock extends BuildingBlock {
 
@@ -17,9 +19,9 @@ public class WheatBlock extends BuildingBlock {
 		super(1, true, false, new Color(244, 209, 66), id);
 		itemsInBlock = new LinkedList<>();
 		for (int i = 0; i < 2; i++) {
-//		    itemsInBlock.add(new WheatItem());
-//		    itemsInBlock.add(new WheatStem());
-//		    itemsInBlock.add(new WheatKernel());
+		    itemsInBlock.add(new WheatItem());
+		    itemsInBlock.add(new WheatStemItem());
+		    itemsInBlock.add(new WheatKernelItem());
 		}
 	}
 

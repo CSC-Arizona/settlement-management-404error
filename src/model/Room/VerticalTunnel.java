@@ -8,6 +8,12 @@ import model.Furniture.Furniture;
 import model.Furniture.Ladder;
 import model.Items.Item;
 
+/**
+ * VerticalTunnel contains a ladder that actors can use to travel up and down within the tunnel
+ * system.
+ * 
+ * @author Katherine Walters
+ */
 public class VerticalTunnel extends Room {
 	
 	private List<Furniture> reqFurniture;

@@ -80,14 +80,14 @@ public abstract class Room {
 	/*
 	 * accepts a single integer argument and increases the Room's capacity by that amount.
 	 */
-	public void increaseRoomCapacity(int byThisMuch) {
+	private void increaseRoomCapacity(int byThisMuch) {
 		this.roomCapacity += byThisMuch;
 	}
 	
 	/*
 	 * decrements the remaining number of upgrades
 	 */
-	public void decreaseUpgradesAllowed() {
+	private void decreaseUpgradesAllowed() {
 		this.upgradesAllowed--;
 	}
 	
@@ -116,7 +116,8 @@ public abstract class Room {
 	 * decrements the room's occupancy by one (to be called when an Agent exits)
 	 */
 	public void decreaseNumAgentsInRoom() {
-		this.numAgentsInRoom--;
+		if (this.numAgentsInRoom != 0)
+		    this.numAgentsInRoom--;
 	}
 	
 	/*
