@@ -18,6 +18,7 @@ import model.Items.Item;
 public class AntTunnelBlock extends BuildingBlock {
 
 	private List<Actor> actorsInBlock;
+	private List<Item> itemsOnGround;
 	private final static int durability = 7;
 	private List<Item> itemsInBlock;
 	public final static String id = "Ant tunnel";
@@ -26,6 +27,7 @@ public class AntTunnelBlock extends BuildingBlock {
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new AntLarvaItem());
 		actorsInBlock = new LinkedList<>();
+		itemsOnGround = new LinkedList<>();
 	}
 
 	@Override
@@ -66,6 +68,11 @@ public class AntTunnelBlock extends BuildingBlock {
 	@Override
 	public Furniture getFurniture() {
 		return null;
+	}
+
+	@Override
+	public List<Item> itemsOnGround() {
+		return itemsOnGround;
 	}
 
 }

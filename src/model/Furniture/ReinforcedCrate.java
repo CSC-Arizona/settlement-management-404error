@@ -11,21 +11,26 @@ import model.Items.WoodItem;
 //This class defines the Reinforced Crate
 //Reinforced Crate (6 wood, 2 stone): 50lb weight capacity
 public class ReinforcedCrate extends Crate {
-	private final static int weightCapacity = 50;
+	private final static int weightCapacity = 500;
 	private List<Item> reinforcedCrateList;
 	
 	public ReinforcedCrate() {
-		super(weightCapacity);
+		super(50, weightCapacity);
 		reinforcedCrateList = new LinkedList<>();
 		for (int i = 0; i < 6; i++) {
-			reinforcedCrateList.add(new WoodItem());
+			addItem(new WoodItem());
 		}
-		reinforcedCrateList.add(new StoneItem());
-		reinforcedCrateList.add(new StoneItem());
+		addItem(new StoneItem());
+		addItem(new StoneItem());
 	}
 
 	@Override
 	public List<Item> getRequiredMaterials() {
 		return reinforcedCrateList;
+	}
+	
+	@Override
+	public String toString() {
+		return "Reinforced crate (remaining capacity " + (weightCapacity-contentsWeight) + ")";
 	}
 }

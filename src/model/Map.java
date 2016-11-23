@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.TreeMap;
 
@@ -21,6 +22,7 @@ import model.BuildingBlocks.IronOreBlock;
 import model.BuildingBlocks.LavaBlock;
 import model.BuildingBlocks.StoneBlock;
 import model.Furniture.Furniture;
+import model.Items.Item;
 
 /**
  * Constructs a random map with various geographical features
@@ -40,10 +42,14 @@ public class Map {
 
 	private HashMap<Furniture, Position> hardCodedFurniture;
 	private HashMap<Actor, Position> hardCodedActors;
+	private ArrayList<Position> blocksMarkedForGathering;
+	private ArrayList<Position> itemsOnGround = new ArrayList<>();
 
 	public Map(MapParameters mapParameters,
 			HashMap<Furniture, Position> hardCodedFurniture,
-			HashMap<Actor, Position> hardCodedActors, Random random) {
+			HashMap<Actor, Position> hardCodedActors, Random random,
+			ArrayList<Position> blocksMarkedForGathering) {
+		this.blocksMarkedForGathering = blocksMarkedForGathering;
 		this.random = random;
 		this.mapParameters = mapParameters;
 		this.hardCodedFurniture = hardCodedFurniture;
@@ -87,6 +93,7 @@ public class Map {
 
 	private void constructMap() {
 		map = new BuildingBlock[getTotalHeight()][getTotalWidth()];
+
 		addAir();
 		addStone();
 		addDirt();
@@ -101,6 +108,13 @@ public class Map {
 		addMushrooms();
 		addPlayerActors();
 		addFurniture();
+
+		if (blocksMarkedForGathering != null) {
+			for (Position p : blocksMarkedForGathering) {
+				map[p.getRow()][p.getCol()].markForGathering();
+			}
+		}
+
 	}
 
 	private void addAir() {
@@ -502,6 +516,43 @@ public class Map {
 
 	public HashMap<Furniture, Position> getFurniture() {
 		return hardCodedFurniture;
+	}
+
+	public ArrayList<Position> getBlocksMarkedForGathering() {
+		return blocksMarkedForGathering;
+	}
+
+	public void unmarkBlockForGathering(Position position) {
+		getBuildingBlock(position).unmarkForGathering();
+		ArrayList<Position> newBlocksMarkedForGathering = new ArrayList<>();
+
+		for (Position p : blocksMarkedForGathering) {
+			if (!p.equals(position)) {
+				newBlocksMarkedForGathering.add(p);
+			}
+		}
+		blocksMarkedForGathering = newBlocksMarkedForGathering;
+
+	}
+	
+	public boolean addItemToGround(Position position, Item item) {
+		if (getBuildingBlock(position).addItemToGround(item)) {
+			itemsOnGround.add(position);
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean removeItemFromGround(Position position, Item item) {
+		if (getBuildingBlock(position).removeItemFromGround(item)) {
+			itemsOnGround.remove(0);
+			return true;
+		}
+		return false;
+	}
+	
+	public ArrayList<Position> getItemsOnGround() {
+		return itemsOnGround;
 	}
 
 }

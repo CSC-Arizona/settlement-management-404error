@@ -16,7 +16,7 @@ public class Fireplace extends Furniture {
 	private List<Item> fireplaceList;
 
 	public Fireplace() {
-		super(capacity);
+		super(capacity, 0, "fireplace");
 		fireplaceList = new LinkedList<>();
 		for (int i = 0; i < 4; i++) {
 			fireplaceList.add(new StoneItem());

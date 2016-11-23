@@ -16,7 +16,7 @@ public class AppleTreePlot extends Furniture {
 	private List<Item> appleTreePlotList;
 
 	public AppleTreePlot() {
-		super(capacity);
+		super(capacity, 0, "apple tree plot");
 		appleTreePlotList = new LinkedList<>();
 		appleTreePlotList.add(new AppleSeedItem());
 		appleTreePlotList.add(new AppleSeedItem());

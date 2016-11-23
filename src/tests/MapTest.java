@@ -23,7 +23,7 @@ public class MapTest {
 	public void testMap() {
 
 		Map map = new Map(MapParameters.getDefaultParameters(), null, null,
-				new Random());
+				new Random(), null);
 		assertEquals(MapParameters.getDefaultParameters().mapHeight,
 				map.getTotalHeight());
 		assertEquals(MapParameters.getDefaultParameters().mapWidth,
@@ -34,7 +34,7 @@ public class MapTest {
 	public void testGameMap() {
 
 		Map map = new Map(MapParameters.getDefaultParameters(), null, null,
-				new Random());
+				new Random(), null);
 		assertEquals(MapParameters.getDefaultParameters().mapHeight,
 				map.getTotalHeight());
 		assertEquals(MapParameters.getDefaultParameters().mapWidth,

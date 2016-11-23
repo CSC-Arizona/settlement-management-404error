@@ -60,4 +60,9 @@ public class IronOreBlock extends BuildingBlock {
 	public Furniture getFurniture() {
 		return null;
 	}
+
+	@Override
+	public List<Item> itemsOnGround() {
+		return null;
+	}
 }

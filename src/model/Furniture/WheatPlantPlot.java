@@ -16,7 +16,7 @@ public class WheatPlantPlot extends Furniture {
 	private List<Item> wheatPlantPlotList;
 
 	public WheatPlantPlot() {
-		super(capacity);
+		super(capacity, 0, "wheat plot");
 		wheatPlantPlotList = new LinkedList<>();
 		wheatPlantPlotList.add(new WheatKernelItem());
 		wheatPlantPlotList.add(new WheatKernelItem());

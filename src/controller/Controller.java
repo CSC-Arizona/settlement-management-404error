@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Timer;
@@ -52,8 +53,10 @@ public class Controller {
 
 	public Controller(MapParameters mapParameters,
 			HashMap<Furniture, Position> hardCodedFurniture,
-			HashMap<Actor, Position> hardCodedActors, Random random) {
-		map = new Map(mapParameters, hardCodedFurniture, hardCodedActors, random);
+			HashMap<Actor, Position> hardCodedActors, Random random,
+			ArrayList<Position> blocksMarkedForGathering) {
+		map = new Map(mapParameters, hardCodedFurniture, hardCodedActors,
+				random, blocksMarkedForGathering);
 		GameMap.map = map;
 		view = new BasicView(this, map, mapParameters);
 		view.setVisible(true);
@@ -71,7 +74,7 @@ public class Controller {
 			view.repaint();
 		}
 	}
-	
+
 	public Map getMap() {
 		return map;
 	}

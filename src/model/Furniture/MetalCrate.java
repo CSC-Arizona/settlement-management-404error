@@ -16,7 +16,7 @@ public class MetalCrate extends Crate {
 	private List<Item> metalCrateList;
 	
 	public MetalCrate() {
-		super(weightCapacity);
+		super(20, weightCapacity);
 		metalCrateList = new LinkedList<>();
 		for (int i = 0; i < 6; i++) {
 			metalCrateList.add(new WoodItem());

@@ -1,12 +1,16 @@
 package model.Actors;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 import model.GameMap;
 import model.Inventory;
 import model.Map;
 import model.Furniture.Furniture;
+import model.Items.Item;
 
 /**
  * 
@@ -44,7 +48,7 @@ public abstract class Actor {
 		this.position = position;
 		this.idle = true;
 		this.queue = new LinkedList<Action>();
-		this.inventory = new Inventory();
+		this.inventory = new Inventory(this, map);
 		this.setAlive(true);
 		skills = new Skills();
 	}
@@ -77,9 +81,41 @@ public abstract class Actor {
 		if (idle)
 			if (queue.size() > 0)
 				currentAction = queue.peek();
-			else
-				return;
-
+			else {
+				Position gather = getRandomBlockForGathering();
+				if (gather != null) {
+					currentAction = new GatherAction(gather, map);
+				} else {
+					if (getInventory().size() != 0) {
+						for (int index = 0; index < getInventory().size(); index++) {
+							Item item = getInventory().getItem(index);
+							Position emptyCratePosition = getCrateWithCapacityGreaterThan(item
+									.getWeight());
+							if (emptyCratePosition != null) {
+								currentAction = new StoreItemAction(
+										emptyCratePosition, item, index, map);
+								break;
+							}
+						}
+					}
+					else {
+						Position itemOnGroundPosition = getItemOnGroundPosition();
+						System.out.println(itemOnGroundPosition);
+						List<Item> items = map.getBuildingBlock(
+								itemOnGroundPosition).itemsOnGround();
+						if (items.size() != 0) {
+							Item item = items.get(0);
+							if (itemOnGroundPosition != null) {
+								currentAction = new PickUpItemAction(
+										itemOnGroundPosition, item, map);
+							}
+						}
+					}
+				}
+			}
+		if (currentAction == null) {
+			return;
+		}
 		// Store the result of the execution
 		int result = currentAction.execute(this);
 
@@ -172,13 +208,47 @@ public abstract class Actor {
 			}
 		}
 		return null;
+	}
 
+	public Position getCrateWithCapacityGreaterThan(double target) {
+		HashMap<Furniture, Position> mapFurniture = map.getFurniture();
+		if (mapFurniture != null) {
+			for (Furniture f : mapFurniture.keySet()) {
+				if (f.getID().equals("crate")) {
+					if (f.getRemainingWeightCapacity() >= target) {
+						return mapFurniture.get(f);
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	public Position getRandomBlockForGathering() {
+		ArrayList<Position> blocksMarkedForGathering = map
+				.getBlocksMarkedForGathering();
+		if (blocksMarkedForGathering != null) {
+			if (blocksMarkedForGathering.size() != 0) {
+				return blocksMarkedForGathering.get(new Random()
+						.nextInt(blocksMarkedForGathering.size()));
+			}
+		}
+		return null;
+	}
+
+	public Position getItemOnGroundPosition() {
+		ArrayList<Position> itemsOnGround = map.getItemsOnGround();
+		if (itemsOnGround.size() > 0) {
+			return itemsOnGround.get(0);
+		}
+		return null;
 	}
 
 	@Override
 	public String toString() {
 		String result = Integer.toString(health) + " health; "
-				+ Integer.toString(fatigue) + " fatigue";
+				+ Integer.toString(fatigue) + " fatigue; inventory: "
+				+ this.inventory.toString();
 		return result;
 	}
 

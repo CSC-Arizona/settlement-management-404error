@@ -65,4 +65,9 @@ public class AppleTreeLeafBlock extends BuildingBlock {
 	public Furniture getFurniture() {
 		return null;
 	}
+
+	@Override
+	public List<Item> itemsOnGround() {
+		return null;
+	}
 }

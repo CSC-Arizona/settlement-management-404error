@@ -32,7 +32,7 @@ public class MovementScenario {
 	public MovementScenario() {
 
 		Controller controller = new Controller(MapParameters.getDefaultParameters(), null,
-				hardCodedActors, new Random(seed));
+				hardCodedActors, new Random(seed), null);
 		
 		Map map = controller.getMap();
 		

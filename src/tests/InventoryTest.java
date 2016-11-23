@@ -18,7 +18,7 @@ public class InventoryTest {
 
 	@Test
 	public void test() {
-		Inventory inv = new Inventory();
+		Inventory inv = new Inventory(null, null);
 		assertEquals(0.0, inv.getWeightCarried(), 0.0001);
 		inv.addItem(new AntLarvaItem());
 		assertEquals(0.5, inv.getWeightCarried(), 0.0001);
@@ -39,7 +39,7 @@ public class InventoryTest {
 	
 	@Test
 	public void testExceedingCapacity() {
-		Inventory inv = new Inventory();
+		Inventory inv = new Inventory(null, null);
 		for (int i = 0; i < 20; i++) {
 			assertTrue(inv.addItem(new StoneItem()));
 		}

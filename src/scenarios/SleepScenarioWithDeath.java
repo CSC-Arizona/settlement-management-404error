@@ -32,7 +32,7 @@ public class SleepScenarioWithDeath {
 
 		Controller controller = new Controller(
 				MapParameters.getDefaultParameters(), hardCodedFurniture,
-				hardCodedActors, new Random(seed));
+				hardCodedActors, new Random(seed), null);
 
 		Map map = controller.getMap();
 
