@@ -11,19 +11,27 @@ import model.Map;
 public class SleepAction implements Action {
 
 	private Map map;
-	
+
 	public SleepAction(Map map) {
 		this.map = map;
 	}
-	
+
 	@Override
 	public int execute(Actor performer) {
 		Position nearestBed = performer.getNearestBed();
-		performer.setFatigue(0);
-		if (nearestBed != null) {
-			performer.addToActionQueue(new MoveAction(nearestBed, map));
+
+		// if in same position as bed, sleep, otherwise move
+		if (performer.getPosition().equals(nearestBed)) {
+			performer.setFatigue(0);
+			return Action.COMPLETED;
+		} else {
+			int action = new MoveAction(nearestBed, map).execute(performer);
+			if (action == Action.COMPLETED) {
+				return Action.MADE_PROGRESS;
+			}
+			return action;
 		}
-		return Action.COMPLETED;
+
 	}
 
 }

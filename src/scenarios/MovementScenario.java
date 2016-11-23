@@ -38,12 +38,12 @@ public class MovementScenario {
 		
 		Position finalPosition = new Position(52,980);
 		
-		Actor actor1 = new PlayerControlledActor(100, 0, new Position(58, 990), map);
-		Actor actor2 = new PlayerControlledActor(100, 0, new Position(59, 991), map);
-		Actor actor3 = new PlayerControlledActor(100, 0, new Position(57, 999), map);
+		Actor actor1 = new PlayerControlledActor(100, 0, new Position(58, 990), map, hardCodedActors);
+		Actor actor2 = new PlayerControlledActor(100, 0, new Position(59, 991), map, hardCodedActors);
+		Actor actor3 = new PlayerControlledActor(100, 0, new Position(57, 999), map, hardCodedActors);
 		
 		// this actor should move across 0 boundary
-		Actor actor4 = new PlayerControlledActor(100, 0, new Position(54, 4), map);
+		Actor actor4 = new PlayerControlledActor(100, 0, new Position(54, 4), map, hardCodedActors);
 
 		actor1.addToActionQueue(new MoveAction(finalPosition, map));
 		actor2.addToActionQueue(new MoveAction(finalPosition, map));

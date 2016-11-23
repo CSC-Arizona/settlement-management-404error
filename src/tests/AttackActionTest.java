@@ -5,6 +5,8 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
+
 import org.junit.Test;
 
 import model.GameMap;
@@ -47,9 +49,10 @@ public class AttackActionTest {
 				{1,1,1,1,1},
 				{1,1,1,1,1}};
 		Map map = generateMap(mapGen);
+		HashMap<Actor, Position> actors = new HashMap<>();
 
-		Actor tester = new PlayerControlledActor(5, 0, new Position(10,10), map);
-		Actor rival = new PlayerControlledActor(5, 0, new Position(11,10), map);
+		Actor tester = new PlayerControlledActor(5, 0, new Position(10,10), map, actors);
+		Actor rival = new PlayerControlledActor(5, 0, new Position(11,10), map, actors);
 		tester.addToActionQueue(new AttackAction(rival, map));
 		assertEquals(5,rival.getHealth());
 		assertEquals(0,tester.getSkills().getCombatLevel());
@@ -86,8 +89,9 @@ public class AttackActionTest {
 										{1,1,1,1,1},
 										{1,1,1,1,1}};
 		Map map = generateMap(mapGen);
-		PlayerControlledActor tester = new PlayerControlledActor(10, 0, new Position(1,1), map);
-		Actor rival = new PlayerControlledActor(5, 0, new Position(2,4), map);
+		HashMap<Actor, Position> actors = new HashMap<>();
+		PlayerControlledActor tester = new PlayerControlledActor(10, 0, new Position(1,1), map, actors);
+		Actor rival = new PlayerControlledActor(5, 0, new Position(2,4), map, actors);
 		tester.addToActionQueue(new AttackAction(rival, map));
 		
 		assertEquals(1,tester.getPosition().getRow());
