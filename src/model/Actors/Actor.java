@@ -164,8 +164,9 @@ public abstract class Actor {
 	public Position getNearestBed() {
 		HashMap<Furniture, Position> mapFurniture = GameMap.map.getFurniture();
 		if (mapFurniture != null) {
-			// todo: actually calculate the distance
-			return mapFurniture.get(mapFurniture.keySet().toArray()[0]);
+			if (mapFurniture.size() != 0) {
+				return mapFurniture.get(mapFurniture.keySet().toArray()[0]);
+			}
 		}
 		return null;
 

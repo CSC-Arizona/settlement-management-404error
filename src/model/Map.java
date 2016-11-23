@@ -481,8 +481,11 @@ public class Map {
 				map[oldPosition.getRow()][oldPosition.getCol()]
 						.removeActor(actor);
 				actor.update();
-				Position newPosition = actor.getPosition();
-				map[newPosition.getRow()][newPosition.getCol()].addActor(actor);
+				if (actor.isAlive()) {
+					Position newPosition = actor.getPosition();
+					map[newPosition.getRow()][newPosition.getCol()]
+							.addActor(actor);
+				}
 			}
 		}
 	}
@@ -496,7 +499,7 @@ public class Map {
 			}
 		}
 	}
-	
+
 	public HashMap<Furniture, Position> getFurniture() {
 		return hardCodedFurniture;
 	}

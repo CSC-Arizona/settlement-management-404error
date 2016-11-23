@@ -3,40 +3,46 @@
  */
 package model.Actors;
 
-import java.util.LinkedList;
-
-import model.GameMap;
-import model.Map;
+import java.util.HashMap;
 
 /**
- * @author Jonathon Davis
- * The Player Controlled Actor will execute commands
- * given by the player, the ACtor is not directly controlled 
- * by the player but instead will execute commands from a pool
- * of commands.
+ * @author Jonathon Davis The Player Controlled Actor will execute commands
+ *         given by the player, the ACtor is not directly controlled by the
+ *         player but instead will execute commands from a pool of commands.
  */
 public class PlayerControlledActor extends Actor {
-	
+
 	private int fatigue, hunger, happiness;
 	private static final int threshold = 1000;
 	private static final int death_threshold = 1100;
-	private static LinkedList<PlayerControlledActor> allActors;
+	private HashMap<Actor, Position> allActors;
+
 	/**
 	 * 
-	 * @param health The health of the actor
-	 * @param location The starting location of the Actor
+	 * @param health
+	 *            The health of the actor
+	 * @param location
+	 *            The starting location of the Actor
 	 */
 	public PlayerControlledActor(int health, int fatigue, Position location){
 		super(health, fatigue, location);
-		fatigue = 0;
+		this.fatigue = fatigue;
 		hunger = 0;
 		happiness = 0;
-		if(allActors == null)
-			allActors = new LinkedList<>();
-		allActors.add(this);
+	}
+	
+	public PlayerControlledActor(int health, int fatigue, Position location, HashMap<Actor, Position> allActors){
+		super(health, fatigue, location);
+		this.fatigue = fatigue;
+		hunger = 0;
+		happiness = 0;
+		this.allActors = allActors;
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.Actors.Actor#update()
 	 */
 	@Override
@@ -49,13 +55,13 @@ public class PlayerControlledActor extends Actor {
 		// if one of the needs gets to high, the actor
 		// will ignore his current action and attempt
 		// to fulfill that need
-		if(hunger >= threshold)
+		if (hunger >= threshold)
 			this.priorityAddToActionQueue(new HungerAction());
-		if(fatigue >= 10) {
+		if (fatigue >= threshold && canSleep()) {
 			this.priorityAddToActionQueue(new SleepAction());
 		}
 		// if one of the needs get to high, then the actor dies
-		if(hunger >= death_threshold){
+		if (hunger >= death_threshold || fatigue >= death_threshold) {
 			allActors.remove(this);
 			this.setAlive(false);
 		}
@@ -71,14 +77,21 @@ public class PlayerControlledActor extends Actor {
 	}
 
 	/**
-	 * @param hunger the hunger to set
+	 * @param hunger
+	 *            the hunger to set
 	 */
 	public void setHunger(int hunger) {
 		this.hunger = hunger;
 	}
-	
+
 	public void setFatigue(int fatigue) {
 		this.fatigue = fatigue;
+	}
+
+	public boolean canSleep() {
+		if (this.getNearestBed() == null)
+			return false;
+		return true;
 	}
 
 }
