@@ -1,4 +1,4 @@
-package tests;
+package scenarios;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -19,16 +19,16 @@ import controller.ControllerMain;
  *         Movement scenario: make the actors move to a specified position
  *
  */
-public class Scenario {
+public class MovmentScenario {
 	private int seed = 555555;
 
 	private HashMap<Actor, Position> hardCodedActors = new HashMap<>();
 
 	public static void main(String[] args) {
-		new Scenario();
+		new MovmentScenario();
 	}
 
-	public Scenario() {
+	public MovmentScenario() {
 
 		Position finalPosition = new Position(52,980);
 		
