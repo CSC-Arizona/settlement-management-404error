@@ -41,8 +41,15 @@ public class AttackActionTest {
 	
 	@Test
 	public void attackTest(){
-		Actor tester = new PlayerControlledActor(5,new Position(10,10));
-		Actor rival = new PlayerControlledActor(5,new Position(11,10));
+		int[][] mapGen = new int[][]	{{0,0,0,0,0},
+				{0,0,0,0,0},
+				{1,1,1,1,0},
+				{1,1,1,1,1},
+				{1,1,1,1,1}};
+		Map map = generateMap(mapGen);
+
+		Actor tester = new PlayerControlledActor(5, 0, new Position(10,10), map);
+		Actor rival = new PlayerControlledActor(5, 0, new Position(11,10), map);
 		tester.addToActionQueue(new AttackAction(rival));
 		assertEquals(5,rival.getHealth());
 		assertEquals(0,tester.getSkills().getCombatLevel());
@@ -78,9 +85,9 @@ public class AttackActionTest {
 										{1,1,1,1,0},
 										{1,1,1,1,1},
 										{1,1,1,1,1}};
-		GameMap.map = generateMap(mapGen);
-		PlayerControlledActor tester = new PlayerControlledActor(10, new Position(1,1));
-		Actor rival = new PlayerControlledActor(5,new Position(2,4));
+		Map map = generateMap(mapGen);
+		PlayerControlledActor tester = new PlayerControlledActor(10, 0, new Position(1,1), map);
+		Actor rival = new PlayerControlledActor(5, 0, new Position(2,4), map);
 		tester.addToActionQueue(new AttackAction(rival));
 		
 		assertEquals(1,tester.getPosition().getRow());

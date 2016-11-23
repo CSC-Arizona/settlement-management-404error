@@ -66,9 +66,14 @@ public class Controller {
 		public void run() {
 			time += 1;
 			view.setTimeLabel(time, paused);
+			view.setMouseDescriptionLabel();
 			map.updateActors(timeDelta);
 			view.repaint();
 		}
+	}
+	
+	public Map getMap() {
+		return map;
 	}
 
 }

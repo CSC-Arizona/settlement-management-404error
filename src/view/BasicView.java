@@ -33,6 +33,9 @@ public class BasicView extends JFrame {
 	private JLabel mouseDescriptionLabel;
 	private JLabel mouseCoordinatesLabel;
 
+	private int mouseX;
+	private int mouseY;
+	
 	private int mapWidth;
 	private int mapHeight;
 	private int windowWidth = 1000;
@@ -62,13 +65,17 @@ public class BasicView extends JFrame {
 				+ ", " + visibleCornerX + ")");
 	}
 
-	private void setMouseCoordinatesLabel(int x, int y) {
-		mouseCoordinatesLabel.setText("Mouse coordinates: (" + x + ", " + y
+	private void setMouseCoordinatesLabel() {
+		mouseCoordinatesLabel.setText("Mouse coordinates: (" + mouseY + ", " + mouseX
 				+ ")");
 	}
 
-	private void setMouseDescriptionLabel(String id) {
-		mouseDescriptionLabel.setText("<html>Selected: " + id);
+	public void setMouseDescriptionLabel() {
+		String mouseDescription = map.getBuildingBlock(mouseY, mouseX).toString();
+
+		mouseDescription += "</html>";
+
+		mouseDescriptionLabel.setText("<html>Selected: " + mouseDescription);
 	}
 
 	public BasicView(Controller controller, Map map, MapParameters mapParameters) {
@@ -93,11 +100,11 @@ public class BasicView extends JFrame {
 		labelPanel.add(windowCoordinatesLabel);
 
 		mouseCoordinatesLabel = new JLabel();
-		setMouseCoordinatesLabel(-1, -1);
+		setMouseCoordinatesLabel();
 		labelPanel.add(mouseCoordinatesLabel);
 
 		mouseDescriptionLabel = new JLabel();
-		setMouseDescriptionLabel("");
+		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
 
 		labelPanel
@@ -243,16 +250,12 @@ public class BasicView extends JFrame {
 		public void mouseMoved(MouseEvent e) {
 			Point coords = e.getPoint();
 
-			int x = coords.x / blockSizeX + visibleCornerX;
-			x = Math.floorMod(x, mapWidth);
-			int y = coords.y / blockSizeY + visibleCornerY;
+			mouseX = coords.x / blockSizeX + visibleCornerX;
+			mouseX = Math.floorMod(mouseX, mapWidth);
+			mouseY = coords.y / blockSizeY + visibleCornerY;
 
-			String mouseDescription = map.getBuildingBlock(y, x).toString();
-
-			mouseDescription += "</html>";
-
-			setMouseDescriptionLabel(mouseDescription);
-			setMouseCoordinatesLabel(y, x);
+			setMouseDescriptionLabel();
+			setMouseCoordinatesLabel();
 
 		}
 	}

@@ -496,5 +496,9 @@ public class Map {
 			}
 		}
 	}
+	
+	public HashMap<Furniture, Position> getFurniture() {
+		return hardCodedFurniture;
+	}
 
 }

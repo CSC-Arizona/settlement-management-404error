@@ -19,7 +19,7 @@ public class HungerTest {
 	
 	@Test
 	public void testEat(){
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1), null);
 		test.getInventory().addItem(new AntLarvaItem());
 		assertTrue(test.isAlive());
 		for(int i = 0; i < 1500; i++){
@@ -34,7 +34,7 @@ public class HungerTest {
 	
 	@Test
 	public void testHunger(){
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1), null);
 		assertTrue(test.isAlive());
 		for(int i = 0; i < 1500; i++){
 			test.update();

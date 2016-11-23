@@ -1,8 +1,12 @@
 package model.Actors;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
+import model.GameMap;
 import model.Inventory;
+import model.Map;
+import model.Furniture.Furniture;
 
 /**
  * 
@@ -15,6 +19,7 @@ import model.Inventory;
 public abstract class Actor {
 
 	private int health;
+	private int fatigue;
 	private Position position;
 	private boolean idle;
 	private LinkedList<Action> queue;
@@ -22,6 +27,7 @@ public abstract class Actor {
 	private Skills skills;
 	private Inventory inventory;
 	private boolean alive;
+	private Map map;
 
 	/**
 	 * Creates a new actor
@@ -31,8 +37,10 @@ public abstract class Actor {
 	 * @param position
 	 *            The current position of the actor
 	 */
-	public Actor(int health, Position position) {
+	public Actor(int health, int fatigue, Position position, Map map) {
+		this.map = map;
 		this.health = health;
+		this.fatigue = fatigue;
 		this.position = position;
 		this.idle = true;
 		this.queue = new LinkedList<Action>();
@@ -71,11 +79,12 @@ public abstract class Actor {
 				currentAction = queue.peek();
 			else
 				return;
-		
+
 		// Store the result of the execution
 		int result = currentAction.execute(this);
 
-		//if the Action was Completed or Cancelled, poll the action out of the queue
+		// if the Action was Completed or Cancelled, poll the action out of the
+		// queue
 		if (result == Action.COMPLETED || result == Action.CANCELL) {
 			idle = true;
 			queue.poll();
@@ -104,6 +113,10 @@ public abstract class Actor {
 	 */
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	public void setFatigue(int fatigue) {
+		this.fatigue = fatigue;
 	}
 
 	/**
@@ -148,6 +161,23 @@ public abstract class Actor {
 	 */
 	public void setAlive(boolean alive) {
 		this.alive = alive;
+	}
+
+	public Position getNearestBed() {
+		HashMap<Furniture, Position> mapFurniture = map.getFurniture();
+		if (mapFurniture != null) {
+			// todo: actually calculate the distance
+			return mapFurniture.get(mapFurniture.keySet().toArray()[0]);
+		}
+		return null;
+
+	}
+
+	@Override
+	public String toString() {
+		String result = Integer.toString(health) + " health; "
+				+ Integer.toString(fatigue) + " fatigue";
+		return result;
 	}
 
 }

@@ -5,6 +5,9 @@ package model.Actors;
 
 import java.util.LinkedList;
 
+import model.GameMap;
+import model.Map;
+
 /**
  * @author Jonathon Davis
  * The Player Controlled Actor will execute commands
@@ -24,8 +27,8 @@ public class PlayerControlledActor extends Actor {
 	 * @param health The health of the actor
 	 * @param location The starting location of the Actor
 	 */
-	public PlayerControlledActor(int health, Position location){
-		super(health,location);
+	public PlayerControlledActor(int health, int fatigue, Position location, Map map){
+		super(health, fatigue, location, map);
 		fatigue = 0;
 		hunger = 0;
 		happiness = 0;
@@ -43,11 +46,15 @@ public class PlayerControlledActor extends Actor {
 		fatigue += 1;
 		hunger += 1;
 		happiness += 1;
+		super.setFatigue(fatigue);
 		// if one of the needs gets to high, the actor
 		// will ignore his current action and attempt
 		// to fulfill that need
 		if(hunger >= threshold)
 			this.priorityAddToActionQueue(new HungerAction());
+		if(fatigue >= 10) {
+			this.priorityAddToActionQueue(new SleepAction());
+		}
 		// if one of the needs get to high, then the actor dies
 		if(hunger >= death_threshold){
 			allActors.remove(this);
@@ -71,7 +78,8 @@ public class PlayerControlledActor extends Actor {
 		this.hunger = hunger;
 	}
 	
-	
-
+	public void setFatigue(int fatigue) {
+		this.fatigue = fatigue;
+	}
 
 }
