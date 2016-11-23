@@ -48,7 +48,7 @@ public class MoveActionTest {
 										{0,0,0,0,0}};
 		Map map = generateMap(mapGen);
 		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1), map);
-		test.addToActionQueue(new MoveAction(new Position(2,4)));
+		test.addToActionQueue(new MoveAction(new Position(2,4), map));
 		
 		assertEquals(1,test.getPosition().getRow());
 		assertEquals(1,test.getPosition().getCol());
@@ -75,7 +75,7 @@ public class MoveActionTest {
 										{0,0,0,0,0}};
 		Map map = generateMap(mapGen);
 		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1), map);
-		test.addToActionQueue(new MoveAction(new Position(2,4)));
+		test.addToActionQueue(new MoveAction(new Position(2,4), map));
 		
 		assertEquals(1,test.getPosition().getRow());
 		assertEquals(1,test.getPosition().getCol());

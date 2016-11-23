@@ -69,7 +69,7 @@ public class BuildingBlockTest {
 	@Test
 	public void testWoodBlock() {
 		AppleTreeTrunkBlock wb = new AppleTreeTrunkBlock();
-		assertFalse(wb.isOccupiable());
+		assertTrue(wb.isOccupiable());
 		assertTrue(wb.isDestroyable());
 		assertEquals(new WoodItem().getClass(), wb.lootBlock().get(0).getClass());
 		assertEquals(5, wb.getDurability());

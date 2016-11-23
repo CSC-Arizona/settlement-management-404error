@@ -1,13 +1,17 @@
 package model.Actors;
 
+import model.Map;
+
 /**
  * @author Jonathon Davis
  *
  */
 public class AttackAction implements Action {
 	private Actor target;
+	private Map map;
 	
-	public AttackAction(Actor target){
+	public AttackAction(Actor target, Map map){
+		this.map = map;
 		this.target = target;
 	}
 
@@ -35,7 +39,7 @@ public class AttackAction implements Action {
 			else
 				return Action.MADE_PROGRESS;
 		} else {
-			int action = new MoveAction(target.getPosition()).execute(performer);
+			int action = new MoveAction(target.getPosition(), map).execute(performer);
 			if(action == Action.COMPLETED)
 				return Action.MADE_PROGRESS;
 			else

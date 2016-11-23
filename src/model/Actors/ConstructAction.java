@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.GameMap;
+import model.Map;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.CavernBlock;
 import model.Room.HorizontalTunnel;
@@ -28,8 +29,10 @@ public class ConstructAction implements Action {
 	// this
 	// action is stalled for any reason
 	private List<Position> blocksToChange;
-
-	ConstructAction(Position pos, Room roomType) {
+	private Map map;
+	
+	ConstructAction(Position pos, Room roomType, Map map) {
+		this.map = map;
 		this.pos = pos;
 		this.corner = GameMap.getBlock(pos);
 		this.roomType = roomType;
@@ -72,7 +75,7 @@ public class ConstructAction implements Action {
 	 */
 	private int digOutRoom(Actor performer) {
 		for (Position p : blocksToChange) {
-			GatherAction g = new GatherAction(p);
+			GatherAction g = new GatherAction(p, map);
 			int result = g.execute(performer);
 			if (result != Action.COMPLETED) {
 				return result;

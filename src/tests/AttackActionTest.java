@@ -50,7 +50,7 @@ public class AttackActionTest {
 
 		Actor tester = new PlayerControlledActor(5, 0, new Position(10,10), map);
 		Actor rival = new PlayerControlledActor(5, 0, new Position(11,10), map);
-		tester.addToActionQueue(new AttackAction(rival));
+		tester.addToActionQueue(new AttackAction(rival, map));
 		assertEquals(5,rival.getHealth());
 		assertEquals(0,tester.getSkills().getCombatLevel());
 		tester.update();
@@ -73,7 +73,7 @@ public class AttackActionTest {
 		assertEquals(0,rival.getHealth());
 		tester.update();
 		assertEquals(0,rival.getHealth());
-		tester.addToActionQueue(new AttackAction(rival));
+		tester.addToActionQueue(new AttackAction(rival, map));
 		tester.update();
 		assertEquals(0,rival.getHealth());
 	}
@@ -88,7 +88,7 @@ public class AttackActionTest {
 		Map map = generateMap(mapGen);
 		PlayerControlledActor tester = new PlayerControlledActor(10, 0, new Position(1,1), map);
 		Actor rival = new PlayerControlledActor(5, 0, new Position(2,4), map);
-		tester.addToActionQueue(new AttackAction(rival));
+		tester.addToActionQueue(new AttackAction(rival, map));
 		
 		assertEquals(1,tester.getPosition().getRow());
 		assertEquals(1,tester.getPosition().getCol());
@@ -123,7 +123,7 @@ public class AttackActionTest {
 		assertEquals(0,rival.getHealth());
 		tester.update();
 		assertEquals(0,rival.getHealth());
-		tester.addToActionQueue(new AttackAction(rival));
+		tester.addToActionQueue(new AttackAction(rival, map));
 		tester.update();
 		assertEquals(0,rival.getHealth());
 	}

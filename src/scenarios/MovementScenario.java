@@ -45,10 +45,10 @@ public class MovementScenario {
 		// this actor should move across 0 boundary
 		Actor actor4 = new PlayerControlledActor(100, 0, new Position(54, 4), map);
 
-		actor1.addToActionQueue(new MoveAction(finalPosition));
-		actor2.addToActionQueue(new MoveAction(finalPosition));
-		actor3.addToActionQueue(new MoveAction(finalPosition));
-		actor4.addToActionQueue(new MoveAction(finalPosition));
+		actor1.addToActionQueue(new MoveAction(finalPosition, map));
+		actor2.addToActionQueue(new MoveAction(finalPosition, map));
+		actor3.addToActionQueue(new MoveAction(finalPosition, map));
+		actor4.addToActionQueue(new MoveAction(finalPosition, map));
 
 		hardCodedActors.put(actor1, actor1.getPosition());
 		hardCodedActors.put(actor2, actor2.getPosition());

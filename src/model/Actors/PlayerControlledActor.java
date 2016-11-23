@@ -21,7 +21,7 @@ public class PlayerControlledActor extends Actor {
 	private static final int threshold = 1000;
 	private static final int death_threshold = 1100;
 	private static LinkedList<PlayerControlledActor> allActors;
-	
+	private Map map;
 	/**
 	 * 
 	 * @param health The health of the actor
@@ -32,6 +32,7 @@ public class PlayerControlledActor extends Actor {
 		fatigue = 0;
 		hunger = 0;
 		happiness = 0;
+		this.map = map;
 		if(allActors == null)
 			allActors = new LinkedList<>();
 		allActors.add(this);
@@ -53,7 +54,7 @@ public class PlayerControlledActor extends Actor {
 		if(hunger >= threshold)
 			this.priorityAddToActionQueue(new HungerAction());
 		if(fatigue >= 10) {
-			this.priorityAddToActionQueue(new SleepAction());
+			this.priorityAddToActionQueue(new SleepAction(map));
 		}
 		// if one of the needs get to high, then the actor dies
 		if(hunger >= death_threshold){
