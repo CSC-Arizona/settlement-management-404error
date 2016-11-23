@@ -3,7 +3,8 @@
  */
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -44,9 +45,8 @@ public class HungerTest {
 				{0,1,1,1,1},
 				{1,0,0,1,1},
 				{1,1,1,1,1}};
-		Map map = generateMap(mapGen);
 
-		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1), map);
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1));
 		test.getInventory().addItem(new AntLarvaItem());
 		assertTrue(test.isAlive());
 		for(int i = 0; i < 1500; i++){
@@ -66,9 +66,8 @@ public class HungerTest {
 				{0,1,1,1,1},
 				{1,0,0,1,1},
 				{1,1,1,1,1}};
-		Map map = generateMap(mapGen);
 		
-		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1), map);
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1));
 		assertTrue(test.isAlive());
 		for(int i = 0; i < 1500; i++){
 			test.update();

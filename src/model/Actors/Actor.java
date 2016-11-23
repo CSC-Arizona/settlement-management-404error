@@ -27,7 +27,6 @@ public abstract class Actor {
 	private Skills skills;
 	private Inventory inventory;
 	private boolean alive;
-	private Map map;
 
 	/**
 	 * Creates a new actor
@@ -37,8 +36,7 @@ public abstract class Actor {
 	 * @param position
 	 *            The current position of the actor
 	 */
-	public Actor(int health, int fatigue, Position position, Map map) {
-		this.map = map;
+	public Actor(int health, int fatigue, Position position) {
 		this.health = health;
 		this.fatigue = fatigue;
 		this.position = position;
@@ -164,7 +162,7 @@ public abstract class Actor {
 	}
 
 	public Position getNearestBed() {
-		HashMap<Furniture, Position> mapFurniture = map.getFurniture();
+		HashMap<Furniture, Position> mapFurniture = GameMap.map.getFurniture();
 		if (mapFurniture != null) {
 			// todo: actually calculate the distance
 			return mapFurniture.get(mapFurniture.keySet().toArray()[0]);
@@ -175,8 +173,7 @@ public abstract class Actor {
 
 	@Override
 	public String toString() {
-		String result = Integer.toString(health) + " health; "
-				+ Integer.toString(fatigue) + " fatigue";
+		String result = Integer.toString(health) + " health; " + Integer.toString(fatigue) + " fatigue";
 		return result;
 	}
 

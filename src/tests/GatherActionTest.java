@@ -46,9 +46,9 @@ public class GatherActionTest {
 										{1,1,1,1,1},
 										{1,1,1,1,1},
 										{1,1,1,1,1}};
-		Map map = generateMap(mapGen);
-		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1), map);
-		test.addToActionQueue(new GatherAction(new Position(1,4), map));
+		GameMap.map = generateMap(mapGen);
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1));
+		test.addToActionQueue(new GatherAction(new Position(1,4)));
 		
 		assertEquals(1,test.getPosition().getRow());
 		assertEquals(1,test.getPosition().getCol());
@@ -72,7 +72,7 @@ public class GatherActionTest {
 		int amount = test.getInventory().size();
 		
 		assertEquals(amount,testBlock.lootBlock().size());
-		assertEquals("Air",map.getBuildingBlock(1, 4).getID());
+		assertEquals("Air",GameMap.getBlock(1, 4).getID());
 	}
 	
 	@Test
@@ -82,10 +82,10 @@ public class GatherActionTest {
 										{0,1,1,1,1},
 										{1,0,0,1,1},
 										{1,1,1,1,1}};
-		Map map = generateMap(mapGen);
-		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1), map);
-		test.addToActionQueue(new GatherAction(new Position(1,4), map));
-		test.addToActionQueue(new MoveAction(new Position(3,2), map));
+		GameMap.map = generateMap(mapGen);
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1));
+		test.addToActionQueue(new GatherAction(new Position(1,4)));
+		test.addToActionQueue(new MoveAction(new Position(3,2)));
 		
 		assertEquals(1,test.getPosition().getRow());
 		assertEquals(1,test.getPosition().getCol());

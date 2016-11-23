@@ -73,4 +73,34 @@ public class Inventory implements Iterable<Item> {
 	public int size() {
 		return items.size();
 	}
+
+	/**
+	 * @param required
+	 * @return
+	 */
+	public boolean contains(Item required) {
+		Iterator<Item> it = items.iterator();
+		while(it.hasNext()){
+			Item item = it.next();
+			if(item.getClass().equals(required.getClass())){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @param required
+	 */
+	public void removeItem(Item required) {
+		Iterator<Item> it = items.iterator();
+		while(it.hasNext()){
+			Item item = it.next();
+			if(item.getClass().equals(required.getClass())){
+				it.remove();
+				return;
+			}
+		}
+		
+	}
 }

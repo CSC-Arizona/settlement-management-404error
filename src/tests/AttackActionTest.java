@@ -48,9 +48,9 @@ public class AttackActionTest {
 				{1,1,1,1,1}};
 		Map map = generateMap(mapGen);
 
-		Actor tester = new PlayerControlledActor(5, 0, new Position(10,10), map);
-		Actor rival = new PlayerControlledActor(5, 0, new Position(11,10), map);
-		tester.addToActionQueue(new AttackAction(rival, map));
+		Actor tester = new PlayerControlledActor(5, 0, new Position(10,10));
+		Actor rival = new PlayerControlledActor(5, 0, new Position(11,10));
+		tester.addToActionQueue(new AttackAction(rival));
 		assertEquals(5,rival.getHealth());
 		assertEquals(0,tester.getSkills().getCombatLevel());
 		tester.update();
@@ -73,7 +73,7 @@ public class AttackActionTest {
 		assertEquals(0,rival.getHealth());
 		tester.update();
 		assertEquals(0,rival.getHealth());
-		tester.addToActionQueue(new AttackAction(rival, map));
+		tester.addToActionQueue(new AttackAction(rival));
 		tester.update();
 		assertEquals(0,rival.getHealth());
 	}
@@ -85,21 +85,21 @@ public class AttackActionTest {
 										{1,1,1,1,0},
 										{1,1,1,1,1},
 										{1,1,1,1,1}};
-		Map map = generateMap(mapGen);
-		PlayerControlledActor tester = new PlayerControlledActor(10, 0, new Position(1,1), map);
-		Actor rival = new PlayerControlledActor(5, 0, new Position(2,4), map);
-		tester.addToActionQueue(new AttackAction(rival, map));
+		GameMap.map = generateMap(mapGen);
+		PlayerControlledActor tester = new PlayerControlledActor(10, 0, new Position(1,1));
+		Actor rival = new PlayerControlledActor(5, 0, new Position(2,4));
+		tester.addToActionQueue(new AttackAction(rival));
 		
 		assertEquals(1,tester.getPosition().getRow());
 		assertEquals(1,tester.getPosition().getCol());
 		
 		tester.update();
 		assertEquals(1,tester.getPosition().getRow());
-		assertEquals(2,tester.getPosition().getCol());
+		assertEquals(0,tester.getPosition().getCol());
 		
 		tester.update();
-		assertEquals(1,tester.getPosition().getRow());
-		assertEquals(3,tester.getPosition().getCol());
+		assertEquals(2,tester.getPosition().getRow());
+		assertEquals(4,tester.getPosition().getCol());
 		
 		assertEquals(5,rival.getHealth());
 		assertEquals(0,tester.getSkills().getCombatLevel());
@@ -123,7 +123,7 @@ public class AttackActionTest {
 		assertEquals(0,rival.getHealth());
 		tester.update();
 		assertEquals(0,rival.getHealth());
-		tester.addToActionQueue(new AttackAction(rival, map));
+		tester.addToActionQueue(new AttackAction(rival));
 		tester.update();
 		assertEquals(0,rival.getHealth());
 	}

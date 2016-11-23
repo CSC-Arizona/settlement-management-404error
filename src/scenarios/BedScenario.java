@@ -3,15 +3,14 @@ package scenarios;
 import java.util.HashMap;
 import java.util.Random;
 
-import model.Map;
+import controller.Controller;
+import model.GameMap;
 import model.MapParameters;
 import model.Actors.Actor;
-import model.Actors.MoveAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.Furniture.Bed;
 import model.Furniture.Furniture;
-import controller.Controller;
 
 /**
  * @author Ethan Ward
@@ -35,10 +34,10 @@ public class BedScenario {
 				MapParameters.getDefaultParameters(), hardCodedFurniture,
 				hardCodedActors, new Random(seed));
 
-		Map map = controller.getMap();
+		GameMap.map = controller.getMap();
 
 		PlayerControlledActor actor = new PlayerControlledActor(100, 0,
-				new Position(50, 985), map);
+				new Position(50, 985));
 		actor.setFatigue(5);
 		hardCodedActors.put(actor, actor.getPosition());
 

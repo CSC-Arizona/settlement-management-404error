@@ -8,10 +8,8 @@ import model.Map;
  */
 public class AttackAction implements Action {
 	private Actor target;
-	private Map map;
-	
-	public AttackAction(Actor target, Map map){
-		this.map = map;
+
+	public AttackAction(Actor target){
 		this.target = target;
 	}
 
@@ -39,7 +37,7 @@ public class AttackAction implements Action {
 			else
 				return Action.MADE_PROGRESS;
 		} else {
-			int action = new MoveAction(target.getPosition(), map).execute(performer);
+			int action = new MoveAction(target.getPosition()).execute(performer);
 			if(action == Action.COMPLETED)
 				return Action.MADE_PROGRESS;
 			else
