@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Actors.Actor;
+import model.Furniture.Furniture;
 import model.Items.AntLarvaItem;
 import model.Items.Item;
 
@@ -50,6 +51,21 @@ public class AntTunnelBlock extends BuildingBlock {
 	@Override
 	public List<Actor> getActors() {
 		return actorsInBlock;
+	}
+	
+	@Override
+	public boolean addFurniture(Furniture furniture) {
+		return false;
+	}
+
+	@Override
+	public boolean removeFurniture() {
+		return false;
+	}
+
+	@Override
+	public Furniture getFurniture() {
+		return null;
 	}
 
 }

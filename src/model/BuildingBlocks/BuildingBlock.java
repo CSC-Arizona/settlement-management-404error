@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 import model.Actors.Actor;
+import model.Furniture.Furniture;
 import model.Items.Item;
 
 /**
@@ -24,7 +25,7 @@ public abstract class BuildingBlock {
 
 	private Color color;
 	private String id;
-	
+
 	public BuildingBlock(int durability, boolean destroyable,
 			boolean occupiable, Color color, String id) {// , List<Item>
 															// itemsInBlock) {
@@ -65,17 +66,41 @@ public abstract class BuildingBlock {
 		return id;
 	}
 
-
 	/*
 	 * returns a list of the items the BuildingBlock drops if it is destroyed,
 	 * or null if it drops nothing.
 	 */
 	abstract public List<Item> lootBlock();
-	
+
 	abstract public boolean addActor(Actor actor);
-	
+
 	abstract public boolean removeActor(Actor actor);
-	
+
 	abstract public List<Actor> getActors();
-	
+
+	abstract public boolean addFurniture(Furniture furniture);
+
+	abstract public boolean removeFurniture();
+
+	abstract public Furniture getFurniture();
+
+	@Override
+	public String toString() {
+		String result = "";
+
+		result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Block type: " + id;
+		
+		if (getActors() != null) {
+			for (Actor actor : getActors()) {
+				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Actor: " + actor.toString();
+			}
+		}
+		
+		if (getFurniture() != null) {
+			result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Furniture: " + getFurniture().toString();
+		}
+		return result;
+
+	}
+
 }

@@ -59,13 +59,17 @@ public class MoveAction implements Action {
 	 * Recursively finds the shortest path from one node and all others
 	 * @param currentPos The current Position
 	 * @param currentNode The current Node
+	 * 
+	 * TODO: make this function handle the discontinuity from end of
+	 * map -> beginning (wrap around)
 	 */
 	private void calculatePath(Position currentPos, Node currentNode) {
 		int row = currentPos.getRow(), col = currentPos.getCol();
 		// Check to make sure this is in the bounds of the map
-		if (row < 0 || col < 0 || row >= GameMap.mapHeight() || col >= GameMap.mapWidth() || !GameMap.getBlock(row, col).getID().equals("Air"))
+		if (row < 0 || col < 0 || row >= GameMap.mapHeight() || col >= GameMap.mapWidth() || !GameMap.getBlock(row, col).isOccupiable())
 			return;
 		// check to make sure there is a valid block to stand on
+		
 		if (row + 1 < GameMap.mapHeight() && !GameMap.getBlock(row+1, col).getID().equals("Air")) {
 			// check to see if this node already has a more efficient route
 			if (visited.containsKey(currentPos) && currentNode.distance > visited.get(currentPos).distance)

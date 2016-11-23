@@ -11,9 +11,10 @@ import model.Room.Room;
 import model.Room.VerticalTunnel;
 
 /**
- * Prerequisite for ConstructAction: the square that is selected needs to have a path leading to
- * it (occupiable spaces adjacent to whatever square is chosen). I think this would be easier to 
- * implement on the map side once we actually put in a menu that shows when a square is selected.
+ * Prerequisite for ConstructAction: the square that is selected needs to have a
+ * path leading to it (occupiable spaces adjacent to whatever square is chosen).
+ * I think this would be easier to implement on the map side once we actually
+ * put in a menu that shows when a square is selected.
  * 
  * @author Katherine Walters
  *
@@ -23,27 +24,31 @@ public class ConstructAction implements Action {
 	private Position pos;
 	private BuildingBlock corner;
 	private Room roomType;
-	// blocksToChange will contain all of the blocks remaining to be dug out if this 
+	// blocksToChange will contain all of the blocks remaining to be dug out if
+	// this
 	// action is stalled for any reason
 	private List<Position> blocksToChange;
-	
+
 	ConstructAction(Position pos, Room roomType) {
 		this.pos = pos;
-		this.corner = GameMap.getBlock(pos.getRow(), pos.getCol());
+		this.corner = GameMap.getBlock(pos);
 		this.roomType = roomType;
 		this.blocksToChange = new LinkedList<>();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see model.Actors.Action#execute(model.Actors.Actor)
 	 */
 	@Override
 	public int execute(Actor performer) {
-		// cancel the action if the room is destined to be build on already-used space
+		// cancel the action if the room is destined to be build on already-used
+		// space
 		if (corner.isOccupiable())
 			return Action.CANCELL;
-		// cancel if the the room's dimensions aren't available in either direction 
+		// cancel if the the room's dimensions aren't available in either
+		// direction
 		if (isAvailableAsTopLeft()) {
 			// gather those squares
 			// set those squares to be caverns
@@ -54,15 +59,16 @@ public class ConstructAction implements Action {
 			return digOutRoom(performer);
 		} else {
 			// dimensions weren't available
-		    return Action.CANCELL;
+			return Action.CANCELL;
 		}
 	}
-	
+
 	/*
-	 * For every BuildingBlock in the soon to be room, a gather action is created. If this 
-	 * gather action is stalled for some reason, it stalls this construct action as well. 
-	 * Else, the room is dug out and each block in the room is set to be a cavernBlock. (Should
-	 * we make blocks for each specific type of room instead??)
+	 * For every BuildingBlock in the soon to be room, a gather action is
+	 * created. If this gather action is stalled for some reason, it stalls this
+	 * construct action as well. Else, the room is dug out and each block in the
+	 * room is set to be a cavernBlock. (Should we make blocks for each specific
+	 * type of room instead??)
 	 */
 	private int digOutRoom(Actor performer) {
 		for (Position p : blocksToChange) {
@@ -71,20 +77,20 @@ public class ConstructAction implements Action {
 			if (result != Action.COMPLETED) {
 				return result;
 			}
-			GameMap.setBuildingBlock(p.getRow(), p.getCol(), new CavernBlock());
+			GameMap.setBuildingBlock(p, new CavernBlock());
 			blocksToChange.remove(p);
 		}
 		return Action.COMPLETED;
 	}
-	
+
 	/*
-	 * Returns a list of all the blocks that still need to be gathered and changed to caverns if
-	 * this action is stalled for some reason.
+	 * Returns a list of all the blocks that still need to be gathered and
+	 * changed to caverns if this action is stalled for some reason.
 	 */
 	public List<Position> getBlocksToChange() {
 		return blocksToChange;
 	}
-	
+
 	private boolean isAvailableAsTopLeft() {
 		// check to see if the chosen position is the top left corner
 		int width = roomType.getRequiredWidth();
@@ -103,7 +109,7 @@ public class ConstructAction implements Action {
 		}
 		return true;
 	}
-	
+
 	private boolean isAvailableAsTopRight() {
 		// check to see if the chosen position is the top right corner
 		int width = roomType.getRequiredWidth();

@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.TreeMap;
 
@@ -18,6 +20,7 @@ import model.BuildingBlocks.GoldOreBlock;
 import model.BuildingBlocks.IronOreBlock;
 import model.BuildingBlocks.LavaBlock;
 import model.BuildingBlocks.StoneBlock;
+import model.Furniture.Furniture;
 
 /**
  * Constructs a random map with various geographical features
@@ -27,71 +30,63 @@ import model.BuildingBlocks.StoneBlock;
  */
 public class Map {
 
-	private int totalHeight;
-	private int airHeight;
-	private int dirtDepth;
-	private int stoneDepth;
-	private int lavaDepth = 10;
-	private int totalWidth;
 	private Random random;
 
 	private ArrayList<AppleTree> trees;
 	private ArrayList<Integer[]> cavernFloorBlocks;
-	private ArrayList<Actor> actors;
-
-	private double ironFrequency = 0.01;
-	private double goldFrequency = 0.001;
-	private double mountainFrequency = 0.03;
-	private double treeFrequency = 0.05;
-	private double grassFrequency = 0.1;
-	private double caveFrequency = 0.005;
-	private int numberOfAntColonies = 2;
-	private int numberOfPlayerActors = 7;
 
 	private BuildingBlock[][] map;
+	private MapParameters mapParameters;
 
-	public Map(int totalHeight, int totalWidth, int dirtDepth, int stoneDepth,
-			int seed) {
-		random = new Random(seed);
+	private HashMap<Furniture, Position> hardCodedFurniture;
+	private HashMap<Actor, Position> hardCodedActors;
 
-		this.totalHeight = totalHeight;
-		this.dirtDepth = dirtDepth;
-		this.stoneDepth = stoneDepth;
-		this.airHeight = (totalHeight - dirtDepth - stoneDepth - lavaDepth);
-		this.totalWidth = totalWidth;
+	public Map(MapParameters mapParameters,
+			HashMap<Furniture, Position> hardCodedFurniture,
+			HashMap<Actor, Position> hardCodedActors, Random random) {
+		this.random = random;
+		this.mapParameters = mapParameters;
+		this.hardCodedFurniture = hardCodedFurniture;
+		this.hardCodedActors = hardCodedActors;
+
 		constructMap();
 	}
 
-	public Map(BuildingBlock[][] map) {
-		this.totalHeight = map.length;
-		this.totalWidth = map[0].length;
-		this.map = map;
+	public Map(BuildingBlock[][] mapTypes) {
+		this.mapParameters = new MapParameters(mapTypes[0].length,
+				mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+		this.map = mapTypes;
+	}
+
+	public BuildingBlock getBuildingBlock(Position position) {
+		return map[position.getRow()][position.getCol()];
 	}
 
 	public BuildingBlock getBuildingBlock(int row, int col) {
 		return map[row][col];
 	}
 
-	public void setBuildingBlock(int row, int col, BuildingBlock newBlock) {
-		map[row][col] = newBlock;
+	public void setBuildingBlock(Position position, BuildingBlock newBlock) {
+		map[position.getRow()][position.getCol()] = newBlock;
 	}
 
 	/**
-	 * @return the totalHeight
+	 * @return the map height
 	 */
 	public int getTotalHeight() {
-		return totalHeight;
+		return mapParameters.mapHeight;
 	}
 
 	/**
-	 * @return the totalWidth
+	 * @return the map width
 	 */
 	public int getTotalWidth() {
-		return totalWidth;
+		return mapParameters.mapWidth;
 	}
 
 	private void constructMap() {
-		map = new BuildingBlock[totalHeight][totalWidth];
+		map = new BuildingBlock[getTotalHeight()][getTotalWidth()];
 		addAir();
 		addStone();
 		addDirt();
@@ -105,11 +100,12 @@ public class Map {
 		addCaves();
 		addMushrooms();
 		addPlayerActors();
+		addFurniture();
 	}
 
 	private void addAir() {
-		for (int i = 0; i < airHeight; i++) {
-			for (int j = 0; j < totalWidth; j++) {
+		for (int i = 0; i < mapParameters.airHeight; i++) {
+			for (int j = 0; j < getTotalWidth(); j++) {
 				map[i][j] = new AirBlock();
 			}
 		}
@@ -117,8 +113,8 @@ public class Map {
 
 	private void addDirt() {
 		int randomEdge = random.nextInt(10);
-		for (int j = 0; j < totalWidth; j++) {
-			for (int i = airHeight; i < (airHeight + dirtDepth); i++) {
+		for (int j = 0; j < getTotalWidth(); j++) {
+			for (int i = mapParameters.airHeight; i < (mapParameters.airHeight + mapParameters.dirtDepth); i++) {
 				map[i][j] = new EarthBlock();
 			}
 			if (randomEdge <= 2) {
@@ -140,48 +136,53 @@ public class Map {
 			}
 			if (randomEdge < 0)
 				randomEdge += 1;
-			for (int i = (airHeight + dirtDepth); i < (airHeight + dirtDepth + randomEdge); i++) {
+			for (int i = (mapParameters.airHeight + mapParameters.dirtDepth); i < (mapParameters.airHeight
+					+ mapParameters.dirtDepth + randomEdge); i++) {
 				map[i][j] = new EarthBlock();
 			}
 		}
 	}
 
 	private void addStone() {
-		for (int i = (airHeight + dirtDepth); i < (airHeight + dirtDepth + stoneDepth); i++) {
-			for (int j = 0; j < totalWidth; j++) {
+		for (int i = (mapParameters.airHeight + mapParameters.dirtDepth); i < (mapParameters.airHeight
+				+ mapParameters.dirtDepth + mapParameters.stoneDepth); i++) {
+			for (int j = 0; j < getTotalWidth(); j++) {
 				map[i][j] = new StoneBlock();
 			}
 		}
 	}
 
 	private void addLava() {
-		for (int i = (airHeight + dirtDepth + stoneDepth); i < (airHeight
-				+ dirtDepth + stoneDepth + lavaDepth); i++) {
-			for (int j = 0; j < totalWidth; j++) {
+		for (int i = (mapParameters.airHeight + mapParameters.dirtDepth + mapParameters.stoneDepth); i < (mapParameters.airHeight
+				+ mapParameters.dirtDepth + mapParameters.stoneDepth + mapParameters.lavaDepth); i++) {
+			for (int j = 0; j < getTotalWidth(); j++) {
 				map[i][j] = new LavaBlock();
 			}
 		}
 	}
 
 	private void addIron() {
-		int totalIronClusters = (int) (ironFrequency * stoneDepth * totalWidth);
+		int totalIronClusters = (int) (mapParameters.ironFrequency
+				* mapParameters.stoneDepth * getTotalWidth());
 
 		int first_third = totalIronClusters / 10;
 		int second_third = totalIronClusters / 40;
 		int third_third = totalIronClusters - first_third - second_third;
 
 		for (int i = 0; i < second_third; i++) {
-			int startX = random.nextInt(totalWidth);
-			int startY = random.nextInt(stoneDepth / 3) + dirtDepth + airHeight
-					+ stoneDepth / 3;
+			int startX = random.nextInt(getTotalWidth());
+			int startY = random.nextInt(mapParameters.stoneDepth / 3)
+					+ mapParameters.dirtDepth + mapParameters.airHeight
+					+ mapParameters.stoneDepth / 3;
 			if (map[startY][startX].getID().equals(StoneBlock.id)) {
 				map[startY][startX] = new IronOreBlock();
 			}
 		}
 		for (int i = 0; i < third_third; i++) {
-			int startX = random.nextInt(totalWidth);
-			int startY = random.nextInt(stoneDepth / 3) + dirtDepth + airHeight
-					+ 2 * stoneDepth / 3;
+			int startX = random.nextInt(getTotalWidth());
+			int startY = random.nextInt(mapParameters.stoneDepth / 3)
+					+ mapParameters.dirtDepth + mapParameters.airHeight + 2
+					* mapParameters.stoneDepth / 3;
 			if (map[startY][startX].getID().equals(StoneBlock.id)) {
 				map[startY][startX] = new IronOreBlock();
 			}
@@ -189,11 +190,13 @@ public class Map {
 	}
 
 	private void addGold() {
-		int totalGoldClusters = (int) (goldFrequency * stoneDepth * totalWidth);
+		int totalGoldClusters = (int) (mapParameters.goldFrequency
+				* mapParameters.stoneDepth * getTotalWidth());
 		for (int i = 0; i < totalGoldClusters; i++) {
-			int startX = random.nextInt(totalWidth);
-			int startY = random.nextInt(stoneDepth / 5) + dirtDepth + airHeight
-					+ 4 * stoneDepth / 5;
+			int startX = random.nextInt(getTotalWidth());
+			int startY = random.nextInt(mapParameters.stoneDepth / 5)
+					+ mapParameters.dirtDepth + mapParameters.airHeight + 4
+					* mapParameters.stoneDepth / 5;
 			if (map[startY][startX].getID().equals(StoneBlock.id)) {
 				map[startY][startX] = new GoldOreBlock();
 			}
@@ -201,17 +204,17 @@ public class Map {
 	}
 
 	private void addMountains() {
-		int totalMountains = (int) (mountainFrequency * totalWidth);
+		int totalMountains = (int) (mapParameters.mountainFrequency * getTotalWidth());
 
 		for (int i = 0; i < totalMountains; i++) {
-			int X = random.nextInt(totalWidth);
+			int X = random.nextInt(getTotalWidth());
 			int widthEstimate = random.nextInt(100);
-			int Y = airHeight;
+			int Y = mapParameters.airHeight;
 
 			// up
 			for (int j = 0; j < widthEstimate / 2; j++) {
 				map[Y][X] = new EarthBlock();
-				for (int k = Y; k < airHeight; k++) {
+				for (int k = Y; k < mapParameters.airHeight; k++) {
 					map[k][X] = new EarthBlock();
 				}
 				double testValue = random.nextDouble();
@@ -225,15 +228,15 @@ public class Map {
 				}
 				if (Y < 0)
 					Y++;
-				if (Y >= airHeight)
+				if (Y >= mapParameters.airHeight)
 					Y--;
-				X %= totalWidth;
+				X %= getTotalWidth();
 			}
 
 			// down
 			while (true) {
 				map[Y][X] = new EarthBlock();
-				for (int k = Y; k < airHeight; k++) {
+				for (int k = Y; k < mapParameters.airHeight; k++) {
 					map[k][X] = new EarthBlock();
 				}
 				double testValue = random.nextDouble();
@@ -247,32 +250,33 @@ public class Map {
 				}
 				if (Y < 0)
 					Y++;
-				if (Y >= airHeight)
+				if (Y >= mapParameters.airHeight)
 					break;
-				X %= totalWidth;
+				X %= getTotalWidth();
 			}
 		}
 	}
 
 	private void addTrees() {
 		trees = new ArrayList<AppleTree>();
-		int totalTrees = (int) (treeFrequency * totalWidth);
+		int totalTrees = (int) (mapParameters.treeFrequency * getTotalWidth());
 
 		for (int i = 0; i < totalTrees; i++) {
-			AppleTree tree = new AppleTree(totalWidth, airHeight, map, random);
+			AppleTree tree = new AppleTree(getTotalWidth(),
+					mapParameters.airHeight, map, random);
 			tree.addToMap();
 			trees.add(tree);
 		}
 	}
 
 	private void addBushes() {
-		int totalBushes = (int) (grassFrequency * totalWidth);
+		int totalBushes = (int) (mapParameters.grassFrequency * getTotalWidth());
 
 		for (int i = 0; i < totalBushes; i++) {
-			int bushX = random.nextInt(totalWidth);
+			int bushX = random.nextInt(getTotalWidth());
 
 			// move up until we are no longer underground
-			int bushY = airHeight;
+			int bushY = mapParameters.airHeight;
 			while (!map[bushY][bushX].getID().equals(AirBlock.id)) {
 				bushY -= 1;
 				if (bushY < 0)
@@ -288,11 +292,11 @@ public class Map {
 	}
 
 	private void addAntColonies() {
-		for (int i = 0; i < numberOfAntColonies; i++) {
-			int startX = random.nextInt(totalWidth);
+		for (int i = 0; i < mapParameters.numberOfAntColonies; i++) {
+			int startX = random.nextInt(getTotalWidth());
 			int height = random.nextInt(2) + 5;
 
-			int startY = airHeight;
+			int startY = mapParameters.airHeight;
 			// move up until we are no longer underground
 			while (map[startY][startX].getID().equals(EarthBlock.id)
 					|| map[startY][startX].getID().equals(AntTunnelBlock.id)) {
@@ -305,11 +309,11 @@ public class Map {
 				startY = 0;
 			}
 
-			for (int j = startY; j < airHeight; j++) {
+			for (int j = startY; j < mapParameters.airHeight; j++) {
 				int width = 2 * (j - startY);
 				for (int k = (-width + 1); k < width; k++) {
 					int row = j;
-					int col = Math.floorMod(startX + k, totalWidth);
+					int col = Math.floorMod(startX + k, getTotalWidth());
 					if (k != 0) {
 
 						if (map[row][col].getID().equals(AirBlock.id)) {
@@ -331,7 +335,7 @@ public class Map {
 	private void addAntTunnel(int startX) {
 		int tunnelSize = random.nextInt(200) + 400;
 		int tunnelX = startX;
-		int tunnelY = airHeight - 1;
+		int tunnelY = mapParameters.airHeight - 1;
 		int[] offsetsX = new int[] { -1, 0, 1 };
 		int[] offsetsY = new int[] { 1, 1, -1, 0, 1 };
 		int newTunnelX;
@@ -343,9 +347,9 @@ public class Map {
 			if (inChamber) {
 				newTunnelX = tunnelX + offsetsX[random.nextInt(3)];
 				newTunnelY = tunnelY + offsetsY[random.nextInt(5)];
-				newTunnelX = Math.floorMod(newTunnelX, totalWidth);
+				newTunnelX = Math.floorMod(newTunnelX, getTotalWidth());
 				if (newTunnelY > 0
-						&& newTunnelY >= airHeight
+						&& newTunnelY >= mapParameters.airHeight
 						&& (map[newTunnelY][newTunnelX].getID().equals(
 								EarthBlock.id) || map[newTunnelY][newTunnelX]
 								.getID().equals(CavernBlock.id))
@@ -364,9 +368,9 @@ public class Map {
 			} else {
 				newTunnelX = tunnelX + directionX;
 				newTunnelY = tunnelY + directionY;
-				newTunnelX = Math.floorMod(newTunnelX, totalWidth);
+				newTunnelX = Math.floorMod(newTunnelX, getTotalWidth());
 				if (newTunnelY > 0
-						&& newTunnelY >= airHeight
+						&& newTunnelY >= mapParameters.airHeight
 						&& (map[newTunnelY][newTunnelX].getID().equals(
 								EarthBlock.id) || map[newTunnelY][newTunnelX]
 								.getID().equals(CavernBlock.id))
@@ -390,15 +394,18 @@ public class Map {
 	 */
 	private void addCaves() {
 		cavernFloorBlocks = new ArrayList<Integer[]>();
-		int totalCaves = (int) (caveFrequency * totalWidth);
+		int totalCaves = (int) (mapParameters.caveFrequency * getTotalWidth());
 
 		for (int i = 0; i < totalCaves; i++) {
+
+			// ellipse parameters
 			double a = 10 * (random.nextDouble() + 1);
 			double b = 3 * (random.nextDouble() + 1);
 
-			int originX = random.nextInt(totalWidth);
-			int originY = random.nextInt(stoneDepth / 2) + airHeight
-					+ dirtDepth + stoneDepth / 2;
+			int originX = random.nextInt(getTotalWidth());
+			int originY = random.nextInt(mapParameters.stoneDepth / 2)
+					+ mapParameters.airHeight + mapParameters.dirtDepth
+					+ mapParameters.stoneDepth / 2;
 
 			for (double t = 0.0; t <= Math.PI; t += 0.01) {
 				int x = originX + (int) (a * Math.cos(t));
@@ -407,9 +414,9 @@ public class Map {
 				int y2 = originY
 						- (int) (b * Math.sin(t) + 4 * random.nextDouble());
 
-				x = Math.floorMod(x, totalWidth);
+				x = Math.floorMod(x, getTotalWidth());
 
-				if (y1 < totalHeight) {
+				if (y1 < getTotalHeight()) {
 					if (!map[y1 + 1][x].getID().equals(LavaBlock.id))
 						cavernFloorBlocks.add(new Integer[] { y1 + 1, x });
 				}
@@ -435,7 +442,7 @@ public class Map {
 		for (int i = 0; i < 10; i++) {
 			Integer[] cavernFloorBlock = cavernFloorBlocks.get(random
 					.nextInt(cavernFloorBlocks.size()));
-			Mushroom mushroom = new Mushroom(totalWidth, map, random,
+			Mushroom mushroom = new Mushroom(getTotalWidth(), map, random,
 					cavernFloorBlock);
 			mushroom.addToMap();
 		}
@@ -443,8 +450,8 @@ public class Map {
 
 	private int[] getRandomOccupiablePosition(int centerX, int range) {
 		int x = random.nextInt(range) - range / 2;
-		int y = airHeight;
-		x = Math.floorMod(x, totalWidth);
+		int y = mapParameters.airHeight;
+		x = Math.floorMod(x, getTotalWidth());
 
 		while (!map[y][x].getID().equals(AirBlock.id)) {
 			y -= 1;
@@ -459,43 +466,34 @@ public class Map {
 	}
 
 	private void addPlayerActors() {
-		actors = new ArrayList<Actor>();
-
-		int count = 0;
-		while (count < numberOfPlayerActors) {
-			int[] actorPosition = getRandomOccupiablePosition(0, 20);
-
-			int y = actorPosition[0];
-			int x = actorPosition[1];
-
-			if (x != -1) {
-				Actor actor = new PlayerControlledActor(100, new Position(y, x));
-				
-				// add a random position to move to (temporary)
-				int[] goalPosition = getRandomOccupiablePosition(0, 20);
-				if (goalPosition[0] != -1) {
-					Position position = new Position(goalPosition[0],
-							goalPosition[1]);
-					MoveAction action = new MoveAction(position);
-					actor.addToActionQueue(action);
-				}
-				
-				if (map[y][x].addActor(actor)) {
-					actors.add(actor);
-					count += 1;
-				}
+		if (hardCodedActors != null) {
+			for (Actor actor : hardCodedActors.keySet()) {
+				Position position = hardCodedActors.get(actor);
+				map[position.getRow()][position.getCol()].addActor(actor);
 			}
-
 		}
 	}
 
 	public void updateActors(int timeDelta) {
-		for (Actor actor : actors) {
-			Position oldPosition = actor.getPosition();
-			map[oldPosition.getRow()][oldPosition.getCol()].removeActor(actor);
-			actor.update();
-			Position newPosition = actor.getPosition();
-			map[newPosition.getRow()][newPosition.getCol()].addActor(actor);
+		if (hardCodedActors != null) {
+			for (Actor actor : hardCodedActors.keySet()) {
+				Position oldPosition = actor.getPosition();
+				map[oldPosition.getRow()][oldPosition.getCol()]
+						.removeActor(actor);
+				actor.update();
+				Position newPosition = actor.getPosition();
+				map[newPosition.getRow()][newPosition.getCol()].addActor(actor);
+			}
+		}
+	}
+
+	private void addFurniture() {
+		if (hardCodedFurniture != null) {
+			for (Furniture furniture : hardCodedFurniture.keySet()) {
+				Position position = hardCodedFurniture.get(furniture);
+				map[position.getRow()][position.getCol()]
+						.addFurniture(furniture);
+			}
 		}
 	}
 

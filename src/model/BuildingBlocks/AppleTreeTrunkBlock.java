@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Actors.Actor;
+import model.Furniture.Furniture;
 import model.Items.Item;
 import model.Items.WoodItem;
 
@@ -21,9 +22,8 @@ public class AppleTreeTrunkBlock extends BuildingBlock {
 	private final static int durability = 5;
 	public final static String id = "Wood";
 	
-	
 	public AppleTreeTrunkBlock() {
-		super(durability, true, false, new Color(174, 144, 55), id);
+		super(durability, true, true, new Color(174, 144, 55), id);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new WoodItem());
 		actorsInBlock = new LinkedList<>();
@@ -52,6 +52,21 @@ public class AppleTreeTrunkBlock extends BuildingBlock {
 	@Override
 	public List<Actor> getActors() {
 		return actorsInBlock;
+	}
+	
+	@Override
+	public boolean addFurniture(Furniture furniture) {
+		return false;
+	}
+
+	@Override
+	public boolean removeFurniture() {
+		return false;
+	}
+
+	@Override
+	public Furniture getFurniture() {
+		return null;
 	}
 
 }

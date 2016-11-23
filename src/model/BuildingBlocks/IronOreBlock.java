@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Actors.Actor;
+import model.Furniture.Furniture;
 import model.Items.IronItem;
 import model.Items.Item;
 
@@ -45,4 +46,18 @@ public class IronOreBlock extends BuildingBlock {
 		return null;
 	}
 
+	@Override
+	public boolean addFurniture(Furniture furniture) {
+		return false;
+	}
+
+	@Override
+	public boolean removeFurniture() {
+		return false;
+	}
+
+	@Override
+	public Furniture getFurniture() {
+		return null;
+	}
 }

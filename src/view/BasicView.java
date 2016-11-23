@@ -20,7 +20,9 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 import model.Map;
+import model.MapParameters;
 import model.Actors.Actor;
+import model.Furniture.Furniture;
 
 public class BasicView extends JFrame {
 
@@ -69,11 +71,11 @@ public class BasicView extends JFrame {
 		mouseDescriptionLabel.setText("<html>Selected: " + id);
 	}
 
-	public BasicView(Controller controller, Map map, int mapHeight, int mapWidth) {
+	public BasicView(Controller controller, Map map, MapParameters mapParameters) {
 		this.controller = controller;
 		this.map = map;
-		this.mapWidth = mapWidth;
-		this.mapHeight = mapHeight;
+		this.mapWidth = mapParameters.mapWidth;
+		this.mapHeight = mapParameters.mapHeight;
 
 		Box box = new Box(BoxLayout.Y_AXIS);
 		box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -161,6 +163,13 @@ public class BasicView extends JFrame {
 						}
 					}
 
+					Furniture furniture = map.getBuildingBlock(row, col)
+							.getFurniture();
+					if (furniture != null) {
+						g2.drawString("F", j * blockSizeX + blockSizeX / 2,
+								(i + 1) * blockSizeY);
+					}
+
 				}
 			}
 		}
@@ -238,18 +247,7 @@ public class BasicView extends JFrame {
 			x = Math.floorMod(x, mapWidth);
 			int y = coords.y / blockSizeY + visibleCornerY;
 
-			String mouseDescription = map.getBuildingBlock(y, x).getID();
-
-			List<Actor> actors = map.getBuildingBlock(y, x).getActors();
-			if (actors != null) {
-				int size = actors.size();
-				for (int i = 0; i < size; i++) {
-					mouseDescription += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Actor "
-							+ i;
-					mouseDescription += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Health: "
-							+ actors.get(i).getHealth();
-				}
-			}
+			String mouseDescription = map.getBuildingBlock(y, x).toString();
 
 			mouseDescription += "</html>";
 

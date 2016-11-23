@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Actors.Actor;
+import model.Furniture.Furniture;
 import model.Items.Item;
 
 /**
@@ -16,6 +17,7 @@ import model.Items.Item;
  */
 public class CavernBlock extends BuildingBlock {
 
+	private Furniture furniture;
 	private List<Actor> actorsInBlock;
 	private final static int durability = 0;
 	public final static String id = "Cavern";
@@ -48,6 +50,29 @@ public class CavernBlock extends BuildingBlock {
 	@Override
 	public List<Actor> getActors() {
 		return actorsInBlock;
+	}
+	
+	@Override
+	public boolean addFurniture(Furniture furniture) {
+		if (this.furniture == null) {
+			this.furniture = furniture;
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean removeFurniture() {
+		if (this.furniture != null) {
+			this.furniture = null;
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Furniture getFurniture() {
+		return furniture;
 	}
 
 }

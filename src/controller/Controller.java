@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -7,6 +8,10 @@ import java.util.TimerTask;
 import view.BasicView;
 import model.GameMap;
 import model.Map;
+import model.MapParameters;
+import model.Actors.Actor;
+import model.Actors.Position;
+import model.Furniture.Furniture;
 
 /**
  * Display a map
@@ -19,22 +24,12 @@ public class Controller {
 	int time = 0;
 	private boolean paused = false;
 
-	private int mapHeight = 150;
-	private int mapWidth = 1000;
-	private int mapDirtDepth = 30;
-	private int mapStoneDepth = 50;
-
 	private Map map;
-	private GameMap gameMap;
 
 	private BasicView view;
 
 	private Timer timer;
 	private int timeDelta = 1000;
-
-	public static void main(String[] args) {
-		new Controller();
-	}
 
 	public void stopTimer() {
 		this.timer.cancel();
@@ -55,11 +50,12 @@ public class Controller {
 		return time;
 	}
 
-	public Controller() {
-		map = new Map(mapHeight, mapWidth, mapDirtDepth, mapStoneDepth,
-				new Random().nextInt(1000000));
+	public Controller(MapParameters mapParameters,
+			HashMap<Furniture, Position> hardCodedFurniture,
+			HashMap<Actor, Position> hardCodedActors, Random random) {
+		map = new Map(mapParameters, hardCodedFurniture, hardCodedActors, random);
 		GameMap.map = map;
-		view = new BasicView(this, map, mapHeight, mapWidth);
+		view = new BasicView(this, map, mapParameters);
 		view.setVisible(true);
 		startTimer();
 	}

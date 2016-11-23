@@ -5,6 +5,7 @@ package model.Actors;
 
 /**
  * A position on the map, uses row col coordinates
+ * 
  * @author Jonathon Davis
  *
  */
@@ -49,6 +50,11 @@ public class Position implements Comparable<Position> {
 
 	public boolean equals(Position obj) {
 		return (this.row == obj.row && this.col == obj.col);
+	}
+
+	@Override
+	public String toString() {
+		return Integer.toString(row) + " " + Integer.toString(col);
 	}
 
 }

@@ -71,8 +71,10 @@ public abstract class Actor {
 				currentAction = queue.peek();
 			else
 				return;
+		
 		// Store the result of the execution
 		int result = currentAction.execute(this);
+
 		//if the Action was Completed or Cancelled, poll the action out of the queue
 		if (result == Action.COMPLETED || result == Action.CANCELL) {
 			idle = true;

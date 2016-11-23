@@ -3,6 +3,7 @@
  */
 package model;
 
+import model.Actors.Position;
 import model.BuildingBlocks.BuildingBlock;
 
 /**
@@ -21,12 +22,17 @@ public final class GameMap {
 		return map.getTotalWidth();
 	}
 
-	public static BuildingBlock getBlock(int row, int col) {
-		return map.getBuildingBlock(row, col);
+	public static BuildingBlock getBlock(Position position) {
+		return map.getBuildingBlock(position);
 	}
 	
-	public static void setBuildingBlock(int row, int col, BuildingBlock newBlock){
-		map.setBuildingBlock(row, col, newBlock);
+	public static BuildingBlock getBlock(int row, int col) {
+		return map.getBuildingBlock(new Position(row,col));
+	}
+	
+	
+	public static void setBuildingBlock(Position position, BuildingBlock newBlock){
+		map.setBuildingBlock(position, newBlock);
 	}
 	
 }

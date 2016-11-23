@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 import model.Actors.Actor;
+import model.Furniture.Furniture;
 import model.Items.Item;
 
 /**
@@ -40,6 +41,21 @@ public class LavaBlock extends BuildingBlock {
 	
 	@Override
 	public List<Actor> getActors() {
+		return null;
+	}
+	
+	@Override
+	public boolean addFurniture(Furniture furniture) {
+		return false;
+	}
+
+	@Override
+	public boolean removeFurniture() {
+		return false;
+	}
+
+	@Override
+	public Furniture getFurniture() {
 		return null;
 	}
 }

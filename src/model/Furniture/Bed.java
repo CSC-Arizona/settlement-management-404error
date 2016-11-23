@@ -12,7 +12,7 @@ import model.Items.WoodItem;
 //This class defines the Bed Furniture, which actors can rest on to satisfy the fatigue need
 //Bed: 4 wood, 2 stone, 4 wheat stems
 public class Bed extends Furniture {
-	
+
 	private static int capacity = 2;
 	private List<Item> bedList;
 
@@ -27,14 +27,12 @@ public class Bed extends Furniture {
 		for (int i = 0; i < 4; i++) {
 			bedList.add(new WheatStemItem());
 		}
-		
+
 	}
 
-	
 	@Override
 	public List<Item> getRequiredMaterials() {
 		return bedList;
 	}
-	
 
 }

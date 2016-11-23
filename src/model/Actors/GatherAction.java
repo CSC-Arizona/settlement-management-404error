@@ -43,7 +43,7 @@ public class GatherAction implements Action {
 				durability = block.getDurability();
 			durability--;
 			if (durability <= 0) {
-				GameMap.setBuildingBlock(position.getRow(), position.getCol(), new AirBlock());
+				GameMap.setBuildingBlock(position, new AirBlock());
 				if (block.lootBlock() != null)
 					for (Item i : block.lootBlock())
 						performer.getInventory().addItem(i);
