@@ -56,7 +56,7 @@ public class ConstructActionTest {
 		assertEquals(1,test.getPosition().getRow());
 		assertEquals(2,test.getPosition().getCol());
 		
-		for(int i = 0; i < map.getBuildingBlock(new Position(2,3)).getDurability(); i++){
+		for(int i = 0; i < map.getBuildingBlock(new Position(2,3)).getDurability() - 1; i++){
 			test.update();
 			assertEquals(1,test.getPosition().getRow());
 			assertEquals(2,test.getPosition().getCol());
