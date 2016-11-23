@@ -1,15 +1,12 @@
 package model.Actors;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.GameMap;
 import model.Map;
 import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.CavernBlock;
-import model.Room.HorizontalTunnel;
 import model.Room.Room;
-import model.Room.VerticalTunnel;
 
 /**
  * Prerequisite for ConstructAction: the square that is selected needs to have a
@@ -18,25 +15,24 @@ import model.Room.VerticalTunnel;
  * put in a menu that shows when a square is selected.
  * 
  * @author Katherine Walters
- *
+ * @author Jonathon Davis
  */
 public class ConstructAction implements Action {
 
-	private Position pos;
 	private BuildingBlock corner;
-	private Room roomType;
-	// blocksToChange will contain all of the blocks remaining to be dug out if
-	// this
-	// action is stalled for any reason
+	private List<Action> GatherCommands;
 	private List<Position> blocksToChange;
 	private Map map;
 	
-	ConstructAction(Position pos, Room roomType, Map map) {
+	public ConstructAction(Room room, Map map) {
 		this.map = map;
-		this.pos = pos;
-		this.corner = GameMap.getBlock(pos);
-		this.roomType = roomType;
+		this.corner = map.getBuildingBlock(room.getPosition());
 		this.blocksToChange = new LinkedList<>();
+		for(int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++){
+			for(int r = room.getPosition().getRow(); r < room.getPosition().getRow() + room.getRequiredHeight(); r++){
+				blocksToChange.add(new Position(r,c));
+			}
+		}
 	}
 
 	/*
@@ -50,86 +46,32 @@ public class ConstructAction implements Action {
 		// space
 		if (corner.isOccupiable())
 			return Action.CANCELL;
-		// cancel if the the room's dimensions aren't available in either
-		// direction
-		if (isAvailableAsTopLeft()) {
-			// gather those squares
-			// set those squares to be caverns
-			return digOutRoom(performer);
-		} else if (isAvailableAsTopRight()) {
-			// gather those squares
-			// set those squares to be caverns
-			return digOutRoom(performer);
-		} else {
-			// dimensions weren't available
-			return Action.CANCELL;
-		}
-	}
 
-	/*
-	 * For every BuildingBlock in the soon to be room, a gather action is
-	 * created. If this gather action is stalled for some reason, it stalls this
-	 * construct action as well. Else, the room is dug out and each block in the
-	 * room is set to be a cavernBlock. (Should we make blocks for each specific
-	 * type of room instead??)
-	 */
-	private int digOutRoom(Actor performer) {
-		for (Position p : blocksToChange) {
-			GatherAction g = new GatherAction(p, map);
-			int result = g.execute(performer);
-			if (result != Action.COMPLETED) {
-				return result;
+		if(GatherCommands == null){
+			GatherCommands = new LinkedList<>();
+			for (Position block : blocksToChange)
+				GatherCommands.add(new GatherAction(block, map));
+		}
+		
+		// Mine out the area
+		int result = Action.DELAY;
+		Iterator<Action> it = GatherCommands.iterator();
+		while(result == Action.DELAY && GatherCommands.size() > 0 && it.hasNext()){
+			Action action = it.next();
+			result = action.execute(performer);
+			if(result == Action.COMPLETED || result == Action.CANCELL){
+				it.remove();
+				break;
 			}
-			GameMap.setBuildingBlock(p, new CavernBlock());
-			blocksToChange.remove(p);
+			if(result == Action.MADE_PROGRESS)
+				return Action.MADE_PROGRESS;
 		}
-		return Action.COMPLETED;
-	}
-
-	/*
-	 * Returns a list of all the blocks that still need to be gathered and
-	 * changed to caverns if this action is stalled for some reason.
-	 */
-	public List<Position> getBlocksToChange() {
-		return blocksToChange;
-	}
-
-	private boolean isAvailableAsTopLeft() {
-		// check to see if the chosen position is the top left corner
-		int width = roomType.getRequiredWidth();
-		int height = roomType.getRequiredHeight();
-		BuildingBlock curr;
-		for (int r = pos.getRow(); r < pos.getRow() + height; r++) {
-			for (int c = pos.getCol(); c < pos.getCol() + width; c++) {
-				curr = GameMap.getBlock(r, c);
-				if (curr.isDestroyable() && !curr.isOccupiable()) {
-					blocksToChange.add(new Position(r, c));
-				} else {
-					blocksToChange.clear();
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	private boolean isAvailableAsTopRight() {
-		// check to see if the chosen position is the top right corner
-		int width = roomType.getRequiredWidth();
-		int height = roomType.getRequiredHeight();
-		BuildingBlock curr;
-		for (int r = pos.getRow(); r < pos.getRow() + height; r++) {
-			for (int c = pos.getCol(); c > pos.getCol() - width; c--) {
-				curr = GameMap.getBlock(r, c);
-				if (curr.isDestroyable() && !curr.isOccupiable()) {
-					blocksToChange.add(new Position(r, c));
-				} else {
-					blocksToChange.clear();
-					return false;
-				}
-			}
-		}
-		return true;
+		
+		//TODO: fill the room with furniture
+		if(GatherCommands.size() <= 0)
+			return Action.COMPLETED;
+		// if no progress could be made then delay
+		return Action.DELAY;
 	}
 
 }

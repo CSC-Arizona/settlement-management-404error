@@ -4,9 +4,7 @@
 package model.Actors;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 
-import model.GameMap;
 import model.Map;
 
 /**
@@ -22,21 +20,14 @@ public class PlayerControlledActor extends Actor {
 	private HashMap<Actor, Position> allActors;
 	private Map map;
 
-	/**
-	 * 
-	 * @param health
-	 *            The health of the actor
-	 * @param location
-	 *            The starting location of the Actor
-	 */
 	public PlayerControlledActor(int health, int fatigue, Position location,
-			Map map, HashMap<Actor, Position> allActors) {
+			HashMap<Actor, Position> allActors, Map map) {
 		super(health, fatigue, location, map);
 		this.fatigue = fatigue;
 		hunger = 0;
 		happiness = 0;
-		this.map = map;
 		this.allActors = allActors;
+		this.map = map;
 
 	}
 

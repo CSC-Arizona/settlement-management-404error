@@ -40,7 +40,7 @@ public class GatheringScenario {
 				new Random(seed), blocksMarkedForGathering);
 		Map map = controller.getMap();
 		PlayerControlledActor actor = new PlayerControlledActor(100, 0,
-				new Position(44, 985), map, hardCodedActors);
+				new Position(44, 985), hardCodedActors, map);
 
 		hardCodedActors.put(actor, actor.getPosition());
 

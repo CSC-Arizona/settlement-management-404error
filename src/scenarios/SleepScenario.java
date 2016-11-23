@@ -37,8 +37,7 @@ public class SleepScenario {
 
 		Map map = controller.getMap();
 
-		PlayerControlledActor actor = new PlayerControlledActor(100, 990,
-				new Position(50, 985), map, hardCodedActors);
+		PlayerControlledActor actor = new PlayerControlledActor(100, 990, new Position(50, 985), hardCodedActors, map);
 		hardCodedActors.put(actor, actor.getPosition());
 
 	}

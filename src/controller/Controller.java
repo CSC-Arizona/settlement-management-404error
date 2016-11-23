@@ -7,7 +7,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import view.BasicView;
-import model.GameMap;
 import model.Map;
 import model.MapParameters;
 import model.Actors.Actor;
@@ -57,7 +56,6 @@ public class Controller {
 			ArrayList<Position> blocksMarkedForGathering) {
 		map = new Map(mapParameters, hardCodedFurniture, hardCodedActors,
 				random, blocksMarkedForGathering);
-		GameMap.map = map;
 		view = new BasicView(this, map, mapParameters);
 		view.setVisible(true);
 		startTimer();

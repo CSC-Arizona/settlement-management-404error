@@ -18,10 +18,10 @@ public class ReinforcedCrate extends Crate {
 		super(50, weightCapacity);
 		reinforcedCrateList = new LinkedList<>();
 		for (int i = 0; i < 6; i++) {
-			addItem(new WoodItem());
+			reinforcedCrateList.add(new WoodItem());
 		}
-		addItem(new StoneItem());
-		addItem(new StoneItem());
+		reinforcedCrateList.add(new StoneItem());
+		reinforcedCrateList.add(new StoneItem());
 	}
 
 	@Override

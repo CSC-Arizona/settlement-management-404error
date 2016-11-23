@@ -5,11 +5,8 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.HashMap;
-
 import org.junit.Test;
 
-import model.GameMap;
 import model.Map;
 import model.Actors.Actor;
 import model.Actors.AttackAction;
@@ -49,10 +46,9 @@ public class AttackActionTest {
 				{1,1,1,1,1},
 				{1,1,1,1,1}};
 		Map map = generateMap(mapGen);
-		HashMap<Actor, Position> actors = new HashMap<>();
 
-		Actor tester = new PlayerControlledActor(5, 0, new Position(10,10), map, actors);
-		Actor rival = new PlayerControlledActor(5, 0, new Position(11,10), map, actors);
+		Actor tester = new PlayerControlledActor(5, 0, new Position(10,10), null, map);
+		Actor rival = new PlayerControlledActor(5, 0, new Position(11,10), null, map);
 		tester.addToActionQueue(new AttackAction(rival, map));
 		assertEquals(5,rival.getHealth());
 		assertEquals(0,tester.getSkills().getCombatLevel());
@@ -89,9 +85,8 @@ public class AttackActionTest {
 										{1,1,1,1,1},
 										{1,1,1,1,1}};
 		Map map = generateMap(mapGen);
-		HashMap<Actor, Position> actors = new HashMap<>();
-		PlayerControlledActor tester = new PlayerControlledActor(10, 0, new Position(1,1), map, actors);
-		Actor rival = new PlayerControlledActor(5, 0, new Position(2,4), map, actors);
+		PlayerControlledActor tester = new PlayerControlledActor(10, 0, new Position(1,1), null, map);
+		Actor rival = new PlayerControlledActor(5, 0, new Position(2,4), null, map);
 		tester.addToActionQueue(new AttackAction(rival, map));
 		
 		assertEquals(1,tester.getPosition().getRow());
@@ -99,11 +94,11 @@ public class AttackActionTest {
 		
 		tester.update();
 		assertEquals(1,tester.getPosition().getRow());
-		assertEquals(2,tester.getPosition().getCol());
+		assertEquals(0,tester.getPosition().getCol());
 		
 		tester.update();
-		assertEquals(1,tester.getPosition().getRow());
-		assertEquals(3,tester.getPosition().getCol());
+		assertEquals(2,tester.getPosition().getRow());
+		assertEquals(4,tester.getPosition().getCol());
 		
 		assertEquals(5,rival.getHealth());
 		assertEquals(0,tester.getSkills().getCombatLevel());

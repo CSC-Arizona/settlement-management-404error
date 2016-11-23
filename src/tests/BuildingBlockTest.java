@@ -48,7 +48,7 @@ public class BuildingBlockTest {
 	@Test
 	public void testBushBlock() {
 		GrassBlock bb = new GrassBlock();
-		assertFalse(bb.isOccupiable());
+		assertTrue(bb.isOccupiable());
 		assertTrue(bb.isDestroyable());
 		assertEquals(1, bb.lootBlock().size());
 		WheatKernelItem i = (WheatKernelItem) bb.lootBlock().get(0);

@@ -37,7 +37,7 @@ public class SleepScenarioWithDeath {
 		Map map = controller.getMap();
 
 		PlayerControlledActor actor = new PlayerControlledActor(100, 1090,
-				new Position(50, 985), map, hardCodedActors);
+				new Position(50, 985), hardCodedActors, map);
 		hardCodedActors.put(actor, actor.getPosition());
 
 	}

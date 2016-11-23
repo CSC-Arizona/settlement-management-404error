@@ -3,7 +3,6 @@
  */
 package model.Actors;
 
-import model.GameMap;
 import model.Map;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
@@ -51,7 +50,12 @@ public class GatherAction implements Action {
 				if (block.lootBlock() != null)
 					for (Item i : block.lootBlock())
 						performer.getInventory().addItem(i);
-
+				if (map.getTotalHeight() > performer.getPosition().getRow() + 1
+						&& map.getBuildingBlock(performer.getPosition().getRow() + 1, performer.getPosition().getCol())
+								.getID().equals("Air")) {
+					new MoveAction(new Position(performer.getPosition().getRow() + 1, performer.getPosition().getCol()), map)
+							.execute(performer);
+				}
 				return Action.COMPLETED;
 			}
 			return Action.MADE_PROGRESS;
@@ -73,8 +77,8 @@ public class GatherAction implements Action {
 	}
 
 	/**
-	 * Finds an adjacent valid location near 
-	 * the block to move the actor to
+	 * Finds an adjacent valid location near the block to move the actor to
+	 * 
 	 * @return The Position to move to
 	 */
 	private Position getMoveLocation() {

@@ -57,4 +57,9 @@ public class Position implements Comparable<Position> {
 		return Integer.toString(row) + " " + Integer.toString(col);
 	}
 
+
+	public void setCol(int col) {
+		this.col = col;	
+	}
+
 }

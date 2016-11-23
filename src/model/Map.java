@@ -523,18 +523,19 @@ public class Map {
 	}
 
 	public void unmarkBlockForGathering(Position position) {
-		getBuildingBlock(position).unmarkForGathering();
-		ArrayList<Position> newBlocksMarkedForGathering = new ArrayList<>();
+		if (blocksMarkedForGathering != null) {
+			getBuildingBlock(position).unmarkForGathering();
+			ArrayList<Position> newBlocksMarkedForGathering = new ArrayList<>();
 
-		for (Position p : blocksMarkedForGathering) {
-			if (!p.equals(position)) {
-				newBlocksMarkedForGathering.add(p);
+			for (Position p : blocksMarkedForGathering) {
+				if (!p.equals(position)) {
+					newBlocksMarkedForGathering.add(p);
+				}
 			}
+			blocksMarkedForGathering = newBlocksMarkedForGathering;
 		}
-		blocksMarkedForGathering = newBlocksMarkedForGathering;
-
 	}
-	
+
 	public boolean addItemToGround(Position position, Item item) {
 		if (getBuildingBlock(position).addItemToGround(item)) {
 			itemsOnGround.add(position);
@@ -542,7 +543,7 @@ public class Map {
 		}
 		return false;
 	}
-	
+
 	public boolean removeItemFromGround(Position position, Item item) {
 		if (getBuildingBlock(position).removeItemFromGround(item)) {
 			itemsOnGround.remove(0);
@@ -550,7 +551,7 @@ public class Map {
 		}
 		return false;
 	}
-	
+
 	public ArrayList<Position> getItemsOnGround() {
 		return itemsOnGround;
 	}

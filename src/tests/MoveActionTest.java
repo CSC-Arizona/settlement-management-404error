@@ -10,7 +10,6 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import model.GameMap;
 import model.Map;
 import model.Actors.Actor;
 import model.Actors.MoveAction;
@@ -27,7 +26,6 @@ import model.BuildingBlocks.EarthBlock;
 public class MoveActionTest {
 
 	public Map generateMap(int[][] map) {
-		GameMap gm = new GameMap();
 		BuildingBlock[][] mapTypes = new BuildingBlock[map.length][map[0].length];
 		for (int i = 0; i < mapTypes.length; i++) {
 			for (int j = 0; j < mapTypes[i].length; j++) {
@@ -42,12 +40,10 @@ public class MoveActionTest {
 
 	@Test
 	public void testMoveAction() {
-		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 },
-				{ 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 }, { 0, 0, 0, 0, 0 } };
-		HashMap<Actor, Position> actors = new HashMap<>();
+		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 },
+				{ 0, 0, 0, 0, 0 } };
 		Map map = generateMap(mapGen);
-		PlayerControlledActor test = new PlayerControlledActor(10, 0,
-				new Position(1, 1), map, actors);
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1, 1), null, map);
 		test.addToActionQueue(new MoveAction(new Position(2, 4), map));
 
 		assertEquals(1, test.getPosition().getRow());
@@ -55,11 +51,7 @@ public class MoveActionTest {
 
 		test.update();
 		assertEquals(1, test.getPosition().getRow());
-		assertEquals(2, test.getPosition().getCol());
-
-		test.update();
-		assertEquals(1, test.getPosition().getRow());
-		assertEquals(3, test.getPosition().getCol());
+		assertEquals(0, test.getPosition().getCol());
 
 		test.update();
 		assertEquals(2, test.getPosition().getRow());
@@ -68,12 +60,10 @@ public class MoveActionTest {
 
 	@Test
 	public void testNonMoveAction() {
-		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 },
-				{ 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
+		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0 } };
 		Map map = generateMap(mapGen);
-		HashMap<Actor, Position> actors = new HashMap<>();
-		PlayerControlledActor test = new PlayerControlledActor(10, 0,
-				new Position(1, 1), map, actors);
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1, 1), null, map);
 		test.addToActionQueue(new MoveAction(new Position(2, 4), map));
 
 		assertEquals(1, test.getPosition().getRow());

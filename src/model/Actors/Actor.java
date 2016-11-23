@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import model.GameMap;
 import model.Inventory;
 import model.Map;
 import model.Furniture.Furniture;
@@ -97,17 +96,17 @@ public abstract class Actor {
 								break;
 							}
 						}
-					}
-					else {
+					} else {
 						Position itemOnGroundPosition = getItemOnGroundPosition();
-						System.out.println(itemOnGroundPosition);
-						List<Item> items = map.getBuildingBlock(
-								itemOnGroundPosition).itemsOnGround();
-						if (items.size() != 0) {
-							Item item = items.get(0);
-							if (itemOnGroundPosition != null) {
-								currentAction = new PickUpItemAction(
-										itemOnGroundPosition, item, map);
+						if (itemOnGroundPosition != null) {
+							List<Item> items = map.getBuildingBlock(
+									itemOnGroundPosition).itemsOnGround();
+							if (items.size() != 0) {
+								Item item = items.get(0);
+								if (itemOnGroundPosition != null) {
+									currentAction = new PickUpItemAction(
+											itemOnGroundPosition, item, map);
+								}
 							}
 						}
 					}
@@ -203,7 +202,6 @@ public abstract class Actor {
 		HashMap<Furniture, Position> mapFurniture = map.getFurniture();
 		if (mapFurniture != null) {
 			if (mapFurniture.size() != 0) {
-				// todo: actually calculate the distance
 				return mapFurniture.get(mapFurniture.keySet().toArray()[0]);
 			}
 		}

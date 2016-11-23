@@ -57,9 +57,9 @@ public class FurnitureTest {
 	@Test
 	public void testBasicCrate() {
 		BasicCrate bc = new BasicCrate();
-		assertEquals(1, bc.getCapacity());
+		assertEquals(5, bc.getCapacity());
 		bc.increaseCapacityBy(1);
-		assertEquals(2, bc.getCapacity());
+		assertEquals(6, bc.getCapacity());
 		assertEquals(30, bc.getWeightCapacity());
 		List<Item> basicCrateList = bc.getRequiredMaterials();
 		ListIterator<Item> li = basicCrateList.listIterator();
@@ -151,9 +151,9 @@ public class FurnitureTest {
 	@Test
 	public void testMetalCrate() {
 		MetalCrate mc = new MetalCrate();
-		assertEquals(1, mc.getCapacity());
+		assertEquals(20, mc.getCapacity());
 		mc.increaseCapacityBy(1);
-		assertEquals(2, mc.getCapacity());
+		assertEquals(21, mc.getCapacity());
 		assertEquals(70, mc.getWeightCapacity());
 		List<Item> metalCrateList = mc.getRequiredMaterials();
 		ListIterator<Item> li = metalCrateList.listIterator();
@@ -204,10 +204,10 @@ public class FurnitureTest {
 	@Test
 	public void testReinforcedCrate() {
 		ReinforcedCrate rc = new ReinforcedCrate();
-		assertEquals(1, rc.getCapacity());
+		assertEquals(50, rc.getCapacity());
 		rc.increaseCapacityBy(1);
-		assertEquals(2, rc.getCapacity());
-		assertEquals(50, rc.getWeightCapacity());
+		assertEquals(51, rc.getCapacity());
+		assertEquals(500, rc.getWeightCapacity());
 		List<Item> reinforcedCrateList = rc.getRequiredMaterials();
 		ListIterator<Item> li = reinforcedCrateList.listIterator();
 		assertEquals(wi.getClass(), li.next().getClass());
