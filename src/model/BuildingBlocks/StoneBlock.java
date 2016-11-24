@@ -61,4 +61,9 @@ public class StoneBlock extends BuildingBlock {
 		return null;
 	}
 
+	@Override
+	public List<Item> itemsOnGround() {
+		return null;
+	}
+
 }

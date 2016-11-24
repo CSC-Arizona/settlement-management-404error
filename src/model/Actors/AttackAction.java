@@ -8,7 +8,7 @@ import model.Map;
  */
 public class AttackAction implements Action {
 	private Actor target;
-
+	
 	public AttackAction(Actor target){
 		this.target = target;
 	}

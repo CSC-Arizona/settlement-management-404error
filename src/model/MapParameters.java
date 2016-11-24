@@ -47,7 +47,7 @@ public class MapParameters {
 
 	public static MapParameters getDefaultParameters() {
 		return new MapParameters(1000, 70, 20, 30, 10, 0.01, 0.001, 0.1, 0.1,
-				0.1, 0.05, 2);
+				0.1, 0.005, 2);
 	}
 
 }

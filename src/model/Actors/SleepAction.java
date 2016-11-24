@@ -2,8 +2,10 @@ package model.Actors;
 
 import java.util.HashMap;
 
-import model.GameMap;
+import model.Game;
 import model.Furniture.Furniture;
+
+import model.Map;
 
 /**
  * @author Ethan Ward
@@ -12,7 +14,7 @@ import model.Furniture.Furniture;
  *
  */
 public class SleepAction implements Action {
-
+	
 	// github.com/CSC-Arizona/settlement-management-404error
 	@Override
 	public int execute(Actor performer) {
@@ -37,7 +39,7 @@ public class SleepAction implements Action {
 	}
 	
 	public Position getNearestBed() {
-		HashMap<Furniture, Position> mapFurniture = GameMap.map.getFurniture();
+		HashMap<Furniture, Position> mapFurniture = Game.getMap().getFurniture();
 		if (mapFurniture != null) {
 			if (mapFurniture.size() != 0) {
 				return mapFurniture.get(mapFurniture.keySet().toArray()[0]);

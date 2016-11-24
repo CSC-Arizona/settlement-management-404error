@@ -18,6 +18,7 @@ public class AirBlock extends BuildingBlock {
 
 	private Furniture furniture;
 	private List<Actor> actorsInBlock;
+	private List<Item> itemsOnGround;
 	private final static int durability = 0;
 	public final static String id = "Air";
 	private boolean occupiable = true;
@@ -25,6 +26,7 @@ public class AirBlock extends BuildingBlock {
 	public AirBlock() {
 		super(durability, false, true, new Color(206, 237, 240), id);
 		actorsInBlock = new LinkedList<>();
+		itemsOnGround = new LinkedList<>();
 	}
 
 	@Override
@@ -73,6 +75,11 @@ public class AirBlock extends BuildingBlock {
 	@Override
 	public Furniture getFurniture() {
 		return furniture;
+	}
+
+	@Override
+	public List<Item> itemsOnGround() {
+		return itemsOnGround;
 	}
 
 }

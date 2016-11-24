@@ -19,12 +19,14 @@ public class CavernBlock extends BuildingBlock {
 
 	private Furniture furniture;
 	private List<Actor> actorsInBlock;
+	private List<Item> itemsOnGround;
 	private final static int durability = 0;
 	public final static String id = "Cavern";
 	
 	public CavernBlock() {
 		super(durability, false, true, new Color(102,72,32), id);
 		actorsInBlock = new LinkedList<>();
+		itemsOnGround = new LinkedList<>();
 	}
 
 	@Override
@@ -73,6 +75,11 @@ public class CavernBlock extends BuildingBlock {
 	@Override
 	public Furniture getFurniture() {
 		return furniture;
+	}
+
+	@Override
+	public List<Item> itemsOnGround() {
+		return itemsOnGround;
 	}
 
 }

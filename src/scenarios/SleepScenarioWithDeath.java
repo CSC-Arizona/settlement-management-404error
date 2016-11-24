@@ -3,7 +3,7 @@ package scenarios;
 import java.util.HashMap;
 import java.util.Random;
 
-import model.GameMap;
+import model.Game;
 import model.Map;
 import model.MapParameters;
 import model.Actors.Actor;
@@ -31,12 +31,14 @@ public class SleepScenarioWithDeath {
 
 	public SleepScenarioWithDeath() {
 
-		Controller controller = new Controller(MapParameters.getDefaultParameters(), hardCodedFurniture,
-				hardCodedActors, new Random(seed));
+		Controller controller = new Controller(
+				MapParameters.getDefaultParameters(), hardCodedFurniture,
+				hardCodedActors, new Random(seed), null);
 
-		GameMap.map = controller.getMap();
+		Game.setMap(controller.getMap());
 
-		PlayerControlledActor actor = new PlayerControlledActor(100, 1090, new Position(50, 985));
+		PlayerControlledActor actor = new PlayerControlledActor(100, 1090,
+				new Position(50, 985), hardCodedActors);
 		hardCodedActors.put(actor, actor.getPosition());
 
 	}

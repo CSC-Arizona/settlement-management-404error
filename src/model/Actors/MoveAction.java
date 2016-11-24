@@ -5,7 +5,7 @@ package model.Actors;
 
 import java.util.TreeMap;
 
-import model.GameMap;
+import model.Game;
 import model.Map;
 
 /**
@@ -68,18 +68,18 @@ public class MoveAction implements Action {
 	 */
 	private void calculatePath(Position currentPos, Node currentNode) {
 		int row = currentPos.getRow(), 
-				col = (currentPos.getCol() > 0) ? currentPos.getCol() % (GameMap.mapWidth())
-				: GameMap.mapWidth() + currentPos.getCol();
-		if (currentPos.getCol() ==  GameMap.mapWidth() || currentNode.position.getCol() ==  GameMap.mapWidth() || col ==  GameMap.mapWidth()){
+				col = (currentPos.getCol() > 0) ? currentPos.getCol() % (Game.getMap().getTotalWidth())
+				: Game.getMap().getTotalWidth() + currentPos.getCol();
+		if (currentPos.getCol() ==  Game.getMap().getTotalWidth() || currentNode.position.getCol() ==  Game.getMap().getTotalWidth() || col ==  Game.getMap().getTotalWidth()){
 			currentPos.setCol(0);
 			currentNode.position.setCol(0);
 			col = 0;
 		}
-		if(!GameMap.getBlock(row, col).isOccupiable())
+		if(!Game.getMap().getBuildingBlock(row, col).isOccupiable())
 			return;
 		// check to make sure there is a valid block to stand on
 
-		if (row + 1 < GameMap.mapHeight() && !GameMap.getBlock(row + 1, col).getID().equals("Air")) {
+		if (row + 1 < Game.getMap().getTotalHeight() && !Game.getMap().getBuildingBlock(row + 1, col).getID().equals("Air")) {
 			// check to see if this node already has a more efficient route
 			if (visited.containsKey(currentPos) && currentNode.distance > visited.get(currentPos).distance)
 				return;
@@ -87,7 +87,7 @@ public class MoveAction implements Action {
 			visited.put(currentPos, currentNode);
 			for (int r = row - 1; r <= row + 1; r++)
 				for (int c = col - 1; c <= col + 1; c++)
-					if (!(r == row && c == col) && r < GameMap.mapHeight() && r >= 0)
+					if (!(r == row && c == col) && r < Game.getMap().getTotalHeight() && r >= 0)
 						calculatePath(new Position(r, c),
 								new Node(currentNode.distance + 1, new Position(r, c), currentNode));
 		}

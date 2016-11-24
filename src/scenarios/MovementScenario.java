@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 import controller.Controller;
-import model.GameMap;
+import model.Game;
+import model.Map;
 import model.MapParameters;
 import model.Actors.Actor;
 import model.Actors.MoveAction;
@@ -29,18 +30,18 @@ public class MovementScenario {
 	public MovementScenario() {
 
 		Controller controller = new Controller(MapParameters.getDefaultParameters(), null,
-				hardCodedActors, new Random(seed));
+				hardCodedActors, new Random(seed), null);
 		
-		GameMap.map = controller.getMap();
+		Game.setMap(controller.getMap());
 		
 		Position finalPosition = new Position(52,980);
 		
-		Actor actor1 = new PlayerControlledActor(100, 0, new Position(58, 990));
-		Actor actor2 = new PlayerControlledActor(100, 0, new Position(59, 991));
-		Actor actor3 = new PlayerControlledActor(100, 0, new Position(57, 999));
+		Actor actor1 = new PlayerControlledActor(100, 0, new Position(58, 990), hardCodedActors);
+		Actor actor2 = new PlayerControlledActor(100, 0, new Position(59, 991), hardCodedActors);
+		Actor actor3 = new PlayerControlledActor(100, 0, new Position(57, 999), hardCodedActors);
 		
 		// this actor should move across 0 boundary
-		Actor actor4 = new PlayerControlledActor(100, 0, new Position(54, 4));
+		Actor actor4 = new PlayerControlledActor(100, 0, new Position(54, 4), hardCodedActors);
 
 		actor1.addToActionQueue(new MoveAction(finalPosition));
 		actor2.addToActionQueue(new MoveAction(finalPosition));

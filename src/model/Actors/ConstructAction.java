@@ -4,7 +4,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.GameMap;
+import model.Game;
+import model.Map;
 import model.BuildingBlocks.BuildingBlock;
 import model.Room.Room;
 
@@ -24,7 +25,7 @@ public class ConstructAction implements Action {
 	private List<Position> blocksToChange;
 	
 	public ConstructAction(Room room) {
-		this.corner = GameMap.getBlock(room.getPosition());
+		this.corner = Game.getMap().getBuildingBlock(room.getPosition());
 		this.blocksToChange = new LinkedList<>();
 		for(int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++){
 			for(int r = room.getPosition().getRow(); r < room.getPosition().getRow() + room.getRequiredHeight(); r++){

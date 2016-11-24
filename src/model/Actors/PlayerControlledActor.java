@@ -5,6 +5,8 @@ package model.Actors;
 
 import java.util.HashMap;
 
+import model.Map;
+
 /**
  * @author Jonathon Davis The Player Controlled Actor will execute commands
  *         given by the player, the ACtor is not directly controlled by the
@@ -17,21 +19,8 @@ public class PlayerControlledActor extends Actor {
 	private static final int death_threshold = 1100;
 	private HashMap<Actor, Position> allActors;
 
-	/**
-	 * 
-	 * @param health
-	 *            The health of the actor
-	 * @param location
-	 *            The starting location of the Actor
-	 */
-	public PlayerControlledActor(int health, int fatigue, Position location){
-		super(health, fatigue, location);
-		this.fatigue = fatigue;
-		hunger = 0;
-		happiness = 0;
-	}
-	
-	public PlayerControlledActor(int health, int fatigue, Position location, HashMap<Actor, Position> allActors){
+	public PlayerControlledActor(int health, int fatigue, Position location,
+			HashMap<Actor, Position> allActors) {
 		super(health, fatigue, location);
 		this.fatigue = fatigue;
 		hunger = 0;

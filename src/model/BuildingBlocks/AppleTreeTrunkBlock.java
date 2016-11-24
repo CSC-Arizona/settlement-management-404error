@@ -19,6 +19,7 @@ public class AppleTreeTrunkBlock extends BuildingBlock {
 
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsInBlock;
+	private List<Item> itemsOnGround;
 	private final static int durability = 5;
 	public final static String id = "Wood";
 	
@@ -27,6 +28,7 @@ public class AppleTreeTrunkBlock extends BuildingBlock {
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new WoodItem());
 		actorsInBlock = new LinkedList<>();
+		itemsOnGround = new LinkedList<>();
 	}
 
 	@Override
@@ -67,6 +69,11 @@ public class AppleTreeTrunkBlock extends BuildingBlock {
 	@Override
 	public Furniture getFurniture() {
 		return null;
+	}
+
+	@Override
+	public List<Item> itemsOnGround() {
+		return itemsOnGround;
 	}
 
 }

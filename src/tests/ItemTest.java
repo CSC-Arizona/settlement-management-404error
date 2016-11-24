@@ -91,7 +91,7 @@ public class ItemTest {
 	    assertTrue(wki.getIsEdible());
 	    assertEquals(1, wki.getAttackModifier());
 	    assertEquals(1, wki.getHealthPoints());
-	    assertEquals(1, wki.getWeight(), 0.00001);
+	    assertEquals(70, wki.getWeight(), 0.00001);
 	}
 	
 	@Test

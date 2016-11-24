@@ -17,14 +17,16 @@ public class GrassBlock extends BuildingBlock {
 
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsInBlock;
+	private List<Item> itemsOnGround;
 	private final static int durability = 1;
 	public final static String id = "Grass";
 
 	public GrassBlock() {
-		super(durability, true, false, new Color(0, 87, 3), id);
+		super(durability, true, true, new Color(0, 87, 3), id);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new WheatKernelItem());
 		actorsInBlock = new LinkedList<>();
+		itemsOnGround = new LinkedList<>();
 	}
 
 	@Override
@@ -65,6 +67,11 @@ public class GrassBlock extends BuildingBlock {
 	@Override
 	public Furniture getFurniture() {
 		return null;
+	}
+
+	@Override
+	public List<Item> itemsOnGround() {
+		return itemsOnGround;
 	}
 
 }

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import model.GameMap;
+import model.Game;
 import model.Map;
 import model.Actors.ConstructAction;
 import model.Actors.PlayerControlledActor;
@@ -46,8 +46,8 @@ public class ConstructActionTest {
 										{1,1,1,1,1},
 										{1,1,1,1,1},
 										{1,1,1,1,1}};
-		GameMap.map = generateMap(mapGen);
-		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1));
+		Game.setMap(generateMap(mapGen));
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1), null);
 		test.addToActionQueue(new ConstructAction(new VerticalTunnel(new Position(2,3))));
 		
 		assertEquals(1,test.getPosition().getRow());
@@ -57,7 +57,7 @@ public class ConstructActionTest {
 		assertEquals(1,test.getPosition().getRow());
 		assertEquals(2,test.getPosition().getCol());
 		
-		for(int i = 0; i < GameMap.getBlock(new Position(2,3)).getDurability(); i++){
+		for(int i = 0; i < Game.getMap().getBuildingBlock(new Position(2,3)).getDurability(); i++){
 			test.update();
 			assertEquals(1,test.getPosition().getRow());
 			assertEquals(2,test.getPosition().getCol());
@@ -66,15 +66,19 @@ public class ConstructActionTest {
 		test.update();
 		assertEquals(2,test.getPosition().getRow());
 		assertEquals(3,test.getPosition().getCol());
-		assertEquals("Air",GameMap.getBlock(new Position(2,3)).getID());
+		assertEquals("Air",Game.getMap().getBuildingBlock(new Position(2,3)).getID());
 		
-		for(int i = 0; i < GameMap.getBlock(new Position(3,3)).getDurability(); i++){
+		for(int i = 0; i < Game.getMap().getBuildingBlock(new Position(3,3)).getDurability() - 1; i++){
 			test.update();
 			assertEquals(2,test.getPosition().getRow());
 			assertEquals(3,test.getPosition().getCol());
 		}
 		
-		assertEquals("Air",GameMap.getBlock(new Position(3,3)).getID());
+		test.update();
+		assertEquals(3,test.getPosition().getRow());
+		assertEquals(3,test.getPosition().getCol());
+		
+		assertEquals("Air",Game.getMap().getBuildingBlock(new Position(3,3)).getID());
 		
 
 	}

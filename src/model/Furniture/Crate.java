@@ -10,15 +10,10 @@ import model.Items.Item;
 public abstract class Crate extends Furniture {
 	
 	private static int capacity = 1;
-	private int weightCapacity;
 	
-	public Crate (int weightCapacity) {
-		super(capacity);
-		this.weightCapacity = weightCapacity;
+	public Crate (int capacity, int weightCapacity) {
+		super(capacity, weightCapacity, "crate");
 	}
 	
-	//Returns the total weight of items that can be stored in this crate
-	public int getWeightCapacity() {
-		return this.weightCapacity;
-	}
+
 }

@@ -64,4 +64,9 @@ public class TreeRootBlock extends BuildingBlock {
 		return null;
 	}
 
+	@Override
+	public List<Item> itemsOnGround() {
+		return null;
+	}
+
 }

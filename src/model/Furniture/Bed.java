@@ -17,7 +17,7 @@ public class Bed extends Furniture {
 	private List<Item> bedList;
 
 	public Bed() {
-		super(capacity);
+		super(capacity, 0, "bed");
 		bedList = new LinkedList<>();
 		for (int i = 0; i < 4; i++) {
 			bedList.add(new WoodItem());

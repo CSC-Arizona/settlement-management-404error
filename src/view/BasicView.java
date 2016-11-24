@@ -1,14 +1,18 @@
 package view;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Box;
@@ -23,6 +27,7 @@ import model.Map;
 import model.MapParameters;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
+import model.Items.Item;
 
 public class BasicView extends JFrame {
 
@@ -35,7 +40,7 @@ public class BasicView extends JFrame {
 
 	private int mouseX;
 	private int mouseY;
-	
+
 	private int mapWidth;
 	private int mapHeight;
 	private int windowWidth = 1000;
@@ -52,6 +57,11 @@ public class BasicView extends JFrame {
 
 	private Controller controller;
 
+	private boolean gatheringSelection = false;
+	private boolean drawingShape = false;
+	private Point start;
+	private Point end;
+
 	public void setTimeLabel(int time, boolean paused) {
 		if (paused) {
 			timeLabel.setText("Time: " + time + " (paused)");
@@ -66,12 +76,13 @@ public class BasicView extends JFrame {
 	}
 
 	private void setMouseCoordinatesLabel() {
-		mouseCoordinatesLabel.setText("Mouse coordinates: (" + mouseY + ", " + mouseX
-				+ ")");
+		mouseCoordinatesLabel.setText("Mouse coordinates: (" + mouseY + ", "
+				+ mouseX + ")");
 	}
 
 	public void setMouseDescriptionLabel() {
-		String mouseDescription = map.getBuildingBlock(mouseY, mouseX).toString();
+		String mouseDescription = map.getBuildingBlock(mouseY, mouseX)
+				.toString();
 
 		mouseDescription += "</html>";
 
@@ -124,6 +135,7 @@ public class BasicView extends JFrame {
 
 		this.addKeyListener(new MyKeyListener());
 		drawingPanel.addMouseMotionListener(new MyMotionListener());
+		drawingPanel.addMouseListener(new MyMouseListener());
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -164,9 +176,11 @@ public class BasicView extends JFrame {
 					if (actors != null) {
 						int size = actors.size();
 						if (size != 0) {
+							g2.setColor(Color.RED);
 							g2.drawString(Integer.toString(size), j
 									* blockSizeX + blockSizeX / 2, (i + 1)
 									* blockSizeY);
+							g2.setColor(Color.BLACK);
 						}
 					}
 
@@ -177,7 +191,31 @@ public class BasicView extends JFrame {
 								(i + 1) * blockSizeY);
 					}
 
+					if (map.getBuildingBlock(row, col).isMarkedForGathering()) {
+						g2.drawString("G", j * blockSizeX + blockSizeX / 2,
+								(i + 1) * blockSizeY);
+					}
+
+					List<Item> itemsOnGround = map.getBuildingBlock(row, col)
+							.itemsOnGround();
+					if (itemsOnGround != null) {
+						if (itemsOnGround.size() != 0) {
+							g2.drawString("#", j * blockSizeX + blockSizeX / 2,
+									(i + 1) * blockSizeY);
+						}
+					}
+
 				}
+			}
+			if (gatheringSelection && drawingShape) {
+				Stroke oldStroke = g2.getStroke();
+				g2.setStroke(new BasicStroke(2));
+
+				int width = Math.abs(start.x - end.x);
+				int height = Math.abs(start.y - end.y);
+				g2.drawRect(Math.min(start.x, end.x), Math.min(start.y, end.y),
+						width, height);
+				g2.setStroke(oldStroke);
 			}
 		}
 	}
@@ -224,6 +262,17 @@ public class BasicView extends JFrame {
 				}
 				setTimeLabel(controller.getTime(), controller.isPaused());
 				break;
+
+			case KeyEvent.VK_G:
+				// "gathering"
+				if (!gatheringSelection) {
+					controller.stopTimer();
+					gatheringSelection = true;
+				} else {
+					controller.startTimer();
+					gatheringSelection = false;
+				}
+				break;
 			}
 
 			setWindowCoordinateLabel();
@@ -257,7 +306,53 @@ public class BasicView extends JFrame {
 			setMouseDescriptionLabel();
 			setMouseCoordinatesLabel();
 
+			if (gatheringSelection && drawingShape) {
+				end = e.getPoint();
+				repaint();
+			}
 		}
+	}
+
+	private class MyMouseListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (gatheringSelection) {
+				if (!drawingShape) {
+					start = e.getPoint();
+					end = e.getPoint();
+				} else {
+					end = e.getPoint();
+
+				}
+				drawingShape = !drawingShape;
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
 	}
 
 }

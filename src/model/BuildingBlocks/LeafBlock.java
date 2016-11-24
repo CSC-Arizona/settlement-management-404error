@@ -55,4 +55,9 @@ public class LeafBlock extends BuildingBlock {
 		return null;
 	}
 
+	@Override
+	public List<Item> itemsOnGround() {
+		return null;
+	}
+
 }

@@ -1,12 +1,12 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import view.BasicView;
-import model.GameMap;
 import model.Map;
 import model.MapParameters;
 import model.Actors.Actor;
@@ -52,9 +52,10 @@ public class Controller {
 
 	public Controller(MapParameters mapParameters,
 			HashMap<Furniture, Position> hardCodedFurniture,
-			HashMap<Actor, Position> hardCodedActors, Random random) {
-		map = new Map(mapParameters, hardCodedFurniture, hardCodedActors, random);
-		GameMap.map = map;
+			HashMap<Actor, Position> hardCodedActors, Random random,
+			ArrayList<Position> blocksMarkedForGathering) {
+		map = new Map(mapParameters, hardCodedFurniture, hardCodedActors,
+				random, blocksMarkedForGathering);
 		view = new BasicView(this, map, mapParameters);
 		view.setVisible(true);
 		startTimer();
@@ -71,7 +72,7 @@ public class Controller {
 			view.repaint();
 		}
 	}
-	
+
 	public Map getMap() {
 		return map;
 	}

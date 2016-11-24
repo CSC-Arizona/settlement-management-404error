@@ -11,7 +11,7 @@ public class Ladder extends Furniture {
 	private List<Item> ladderMaterials;
 	
 	public Ladder() {
-		super(10);
+		super(10, 0, "ladder");
         ladderMaterials = new LinkedList<>();
         ladderMaterials.add(new WoodItem());
         ladderMaterials.add(new WoodItem());

@@ -3,7 +3,8 @@
  */
 package model.Actors;
 
-import model.GameMap;
+import model.Game;
+import model.Map;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.Items.Item;
@@ -33,23 +34,25 @@ public class GatherAction implements Action {
 	@Override
 	public int execute(Actor performer) {
 		// if the block can't be gathered cancel the action
-		if (!GameMap.getBlock(position.getRow(), position.getCol()).isDestroyable())
+		if (!Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable())
 			return Action.CANCELL;
 
 		if (Math.abs(position.getCol() - performer.getPosition().getCol()) <= 1
 				&& Math.abs(position.getRow() - performer.getPosition().getRow()) <= 1) {
-			BuildingBlock block = GameMap.getBlock(position.getRow(), position.getCol());
+			BuildingBlock block = Game.getMap().getBuildingBlock(position.getRow(), position.getCol());
 			if (durability == Integer.MAX_VALUE)
 				durability = block.getDurability();
 			durability--;
 			if (durability <= 0) {
-				GameMap.setBuildingBlock(position, new AirBlock());
+				Game.getMap().setBuildingBlock(position, new AirBlock());
 				if (block.lootBlock() != null)
 					for (Item i : block.lootBlock())
-						performer.getInventory().addItem(i);
-				if (GameMap.mapHeight() > performer.getPosition().getRow() + 1
-						&& GameMap.getBlock(performer.getPosition().getRow() + 1, performer.getPosition().getCol())
-								.getID().equals("Air")) {
+						if(performer.getInventory().canAdd(i))
+							performer.getInventory().addItem(i);
+						else
+							Game.getMap().addItemToGround(position, i);
+				if (Game.getMap().getTotalHeight() > performer.getPosition().getRow() + 1
+						&& Game.getMap().getBuildingBlock(performer.getPosition().getRow() + 1, performer.getPosition().getCol()).isOccupiable()) {
 					performer.setPosition(new Position(performer.getPosition().getRow() + 1, performer.getPosition().getCol()));
 				}
 				return Action.COMPLETED;
@@ -81,9 +84,9 @@ public class GatherAction implements Action {
 		// check to see if a nearby location is valid
 		for (int r = position.getRow() - 1; r < position.getRow() + 1; r++) {
 			for (int c = position.getCol() - 1; c < position.getCol() + 1; c++) {
-				if (r > 0 && c > 0 && r < GameMap.mapHeight() && c < GameMap.mapWidth()
-						&& GameMap.getBlock(r, c).getID().equals("Air") && r + 1 < GameMap.mapHeight()
-						&& !GameMap.getBlock(r + 1, c).getID().equals("Air"))
+				if (r > 0 && c > 0 && r < Game.getMap().getTotalWidth() && c < Game.getMap().getTotalWidth()
+						&& Game.getMap().getBuildingBlock(r, c).getID().equals("Air") && r + 1 < Game.getMap().getTotalHeight()
+						&& !Game.getMap().getBuildingBlock(r + 1, c).getID().equals("Air"))
 					return new Position(r, c);
 			}
 		}

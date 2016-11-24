@@ -57,4 +57,9 @@ public class EarthBlock extends BuildingBlock {
 		return null;
 	}
 
+	@Override
+	public List<Item> itemsOnGround() {
+		return null;
+	}
+
 }
