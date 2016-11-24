@@ -75,7 +75,7 @@ public class MoveAction implements Action {
 			currentNode.position.setCol(0);
 			col = 0;
 		}
-		if(!GameMap.getBlock(row, col).getID().equals("Air"))
+		if(!GameMap.getBlock(row, col).isOccupiable())
 			return;
 		// check to make sure there is a valid block to stand on
 

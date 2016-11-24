@@ -161,16 +161,6 @@ public abstract class Actor {
 		this.alive = alive;
 	}
 
-	public Position getNearestBed() {
-		HashMap<Furniture, Position> mapFurniture = GameMap.map.getFurniture();
-		if (mapFurniture != null) {
-			if (mapFurniture.size() != 0) {
-				return mapFurniture.get(mapFurniture.keySet().toArray()[0]);
-			}
-		}
-		return null;
-
-	}
 
 	@Override
 	public String toString() {

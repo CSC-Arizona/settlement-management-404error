@@ -50,8 +50,7 @@ public class GatherAction implements Action {
 				if (GameMap.mapHeight() > performer.getPosition().getRow() + 1
 						&& GameMap.getBlock(performer.getPosition().getRow() + 1, performer.getPosition().getCol())
 								.getID().equals("Air")) {
-					new MoveAction(new Position(performer.getPosition().getRow() + 1, performer.getPosition().getCol()))
-							.execute(performer);
+					performer.setPosition(new Position(performer.getPosition().getRow() + 1, performer.getPosition().getCol()));
 				}
 				return Action.COMPLETED;
 			}

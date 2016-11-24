@@ -57,7 +57,7 @@ public class PlayerControlledActor extends Actor {
 		// to fulfill that need
 		if (hunger >= threshold)
 			this.priorityAddToActionQueue(new HungerAction());
-		if (fatigue >= threshold && canSleep()) {
+		if (fatigue >= threshold) {
 			this.priorityAddToActionQueue(new SleepAction());
 		}
 		// if one of the needs get to high, then the actor dies
@@ -86,12 +86,6 @@ public class PlayerControlledActor extends Actor {
 
 	public void setFatigue(int fatigue) {
 		this.fatigue = fatigue;
-	}
-
-	public boolean canSleep() {
-		if (this.getNearestBed() == null)
-			return false;
-		return true;
 	}
 
 }
