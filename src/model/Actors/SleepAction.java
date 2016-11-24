@@ -5,8 +5,6 @@ import java.util.HashMap;
 import model.Game;
 import model.Furniture.Furniture;
 
-import model.Map;
-
 /**
  * @author Ethan Ward
  * 

@@ -1,7 +1,5 @@
 package model.Actors;
 
-import model.Map;
-
 /**
  * @author Jonathon Davis
  *

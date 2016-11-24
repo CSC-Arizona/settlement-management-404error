@@ -6,7 +6,6 @@ package model.Actors;
 import java.util.TreeMap;
 
 import model.Game;
-import model.Map;
 
 /**
  * Creates a move action where the Actor attempts to move towards the location

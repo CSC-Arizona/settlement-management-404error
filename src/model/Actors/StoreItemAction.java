@@ -1,7 +1,5 @@
 package model.Actors;
 
-import java.util.HashMap;
-
 import model.Map;
 import model.Furniture.Furniture;
 import model.Items.Item;

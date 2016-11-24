@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Game;
-import model.Map;
 import model.BuildingBlocks.BuildingBlock;
 import model.Room.Room;
 

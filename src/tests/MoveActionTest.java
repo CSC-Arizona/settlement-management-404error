@@ -5,14 +5,10 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Point;
-import java.util.HashMap;
-
 import org.junit.Test;
 
 import model.Game;
 import model.Map;
-import model.Actors.Actor;
 import model.Actors.MoveAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;

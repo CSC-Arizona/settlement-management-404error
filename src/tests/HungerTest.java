@@ -3,21 +3,17 @@
  */
 package tests;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.HashMap;
 
 import org.junit.Test;
 
+import model.Game;
 import model.Map;
-import model.Actors.Actor;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
-import model.BuildingBlocks.IronOreBlock;
 import model.Items.AntLarvaItem;
 
 /**
@@ -44,7 +40,7 @@ public class HungerTest {
 
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 },
 				{ 0, 0, 0, 0, 0 } };
-		Map map = generateMap(mapGen);
+		Game.setMap(generateMap(mapGen));
 		
 		PlayerControlledActor test = new PlayerControlledActor(10, -150000, new Position(1,1), null);
 		test.getInventory().addItem(new AntLarvaItem());
@@ -64,7 +60,7 @@ public class HungerTest {
 		
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 },
 				{ 0, 0, 0, 0, 0 } };
-		Map map = generateMap(mapGen);
+		Game.setMap(generateMap(mapGen));
 		
 		PlayerControlledActor test = new PlayerControlledActor(10, -150000, new Position(1,1), null);
 		assertTrue(test.isAlive());

@@ -39,7 +39,7 @@ public class BuildingBlockTest {
 		AppleTreeLeafBlock lb = new AppleTreeLeafBlock();
 		assertFalse(lb.isOccupiable());
 		assertTrue(lb.isDestroyable());
-		assertEquals(new LinkedList().getClass(), lb.lootBlock().getClass());
+		assertEquals(new LinkedList<Object>().getClass(), lb.lootBlock().getClass());
 		assertEquals(8, lb.lootBlock().size());
 		assertEquals(1, lb.getDurability());
 		assertEquals(new Color(242, 58, 58), lb.getColor());
@@ -61,7 +61,7 @@ public class BuildingBlockTest {
 		GoldOreBlock gob = new GoldOreBlock();
 		assertFalse(gob.isOccupiable());
 		assertTrue(gob.isDestroyable());
-		assertEquals(new LinkedList(), gob.lootBlock());
+		assertEquals(new LinkedList<Object>(), gob.lootBlock());
 		assertEquals(10, gob.getDurability());
 		assertEquals(new Color(255, 223, 0), gob.getColor());
 	}

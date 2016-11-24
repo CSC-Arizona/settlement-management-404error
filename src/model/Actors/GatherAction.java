@@ -4,7 +4,6 @@
 package model.Actors;
 
 import model.Game;
-import model.Map;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.Items.Item;

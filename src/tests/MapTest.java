@@ -6,7 +6,6 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import controller.ControllerMain;
 import model.Map;
 import model.MapParameters;
 

@@ -1,13 +1,8 @@
 package model.Actors;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
-import model.Game;
 import model.Inventory;
-import model.Map;
-import model.Furniture.Furniture;
 
 /**
  * 

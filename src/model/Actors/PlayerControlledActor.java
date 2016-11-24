@@ -5,8 +5,6 @@ package model.Actors;
 
 import java.util.HashMap;
 
-import model.Map;
-
 /**
  * @author Jonathon Davis The Player Controlled Actor will execute commands
  *         given by the player, the ACtor is not directly controlled by the

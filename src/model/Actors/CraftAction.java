@@ -3,7 +3,6 @@ package model.Actors;
 import java.util.Iterator;
 import java.util.List;
 
-import model.Furniture.Ladder;
 import model.Items.Item;
 
 /**

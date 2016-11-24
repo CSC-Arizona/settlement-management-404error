@@ -5,7 +5,6 @@ import java.util.Random;
 
 import controller.Controller;
 import model.Game;
-import model.Map;
 import model.MapParameters;
 import model.Actors.Actor;
 import model.Actors.MoveAction;
@@ -52,8 +51,6 @@ public class MovementScenario {
 		hardCodedActors.put(actor2, actor2.getPosition());
 		hardCodedActors.put(actor3, actor3.getPosition());
 		hardCodedActors.put(actor4, actor4.getPosition());
-
-
 	}
 
 }

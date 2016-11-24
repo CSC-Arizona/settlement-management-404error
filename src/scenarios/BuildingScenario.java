@@ -6,7 +6,6 @@ import java.util.Random;
 
 import controller.Controller;
 import model.Game;
-import model.Map;
 import model.MapParameters;
 import model.Actors.Actor;
 import model.Actors.ConstructAction;

@@ -46,7 +46,7 @@ public class AttackActionTest {
 				{1,1,1,1,0},
 				{1,1,1,1,1},
 				{1,1,1,1,1}};
-		Map map = generateMap(mapGen);
+		Game.setMap(generateMap(mapGen));
 
 		Actor tester = new PlayerControlledActor(5, 0, new Position(10,10), null);
 		Actor rival = new PlayerControlledActor(5, 0, new Position(11,10), null);
