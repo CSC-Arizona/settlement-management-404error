@@ -6,12 +6,11 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import view.BasicView;
 import model.Map;
 import model.MapParameters;
-import model.Actors.Actor;
 import model.Actors.Position;
 import model.Furniture.Furniture;
+import view.BasicView;
 
 /**
  * Display a map
@@ -52,9 +51,9 @@ public class Controller {
 
 	public Controller(MapParameters mapParameters,
 			HashMap<Furniture, Position> hardCodedFurniture,
-			HashMap<Actor, Position> hardCodedActors, Random random,
+			Random random,
 			ArrayList<Position> blocksMarkedForGathering) {
-		map = new Map(mapParameters, hardCodedFurniture, hardCodedActors,
+		map = new Map(mapParameters, hardCodedFurniture,
 				random, blocksMarkedForGathering);
 		view = new BasicView(this, map, mapParameters);
 		view.setVisible(true);

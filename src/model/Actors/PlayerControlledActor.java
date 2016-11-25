@@ -3,7 +3,7 @@
  */
 package model.Actors;
 
-import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * @author Jonathon Davis The Player Controlled Actor will execute commands
@@ -15,15 +15,16 @@ public class PlayerControlledActor extends Actor {
 	private int fatigue, hunger, happiness;
 	private static final int threshold = 1000;
 	private static final int death_threshold = 1100;
-	private HashMap<Actor, Position> allActors;
+	public static LinkedList<Actor> allActors;
 
-	public PlayerControlledActor(int health, int fatigue, Position location,
-			HashMap<Actor, Position> allActors) {
+	public PlayerControlledActor(int health, int fatigue, Position location) {
 		super(health, fatigue, location);
 		this.fatigue = fatigue;
 		hunger = 0;
 		happiness = 0;
-		this.allActors = allActors;
+		if(allActors == null)
+			allActors = new LinkedList<>();
+		allActors.add(this);
 
 	}
 
@@ -44,9 +45,8 @@ public class PlayerControlledActor extends Actor {
 		// to fulfill that need
 		if (hunger >= threshold)
 			this.priorityAddToActionQueue(new HungerAction());
-		if (fatigue >= threshold) {
+		if (fatigue >= threshold)
 			this.priorityAddToActionQueue(new SleepAction());
-		}
 		// if one of the needs get to high, then the actor dies
 		if (hunger >= death_threshold || fatigue >= death_threshold) {
 			allActors.remove(this);

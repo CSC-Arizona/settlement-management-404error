@@ -24,7 +24,7 @@ public class CraftingActionTest {
 	
 	@Test
 	public void testCrafting(){
-		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1), null);
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1,1));
 		BasicSword item = new BasicSword();
 		test.addToActionQueue(new CraftAction(item,item.getRequiredMaterials()));
 		test.getInventory().addItem(new WoodItem());

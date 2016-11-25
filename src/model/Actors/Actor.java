@@ -23,6 +23,7 @@ public abstract class Actor {
 	private Skills skills;
 	private Inventory inventory;
 	private boolean alive;
+	public static LinkedList<Actor> allActors;
 
 	/**
 	 * Creates a new actor
@@ -41,6 +42,9 @@ public abstract class Actor {
 		this.inventory = new Inventory();
 		this.setAlive(true);
 		skills = new Skills();
+		if(allActors == null)
+			allActors = new LinkedList<>();
+		allActors.add(this);
 	}
 
 	/**

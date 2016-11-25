@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import model.Actors.Actor;
+import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.AntTunnelBlock;
@@ -36,19 +37,17 @@ public class Map {
 	private MapParameters mapParameters;
 
 	private HashMap<Furniture, Position> hardCodedFurniture;
-	private HashMap<Actor, Position> hardCodedActors;
 	private ArrayList<Position> blocksMarkedForGathering;
 	private ArrayList<Position> itemsOnGround = new ArrayList<>();
 
 	public Map(MapParameters mapParameters,
 			HashMap<Furniture, Position> hardCodedFurniture,
-			HashMap<Actor, Position> hardCodedActors, Random random,
+			Random random,
 			ArrayList<Position> blocksMarkedForGathering) {
 		this.blocksMarkedForGathering = blocksMarkedForGathering;
 		this.random = random;
 		this.mapParameters = mapParameters;
 		this.hardCodedFurniture = hardCodedFurniture;
-		this.hardCodedActors = hardCodedActors;
 
 		constructMap();
 	}
@@ -475,17 +474,17 @@ public class Map {
 	}
 
 	private void addPlayerActors() {
-		if (hardCodedActors != null) {
-			for (Actor actor : hardCodedActors.keySet()) {
-				Position position = hardCodedActors.get(actor);
+		if (PlayerControlledActor.allActors != null) {
+			for (Actor actor : PlayerControlledActor.allActors) {
+				Position position = actor.getPosition();
 				map[position.getRow()][position.getCol()].addActor(actor);
 			}
 		}
 	}
 
 	public void updateActors(int timeDelta) {
-		if (hardCodedActors != null) {
-			for (Actor actor : hardCodedActors.keySet()) {
+		if (Actor.allActors != null) {
+			for (Actor actor : Actor.allActors) {
 				Position oldPosition = actor.getPosition();
 				map[oldPosition.getRow()][oldPosition.getCol()]
 						.removeActor(actor);

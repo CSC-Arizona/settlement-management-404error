@@ -33,16 +33,14 @@ public class BuildingScenario {
 	public BuildingScenario() {
 		
 		Controller controller = new Controller (
-			MapParameters.getDefaultParameters(), hardCodedFurniture, hardCodedActors,
-			new Random(seed), blocksMarkedForGathering);
+			MapParameters.getDefaultParameters(), hardCodedFurniture, new Random(seed), blocksMarkedForGathering);
 		Game.setMap(controller.getMap());
-		PlayerControlledActor actor = new PlayerControlledActor(100, 0, new Position(44, 985), hardCodedActors);
+		PlayerControlledActor actor = new PlayerControlledActor(100, 0, new Position(44, 985));
 		for (int i = 0; i < 8; i++) {
 			actor.getInventory().addItem(new StoneItem());
 			actor.getInventory().addItem(new IronItem());
 		}
 		actor.addToActionQueue(new ConstructAction(new StoreRoom(new Position(45, 983))));
-		hardCodedActors.put(actor, actor.getPosition());
 	}
 
 }

@@ -44,7 +44,7 @@ public class GatherActionTest {
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 2 }, { 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1 },
 				{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
-		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1, 1), null);
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1, 1));
 		test.addToActionQueue(new GatherAction(new Position(1, 4)));
 
 		assertEquals(1, test.getPosition().getRow());
@@ -77,7 +77,7 @@ public class GatherActionTest {
 		int[][] mapGen = new int[][] { { 0, 0, 0, 1, 1 }, { 0, 0, 0, 1, 2 }, { 0, 1, 1, 1, 1 }, { 1, 0, 0, 1, 1 },
 				{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
-		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1, 1), null);
+		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1, 1));
 		test.addToActionQueue(new GatherAction(new Position(1, 4)));
 		test.addToActionQueue(new MoveAction(new Position(3, 2)));
 
