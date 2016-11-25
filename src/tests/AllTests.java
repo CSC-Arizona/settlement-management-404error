@@ -15,7 +15,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ ArmorTest.class, AttackActionTest.class, BuildingBlockTest.class, InventoryTest.class, ItemTest.class,
 		MoveActionTest.class, HungerTest.class, GatherActionTest.class, FurnitureTest.class, WeaponTest.class,
 		MapTest.class, RoomTest.class, ConstructActionTest.class, CraftingActionTest.class, SaveTest.class,
-		ActionPoolTest.class, PickUpAndStoreActionTest.class })
+		ActionPoolTest.class, PickUpAndStoreActionTest.class, SleepActionTest.class })
 public class AllTests {
 
 }
