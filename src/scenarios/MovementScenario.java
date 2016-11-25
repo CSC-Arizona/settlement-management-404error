@@ -32,12 +32,12 @@ public class MovementScenario {
 		
 		Position finalPosition = new Position(52,980);
 		
-		Actor actor1 = new PlayerControlledActor(100, 0, new Position(58, 990));
-		Actor actor2 = new PlayerControlledActor(100, 0, new Position(59, 991));
-		Actor actor3 = new PlayerControlledActor(100, 0, new Position(57, 999));
+		Actor actor1 = new PlayerControlledActor(100, new Position(58, 990));
+		Actor actor2 = new PlayerControlledActor(100, new Position(59, 991));
+		Actor actor3 = new PlayerControlledActor(100, new Position(57, 999));
 		
 		// this actor should move across 0 boundary
-		Actor actor4 = new PlayerControlledActor(100, 0, new Position(54, 4));
+		Actor actor4 = new PlayerControlledActor(100, new Position(54, 4));
 
 		// only need one movement action, any more is wasteful and computationally expensive
 		MoveAction move = new MoveAction(finalPosition);

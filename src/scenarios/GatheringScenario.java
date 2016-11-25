@@ -36,7 +36,7 @@ public class GatheringScenario {
 		Controller controller = new Controller(MapParameters.getDefaultParameters(), hardCodedFurniture,
 				new Random(seed), blocksMarkedForGathering);
 		Game.setMap(controller.getMap());
-		PlayerControlledActor actor = new PlayerControlledActor(100, 0, new Position(44, 985));
+		PlayerControlledActor actor = new PlayerControlledActor(100, new Position(44, 985));
 
 		actor.addToActionQueue(new GatherAction(new Position(44, 987)));
 		actor.addToActionQueue(new GatherAction(new Position(48, 996)));

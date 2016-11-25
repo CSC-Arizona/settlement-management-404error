@@ -15,7 +15,6 @@ import model.Inventory;
 public abstract class Actor {
 
 	private int health;
-	private int fatigue;
 	private Position position;
 	private boolean idle;
 	private LinkedList<Action> queue;
@@ -33,14 +32,13 @@ public abstract class Actor {
 	 * @param position
 	 *            The current position of the actor
 	 */
-	public Actor(int health, int fatigue, Position position) {
+	public Actor(int health, Position position) {
 		this.health = health;
-		this.fatigue = fatigue;
 		this.position = position;
 		this.idle = true;
 		this.queue = new LinkedList<Action>();
 		this.inventory = new Inventory();
-		this.setAlive(true);
+		this.alive = true;
 		skills = new Skills();
 		if(allActors == null)
 			allActors = new LinkedList<>();
@@ -99,25 +97,6 @@ public abstract class Actor {
 	}
 
 	/**
-	 * @return the health
-	 */
-	public int getHealth() {
-		return health;
-	}
-
-	/**
-	 * @param health
-	 *            the health to set
-	 */
-	public void setHealth(int health) {
-		this.health = health;
-	}
-
-	public void setFatigue(int fatigue) {
-		this.fatigue = fatigue;
-	}
-
-	/**
 	 * @return the position
 	 */
 	public Position getPosition() {
@@ -158,14 +137,23 @@ public abstract class Actor {
 	 *            the alive to set
 	 */
 	public void setAlive(boolean alive) {
+		if(alive)
+			return;
 		this.alive = alive;
+		allActors.remove(this);
+		
+	}
+	
+	public int getHealth(){
+		return health;
 	}
 
-
-	@Override
-	public String toString() {
-		String result = Integer.toString(health) + " health; " + Integer.toString(fatigue) + " fatigue";
-		return result;
+	/**
+	 * @param i
+	 */
+	public void setHealth(int i) {
+		this.health = i;
+		
 	}
 
 }

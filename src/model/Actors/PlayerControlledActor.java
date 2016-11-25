@@ -17,9 +17,9 @@ public class PlayerControlledActor extends Actor {
 	private static final int death_threshold = 1100;
 	public static LinkedList<Actor> allActors;
 
-	public PlayerControlledActor(int health, int fatigue, Position location) {
-		super(health, fatigue, location);
-		this.fatigue = fatigue;
+	public PlayerControlledActor(int health, Position location) {
+		super(health, location);
+		fatigue = 0;
 		hunger = 0;
 		happiness = 0;
 		if(allActors == null)
@@ -39,7 +39,6 @@ public class PlayerControlledActor extends Actor {
 		fatigue += 1;
 		hunger += 1;
 		happiness += 1;
-		super.setFatigue(fatigue);
 		// if one of the needs gets to high, the actor
 		// will ignore his current action and attempt
 		// to fulfill that need
@@ -73,6 +72,12 @@ public class PlayerControlledActor extends Actor {
 
 	public void setFatigue(int fatigue) {
 		this.fatigue = fatigue;
+	}
+	
+	@Override
+	public String toString() {
+		String result = Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue";
+		return result;
 	}
 
 }

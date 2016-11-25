@@ -42,7 +42,8 @@ public class HungerTest {
 				{ 0, 0, 0, 0, 0 } };
 		Game.setMap(generateMap(mapGen));
 		
-		PlayerControlledActor test = new PlayerControlledActor(10, -150000, new Position(1,1));
+		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
+		test.setFatigue(-150000);
 		test.getInventory().addItem(new AntLarvaItem());
 		assertTrue(test.isAlive());
 		for (int i = 0; i < 1000; i++) {
@@ -62,7 +63,8 @@ public class HungerTest {
 				{ 0, 0, 0, 0, 0 } };
 		Game.setMap(generateMap(mapGen));
 		
-		PlayerControlledActor test = new PlayerControlledActor(10, -150000, new Position(1,1));
+		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
+		test.setFatigue(-150000);
 		assertTrue(test.isAlive());
 		for (int i = 0; i < 1000; i++) {
 			test.update();

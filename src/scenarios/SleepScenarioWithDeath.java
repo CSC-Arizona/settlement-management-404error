@@ -30,7 +30,7 @@ public class SleepScenarioWithDeath {
 
 		Game.setMap(controller.getMap());
 
-		new PlayerControlledActor(100, 1090, new Position(50, 985));
+		new PlayerControlledActor(100, new Position(50, 985)).setFatigue(1090);
 
 	}
 }

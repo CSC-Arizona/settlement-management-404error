@@ -35,7 +35,7 @@ public class BuildingScenario {
 		Controller controller = new Controller (
 			MapParameters.getDefaultParameters(), hardCodedFurniture, new Random(seed), blocksMarkedForGathering);
 		Game.setMap(controller.getMap());
-		PlayerControlledActor actor = new PlayerControlledActor(100, 0, new Position(44, 985));
+		PlayerControlledActor actor = new PlayerControlledActor(100, new Position(44, 985));
 		for (int i = 0; i < 8; i++) {
 			actor.getInventory().addItem(new StoneItem());
 			actor.getInventory().addItem(new IronItem());

@@ -17,13 +17,13 @@ public class SleepAction implements Action {
 	@Override
 	public int execute(Actor performer) {
 		Position nearestBed = getNearestBed();
-		performer.setFatigue(0);
+		PlayerControlledActor performer2 = (PlayerControlledActor)performer;
 		if (nearestBed != null) {
 			performer.addToActionQueue(new MoveAction(nearestBed));
 
 			// if in same position as bed, sleep, otherwise move
 			if (performer.getPosition().equals(nearestBed)) {
-				performer.setFatigue(0);
+				performer2.setFatigue(0);
 				return Action.COMPLETED;
 			} else {
 				int action = new MoveAction(nearestBed).execute(performer);
@@ -33,7 +33,7 @@ public class SleepAction implements Action {
 				return action;
 			}
 		}
-		return Action.DELAY;
+		return Action.CANCELL;
 	}
 	
 	public Position getNearestBed() {
