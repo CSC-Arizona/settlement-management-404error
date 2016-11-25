@@ -4,7 +4,7 @@ package model.Actors;
  * @author Jonathon Davis
  *
  */
-public class AttackAction implements Action {
+public class AttackAction extends Action {
 	private Actor target;
 	
 	public AttackAction(Actor target){

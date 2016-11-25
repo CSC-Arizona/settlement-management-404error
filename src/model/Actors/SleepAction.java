@@ -11,7 +11,7 @@ import model.Furniture.Furniture;
  * 
  *
  */
-public class SleepAction implements Action {
+public class SleepAction extends Action {
 	
 	// github.com/CSC-Arizona/settlement-management-404error
 	@Override

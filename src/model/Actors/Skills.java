@@ -3,11 +3,13 @@
  */
 package model.Actors;
 
+import java.io.Serializable;
+
 /**
  * @author Jonathon Davis
  *
  */
-public class Skills {
+public class Skills implements Serializable {
 	private int combatXP;
 	
 	/**

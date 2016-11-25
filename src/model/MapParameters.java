@@ -1,6 +1,8 @@
 package model;
 
-public class MapParameters {
+import java.io.Serializable;
+
+public class MapParameters implements Serializable {
 
 	// total height / width of the map
 	public final int mapHeight;

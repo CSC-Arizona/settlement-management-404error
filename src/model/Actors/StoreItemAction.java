@@ -6,7 +6,7 @@ import model.Game;
 import model.Furniture.Furniture;
 import model.Items.Item;
 
-public class StoreItemAction implements Action {
+public class StoreItemAction extends Action {
 
 	private Position cratePosition;
 	private Item item;

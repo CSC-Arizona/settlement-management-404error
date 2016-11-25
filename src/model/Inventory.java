@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +16,7 @@ import model.Items.Item;
  * 
  * @author Katherine Walters
  */
-public class Inventory implements Iterable<Item> {
+public class Inventory implements Iterable<Item>, Serializable {
 
 	public static final double MAXWEIGHT = 100.0;
 	private double weight;

@@ -3,7 +3,7 @@ package model.Actors;
 import model.Game;
 import model.Items.Item;
 
-public class PickUpItemAction implements Action {
+public class PickUpItemAction extends Action {
 
 	private Position itemPosition;
 	private StoreItemAction store;

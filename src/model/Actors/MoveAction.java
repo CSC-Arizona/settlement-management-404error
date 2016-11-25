@@ -12,7 +12,7 @@ import model.Game;
  * 
  * @author Jonathon Davis
  */
-public class MoveAction implements Action {
+public class MoveAction extends Action {
 
 	private TreeMap<Position, Node> visited;
 	private Position desiredDestination;

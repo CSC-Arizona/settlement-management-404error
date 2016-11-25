@@ -11,7 +11,7 @@ import model.Items.Item;
  * @author Jonathon Davis
  *
  */
-public class CraftAction implements Action {
+public class CraftAction extends Action {
 	
 	private Item toBeCrafted;
 	private List<Item> requiredMaterials;

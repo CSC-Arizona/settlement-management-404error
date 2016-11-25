@@ -1,5 +1,6 @@
 package model.Actors;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 import model.Inventory;
@@ -12,7 +13,7 @@ import model.Inventory;
  * @author Jonathon Davis
  *
  */
-public abstract class Actor {
+public abstract class Actor implements Serializable {
 
 	private int health;
 	private Position position;
@@ -155,5 +156,7 @@ public abstract class Actor {
 		this.health = i;
 		
 	}
+	
+	
 
 }

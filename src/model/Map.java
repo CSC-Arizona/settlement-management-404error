@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -26,7 +27,7 @@ import model.Items.Item;
  * @author Ethan Ward
  *
  */
-public class Map {
+public class Map implements Serializable {
 
 	private Random random;
 

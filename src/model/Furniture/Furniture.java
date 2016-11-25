@@ -1,5 +1,6 @@
 package model.Furniture;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import model.Items.Item;
 
 //Author: Maxwell Faridian
 //This class is abstract and is extended by all pieces of furniture that are placed inside of rooms
-public abstract class Furniture {
+public abstract class Furniture implements Serializable {
 	
 	private int capacity;
 	private int weightCapacity;

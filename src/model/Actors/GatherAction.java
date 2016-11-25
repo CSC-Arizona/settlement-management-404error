@@ -14,7 +14,7 @@ import model.Items.Item;
  * @author Jonathon Davis
  *
  */
-public class GatherAction implements Action {
+public class GatherAction extends Action {
 	Position position;
 	int durability;
 	MoveAction movement;

@@ -3,9 +3,6 @@
  */
 package model;
 
-import model.Actors.Position;
-import model.BuildingBlocks.BuildingBlock;
-
 /**
  * Singleton used for the game map
  * @author Jonathon Davis

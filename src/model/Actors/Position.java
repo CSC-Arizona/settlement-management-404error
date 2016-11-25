@@ -3,13 +3,15 @@
  */
 package model.Actors;
 
+import java.io.Serializable;
+
 /**
  * A position on the map, uses row col coordinates
  * 
  * @author Jonathon Davis
  *
  */
-public class Position implements Comparable<Position> {
+public class Position implements Comparable<Position>, Serializable {
 	private int row, col;
 
 	public Position(int row, int col) {

@@ -12,7 +12,7 @@ import model.Items.Item;
  * @author Jonathon
  *
  */
-public class HungerAction implements Action {
+public class HungerAction extends Action {
 
 	/* (non-Javadoc)
 	 * @see model.Actors.Action#execute(model.Actors.Actor)

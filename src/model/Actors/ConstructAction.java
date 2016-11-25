@@ -17,7 +17,7 @@ import model.Room.Room;
  * @author Katherine Walters
  * @author Jonathon Davis
  */
-public class ConstructAction implements Action {
+public class ConstructAction extends Action {
 
 	private BuildingBlock corner;
 	private List<Action> GatherCommands;
