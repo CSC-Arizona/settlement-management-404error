@@ -23,7 +23,6 @@ public class BuildingScenario {
 	private int seed = 8412372;
 	
 	private HashMap<Actor, Position> hardCodedActors = new HashMap<>();
-	private ArrayList<Position> blocksMarkedForGathering = new ArrayList<>();
 	private HashMap<Furniture, Position> hardCodedFurniture = new HashMap<>();
 	
 	public static void main(String[] args) {
@@ -33,7 +32,7 @@ public class BuildingScenario {
 	public BuildingScenario() {
 		
 		Controller controller = new Controller (
-			MapParameters.getDefaultParameters(), hardCodedFurniture, new Random(seed), blocksMarkedForGathering);
+			MapParameters.getDefaultParameters(), hardCodedFurniture, new Random(seed));
 		Game.setMap(controller.getMap());
 		PlayerControlledActor actor = new PlayerControlledActor(100, new Position(44, 985));
 		for (int i = 0; i < 8; i++) {

@@ -16,7 +16,6 @@ import model.Furniture.ReinforcedCrate;
 public class GatheringScenario {
 	private int seed = 8412372;
 
-	private ArrayList<Position> blocksMarkedForGathering = new ArrayList<>();
 	private HashMap<Furniture, Position> hardCodedFurniture = new HashMap<>();
 
 	public static void main(String[] args) {
@@ -27,14 +26,8 @@ public class GatheringScenario {
 
 		hardCodedFurniture.put(new ReinforcedCrate(), new Position(44, 985));
 
-		blocksMarkedForGathering.add(new Position(44, 987));
-		blocksMarkedForGathering.add(new Position(48, 996));
-		blocksMarkedForGathering.add(new Position(47, 994));
-		blocksMarkedForGathering.add(new Position(46, 991));
-		blocksMarkedForGathering.add(new Position(46, 990));
-
 		Controller controller = new Controller(MapParameters.getDefaultParameters(), hardCodedFurniture,
-				new Random(seed), blocksMarkedForGathering);
+				new Random(seed));
 		Game.setMap(controller.getMap());
 		PlayerControlledActor actor = new PlayerControlledActor(100, new Position(44, 985));
 

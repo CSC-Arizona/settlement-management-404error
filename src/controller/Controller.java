@@ -51,10 +51,9 @@ public class Controller {
 
 	public Controller(MapParameters mapParameters,
 			HashMap<Furniture, Position> hardCodedFurniture,
-			Random random,
-			ArrayList<Position> blocksMarkedForGathering) {
+			Random random) {
 		map = new Map(mapParameters, hardCodedFurniture,
-				random, blocksMarkedForGathering);
+				random);
 		view = new BasicView(this, map, mapParameters);
 		view.setVisible(true);
 		startTimer();

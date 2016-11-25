@@ -26,7 +26,7 @@ public class SleepScenarioWithDeath {
 
 	public SleepScenarioWithDeath() {
 
-		Controller controller = new Controller(MapParameters.getDefaultParameters(), hardCodedFurniture, new Random(seed), null);
+		Controller controller = new Controller(MapParameters.getDefaultParameters(), hardCodedFurniture, new Random(seed));
 
 		Game.setMap(controller.getMap());
 

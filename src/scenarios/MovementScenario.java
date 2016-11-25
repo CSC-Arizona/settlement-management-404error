@@ -26,7 +26,7 @@ public class MovementScenario {
 	public MovementScenario() {
 
 		Controller controller = new Controller(MapParameters.getDefaultParameters(), null,
-				new Random(seed), null);
+				new Random(seed));
 		
 		Game.setMap(controller.getMap());
 		

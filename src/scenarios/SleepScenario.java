@@ -30,7 +30,7 @@ public class SleepScenario {
 
 		Controller controller = new Controller(
 				MapParameters.getDefaultParameters(), hardCodedFurniture,
-				new Random(seed), null);
+				new Random(seed));
 
 		Game.setMap(controller.getMap());
 
