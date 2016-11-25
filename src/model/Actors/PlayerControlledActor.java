@@ -16,12 +16,21 @@ public class PlayerControlledActor extends Actor {
 	private static final int threshold = 1000;
 	private static final int death_threshold = 1100;
 	public static LinkedList<Actor> allActors;
+	private static ActionPool playerActionPool;
 
+	/**
+	 * Creates a player controlled actor which will execute commands
+	 * given to them by the Player
+	 * @param health What health this player will begin with
+	 * @param location The location this player will begin with
+	 */
 	public PlayerControlledActor(int health, Position location) {
 		super(health, location);
 		fatigue = 0;
 		hunger = 0;
 		happiness = 0;
+		if(playerActionPool == null)
+			playerActionPool = new ActionPool();
 		if(allActors == null)
 			allActors = new LinkedList<>();
 		allActors.add(this);
@@ -70,14 +79,34 @@ public class PlayerControlledActor extends Actor {
 		this.hunger = hunger;
 	}
 
+	/**
+	 * Sets the fatigue level of this actor
+	 * @param fatigue The level the fatigue will be set
+	 */
 	public void setFatigue(int fatigue) {
 		this.fatigue = fatigue;
+	}
+	
+	/**
+	 * Adds an action to the player controlled pool
+	 * @param action The action that will be added
+	 */
+	public static void addAction(Action action){
+		playerActionPool.add(action);
 	}
 	
 	@Override
 	public String toString() {
 		String result = Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue";
 		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see model.Actors.Actor#getActionFromPool()
+	 */
+	@Override
+	public Action getActionFromPool() {
+		return playerActionPool.get();
 	}
 
 }

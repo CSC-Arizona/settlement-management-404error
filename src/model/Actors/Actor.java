@@ -71,11 +71,15 @@ public abstract class Actor implements Serializable {
 	 */
 	public void update() {
 		// if idle get a new action
-		if (idle)
+		if (idle){
 			if (queue.size() > 0)
 				currentAction = queue.peek();
 			else
-				return;
+				currentAction = getActionFromPool();
+			if(currentAction == null)
+				return; // TODO: set to idle action
+		}
+		
 
 		// Store the result of the execution
 		int result = currentAction.execute(this);
@@ -156,6 +160,8 @@ public abstract class Actor implements Serializable {
 		this.health = i;
 		
 	}
+	
+	public abstract Action getActionFromPool();
 	
 	
 
