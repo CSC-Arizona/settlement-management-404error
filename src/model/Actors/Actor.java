@@ -136,6 +136,8 @@ public abstract class Actor implements Serializable {
 	public boolean isAlive() {
 		return alive;
 	}
+	
+	public abstract void addActionToPool(Action action);
 
 	/**
 	 * @param alive

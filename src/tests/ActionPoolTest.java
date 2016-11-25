@@ -48,11 +48,11 @@ public class ActionPoolTest {
 		Game.setMap(generateMap(mapGen));
 		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
 		PlayerControlledActor test2 = new PlayerControlledActor(10, new Position(1, 3));
-		PlayerControlledActor.addAction(new GatherAction(new Position(2, 0)));
-		PlayerControlledActor.addAction(new GatherAction(new Position(2, 4)));
-		PlayerControlledActor.addAction(new GatherAction(new Position(2, 1)));
-		PlayerControlledActor.addAction(new GatherAction(new Position(2, 3)));
-		PlayerControlledActor.addAction(new GatherAction(new Position(2, 2)));
+		test.addActionToPool(new GatherAction(new Position(2, 0)));
+		test.addActionToPool(new GatherAction(new Position(2, 4)));
+		test.addActionToPool(new GatherAction(new Position(2, 1)));
+		test2.addActionToPool(new GatherAction(new Position(2, 3)));
+		test2.addActionToPool(new GatherAction(new Position(2, 2)));
 
 		int durability = Game.getMap().getBuildingBlock(2, 2).getDurability();
 		for (int i = 0; i < durability; i++) {

@@ -1,6 +1,5 @@
 package scenarios;
 
-import java.util.HashMap;
 import java.util.Random;
 
 import controller.Controller;
@@ -9,7 +8,6 @@ import model.MapParameters;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.Furniture.Bed;
-import model.Furniture.Furniture;
 
 /**
  * @author Ethan Ward
@@ -18,21 +16,17 @@ import model.Furniture.Furniture;
  */
 public class SleepScenario {
 	private int seed = 98765;
-	private HashMap<Furniture, Position> hardCodedFurniture = new HashMap<>();
 
 	public static void main(String[] args) {
 		new SleepScenario();
 	}
 
 	public SleepScenario() {
-		hardCodedFurniture.put(new Bed(), new Position(53, 990));
-		hardCodedFurniture.put(new Bed(), new Position(48, 982));
-
-		Controller controller = new Controller(
-				MapParameters.getDefaultParameters(), hardCodedFurniture,
-				new Random(seed));
+		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed));
 
 		Game.setMap(controller.getMap());
+		Game.getMap().addFurniture(new Bed(), new Position(53, 990));
+		Game.getMap().addFurniture(new Bed(), new Position(48, 982));
 
 		new PlayerControlledActor(100, new Position(50, 985)).setFatigue(990);
 

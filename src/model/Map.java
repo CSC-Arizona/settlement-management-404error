@@ -41,11 +41,11 @@ public class Map implements Serializable {
 	private ArrayList<Position> blocksMarkedForGathering;
 	private ArrayList<Position> itemsOnGround = new ArrayList<>();
 
-	public Map(MapParameters mapParameters, HashMap<Furniture, Position> hardCodedFurniture, Random random) {
+	public Map(MapParameters mapParameters, Random random) {
 		this.blocksMarkedForGathering = new ArrayList<>();
 		this.random = random;
 		this.mapParameters = mapParameters;
-		this.hardCodedFurniture = hardCodedFurniture;
+		this.hardCodedFurniture = new HashMap<>();
 
 		constructMap();
 	}
@@ -519,6 +519,11 @@ public class Map implements Serializable {
 			return true;
 		}
 		return false;
+	}
+	
+	public void addFurniture(Furniture f, Position p){
+		hardCodedFurniture.put(f, p);
+		map[p.getRow()][p.getCol()].addFurniture(f);
 	}
 
 	public ArrayList<Position> getItemsOnGround() {

@@ -89,9 +89,12 @@ public class PlayerControlledActor extends Actor {
 	
 	/**
 	 * Adds an action to the player controlled pool
+	 * This does not guarantee that this actor will execute
+	 * this command, however a actor will eventually
+	 * execute this command
 	 * @param action The action that will be added
 	 */
-	public static void addAction(Action action){
+	public void addActionToPool(Action action){
 		playerActionPool.add(action);
 	}
 	

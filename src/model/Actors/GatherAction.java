@@ -51,7 +51,7 @@ public class GatherAction extends Action {
 							performer.getInventory().addItem(i);
 						} else {
 							Game.getMap().addItemToGround(position, i);
-							performer.addToActionQueue(new PickUpItemAction(position, i));
+							performer.addActionToPool(new PickUpItemAction(position, i));
 						}
 				if (Game.getMap().getTotalHeight() > performer.getPosition().getRow() + 1
 						&& Game.getMap().getBuildingBlock(performer.getPosition().getRow() + 1, performer.getPosition().getCol()).isOccupiable()) {

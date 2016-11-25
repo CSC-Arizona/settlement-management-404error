@@ -50,10 +50,8 @@ public class Controller {
 	}
 
 	public Controller(MapParameters mapParameters,
-			HashMap<Furniture, Position> hardCodedFurniture,
 			Random random) {
-		map = new Map(mapParameters, hardCodedFurniture,
-				random);
+		map = new Map(mapParameters, random);
 		view = new BasicView(this, map, mapParameters);
 		view.setVisible(true);
 		startTimer();
