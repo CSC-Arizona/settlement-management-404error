@@ -46,10 +46,12 @@ public class GatherAction implements Action {
 				Game.getMap().setBuildingBlock(position, new AirBlock());
 				if (block.lootBlock() != null)
 					for (Item i : block.lootBlock())
-						if(performer.getInventory().canAdd(i))
+						if(performer.getInventory().canAdd(i)){
 							performer.getInventory().addItem(i);
-						else
+						} else {
 							Game.getMap().addItemToGround(position, i);
+							performer.addToActionQueue(new PickUpItemAction(position, i));
+						}
 				if (Game.getMap().getTotalHeight() > performer.getPosition().getRow() + 1
 						&& Game.getMap().getBuildingBlock(performer.getPosition().getRow() + 1, performer.getPosition().getCol()).isOccupiable()) {
 					performer.setPosition(new Position(performer.getPosition().getRow() + 1, performer.getPosition().getCol()));

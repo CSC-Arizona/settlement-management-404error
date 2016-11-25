@@ -8,6 +8,7 @@ import controller.Controller;
 import model.Game;
 import model.MapParameters;
 import model.Actors.Actor;
+import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.Furniture.Furniture;
@@ -40,6 +41,12 @@ public class GatheringScenario {
 		Game.setMap(controller.getMap());
 		PlayerControlledActor actor = new PlayerControlledActor(100, 0,
 				new Position(44, 985), hardCodedActors);
+		
+		actor.addToActionQueue(new GatherAction(new Position(44,987)));
+		actor.addToActionQueue(new GatherAction(new Position(48,996)));
+		actor.addToActionQueue(new GatherAction(new Position(47,994)));
+		actor.addToActionQueue(new GatherAction(new Position(46,991)));
+		actor.addToActionQueue(new GatherAction(new Position(46,990)));
 
 		hardCodedActors.put(actor, actor.getPosition());
 

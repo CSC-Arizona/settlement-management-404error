@@ -1,31 +1,30 @@
 package model.Actors;
 
-import model.Map;
+import java.util.HashMap;
+
+import model.Game;
 import model.Furniture.Furniture;
 import model.Items.Item;
 
 public class StoreItemAction implements Action {
 
-	private Map map;
 	private Position cratePosition;
 	private Item item;
-	private int index;
 
-	public StoreItemAction(Position cratePosition, Item item, int index) {
+	public StoreItemAction(Item item) {
 		this.item = item;
-		this.index = index;
-		this.cratePosition = cratePosition;
+		cratePosition = getCrateWithCapacityGreaterThan(item.getWeight());
 	}
 
 	@Override
 	public int execute(Actor performer) {
 		if (performer.getPosition().equals(cratePosition)) {
-			Furniture crate = map.getBuildingBlock(cratePosition)
+			Furniture crate = Game.getMap().getBuildingBlock(cratePosition)
 					.getFurniture();
 			if (crate != null && performer.getInventory().size() != 0) {
 				if (crate.getRemainingWeightCapacity() >= item.getWeight()) {
 					crate.addItem(item);
-					performer.getInventory().removeItem(index);
+					performer.getInventory().removeItem(item);
 				}
 			}
 			return Action.COMPLETED;
@@ -36,5 +35,19 @@ public class StoreItemAction implements Action {
 			}
 			return action;
 		}
+	}
+	
+	public Position getCrateWithCapacityGreaterThan(double target) {
+		HashMap<Furniture, Position> mapFurniture = Game.getMap().getFurniture();
+		if (mapFurniture != null) {
+			for (Furniture f : mapFurniture.keySet()) {
+				if (f.getID().equals("crate")) {
+					if (f.getRemainingWeightCapacity() >= target) {
+						return mapFurniture.get(f);
+					}
+				}
+			}
+		}
+		return null;
 	}
 }

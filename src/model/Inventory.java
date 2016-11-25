@@ -117,6 +117,7 @@ public class Inventory implements Iterable<Item> {
 		while(it.hasNext()){
 			Item item = it.next();
 			if(item.getClass().equals(required.getClass())){
+				this.weight -= item.getWeight();
 				it.remove();
 				return;
 			}

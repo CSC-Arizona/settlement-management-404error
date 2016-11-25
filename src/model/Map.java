@@ -2,22 +2,17 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Random;
-import java.util.TreeMap;
 
 import model.Actors.Actor;
-import model.Actors.MoveAction;
-import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.AntTunnelBlock;
 import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.GrassBlock;
 import model.BuildingBlocks.CavernBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.GoldOreBlock;
+import model.BuildingBlocks.GrassBlock;
 import model.BuildingBlocks.IronOreBlock;
 import model.BuildingBlocks.LavaBlock;
 import model.BuildingBlocks.StoneBlock;
