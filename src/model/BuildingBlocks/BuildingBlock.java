@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.List;
 
+import model.Game;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.Item;

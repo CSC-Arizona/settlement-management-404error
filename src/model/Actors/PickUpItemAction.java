@@ -7,11 +7,14 @@ public class PickUpItemAction extends Action {
 
 	private Position itemPosition;
 	private StoreItemAction store;
+	private MoveAction movement;
 	private Item item;
+	private boolean legacyMovement;
 
 	public PickUpItemAction(Position itemPosition, Item item) {
 		this.item = item;
 		this.itemPosition = itemPosition;
+		legacyMovement = false;
 	}
 
 	@Override
@@ -22,7 +25,13 @@ public class PickUpItemAction extends Action {
 				performer.getInventory().addItem(item);
 				return Action.COMPLETED;
 			} else {
-				int action = new MoveAction(itemPosition).execute(performer);
+				if(movement == null)
+					movement = new MoveAction(itemPosition);
+				int action = movement.execute(performer);
+				if(action == Action.CANCELL && legacyMovement){
+					movement = new MoveAction(itemPosition);
+					action = movement.execute(performer);
+				}
 				if (action == Action.COMPLETED) {
 					return Action.MADE_PROGRESS;
 				}

@@ -26,6 +26,7 @@ public class GatherAction extends Action {
 		Game.getMap().markForGathering(position);
 	}
 
+
 	/*
 	 * (non-Javadoc)
 	 * 

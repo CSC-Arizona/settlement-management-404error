@@ -52,9 +52,8 @@ public class MoveAction extends Action {
 	 */
 	private void calculatePath() {
 		visited = new TreeMap<>();
-		Position destination = new Position(desiredDestination.getRow(), desiredDestination.getCol());
-		Node firstNode = new Node(0, new Position(destination.getRow(), destination.getCol()), null);
-		calculatePath(destination, firstNode);
+		Node firstNode = new Node(0, desiredDestination, null);
+		calculatePath(desiredDestination, firstNode);
 	}
 
 	/**
@@ -65,20 +64,23 @@ public class MoveAction extends Action {
 	 * @param currentNode
 	 *            The current Node
 	 */
-	private void calculatePath(Position currentPos, Node currentNode) {
-		int row = currentPos.getRow(), 
+	private void calculatePath(Position currentPos, Node currentNode) {		
+		int row = currentPos.getRow(),
 				col = (currentPos.getCol() > 0) ? currentPos.getCol() % (Game.getMap().getTotalWidth())
-				: Game.getMap().getTotalWidth() + currentPos.getCol();
-		if (currentPos.getCol() ==  Game.getMap().getTotalWidth() || currentNode.position.getCol() ==  Game.getMap().getTotalWidth() || col ==  Game.getMap().getTotalWidth()){
+						: Game.getMap().getTotalWidth() + currentPos.getCol();
+		if (currentPos.getCol() == Game.getMap().getTotalWidth()
+				|| currentNode.position.getCol() == Game.getMap().getTotalWidth()
+				|| col == Game.getMap().getTotalWidth()) {
 			currentPos.setCol(0);
 			currentNode.position.setCol(0);
 			col = 0;
 		}
-		if(!Game.getMap().getBuildingBlock(row, col).isOccupiable())
+		if (!Game.getMap().getBuildingBlock(row, col).isOccupiable())
 			return;
 		// check to make sure there is a valid block to stand on
 
-		if (row + 1 < Game.getMap().getTotalHeight() && !Game.getMap().getBuildingBlock(row + 1, col).getID().equals("Air")) {
+		if (row + 1 < Game.getMap().getTotalHeight()
+				&& !Game.getMap().getBuildingBlock(row + 1, col).getID().equals("Air")) {
 			// check to see if this node already has a more efficient route
 			if (visited.containsKey(currentPos) && currentNode.distance > visited.get(currentPos).distance)
 				return;
@@ -99,14 +101,19 @@ public class MoveAction extends Action {
 	 */
 	@Override
 	public int execute(Actor performer) {
-		if (visited == null)
+		if (visited == null) {
 			calculatePath();
+		}
 		if (performer.getPosition().equals(desiredDestination))
 			return Action.COMPLETED;
-		Position currentPosition = new Position(performer.getPosition().getRow(), performer.getPosition().getCol());
-		if (visited.containsKey(currentPosition))
-			performer.setPosition(visited.get(currentPosition).prev.position);
-		else {
+		if (visited.containsKey(performer.getPosition())) {
+			Position newPosition = visited.get(performer.getPosition()).prev.position;
+			if (Game.getMap().getTotalHeight() > newPosition.getRow() + 1
+					&& Game.getMap().getBuildingBlock(newPosition.getRow() + 1, newPosition.getCol()).getID().equals("Air")){
+				calculatePath();
+			}
+				performer.setPosition(newPosition);
+		} else {
 			/*
 			 * TODO: implement once Map can be changed calculatePath(); if
 			 * (visited.containsKey(currentPosition))
