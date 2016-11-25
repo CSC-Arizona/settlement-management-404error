@@ -75,6 +75,10 @@ public class MoveAction extends Action {
 			currentNode.position.setCol(0);
 			col = 0;
 		}
+		currentPos.setCol(col);
+		currentPos.setRow(row);
+		currentNode.position.setCol(col);
+		currentNode.position.setRow(row);
 		if (!Game.getMap().getBuildingBlock(row, col).isOccupiable())
 			return;
 		// check to make sure there is a valid block to stand on
@@ -108,10 +112,6 @@ public class MoveAction extends Action {
 			return Action.COMPLETED;
 		if (visited.containsKey(performer.getPosition())) {
 			Position newPosition = visited.get(performer.getPosition()).prev.position;
-			if (Game.getMap().getTotalHeight() > newPosition.getRow() + 1
-					&& Game.getMap().getBuildingBlock(newPosition.getRow() + 1, newPosition.getCol()).getID().equals("Air")){
-				calculatePath();
-			}
 				performer.setPosition(newPosition);
 		} else {
 			/*

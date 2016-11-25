@@ -10,6 +10,7 @@ public class StoreItemAction extends Action {
 
 	private Position cratePosition;
 	private Item item;
+	private MoveAction move;
 
 	public StoreItemAction(Item item) {
 		this.item = item;
@@ -29,7 +30,9 @@ public class StoreItemAction extends Action {
 			}
 			return Action.COMPLETED;
 		} else {
-			int action = new MoveAction(cratePosition).execute(performer);
+			if (move == null)
+				move =  new MoveAction(cratePosition);
+			int action = move.execute(performer);
 			if (action == Action.COMPLETED) {
 				return Action.MADE_PROGRESS;
 			}

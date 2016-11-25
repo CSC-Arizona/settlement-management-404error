@@ -64,4 +64,12 @@ public class Position implements Comparable<Position>, Serializable {
 		this.col = col;	
 	}
 
+	/**
+	 * @param row2
+	 */
+	public void setRow(int row) {
+		this.row = row;
+		
+	}
+
 }
