@@ -13,6 +13,10 @@ import model.Map.Map;
  *
  */
 public class Save implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8859099312060885013L;
 	private Map map;
 	private LinkedList<Actor> allActors;
 	

@@ -11,6 +11,10 @@ import model.Items.WoodItem;
 //Basic Crate (6 wood): 30lb weight capacity
 public class BasicCrate extends Crate {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4679484485182352115L;
 	private final static int weightCapacity = 30;
 	private List<Item> basicCrateList;
 	

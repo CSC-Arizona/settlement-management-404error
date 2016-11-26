@@ -12,6 +12,10 @@ import model.Items.StoneItem;
 
 public class StoneShield extends Armor {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2717122119561276068L;
 	private final static int attackMod = 10;
 	private final static int defenseMod = 12;
 	private List<Item> ssList;

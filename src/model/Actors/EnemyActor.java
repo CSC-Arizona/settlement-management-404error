@@ -10,6 +10,7 @@ import java.util.LinkedList;
  */
 public class EnemyActor extends Actor {
 	
+	private static final long serialVersionUID = 2745479477703967043L;
 	public static LinkedList<Actor> allActors;
 	private static ActionPool enemyActionPool;
 

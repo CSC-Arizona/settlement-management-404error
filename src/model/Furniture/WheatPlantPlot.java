@@ -12,6 +12,10 @@ import model.Items.WheatKernelItem;
 //Wheat Plant Plot: 2 Wheat Kernel, 2 Ant Larva 
 public class WheatPlantPlot extends Furniture {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4503399336706335364L;
 	private static int capacity = 1;
 	private List<Item> wheatPlantPlotList;
 

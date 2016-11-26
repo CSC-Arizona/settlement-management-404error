@@ -16,6 +16,10 @@ import model.Items.Item;
  */
 public class IronOreBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2515315071666260673L;
 	private final static int durability = 10;
 	private List<Item> itemsInBlock;
 	public final static String id = "Iron ore";

@@ -8,6 +8,7 @@ import model.Items.Item;
 
 public class StoreItemAction extends Action {
 
+	private static final long serialVersionUID = 1454588966658079359L;
 	private Position cratePosition;
 	private Item item;
 	private MoveAction move;

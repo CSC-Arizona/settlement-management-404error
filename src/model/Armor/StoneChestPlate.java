@@ -11,6 +11,10 @@ import model.Items.StoneItem;
 //Stone Chest Plate: 4 stone
 
 public class StoneChestPlate extends Armor {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7012014956367967621L;
 	private final static int attackMod = 12;
 	private final static int defenseMod = 14;
 	private List<Item> scpList;

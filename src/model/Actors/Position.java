@@ -12,6 +12,8 @@ import java.io.Serializable;
  *
  */
 public class Position implements Comparable<Position>, Serializable {
+
+	private static final long serialVersionUID = 2355700358974842805L;
 	private int row, col;
 
 	public Position(int row, int col) {

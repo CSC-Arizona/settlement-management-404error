@@ -12,6 +12,10 @@ import model.Items.StoneItem;
 //Fireplace: 4 stone, 2 iron
 public class Fireplace extends Furniture {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8275631316064539965L;
 	private static int capacity = 2; //2 dragons can cook at once
 	private List<Item> fireplaceList;
 

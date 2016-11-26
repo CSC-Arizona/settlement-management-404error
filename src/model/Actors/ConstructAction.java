@@ -19,6 +19,7 @@ import model.Room.Room;
  */
 public class ConstructAction extends Action {
 
+	private static final long serialVersionUID = 3917613009303294799L;
 	private BuildingBlock corner;
 	private List<Action> GatherCommands;
 	private List<Position> blocksToChange;

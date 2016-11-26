@@ -11,6 +11,7 @@ import java.util.LinkedList;
  *
  */
 public class ActionPool implements Serializable {
+	private static final long serialVersionUID = 7831232228894564187L;
 	private LinkedList<Action> actionQueue;
 	
 	public ActionPool(){

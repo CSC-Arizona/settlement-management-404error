@@ -8,6 +8,11 @@ import model.Items.Item;
 //This class defines the Weapon object
 public abstract class Weapon extends Item {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1590825761249784692L;
+
 	//Weapons can not be eaten
 	public Weapon(int attackModifier, int healthPts, double weight) {
 		super(false, attackModifier, healthPts, weight);

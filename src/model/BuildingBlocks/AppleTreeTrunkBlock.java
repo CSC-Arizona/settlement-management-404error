@@ -17,6 +17,10 @@ import model.Items.WoodItem;
  */
 public class AppleTreeTrunkBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2695416023070857080L;
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsInBlock;
 	private List<Item> itemsOnGround;

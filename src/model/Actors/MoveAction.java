@@ -14,6 +14,7 @@ import model.Game.Game;
  */
 public class MoveAction extends Action {
 
+	private static final long serialVersionUID = 6366936476306048341L;
 	private TreeMap<Position, Node> visited;
 	private Position desiredDestination;
 

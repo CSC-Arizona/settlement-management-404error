@@ -12,6 +12,10 @@ import model.Items.WoodItem;
 //This class defines the Metal Crate
 //Metal Crate (6 wood, 2 stone, 2 iron): 70lb weight capacity
 public class MetalCrate extends Crate {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3910896217729131037L;
 	private final static int weightCapacity = 70;
 	private List<Item> metalCrateList;
 	

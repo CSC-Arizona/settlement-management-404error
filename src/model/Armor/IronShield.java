@@ -12,6 +12,10 @@ import model.Items.Item;
 
 public class IronShield extends Armor {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8280816099515266107L;
 	private final static int attackMod = 18;
 	private final static int defenseMod = 14;
 	private List<Item> isList;

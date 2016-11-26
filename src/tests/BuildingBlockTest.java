@@ -24,7 +24,6 @@ import model.BuildingBlocks.TreeRootBlock;
 import model.Items.AntLarvaItem;
 import model.Items.IronItem;
 import model.Items.StoneItem;
-import model.Items.WheatKernelItem;
 import model.Items.WoodItem;
 
 /**
@@ -51,7 +50,7 @@ public class BuildingBlockTest {
 		assertTrue(bb.isOccupiable());
 		assertTrue(bb.isDestroyable());
 		assertEquals(1, bb.lootBlock().size());
-		WheatKernelItem i = (WheatKernelItem) bb.lootBlock().get(0);
+		bb.lootBlock().get(0);
 		assertEquals(1, bb.getDurability());
 		assertEquals(new Color(0, 87, 3), bb.getColor());
 	}

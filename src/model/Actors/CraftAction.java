@@ -13,6 +13,7 @@ import model.Items.Item;
  */
 public class CraftAction extends Action {
 	
+	private static final long serialVersionUID = -5666712529302552421L;
 	private Item toBeCrafted;
 	private List<Item> requiredMaterials;
 	

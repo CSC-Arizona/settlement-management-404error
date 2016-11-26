@@ -16,6 +16,7 @@ import model.Items.Item;
  */
 public class Inventory implements Iterable<Item>, Serializable {
 
+	private static final long serialVersionUID = 2935773370312109536L;
 	public static final double MAXWEIGHT = 100.0;
 	private double weight;
 	/*

@@ -7,6 +7,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import model.Actors.Position;
+import model.Items.Item;
 import model.Room.BedRoom;
 import model.Room.EntertainmentRoom;
 import model.Room.FarmRoom;
@@ -27,7 +28,7 @@ import model.Room.VerticalTunnel;
  */
 public class ConstructMenu implements TableModel {
 	
-	private HashMap<String, List> rooms;
+	private HashMap<String, List<Item>> rooms;
 	private static ConstructMenu constructMenu;
 	
 	private ConstructMenu() {

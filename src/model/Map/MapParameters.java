@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class MapParameters implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4087298872483722924L;
 	// total height / width of the map
 	public final int mapHeight;
 	public final int mapWidth;

@@ -5,6 +5,7 @@ import model.Items.Item;
 
 public class PickUpItemAction extends Action {
 
+	private static final long serialVersionUID = 1677097186240103558L;
 	private Position itemPosition;
 	private StoreItemAction store;
 	private MoveAction movement;

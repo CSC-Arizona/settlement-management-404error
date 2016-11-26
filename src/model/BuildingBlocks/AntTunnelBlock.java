@@ -17,6 +17,10 @@ import model.Items.Item;
  */
 public class AntTunnelBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1383914857842009037L;
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsOnGround;
 	private final static int durability = 7;

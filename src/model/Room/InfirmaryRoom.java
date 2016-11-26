@@ -7,7 +7,6 @@ import model.Actors.Position;
 import model.Furniture.Furniture;
 import model.Furniture.HealingBed;
 import model.Items.Item;
-import model.Items.WoodItem;
 
 
 /**

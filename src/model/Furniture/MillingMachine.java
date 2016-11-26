@@ -12,6 +12,10 @@ import model.Items.StoneItem;
 //Milling Machine: 2 stone, 2 iron
 public class MillingMachine extends Furniture{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 689879412991241956L;
 	private static int capacity = 0; //This value should be irrelevant since Milling Machine is decorative
 	private List<Item> millingMachineList;
 	

@@ -13,6 +13,7 @@ import java.util.LinkedList;
  */
 public abstract class Actor implements Serializable {
 
+	private static final long serialVersionUID = -2476564871890336854L;
 	private int health;
 	private Position position;
 	private boolean idle;

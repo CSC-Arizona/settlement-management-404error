@@ -8,6 +8,10 @@ package model.Items;
  */
 public class AppleSeedItem extends Item {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4118212108574740830L;
 	private final static int attackMod = 1;
 	private final static int healthPts = 0;
 	

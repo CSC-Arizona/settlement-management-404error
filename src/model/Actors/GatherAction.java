@@ -15,6 +15,8 @@ import model.Items.Item;
  *
  */
 public class GatherAction extends Action {
+
+	private static final long serialVersionUID = 5909099133984007954L;
 	Position position;
 	int durability;
 	MoveAction movement;

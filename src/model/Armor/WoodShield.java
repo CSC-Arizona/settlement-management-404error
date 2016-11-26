@@ -12,6 +12,10 @@ import model.Items.WoodItem;
 
 public class WoodShield extends Armor {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2764667790125492636L;
 	private final static int attackMod = 4;
 	private final static int defenseMod = 10;
 	private List<Item> wsList;

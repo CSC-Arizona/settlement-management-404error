@@ -13,6 +13,10 @@ import model.Items.WoodItem;
 //Bed: 4 wood, 2 stone, 4 wheat stems
 public class Bed extends Furniture {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9071486516251898395L;
 	private static int capacity = 2;
 	private List<Item> bedList;
 

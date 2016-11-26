@@ -11,6 +11,8 @@ package model.Actors;
  */
 public class EnemyHuntAction extends Action {
 
+	private static final long serialVersionUID = 7268347888796294194L;
+
 	/* (non-Javadoc)
 	 * @see model.Actors.Action#execute(model.Actors.Actor)
 	 */

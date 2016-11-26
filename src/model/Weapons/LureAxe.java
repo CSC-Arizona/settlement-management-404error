@@ -13,6 +13,10 @@ import model.Items.WoodItem;
 //Lure Axe: 2 wood, 1 stone, 1 antLarvaItem
 
 public class LureAxe extends Weapon {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7178058005109807707L;
 	//This item has a weaker attackMod since it attracts ants
 	private final static int attackMod = 12;
 	private List<Item> laList;

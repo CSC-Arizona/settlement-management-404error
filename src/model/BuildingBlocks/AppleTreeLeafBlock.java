@@ -18,6 +18,10 @@ import model.Items.Item;
  */
 public class AppleTreeLeafBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8273562508743492717L;
 	private List<Item> itemsInBlock;
 	private final static int durability = 1;
 	public final static String id = "Apple";

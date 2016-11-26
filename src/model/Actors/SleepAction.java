@@ -13,6 +13,8 @@ import model.Game.Game;
  */
 public class SleepAction extends Action {
 	
+	private static final long serialVersionUID = -7720187199323765207L;
+
 	// github.com/CSC-Arizona/settlement-management-404error
 	@Override
 	public int execute(Actor performer) {

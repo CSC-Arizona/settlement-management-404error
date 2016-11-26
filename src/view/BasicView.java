@@ -30,6 +30,10 @@ import model.Map.MapParameters;
 
 public class BasicView extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8807654664923090784L;
 	private Map map;
 	private DrawingPanel drawingPanel;
 	private JLabel timeLabel;
@@ -146,6 +150,11 @@ public class BasicView extends JFrame {
 	}
 
 	private class DrawingPanel extends JPanel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 8717360204333004762L;
 
 		@Override
 		public void paintComponent(Graphics g) {

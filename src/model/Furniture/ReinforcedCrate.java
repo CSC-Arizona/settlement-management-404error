@@ -11,6 +11,10 @@ import model.Items.WoodItem;
 //This class defines the Reinforced Crate
 //Reinforced Crate (6 wood, 2 stone): 50lb weight capacity
 public class ReinforcedCrate extends Crate {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4875461862312912501L;
 	private final static int weightCapacity = 500;
 	private List<Item> reinforcedCrateList;
 	

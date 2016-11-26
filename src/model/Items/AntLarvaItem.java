@@ -9,6 +9,10 @@ package model.Items;
  */
 public class AntLarvaItem extends Item {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7965917895844782451L;
 	private final static int attackMod = 1;
 	private final static int healthPts = 2;
 	

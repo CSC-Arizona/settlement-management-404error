@@ -8,7 +8,11 @@ package model.Items;
  */
 public class StoneItem extends Item {
 
-    private final static int attackMod = 5;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7735637582901776499L;
+	private final static int attackMod = 5;
 	
 	public StoneItem() {
 		super(false, attackMod, 0, 5.0);

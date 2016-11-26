@@ -29,6 +29,11 @@ import model.Items.Item;
  */
 public class Map implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8180013355509112056L;
+
 	private Random random;
 
 	private ArrayList<AppleTree> trees;

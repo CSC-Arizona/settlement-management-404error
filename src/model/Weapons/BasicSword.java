@@ -14,6 +14,10 @@ import model.Items.WoodItem;
 
 public class BasicSword extends Weapon {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -415305750658078527L;
 	private final static int attackMod = 23;
 	private List<Item> basicSwordList;
 	
