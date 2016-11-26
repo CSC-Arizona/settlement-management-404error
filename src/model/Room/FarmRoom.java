@@ -64,7 +64,6 @@ public class FarmRoom extends Room {
 		    this.state++;
 		    return true;
 		} else {
-			System.out.println("You can't plant anything in an already planted field");
 			return false;
 		}
 	}
