@@ -23,6 +23,7 @@ public abstract class Actor implements Serializable {
 	private Skills skills;
 	private Inventory inventory;
 	private boolean alive;
+	private String name;
 	public static LinkedList<Actor> allActors;
 
 	/**
@@ -40,6 +41,7 @@ public abstract class Actor implements Serializable {
 		this.queue = new LinkedList<Action>();
 		this.inventory = new Inventory();
 		this.alive = true;
+		this.name = Names.generateName();
 		skills = new Skills();
 		if(allActors == null)
 			allActors = new LinkedList<>();
@@ -161,6 +163,10 @@ public abstract class Actor implements Serializable {
 	public void setHealth(int i) {
 		this.health = i;
 		
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public abstract Action getActionFromPool();

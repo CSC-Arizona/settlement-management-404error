@@ -13,7 +13,6 @@ import model.Furniture.ReinforcedCrate;
 public class GatheringScenario {
 	private int seed = 8412372;
 
-
 	public static void main(String[] args) {
 		new GatheringScenario();
 	}

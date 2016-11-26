@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.KeyEvent;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,6 +34,7 @@ import model.Items.Item;
 public class BasicView extends JFrame {
 
 	private Map map;
+	private JPanel guiPanel;
 	private DrawingPanel drawingPanel;
 	private JLabel timeLabel;
 	private JLabel windowCoordinatesLabel;
@@ -99,29 +102,65 @@ public class BasicView extends JFrame {
 		box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		box.add(Box.createVerticalGlue());
 
+		guiPanel = new JPanel();
+		guiPanel.setLayout(new GridLayout(1, 3));
+		box.add(guiPanel);
+
 		JPanel labelPanel = new JPanel();
-
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
-
 		timeLabel = new JLabel();
 		labelPanel.add(timeLabel);
-
 		windowCoordinatesLabel = new JLabel();
 		setWindowCoordinateLabel();
 		labelPanel.add(windowCoordinatesLabel);
-
 		mouseCoordinatesLabel = new JLabel();
 		setMouseCoordinatesLabel();
 		labelPanel.add(mouseCoordinatesLabel);
-
 		mouseDescriptionLabel = new JLabel();
 		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
-
 		labelPanel
 				.setPreferredSize(new Dimension(windowWidth, labelPanelHeight));
+		guiPanel.add(labelPanel);
 
-		box.add(labelPanel);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new GridLayout(4, 3));
+
+		JButton button1 = new JButton(
+				"<html><center>Place furniture</center></html>");
+		JButton button2 = new JButton(
+				"<html><center>Construct room</center></html>");
+		JButton button3 = new JButton(
+				"<html><center>Cut down tree</center></html>");
+		JButton button4 = new JButton(
+				"<html><center>Remove furniture</center></html>");
+		JButton button5 = new JButton(
+				"<html><center>Remove room</center></html>");
+		JButton button6 = new JButton(
+				"<html><center>Pick fruit from tree</center></html>");
+		JButton button7 = new JButton("<html><center>Dig</center></html>");
+		JButton button8 = new JButton("<html><center>Pause</center></html>");
+		JButton button9 = new JButton(
+				"<html><center>Gather plants</center></html>");
+		JButton button10 = new JButton("<html><center>Attack</center></html>");
+		JButton button11 = new JButton("<html><center>Remove designation</center></html>");
+
+		buttonPanel.add(button1);
+		buttonPanel.add(button2);
+		buttonPanel.add(button3);
+		buttonPanel.add(button4);
+		buttonPanel.add(button5);
+		buttonPanel.add(button6);
+		buttonPanel.add(button7);
+		buttonPanel.add(button8);
+		buttonPanel.add(button9);
+		buttonPanel.add(button10);
+		buttonPanel.add(button11);
+		
+		guiPanel.add(buttonPanel);
+
+		JPanel logPanel = new JPanel();
+		guiPanel.add(logPanel);
 
 		drawingPanel = new DrawingPanel();
 
@@ -257,6 +296,7 @@ public class BasicView extends JFrame {
 			case KeyEvent.VK_SPACE:
 				if (controller.isPaused()) {
 					controller.startTimer();
+					gatheringSelection = false;
 				} else {
 					controller.stopTimer();
 				}
@@ -266,12 +306,17 @@ public class BasicView extends JFrame {
 			case KeyEvent.VK_G:
 				// "gathering"
 				if (!gatheringSelection) {
-					controller.stopTimer();
+					if (!controller.isPaused()) {
+						controller.stopTimer();
+					}
 					gatheringSelection = true;
 				} else {
-					controller.startTimer();
+					if (controller.isPaused()) {
+						controller.startTimer();
+					}
 					gatheringSelection = false;
 				}
+				setTimeLabel(controller.getTime(), controller.isPaused());
 				break;
 			}
 
