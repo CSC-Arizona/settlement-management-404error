@@ -25,8 +25,8 @@ public class SleepScenario {
 		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed));
 
 		Game.setMap(controller.getMap());
-		Game.getMap().addFurniture(new Bed(), new Position(53, 990));
 		Game.getMap().addFurniture(new Bed(), new Position(48, 982));
+		Game.getMap().addFurniture(new Bed(), new Position(53, 990));
 
 		new PlayerControlledActor(100, new Position(50, 985)).setFatigue(990);
 
