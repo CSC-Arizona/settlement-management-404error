@@ -45,7 +45,8 @@ public class GatherAction extends Action {
 			BuildingBlock block = Game.getMap().getBuildingBlock(position.getRow(), position.getCol());
 			if (durability == Integer.MAX_VALUE)
 				durability = block.getDurability();
-			durability--;
+			durability-=performer.getSkills().getGatheringLevel() + 1;
+			performer.getSkills().addGatheringXP(1);
 			if (durability <= 0) {
 				Game.getMap().setBuildingBlock(position, new AirBlock());
 				if (block.lootBlock() != null)

@@ -5,6 +5,7 @@ package model.Actors;
  *
  */
 public class AttackAction extends Action {
+
 	private static final long serialVersionUID = -2606344516527539211L;
 	private Actor target;
 

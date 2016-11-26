@@ -12,9 +12,6 @@ import java.util.LinkedList;
  */
 public class PlayerControlledActor extends Actor {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7431678886074775948L;
 	private int fatigue, hunger;
 	private static final int threshold = 1000;
@@ -102,7 +99,7 @@ public class PlayerControlledActor extends Actor {
 	
 	@Override
 	public String toString() {
-		String result = Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue";
+		String result = this.getHealth() + " health; " + fatigue + " fatigue " + hunger + " hunger";
 		return result;
 	}
 
