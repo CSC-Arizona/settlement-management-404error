@@ -18,7 +18,8 @@ public class Controller {
 
 	int time = 0;
 	private boolean paused = false;
-
+	private Designation designatingAction = Designation.NONE;
+	
 	private Map map;
 
 	private BasicView view;
@@ -26,6 +27,22 @@ public class Controller {
 	private Timer timer;
 	private int timeDelta = 1000;
 
+	public void togglePaused() {
+		if (isPaused()) {
+			startTimer();
+		} else {
+			stopTimer();
+		}
+	}
+	
+	public void setDesignatingAction(Designation designation) {
+		this.designatingAction = designation;
+	}
+ 	
+	public Designation getDesignatingAction() {
+		return designatingAction;
+	}
+	
 	public void stopTimer() {
 		this.timer.cancel();
 		paused = true;
