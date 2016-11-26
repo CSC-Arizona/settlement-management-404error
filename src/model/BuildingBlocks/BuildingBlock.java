@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.List;
 
-import model.Game;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.Item;
@@ -17,6 +16,10 @@ import model.Items.Item;
  */
 public abstract class BuildingBlock implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 134053393304725614L;
 	// durability represents the amount of time(?) required to destroy the block
 	private int durability;
 	// represents whether the block can be destroyed (air and cavern) cannot be

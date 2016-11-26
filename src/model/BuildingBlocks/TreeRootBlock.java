@@ -18,6 +18,10 @@ import model.Items.WoodItem;
  */
 public class TreeRootBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7995936798975205838L;
 	private List<Item> itemsInBlock;
 	private final static int durability = 5;
 	public final static String id = "Tree root";

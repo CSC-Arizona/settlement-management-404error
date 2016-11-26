@@ -14,6 +14,10 @@ import model.Items.Item;
  */
 public class MushroomBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -156184307394207619L;
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsInBlock;
 	private final static int durability = 5;

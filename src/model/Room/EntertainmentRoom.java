@@ -4,12 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Actors.Position;
-import model.Furniture.Bed;
 import model.Furniture.Couch;
 import model.Furniture.Furniture;
 import model.Furniture.PoolTable;
 import model.Items.Item;
-import model.Items.WoodItem;
 
 /**
  * The EntertainmentRoom contains 2 Couches and 1 PoolTable. An upgrade basically 

@@ -8,6 +8,10 @@ package model.Items;
  */
 public class WoodItem extends Item {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7140756816668455004L;
 	private final static int attackMod= 2;
 	
 	public WoodItem() {

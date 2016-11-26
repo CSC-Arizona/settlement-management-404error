@@ -12,7 +12,8 @@ import java.util.LinkedList;
  */
 public class PlayerControlledActor extends Actor {
 
-	private int fatigue, hunger, happiness;
+	private static final long serialVersionUID = 7431678886074775948L;
+	private int fatigue, hunger;
 	private static final int threshold = 1000;
 	private static final int death_threshold = 1100;
 	public static LinkedList<Actor> allActors;
@@ -28,7 +29,6 @@ public class PlayerControlledActor extends Actor {
 		super(health, location);
 		fatigue = 0;
 		hunger = 0;
-		happiness = 0;
 		if(playerActionPool == null)
 			playerActionPool = new ActionPool();
 		if(allActors == null)
@@ -47,7 +47,6 @@ public class PlayerControlledActor extends Actor {
 		// update the needs
 		fatigue += 1;
 		hunger += 1;
-		happiness += 1;
 		// if one of the needs gets to high, the actor
 		// will ignore his current action and attempt
 		// to fulfill that need
@@ -100,7 +99,7 @@ public class PlayerControlledActor extends Actor {
 	
 	@Override
 	public String toString() {
-		String result = this.getName() + ": " + Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue";
+		String result = this.getName() + ": " + Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue; " + hunger + " hunger";
 		return result;
 	}
 

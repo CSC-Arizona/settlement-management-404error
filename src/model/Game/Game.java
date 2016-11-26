@@ -1,7 +1,9 @@
 /**
  * 
  */
-package model;
+package model.Game;
+
+import model.Map.Map;
 
 /**
  * Singleton used for the game map

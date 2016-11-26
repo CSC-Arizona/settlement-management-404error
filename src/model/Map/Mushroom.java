@@ -1,11 +1,10 @@
-package model;
+package model.Map;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.CavernBlock;
-import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.MushroomBlock;
 import model.BuildingBlocks.MushroomFruitBlock;
 

@@ -46,7 +46,11 @@ import java.io.Serializable;
  */
 public abstract class Item implements Serializable {
 	
-    private boolean edible;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8597391980298465998L;
+	private boolean edible;
     private int attackModifier;
     private int healthPoints;
     private double weight;

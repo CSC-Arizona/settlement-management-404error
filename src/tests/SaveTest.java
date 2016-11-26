@@ -1,22 +1,19 @@
 package tests;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.LinkedList;
-
 import org.junit.Test;
 
-import model.Game;
-import model.Map;
 import model.Actors.Actor;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
+import model.Game.Game;
 import model.Items.IronItem;
+import model.Map.Map;
 import model.Save.SaveFile;
 import model.Weapons.BasicSword;
 

@@ -3,8 +3,6 @@ package model.Actors;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-import model.Inventory;
-
 /**
  * 
  */
@@ -15,6 +13,7 @@ import model.Inventory;
  */
 public abstract class Actor implements Serializable {
 
+	private static final long serialVersionUID = -2476564871890336854L;
 	private int health;
 	private Position position;
 	private boolean idle;

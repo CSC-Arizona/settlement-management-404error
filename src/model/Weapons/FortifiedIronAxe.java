@@ -13,6 +13,10 @@ import model.Items.WoodItem;
 //Fortified Iron Axe: 2 wood, 1 stone, 2 iron
 public class FortifiedIronAxe extends Weapon {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5154963681454698902L;
 	private final static int attackMod = 21;
 	private List<Item> fortifiedIronAxeList;
 	

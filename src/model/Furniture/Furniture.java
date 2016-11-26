@@ -10,6 +10,10 @@ import model.Items.Item;
 //This class is abstract and is extended by all pieces of furniture that are placed inside of rooms
 public abstract class Furniture implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6642154062478447160L;
 	private int capacity;
 	private int weightCapacity;
 	private String id;

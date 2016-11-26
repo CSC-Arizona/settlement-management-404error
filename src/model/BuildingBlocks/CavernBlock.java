@@ -17,6 +17,10 @@ import model.Items.Item;
  */
 public class CavernBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8963951396251379906L;
 	private Furniture furniture;
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsOnGround;

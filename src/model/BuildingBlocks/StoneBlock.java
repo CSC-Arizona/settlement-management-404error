@@ -16,6 +16,10 @@ import model.Items.StoneItem;
  */
 public class StoneBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4160316069140520443L;
 	private final static int durability = 8;
 	private List<Item> itemsInBlock;
 	public final static String id = "Stone";

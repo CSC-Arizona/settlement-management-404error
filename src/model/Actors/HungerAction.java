@@ -14,6 +14,11 @@ import model.Items.Item;
  */
 public class HungerAction extends Action {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -780586674243835086L;
+
 	/* (non-Javadoc)
 	 * @see model.Actors.Action#execute(model.Actors.Actor)
 	 */

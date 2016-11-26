@@ -3,7 +3,6 @@ package model.Weapons;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Items.AntLarvaItem;
 import model.Items.IronItem;
 import model.Items.Item;
 import model.Items.StoneItem;
@@ -15,6 +14,10 @@ import model.Items.WoodItem;
 
 public class UltraSword extends Weapon {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7899298860484130800L;
 	private final static int attackMod = 27;
 	private List<Item> usList;
 	

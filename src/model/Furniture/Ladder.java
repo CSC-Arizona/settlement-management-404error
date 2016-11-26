@@ -8,6 +8,10 @@ import model.Items.WoodItem;
 
 public class Ladder extends Furniture {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2659920162119419368L;
 	private List<Item> ladderMaterials;
 	
 	public Ladder() {

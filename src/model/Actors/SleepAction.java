@@ -2,8 +2,8 @@ package model.Actors;
 
 import java.util.HashMap;
 
-import model.Game;
 import model.Furniture.Furniture;
+import model.Game.Game;
 
 /**
  * @author Ethan Ward
@@ -13,10 +13,12 @@ import model.Furniture.Furniture;
  */
 public class SleepAction extends Action {
 	
+	private static final long serialVersionUID = -7720187199323765207L;
+
 	// github.com/CSC-Arizona/settlement-management-404error
 	@Override
 	public int execute(Actor performer) {
-		Position nearestBed = getNearestBed();
+		Position nearestBed = getNearestBed(performer);
 		PlayerControlledActor performer2 = (PlayerControlledActor)performer;
 		if (nearestBed != null) {
 			performer.addToActionQueue(new MoveAction(nearestBed));
@@ -36,11 +38,22 @@ public class SleepAction extends Action {
 		return Action.CANCELL;
 	}
 	
-	public Position getNearestBed() {
+	public Position getNearestBed(Actor performer) {
 		HashMap<Furniture, Position> mapFurniture = Game.getMap().getFurniture();
+		double closest = Integer.MAX_VALUE;
+		Position nearest = null;
 		if (mapFurniture != null) {
 			if (mapFurniture.size() != 0) {
-				return mapFurniture.get(mapFurniture.keySet().toArray()[0]);
+				for(Furniture f : mapFurniture.keySet()){
+					int x = performer.getPosition().getCol(), x2 = mapFurniture.get(f).getCol(),
+							y = performer.getPosition().getRow(), y2 = mapFurniture.get(f).getRow();
+					double distance = Math.sqrt((x2-x)*(x2-x)+(y2-y)*(y2-y));
+					if(distance < closest){
+						closest = distance;
+						nearest = mapFurniture.get(f);
+					}
+				}
+				return nearest;
 			}
 		}
 		return null;

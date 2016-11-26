@@ -8,12 +8,12 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Stroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Box;
@@ -25,14 +25,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Controller;
-import model.Map;
-import model.MapParameters;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.Item;
+import model.Map.Map;
+import model.Map.MapParameters;
 
 public class BasicView extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8807654664923090784L;
 	private Map map;
 	private JPanel guiPanel;
 	private DrawingPanel drawingPanel;
@@ -59,11 +63,6 @@ public class BasicView extends JFrame {
 	private int blockSizeX = windowWidth / visibleWidth;
 
 	private Controller controller;
-
-	private boolean gatheringSelection = false;
-	private boolean drawingShape = false;
-	private Point start;
-	private Point end;
 
 	public void setTimeLabel(int time, boolean paused) {
 		if (paused) {
@@ -126,36 +125,58 @@ public class BasicView extends JFrame {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(4, 3));
 
-		JButton button1 = new JButton(
+		JButton placeFurnitureButton = new JButton(
 				"<html><center>Place furniture</center></html>");
-		JButton button2 = new JButton(
+		placeFurnitureButton.setFocusable(false);
+		
+		JButton constructRoomButton = new JButton(
 				"<html><center>Construct room</center></html>");
-		JButton button3 = new JButton(
+		constructRoomButton.setFocusable(false);
+		
+		JButton cutDownTreeButton = new JButton(
 				"<html><center>Cut down tree</center></html>");
-		JButton button4 = new JButton(
+		cutDownTreeButton.setFocusable(false);
+		
+		JButton removeFurnitureButton = new JButton(
 				"<html><center>Remove furniture</center></html>");
-		JButton button5 = new JButton(
+		removeFurnitureButton.setFocusable(false);
+		
+		JButton removeRoomButton = new JButton(
 				"<html><center>Remove room</center></html>");
-		JButton button6 = new JButton(
+		removeRoomButton.setFocusable(false);
+		
+		JButton fruitButton = new JButton(
 				"<html><center>Pick fruit from tree</center></html>");
-		JButton button7 = new JButton("<html><center>Dig</center></html>");
-		JButton button8 = new JButton("<html><center>Pause</center></html>");
-		JButton button9 = new JButton(
+		fruitButton.setFocusable(false);
+		
+		JButton digButton = new JButton("<html><center>Dig</center></html>");
+		digButton.setFocusable(false);
+		
+		JButton pauseButton = new JButton("<html><center>Pause</center></html>");
+		pauseButton.addActionListener(new pauseButtonListener());
+		pauseButton.setFocusable(false);
+		
+		JButton plantsButton = new JButton(
 				"<html><center>Gather plants</center></html>");
-		JButton button10 = new JButton("<html><center>Attack</center></html>");
-		JButton button11 = new JButton("<html><center>Remove designation</center></html>");
-
-		buttonPanel.add(button1);
-		buttonPanel.add(button2);
-		buttonPanel.add(button3);
-		buttonPanel.add(button4);
-		buttonPanel.add(button5);
-		buttonPanel.add(button6);
-		buttonPanel.add(button7);
-		buttonPanel.add(button8);
-		buttonPanel.add(button9);
-		buttonPanel.add(button10);
-		buttonPanel.add(button11);
+		plantsButton.setFocusable(false);
+		
+		JButton attackButton = new JButton("<html><center>Attack</center></html>");
+		attackButton.setFocusable(false);
+		
+		JButton removeButton = new JButton("<html><center>Remove designation</center></html>");
+		removeButton.setFocusable(false);
+		
+		buttonPanel.add(placeFurnitureButton);
+		buttonPanel.add(constructRoomButton);
+		buttonPanel.add(cutDownTreeButton);
+		buttonPanel.add(removeFurnitureButton);
+		buttonPanel.add(removeRoomButton);
+		buttonPanel.add(fruitButton);
+		buttonPanel.add(digButton);
+		buttonPanel.add(pauseButton);
+		buttonPanel.add(plantsButton);
+		buttonPanel.add(attackButton);
+		buttonPanel.add(removeButton);
 		
 		guiPanel.add(buttonPanel);
 
@@ -174,7 +195,6 @@ public class BasicView extends JFrame {
 
 		this.addKeyListener(new MyKeyListener());
 		drawingPanel.addMouseMotionListener(new MyMotionListener());
-		drawingPanel.addMouseListener(new MyMouseListener());
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -186,6 +206,11 @@ public class BasicView extends JFrame {
 	}
 
 	private class DrawingPanel extends JPanel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 8717360204333004762L;
 
 		@Override
 		public void paintComponent(Graphics g) {
@@ -246,16 +271,7 @@ public class BasicView extends JFrame {
 
 				}
 			}
-			if (gatheringSelection && drawingShape) {
-				Stroke oldStroke = g2.getStroke();
-				g2.setStroke(new BasicStroke(2));
 
-				int width = Math.abs(start.x - end.x);
-				int height = Math.abs(start.y - end.y);
-				g2.drawRect(Math.min(start.x, end.x), Math.min(start.y, end.y),
-						width, height);
-				g2.setStroke(oldStroke);
-			}
 		}
 	}
 
@@ -293,31 +309,6 @@ public class BasicView extends JFrame {
 				}
 
 				break;
-			case KeyEvent.VK_SPACE:
-				if (controller.isPaused()) {
-					controller.startTimer();
-					gatheringSelection = false;
-				} else {
-					controller.stopTimer();
-				}
-				setTimeLabel(controller.getTime(), controller.isPaused());
-				break;
-
-			case KeyEvent.VK_G:
-				// "gathering"
-				if (!gatheringSelection) {
-					if (!controller.isPaused()) {
-						controller.stopTimer();
-					}
-					gatheringSelection = true;
-				} else {
-					if (controller.isPaused()) {
-						controller.startTimer();
-					}
-					gatheringSelection = false;
-				}
-				setTimeLabel(controller.getTime(), controller.isPaused());
-				break;
 			}
 
 			setWindowCoordinateLabel();
@@ -351,53 +342,22 @@ public class BasicView extends JFrame {
 			setMouseDescriptionLabel();
 			setMouseCoordinatesLabel();
 
-			if (gatheringSelection && drawingShape) {
-				end = e.getPoint();
-				repaint();
-			}
 		}
 	}
-
-	private class MyMouseListener implements MouseListener {
+	
+	private class pauseButtonListener implements ActionListener {
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
-			if (gatheringSelection) {
-				if (!drawingShape) {
-					start = e.getPoint();
-					end = e.getPoint();
-				} else {
-					end = e.getPoint();
-
-				}
-				drawingShape = !drawingShape;
+		public void actionPerformed(ActionEvent e) {
+			if (controller.isPaused()) {
+				controller.startTimer();
+			} else {
+				controller.stopTimer();
 			}
+			setTimeLabel(controller.getTime(), controller.isPaused());
 		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
+		
 	}
+
 
 }

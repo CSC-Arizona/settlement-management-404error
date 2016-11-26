@@ -5,6 +5,11 @@ import java.util.List;
 
 public class AntLarvaPieCookable extends CookableItem {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6230505512703031570L;
+
 	public AntLarvaPieCookable() {
 		super(10);
 	}

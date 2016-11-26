@@ -15,6 +15,10 @@ import model.Items.Item;
  */
 public class EarthBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6778429167592410879L;
 	private final static int durability = 3;
 	public final static String id = "Earth";
 	

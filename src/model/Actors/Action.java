@@ -6,6 +6,7 @@ package model.Actors;
 import java.io.Serializable;
 
 public abstract class Action implements Serializable  {
+	private static final long serialVersionUID = 7904826388362296409L;
 	public static final int COMPLETED = 0, MADE_PROGRESS = 1, DELAY = 2, CANCELL = 3;
 	
 	/**

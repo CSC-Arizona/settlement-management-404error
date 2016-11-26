@@ -12,6 +12,10 @@ import model.Items.Item;
 
 public class IronChestPlate extends Armor {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8725107513330446951L;
 	private final static int attackMod = 20;
 	private final static int defenseMod = 16;
 	private List<Item> icpList;

@@ -7,14 +7,14 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import model.Game;
-import model.Map;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
+import model.Game.Game;
 import model.Items.AntLarvaItem;
+import model.Map.Map;
 
 /**
  * @author Jonathon Davis

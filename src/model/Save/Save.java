@@ -3,9 +3,9 @@ package model.Save;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-import model.Game;
-import model.Map;
 import model.Actors.Actor;
+import model.Game.Game;
+import model.Map.Map;
 
 /**
  * Represents the Save of all necessary data to be used in a save file
@@ -13,6 +13,10 @@ import model.Actors.Actor;
  *
  */
 public class Save implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8859099312060885013L;
 	private Map map;
 	private LinkedList<Actor> allActors;
 	

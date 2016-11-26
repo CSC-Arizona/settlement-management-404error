@@ -15,6 +15,10 @@ import model.Items.WheatKernelItem;
  */
 public class GrassBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5309020162960429106L;
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsInBlock;
 	private List<Item> itemsOnGround;
