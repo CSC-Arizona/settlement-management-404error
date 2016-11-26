@@ -2,8 +2,8 @@ package model.Actors;
 
 import java.util.HashMap;
 
-import model.Game;
 import model.Furniture.Furniture;
+import model.Game.Game;
 
 /**
  * @author Ethan Ward

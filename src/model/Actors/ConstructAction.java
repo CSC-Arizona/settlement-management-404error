@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Game;
 import model.BuildingBlocks.BuildingBlock;
+import model.Game.Game;
 import model.Room.Room;
 
 /**

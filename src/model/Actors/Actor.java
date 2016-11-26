@@ -3,8 +3,6 @@ package model.Actors;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-import model.Inventory;
-
 /**
  * 
  */

@@ -3,9 +3,9 @@
  */
 package model.Actors;
 
-import model.Game;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
+import model.Game.Game;
 import model.Items.Item;
 
 /**

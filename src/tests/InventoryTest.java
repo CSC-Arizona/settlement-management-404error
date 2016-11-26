@@ -6,15 +6,15 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import model.Game;
-import model.Inventory;
-import model.Map;
+import model.Actors.Inventory;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
+import model.Game.Game;
 import model.Items.AntLarvaItem;
 import model.Items.StoneItem;
 import model.Items.WoodItem;
+import model.Map.Map;
 
 /**
  * InventoryTest covers the functionality of the Inventory class.

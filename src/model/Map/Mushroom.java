@@ -1,4 +1,4 @@
-package model;
+package model.Map;
 
 import java.util.ArrayList;
 import java.util.Random;

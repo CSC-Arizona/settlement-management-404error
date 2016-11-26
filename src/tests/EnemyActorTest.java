@@ -7,8 +7,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import model.Game;
-import model.Map;
 import model.Actors.Actor;
 import model.Actors.AttackAction;
 import model.Actors.EnemyActor;
@@ -18,6 +16,8 @@ import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.IronOreBlock;
+import model.Game.Game;
+import model.Map.Map;
 
 /**
  * @author Jonathon Davis

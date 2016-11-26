@@ -1,12 +1,10 @@
-package model;
+package model.Actors;
 
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Actors.Actor;
-import model.Actors.Position;
 import model.Items.Item;
 
 /**

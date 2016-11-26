@@ -12,7 +12,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Box;
@@ -23,11 +22,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Controller;
-import model.Map;
-import model.MapParameters;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.Item;
+import model.Map.Map;
+import model.Map.MapParameters;
 
 public class BasicView extends JFrame {
 

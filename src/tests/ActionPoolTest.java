@@ -3,12 +3,10 @@
  */
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import model.Game;
-import model.Map;
 import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
@@ -16,6 +14,8 @@ import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.IronOreBlock;
+import model.Game.Game;
+import model.Map.Map;
 
 /**
  * @author Jonathon Davis

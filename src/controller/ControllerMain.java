@@ -2,7 +2,7 @@ package controller;
 
 import java.util.Random;
 
-import model.MapParameters;
+import model.Map.MapParameters;
 
 /**
  * @author Ethan Ward

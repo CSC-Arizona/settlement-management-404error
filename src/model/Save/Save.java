@@ -3,9 +3,9 @@ package model.Save;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-import model.Game;
-import model.Map;
 import model.Actors.Actor;
+import model.Game.Game;
+import model.Map.Map;
 
 /**
  * Represents the Save of all necessary data to be used in a save file

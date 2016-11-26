@@ -6,8 +6,8 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import model.Map;
-import model.MapParameters;
+import model.Map.Map;
+import model.Map.MapParameters;
 
 /**
  * Tests the map and game map classes

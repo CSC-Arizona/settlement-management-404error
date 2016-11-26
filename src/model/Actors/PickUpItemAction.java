@@ -1,6 +1,6 @@
 package model.Actors;
 
-import model.Game;
+import model.Game.Game;
 import model.Items.Item;
 
 public class PickUpItemAction extends Action {

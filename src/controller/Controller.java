@@ -1,15 +1,11 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import model.Map;
-import model.MapParameters;
-import model.Actors.Position;
-import model.Furniture.Furniture;
+import model.Map.Map;
+import model.Map.MapParameters;
 import view.BasicView;
 
 /**
