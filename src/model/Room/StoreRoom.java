@@ -36,6 +36,7 @@ public class StoreRoom extends Room{
 			for (Item i : f.getRequiredMaterials())
 				this.requiredBuildingMaterials.add(i);
 		}
+		
 	}
 
 	@Override

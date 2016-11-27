@@ -11,9 +11,11 @@ import model.Actors.Actor;
 import model.Actors.ConstructAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
+import model.Furniture.BasicCrate;
 import model.Furniture.Furniture;
 import model.Items.IronItem;
 import model.Items.StoneItem;
+import model.Items.WoodItem;
 import model.Room.StoreRoom;
 
 //Author: Maxwell Faridian
@@ -37,12 +39,13 @@ public class BuildingScenario {
 			new Random(seed), blocksMarkedForGathering);
 		Map map = controller.getMap();
 		PlayerControlledActor actor = new PlayerControlledActor(100, 0, new Position(44, 985), hardCodedActors, map);
-		for (int i = 0; i < 8; i++) {
-			actor.getInventory().addItem(new StoneItem());
-			actor.getInventory().addItem(new IronItem());
+		for (int i = 0; i < 24; i++) {
+			actor.getInventory().addItem(new WoodItem());
 		}
 		actor.addToActionQueue(new ConstructAction(new StoreRoom(new Position(45, 983)), map));
 		hardCodedActors.put(actor, actor.getPosition());
+		
+		hardCodedFurniture.put(new BasicCrate(), new Position(46, 984));
 	}
 
 }
