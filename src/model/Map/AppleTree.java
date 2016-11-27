@@ -3,6 +3,8 @@ package model.Map;
 import java.util.ArrayList;
 import java.util.Random;
 
+import controller.Designation;
+import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.AppleTreeLeafBlock;
 import model.BuildingBlocks.AppleTreeTrunkBlock;
@@ -12,7 +14,7 @@ import model.BuildingBlocks.LeafBlock;
 
 public class AppleTree {
 
-	private ArrayList<Integer[]> trunk;
+	private ArrayList<Position> trunk;
 	private ArrayList<Integer[]> leaves;
 	private ArrayList<Integer[]> apples;
 
@@ -51,7 +53,7 @@ public class AppleTree {
 	 */
 	public AppleTree(int totalWidth, int airHeight, BuildingBlock[][] map,
 			Random random) {
-		trunk = new ArrayList<Integer[]>();
+		trunk = new ArrayList<Position>();
 		leaves = new ArrayList<Integer[]>();
 		apples = new ArrayList<Integer[]>();
 		this.totalWidth = totalWidth;
@@ -77,9 +79,13 @@ public class AppleTree {
 	private void addTrunk() {
 		for (int j = 0; j < treeHeight; j++) {
 			if (treeY - j >= 0) {
-				trunk.add(new Integer[] { treeY - j, treeX });
+				trunk.add(new Position(treeY - j, treeX));
 			}
 		}
+	}
+
+	public ArrayList<Position> getTrunk() {
+		return trunk;
 	}
 
 	private void addLeaves() {
@@ -128,9 +134,9 @@ public class AppleTree {
 	 * tree is added
 	 */
 	public void addToMap() {
-		for (Integer[] pos : trunk) {
-			if (map[pos[0]][pos[1]].getID().equals(AirBlock.id)) {
-				map[pos[0]][pos[1]] = new AppleTreeTrunkBlock();
+		for (Position pos : trunk) {
+			if (map[pos.getRow()][pos.getCol()].getID().equals(AirBlock.id)) {
+				map[pos.getRow()][pos.getCol()] = new AppleTreeTrunkBlock();
 			}
 		}
 
@@ -152,8 +158,8 @@ public class AppleTree {
 	 * tree is destroyed
 	 */
 	public void removeFromMap() {
-		for (Integer[] pos : trunk) {
-			map[pos[0]][pos[1]] = new AirBlock();
+		for (Position pos : trunk) {
+			map[pos.getRow()][pos.getCol()] = new AirBlock();
 		}
 
 		for (Integer[] pos : leaves) {
@@ -162,6 +168,19 @@ public class AppleTree {
 
 		for (Integer[] pos : apples) {
 			map[pos[0]][pos[1]] = new AirBlock();
+		}
+	}
+
+	public void designate() {
+		for (Position pos : trunk) {
+			map[pos.getRow()][pos.getCol()]
+					.addDesignation(Designation.CUTTING_DOWN_TREES);
+		}
+	}
+
+	public void removeDesignation() {
+		for (Position pos : trunk) {
+			map[pos.getRow()][pos.getCol()].addDesignation(Designation.NONE);
 		}
 	}
 
