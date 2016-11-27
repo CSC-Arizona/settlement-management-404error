@@ -17,6 +17,7 @@ import model.Room.BedRoom;
 import model.Room.EntertainmentRoom;
 import model.Room.FarmRoom;
 import model.Room.HorizontalTunnel;
+import model.Room.IncubationRoom;
 import model.Room.InfirmaryRoom;
 import model.Room.KitchenRoom;
 import model.Room.Room;
@@ -255,5 +256,31 @@ public class RoomTest {
 		assertEquals(0, br.increaseCapacityBy());
 	}
 	
+	@Test
+	public void testIncubationRoom() {
+		Room br = new IncubationRoom(new Position(0,0));
+		assertEquals(0, br.getPosition().compareTo(new Position(0,0)));
+		assertEquals(12, br.getRequiredWidth());
+		assertEquals(2, br.getRequiredHeight());
+		assertEquals(4, br.getRoomCapacity());
+		// Incubation rooms can have 3 upgrades
+		assertTrue(br.upgradeRoom());
+		assertEquals(4 + br.increaseCapacityBy(), br.getRoomCapacity());
+		assertTrue(br.upgradeRoom());
+		assertEquals(4 + br.increaseCapacityBy() + br.increaseCapacityBy(), br.getRoomCapacity());
+		assertTrue(br.upgradeRoom());
+		assertEquals(4 + br.increaseCapacityBy() + br.increaseCapacityBy() + br.increaseCapacityBy(), br.getRoomCapacity());
+		assertFalse(br.upgradeRoom());
+		assertEquals(4 + br.increaseCapacityBy() +br.increaseCapacityBy() + br.increaseCapacityBy(), br.getRoomCapacity());
+		assertEquals(0, br.getNumAgentsInRoom());
+		br.increaseNumAgentsInRoom();
+		assertEquals(1, br.getNumAgentsInRoom());
+		br.decreaseNumAgentsInRoom();
+		assertEquals(0, br.getNumAgentsInRoom());
+		br.decreaseNumAgentsInRoom();
+		assertEquals(0, br.getNumAgentsInRoom());
+		assertEquals(new LinkedList<Item>().getClass(), br.getRequiredBuildMaterials().getClass());
+		assertEquals(new LinkedList<Item>().getClass(), br.getRequiredUpgradeMaterials().getClass());
+	}
 
 }

@@ -13,6 +13,7 @@ import model.Furniture.Bed;
 import model.Furniture.Couch;
 import model.Furniture.Fireplace;
 import model.Furniture.HealingBed;
+import model.Furniture.IncubationChamber;
 import model.Furniture.Ladder;
 import model.Furniture.MetalCrate;
 import model.Furniture.MillingMachine;
@@ -244,6 +245,20 @@ public class FurnitureTest {
 		ListIterator<Item> li = ladderList.listIterator();
 		assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(wi.getClass(), li.next().getClass());
+	}
+	
+	@Test
+	public void testIncubationChamber() {
+		IncubationChamber ic = new IncubationChamber();
+		assertEquals(1, ic.getCapacity());
+		ic.increaseCapacityBy(1);
+		assertEquals(2, ic.getCapacity());
+		List<Item> incubationChamberList = ic.getRequiredMaterials();
+		ListIterator<Item> li = incubationChamberList.listIterator();
+		assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
 	}
 	
 }

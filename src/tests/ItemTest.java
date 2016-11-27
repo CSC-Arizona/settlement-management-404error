@@ -7,6 +7,7 @@ import org.junit.Test;
 import model.Items.AntLarvaItem;
 import model.Items.AppleItem;
 import model.Items.AppleSeedItem;
+import model.Items.DragonEggItem;
 import model.Items.IronItem;
 import model.Items.StoneItem;
 import model.Items.WheatItem;
@@ -101,6 +102,15 @@ public class ItemTest {
 	    assertEquals(1, wsi.getAttackModifier());
 	    assertEquals(0, wsi.getHealthPoints());
 	    assertEquals(1, wsi.getWeight(), 0.00001);
+	}
+	
+	@Test
+	public void testDragonEggItem() {
+	    DragonEggItem dei = new DragonEggItem();
+	    assertFalse(dei.getIsEdible());
+	    assertEquals(0, dei.getAttackModifier());
+	    assertEquals(0, dei.getHealthPoints());
+	    assertEquals(3.0, dei.getWeight(), 0.00001);
 	}
 	
 	
