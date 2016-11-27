@@ -12,6 +12,10 @@ import model.Items.Item;
 //Apple Tree Plant Plot: 2 Apple Seeds, 2 Ant Larva
 public class AppleTreePlot extends Furniture {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1305489344104345880L;
 	private static int capacity = 1;
 	private List<Item> appleTreePlotList;
 

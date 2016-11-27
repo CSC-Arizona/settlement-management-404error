@@ -10,6 +10,10 @@ import model.Items.Item;
 
 public class LeafBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5173711288174564277L;
 	private List<Item> itemsInBlock;
 	private final static int durability = 1;
 	public final static String id = "Leaf";

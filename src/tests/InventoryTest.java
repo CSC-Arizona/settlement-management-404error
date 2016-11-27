@@ -1,19 +1,20 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import model.Inventory;
-import model.Map;
-import model.Actors.PlayerControlledActor;
-import model.Actors.Position;
+import model.Actors.Inventory;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
+import model.Game.Game;
 import model.Items.AntLarvaItem;
 import model.Items.StoneItem;
 import model.Items.WoodItem;
+import model.Map.Map;
 
 /**
  * InventoryTest covers the functionality of the Inventory class.
@@ -37,7 +38,7 @@ public class InventoryTest {
 
 	@Test
 	public void test() {
-		Inventory inv = new Inventory(null, null);
+		Inventory inv = new Inventory();
 		assertEquals(0.0, inv.getWeightCarried(), 0.0001);
 		inv.addItem(new AntLarvaItem());
 		assertEquals(0.5, inv.getWeightCarried(), 0.0001);
@@ -62,14 +63,14 @@ public class InventoryTest {
 	public void testExceedingCapacity() {
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 },
 				{ 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 }, { 0, 0, 0, 0, 0 } };
-		Map map = generateMap(mapGen);
+		Game.setMap(generateMap(mapGen));
 
-		Inventory inv = new Inventory(new PlayerControlledActor(100, 100,
-				new Position(0, 0), null, map), map);
-		for (int i = 0; i < 30; i++) {
-			assertTrue(inv.addItem(new StoneItem()));
+		Inventory inv = new Inventory();
+		for (int i = 0; i < 20; i++) {
+			assertTrue(inv.canAdd(new StoneItem()));
+			inv.addItem(new StoneItem());
 		}
-		assertTrue(inv.addItem(new AntLarvaItem()));
+		assertFalse(inv.canAdd(new StoneItem()));
 	}
 
 }

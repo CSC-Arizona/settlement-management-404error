@@ -1,15 +1,7 @@
 package model.Actors;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.Serializable;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
-import model.Inventory;
-import model.Map;
-import model.Furniture.Furniture;
-import model.Items.Item;
 
 /**
  * 
@@ -19,10 +11,10 @@ import model.Items.Item;
  * @author Jonathon Davis
  *
  */
-public abstract class Actor {
+public abstract class Actor implements Serializable {
 
+	private static final long serialVersionUID = -2476564871890336854L;
 	private int health;
-	private int fatigue;
 	private Position position;
 	private boolean idle;
 	private LinkedList<Action> queue;
@@ -30,7 +22,8 @@ public abstract class Actor {
 	private Skills skills;
 	private Inventory inventory;
 	private boolean alive;
-	private Map map;
+	private String name;
+	public static LinkedList<Actor> allActors;
 
 	/**
 	 * Creates a new actor
@@ -40,16 +33,18 @@ public abstract class Actor {
 	 * @param position
 	 *            The current position of the actor
 	 */
-	public Actor(int health, int fatigue, Position position, Map map) {
-		this.map = map;
+	public Actor(int health, Position position) {
 		this.health = health;
-		this.fatigue = fatigue;
 		this.position = position;
 		this.idle = true;
 		this.queue = new LinkedList<Action>();
-		this.inventory = new Inventory(this, map);
-		this.setAlive(true);
+		this.inventory = new Inventory();
+		this.alive = true;
+		this.name = Names.generateName();
 		skills = new Skills();
+		if(allActors == null)
+			allActors = new LinkedList<>();
+		allActors.add(this);
 	}
 
 	/**
@@ -77,44 +72,16 @@ public abstract class Actor {
 	 */
 	public void update() {
 		// if idle get a new action
-		if (idle)
+		if (idle){
 			if (queue.size() > 0)
 				currentAction = queue.peek();
-			else {
-				Position gather = getRandomBlockForGathering();
-				if (gather != null) {
-					currentAction = new GatherAction(gather, map);
-				} else {
-					if (getInventory().size() != 0) {
-						for (int index = 0; index < getInventory().size(); index++) {
-							Item item = getInventory().getItem(index);
-							Position emptyCratePosition = getCrateWithCapacityGreaterThan(item
-									.getWeight());
-							if (emptyCratePosition != null) {
-								currentAction = new StoreItemAction(
-										emptyCratePosition, item, index, map);
-								break;
-							}
-						}
-					} else {
-						Position itemOnGroundPosition = getItemOnGroundPosition();
-						if (itemOnGroundPosition != null) {
-							List<Item> items = map.getBuildingBlock(
-									itemOnGroundPosition).itemsOnGround();
-							if (items.size() != 0) {
-								Item item = items.get(0);
-								if (itemOnGroundPosition != null) {
-									currentAction = new PickUpItemAction(
-											itemOnGroundPosition, item, map);
-								}
-							}
-						}
-					}
-				}
-			}
-		if (currentAction == null) {
-			return;
+			else
+				currentAction = getActionFromPool();
+			if(currentAction == null)
+				return; // TODO: set to idle action
 		}
+		
+
 		// Store the result of the execution
 		int result = currentAction.execute(this);
 
@@ -133,25 +100,6 @@ public abstract class Actor {
 			// if the Action is still in progress then set idle to false
 			idle = false;
 		}
-	}
-
-	/**
-	 * @return the health
-	 */
-	public int getHealth() {
-		return health;
-	}
-
-	/**
-	 * @param health
-	 *            the health to set
-	 */
-	public void setHealth(int health) {
-		this.health = health;
-	}
-
-	public void setFatigue(int fatigue) {
-		this.fatigue = fatigue;
 	}
 
 	/**
@@ -189,65 +137,39 @@ public abstract class Actor {
 	public boolean isAlive() {
 		return alive;
 	}
+	
+	public abstract void addActionToPool(Action action);
 
 	/**
 	 * @param alive
 	 *            the alive to set
 	 */
 	public void setAlive(boolean alive) {
+		if(alive)
+			return;
 		this.alive = alive;
+		allActors.remove(this);
+		
+	}
+	
+	public int getHealth(){
+		return health;
 	}
 
-	public Position getNearestBed() {
-		HashMap<Furniture, Position> mapFurniture = map.getFurniture();
-		if (mapFurniture != null) {
-			if (mapFurniture.size() != 0) {
-				return mapFurniture.get(mapFurniture.keySet().toArray()[0]);
-			}
-		}
-		return null;
+	/**
+	 * @param i
+	 */
+	public void setHealth(int i) {
+		this.health = i;
+		
 	}
-
-	public Position getCrateWithCapacityGreaterThan(double target) {
-		HashMap<Furniture, Position> mapFurniture = map.getFurniture();
-		if (mapFurniture != null) {
-			for (Furniture f : mapFurniture.keySet()) {
-				if (f.getID().equals("crate")) {
-					if (f.getRemainingWeightCapacity() >= target) {
-						return mapFurniture.get(f);
-					}
-				}
-			}
-		}
-		return null;
+	
+	public String getName() {
+		return name;
 	}
-
-	public Position getRandomBlockForGathering() {
-		ArrayList<Position> blocksMarkedForGathering = map
-				.getBlocksMarkedForGathering();
-		if (blocksMarkedForGathering != null) {
-			if (blocksMarkedForGathering.size() != 0) {
-				return blocksMarkedForGathering.get(new Random()
-						.nextInt(blocksMarkedForGathering.size()));
-			}
-		}
-		return null;
-	}
-
-	public Position getItemOnGroundPosition() {
-		ArrayList<Position> itemsOnGround = map.getItemsOnGround();
-		if (itemsOnGround.size() > 0) {
-			return itemsOnGround.get(0);
-		}
-		return null;
-	}
-
-	@Override
-	public String toString() {
-		String result = Integer.toString(health) + " health; "
-				+ Integer.toString(fatigue) + " fatigue; inventory: "
-				+ this.inventory.toString();
-		return result;
-	}
+	
+	public abstract Action getActionFromPool();
+	
+	
 
 }

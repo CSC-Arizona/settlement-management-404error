@@ -1,4 +1,4 @@
-package model;
+package model.Menus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +17,7 @@ import model.Armor.WoodShield;
 import model.Items.AntLarvaPieCookable;
 import model.Items.ApplePieCookable;
 import model.Items.BreadCookable;
+import model.Items.Item;
 import model.Weapons.BasicIronAxe;
 import model.Weapons.BasicStoneAxe;
 import model.Weapons.BasicSword;
@@ -30,7 +31,7 @@ import model.Weapons.UltraSword;
 //and what items they need to craft said item
 public class CraftMenu implements TableModel {
 	
-	private HashMap<String, List> craftableItems;
+	private HashMap<String, List<Item>> craftableItems;
 	private static CraftMenu craftMenu;
 	
 	private CraftMenu() {

@@ -7,7 +7,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import model.Map;
 import model.Actors.Actor;
 import model.Actors.AttackAction;
 import model.Actors.PlayerControlledActor;
@@ -16,6 +15,8 @@ import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.IronOreBlock;
+import model.Game.Game;
+import model.Map.Map;
 
 /**
  * @author Jonathon Davis
@@ -45,11 +46,11 @@ public class AttackActionTest {
 				{1,1,1,1,0},
 				{1,1,1,1,1},
 				{1,1,1,1,1}};
-		Map map = generateMap(mapGen);
+		Game.setMap(generateMap(mapGen));
 
-		Actor tester = new PlayerControlledActor(5, 0, new Position(10,10), null, map);
-		Actor rival = new PlayerControlledActor(5, 0, new Position(11,10), null, map);
-		tester.addToActionQueue(new AttackAction(rival, map));
+		Actor tester = new PlayerControlledActor(5, new Position(10,10));
+		Actor rival = new PlayerControlledActor(5,new Position(11,10));
+		tester.addToActionQueue(new AttackAction(rival));
 		assertEquals(5,rival.getHealth());
 		assertEquals(0,tester.getSkills().getCombatLevel());
 		tester.update();
@@ -72,7 +73,7 @@ public class AttackActionTest {
 		assertEquals(0,rival.getHealth());
 		tester.update();
 		assertEquals(0,rival.getHealth());
-		tester.addToActionQueue(new AttackAction(rival, map));
+		tester.addToActionQueue(new AttackAction(rival));
 		tester.update();
 		assertEquals(0,rival.getHealth());
 	}
@@ -84,10 +85,10 @@ public class AttackActionTest {
 										{1,1,1,1,0},
 										{1,1,1,1,1},
 										{1,1,1,1,1}};
-		Map map = generateMap(mapGen);
-		PlayerControlledActor tester = new PlayerControlledActor(10, 0, new Position(1,1), null, map);
-		Actor rival = new PlayerControlledActor(5, 0, new Position(2,4), null, map);
-		tester.addToActionQueue(new AttackAction(rival, map));
+		Game.setMap(generateMap(mapGen));
+		PlayerControlledActor tester = new PlayerControlledActor(10, new Position(1,1));
+		Actor rival = new PlayerControlledActor(5, new Position(2,4));
+		tester.addToActionQueue(new AttackAction(rival));
 		
 		assertEquals(1,tester.getPosition().getRow());
 		assertEquals(1,tester.getPosition().getCol());
@@ -122,7 +123,7 @@ public class AttackActionTest {
 		assertEquals(0,rival.getHealth());
 		tester.update();
 		assertEquals(0,rival.getHealth());
-		tester.addToActionQueue(new AttackAction(rival, map));
+		tester.addToActionQueue(new AttackAction(rival));
 		tester.update();
 		assertEquals(0,rival.getHealth());
 	}

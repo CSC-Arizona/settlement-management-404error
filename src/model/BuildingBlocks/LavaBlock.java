@@ -17,6 +17,10 @@ import model.Items.Item;
  */
 public class LavaBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -159975281404992710L;
 	private final static int durability = 0;
 	public final static String id = "Lava";
 	

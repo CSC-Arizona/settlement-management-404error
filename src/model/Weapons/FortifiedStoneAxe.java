@@ -13,6 +13,10 @@ import model.Items.WoodItem;
 
 public class FortifiedStoneAxe extends Weapon {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7624686854967576466L;
 	private final static int attackMod = 17;
 	private List<Item> fsaList;
 	

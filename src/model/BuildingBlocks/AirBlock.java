@@ -16,13 +16,12 @@ import model.Items.Item;
  */
 public class AirBlock extends BuildingBlock {
 
+	private static final long serialVersionUID = -4693198585625487662L;
 	private Furniture furniture;
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsOnGround;
 	private final static int durability = 0;
 	public final static String id = "Air";
-	private boolean occupiable = true;
-
 	public AirBlock() {
 		super(durability, false, true, new Color(206, 237, 240), id);
 		actorsInBlock = new LinkedList<>();

@@ -14,6 +14,10 @@ import model.Items.WheatStemItem;
 
 public class WheatBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5726876699197732768L;
 	private List<Item> itemsInBlock;
 	public final static String id = "Wheat";
 

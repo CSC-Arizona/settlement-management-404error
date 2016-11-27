@@ -1,48 +1,34 @@
 package scenarios;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
-import model.Map;
-import model.MapParameters;
-import model.Actors.Actor;
+import controller.Controller;
 import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
-import model.Furniture.Furniture;
 import model.Furniture.ReinforcedCrate;
-import controller.Controller;
+import model.Game.Game;
+import model.Map.MapParameters;
 
 public class GatheringScenario {
 	private int seed = 8412372;
 
-	private HashMap<Actor, Position> hardCodedActors = new HashMap<>();
-	private ArrayList<Position> blocksMarkedForGathering = new ArrayList<>();
-	private HashMap<Furniture, Position> hardCodedFurniture = new HashMap<>();
-	
 	public static void main(String[] args) {
 		new GatheringScenario();
 	}
 
 	public GatheringScenario() {
+		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed));
+		Game.setMap(controller.getMap());
+		Game.getMap().addFurniture(new ReinforcedCrate(), new Position(44, 985));
+		PlayerControlledActor actor = new PlayerControlledActor(100, new Position(44, 985));
+		new PlayerControlledActor(100, new Position(44, 983));
 
-		hardCodedFurniture.put(new ReinforcedCrate(), new Position(44, 985));
-		
-		blocksMarkedForGathering.add(new Position(44,987));
-		blocksMarkedForGathering.add(new Position(48,996));
-		blocksMarkedForGathering.add(new Position(47,994));
-		blocksMarkedForGathering.add(new Position(46,991));
-		blocksMarkedForGathering.add(new Position(46,990));
-		
-		Controller controller = new Controller(
-				MapParameters.getDefaultParameters(), hardCodedFurniture, hardCodedActors,
-				new Random(seed), blocksMarkedForGathering);
-		Map map = controller.getMap();
-		PlayerControlledActor actor = new PlayerControlledActor(100, 0,
-				new Position(44, 985), hardCodedActors, map);
-
-		hardCodedActors.put(actor, actor.getPosition());
+		actor.addActionToPool(new GatherAction(new Position(44, 987)));
+		actor.addActionToPool(new GatherAction(new Position(48, 996)));
+		actor.addActionToPool(new GatherAction(new Position(47, 994)));
+		actor.addActionToPool(new GatherAction(new Position(46, 991)));
+		actor.addActionToPool(new GatherAction(new Position(46, 990)));
 
 	}
 

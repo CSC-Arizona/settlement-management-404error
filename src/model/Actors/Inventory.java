@@ -1,10 +1,10 @@
-package model;
+package model.Actors;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Actors.Actor;
 import model.Items.Item;
 
 /**
@@ -14,21 +14,18 @@ import model.Items.Item;
  * 
  * @author Katherine Walters
  */
-public class Inventory implements Iterable<Item> {
+public class Inventory implements Iterable<Item>, Serializable {
 
-	private final double MAXWEIGHT = 100.0;
+	private static final long serialVersionUID = 2935773370312109536L;
+	public static final double MAXWEIGHT = 100.0;
 	private double weight;
-	private Actor actor;
-	private Map map;
 	/*
 	 * I made this a list instead of a HashMap so that it can be displayed on
 	 * the GUI as a JList
 	 */
 	private List<Item> items;
 
-	public Inventory(Actor actor, Map map) {
-		this.actor = actor;
-		this.map = map;
+	public Inventory() {
 		this.weight = 0;
 		items = new LinkedList<>();
 	}
@@ -38,14 +35,9 @@ public class Inventory implements Iterable<Item> {
 	 * inventory exceed its weight limit, the item is added and it returns true.
 	 * Else, drop the item on the ground.
 	 */
-	public boolean addItem(Item it) {
-		if (weight + it.getWeight() <= MAXWEIGHT) {
+	public void addItem(Item it) {
 			items.add(it);
 			weight += it.getWeight();
-			return true;
-		} else {
-			return map.addItemToGround(actor.getPosition(), it);
-		}
 	}
 
 	/*
@@ -73,6 +65,10 @@ public class Inventory implements Iterable<Item> {
 	 */
 	public double getWeightCarried() {
 		return weight;
+	}
+	
+	public boolean canAdd(Item it){
+		return it.getWeight() + weight <= MAXWEIGHT;
 	}
 
 	/*
@@ -121,6 +117,7 @@ public class Inventory implements Iterable<Item> {
 		while(it.hasNext()){
 			Item item = it.next();
 			if(item.getClass().equals(required.getClass())){
+				this.weight -= item.getWeight();
 				it.remove();
 				return;
 			}

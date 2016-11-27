@@ -24,7 +24,6 @@ import model.BuildingBlocks.TreeRootBlock;
 import model.Items.AntLarvaItem;
 import model.Items.IronItem;
 import model.Items.StoneItem;
-import model.Items.WheatKernelItem;
 import model.Items.WoodItem;
 
 /**
@@ -39,7 +38,7 @@ public class BuildingBlockTest {
 		AppleTreeLeafBlock lb = new AppleTreeLeafBlock();
 		assertFalse(lb.isOccupiable());
 		assertTrue(lb.isDestroyable());
-		assertEquals(new LinkedList().getClass(), lb.lootBlock().getClass());
+		assertEquals(new LinkedList<Object>().getClass(), lb.lootBlock().getClass());
 		assertEquals(8, lb.lootBlock().size());
 		assertEquals(1, lb.getDurability());
 		assertEquals(new Color(242, 58, 58), lb.getColor());
@@ -51,7 +50,7 @@ public class BuildingBlockTest {
 		assertTrue(bb.isOccupiable());
 		assertTrue(bb.isDestroyable());
 		assertEquals(1, bb.lootBlock().size());
-		WheatKernelItem i = (WheatKernelItem) bb.lootBlock().get(0);
+		bb.lootBlock().get(0);
 		assertEquals(1, bb.getDurability());
 		assertEquals(new Color(0, 87, 3), bb.getColor());
 	}
@@ -61,7 +60,7 @@ public class BuildingBlockTest {
 		GoldOreBlock gob = new GoldOreBlock();
 		assertFalse(gob.isOccupiable());
 		assertTrue(gob.isDestroyable());
-		assertEquals(new LinkedList(), gob.lootBlock());
+		assertEquals(new LinkedList<Object>(), gob.lootBlock());
 		assertEquals(10, gob.getDurability());
 		assertEquals(new Color(255, 223, 0), gob.getColor());
 	}

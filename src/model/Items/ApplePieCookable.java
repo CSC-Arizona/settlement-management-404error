@@ -5,6 +5,11 @@ import java.util.List;
 
 public class ApplePieCookable extends CookableItem {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5921506440012280810L;
+
 	public ApplePieCookable() {
 		super(10);
 	}

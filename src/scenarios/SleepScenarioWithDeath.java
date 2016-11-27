@@ -1,17 +1,12 @@
 package scenarios;
 
-import java.util.HashMap;
 import java.util.Random;
 
-import model.Map;
-import model.MapParameters;
-import model.Actors.Actor;
-import model.Actors.MoveAction;
+import controller.Controller;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
-import model.Furniture.Bed;
-import model.Furniture.Furniture;
-import controller.Controller;
+import model.Game.Game;
+import model.Map.MapParameters;
 
 /**
  * @author Ethan Ward
@@ -21,8 +16,6 @@ import controller.Controller;
  */
 public class SleepScenarioWithDeath {
 	private int seed = 98765;
-	private HashMap<Actor, Position> hardCodedActors = new HashMap<>();
-	private HashMap<Furniture, Position> hardCodedFurniture = new HashMap<>();
 
 	public static void main(String[] args) {
 		new SleepScenarioWithDeath();
@@ -30,15 +23,11 @@ public class SleepScenarioWithDeath {
 
 	public SleepScenarioWithDeath() {
 
-		Controller controller = new Controller(
-				MapParameters.getDefaultParameters(), hardCodedFurniture,
-				hardCodedActors, new Random(seed), null);
+		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed));
 
-		Map map = controller.getMap();
+		Game.setMap(controller.getMap());
 
-		PlayerControlledActor actor = new PlayerControlledActor(100, 1090,
-				new Position(50, 985), hardCodedActors, map);
-		hardCodedActors.put(actor, actor.getPosition());
+		new PlayerControlledActor(100, new Position(50, 985)).setFatigue(1090);
 
 	}
 }

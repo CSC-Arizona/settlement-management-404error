@@ -8,6 +8,10 @@ import model.Items.Item;
 //This class constructs Armor objects, which are themselves extensions of the Item class
 public abstract class Armor extends Item {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2420900077518432098L;
 	private int defenseModifier;
 	
 	public Armor (boolean edible, int attackModifier, int healthPts, double weight, int defenseMod) {

@@ -5,6 +5,11 @@ import java.util.List;
 
 public class BreadCookable extends CookableItem {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5914974809369066714L;
+
 	public BreadCookable() {
 		super(10);
 	}

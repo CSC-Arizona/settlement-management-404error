@@ -13,6 +13,10 @@ import model.Items.WoodItem;
 
 public class BasicStoneAxe extends Weapon {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7908483863488465121L;
 	private final static int attackMod = 15;
 	private List<Item> basicStoneAxeList;
 	

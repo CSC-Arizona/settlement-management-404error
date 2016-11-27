@@ -14,6 +14,10 @@ import model.Items.WoodItem;
 //Healing Bed: 4 wood, 2 stone, 5 wheat stems, 1 iron
 public class HealingBed extends Furniture {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8011112006333334423L;
 	private static int capacity = 2;
 	private List<Item> healingBedList;
 

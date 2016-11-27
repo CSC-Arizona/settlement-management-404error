@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Map;
 import model.BuildingBlocks.BuildingBlock;
+import model.Game.Game;
 import model.Room.Room;
 
 /**
@@ -17,16 +17,15 @@ import model.Room.Room;
  * @author Katherine Walters
  * @author Jonathon Davis
  */
-public class ConstructAction implements Action {
+public class ConstructAction extends Action {
 
+	private static final long serialVersionUID = 3917613009303294799L;
 	private BuildingBlock corner;
 	private List<Action> GatherCommands;
 	private List<Position> blocksToChange;
-	private Map map;
 	
-	public ConstructAction(Room room, Map map) {
-		this.map = map;
-		this.corner = map.getBuildingBlock(room.getPosition());
+	public ConstructAction(Room room) {
+		this.corner = Game.getMap().getBuildingBlock(room.getPosition());
 		this.blocksToChange = new LinkedList<>();
 		for(int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++){
 			for(int r = room.getPosition().getRow(); r < room.getPosition().getRow() + room.getRequiredHeight(); r++){
@@ -50,7 +49,7 @@ public class ConstructAction implements Action {
 		if(GatherCommands == null){
 			GatherCommands = new LinkedList<>();
 			for (Position block : blocksToChange)
-				GatherCommands.add(new GatherAction(block, map));
+				GatherCommands.add(new GatherAction(block));
 		}
 		
 		// Mine out the area

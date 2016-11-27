@@ -1,5 +1,7 @@
 package model.Items;
 
+import java.io.Serializable;
+
 /**
  * Item is an abstract class that can be extended by any items that can be held
  * in an Inventory. This encompasses resources, armor, and weapons.
@@ -42,9 +44,13 @@ package model.Items;
  * Reinforced Crate (6 wood, 2 stone): 50lb weight capacity
  * Metal Crate (6 wood, 2 stone, 2 iron): 70lb weight capacity
  */
-public abstract class Item {
+public abstract class Item implements Serializable {
 	
-    private boolean edible;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8597391980298465998L;
+	private boolean edible;
     private int attackModifier;
     private int healthPoints;
     private double weight;

@@ -5,19 +5,16 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Point;
-import java.util.HashMap;
-
 import org.junit.Test;
 
-import model.Map;
-import model.Actors.Actor;
 import model.Actors.MoveAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
+import model.Game.Game;
+import model.Map.Map;
 
 /**
  * @author Jonathon Davis
@@ -42,9 +39,9 @@ public class MoveActionTest {
 	public void testMoveAction() {
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 },
 				{ 0, 0, 0, 0, 0 } };
-		Map map = generateMap(mapGen);
-		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1, 1), null, map);
-		test.addToActionQueue(new MoveAction(new Position(2, 4), map));
+		Game.setMap(generateMap(mapGen));
+		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
+		test.addToActionQueue(new MoveAction(new Position(2, 4)));
 
 		assertEquals(1, test.getPosition().getRow());
 		assertEquals(1, test.getPosition().getCol());
@@ -62,9 +59,9 @@ public class MoveActionTest {
 	public void testNonMoveAction() {
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 },
 				{ 0, 0, 0, 0, 0 } };
-		Map map = generateMap(mapGen);
-		PlayerControlledActor test = new PlayerControlledActor(10, 0, new Position(1, 1), null, map);
-		test.addToActionQueue(new MoveAction(new Position(2, 4), map));
+		Game.setMap(generateMap(mapGen));
+		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
+		test.addToActionQueue(new MoveAction(new Position(2, 4)));
 
 		assertEquals(1, test.getPosition().getRow());
 		assertEquals(1, test.getPosition().getCol());

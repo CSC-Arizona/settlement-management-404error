@@ -3,7 +3,6 @@ package model.Actors;
 import java.util.Iterator;
 import java.util.List;
 
-import model.Furniture.Ladder;
 import model.Items.Item;
 
 /**
@@ -12,8 +11,9 @@ import model.Items.Item;
  * @author Jonathon Davis
  *
  */
-public class CraftAction implements Action {
+public class CraftAction extends Action {
 	
+	private static final long serialVersionUID = -5666712529302552421L;
 	private Item toBeCrafted;
 	private List<Item> requiredMaterials;
 	

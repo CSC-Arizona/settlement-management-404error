@@ -12,6 +12,10 @@ import model.Items.Item;
  */
 public class GoldOreBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6644333828930335834L;
 	private final static int durability = 10;
 	private List<Item> itemsInBlock;
 	public final static String id = "Gold ore";

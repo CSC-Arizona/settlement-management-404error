@@ -1,17 +1,13 @@
 package scenarios;
 
-import java.util.HashMap;
 import java.util.Random;
 
-import model.Map;
-import model.MapParameters;
-import model.Actors.Actor;
-import model.Actors.MoveAction;
+import controller.Controller;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.Furniture.Bed;
-import model.Furniture.Furniture;
-import controller.Controller;
+import model.Game.Game;
+import model.Map.MapParameters;
 
 /**
  * @author Ethan Ward
@@ -20,25 +16,19 @@ import controller.Controller;
  */
 public class SleepScenario {
 	private int seed = 98765;
-	private HashMap<Actor, Position> hardCodedActors = new HashMap<>();
-	private HashMap<Furniture, Position> hardCodedFurniture = new HashMap<>();
 
 	public static void main(String[] args) {
 		new SleepScenario();
 	}
 
 	public SleepScenario() {
-		hardCodedFurniture.put(new Bed(), new Position(48, 982));
-		hardCodedFurniture.put(new Bed(), new Position(53, 990));
+		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed));
 
-		Controller controller = new Controller(
-				MapParameters.getDefaultParameters(), hardCodedFurniture,
-				hardCodedActors, new Random(seed), null);
+		Game.setMap(controller.getMap());
+		Game.getMap().addFurniture(new Bed(), new Position(48, 982));
+		Game.getMap().addFurniture(new Bed(), new Position(53, 990));
 
-		Map map = controller.getMap();
-
-		PlayerControlledActor actor = new PlayerControlledActor(100, 990, new Position(50, 985), hardCodedActors, map);
-		hardCodedActors.put(actor, actor.getPosition());
+		new PlayerControlledActor(100, new Position(50, 985)).setFatigue(990);
 
 	}
 }

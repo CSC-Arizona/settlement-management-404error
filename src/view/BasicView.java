@@ -1,37 +1,43 @@
 package view;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.Point;
-import java.awt.Stroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Controller;
-import model.Map;
-import model.MapParameters;
+import controller.Designation;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.Item;
+import model.Map.Map;
+import model.Map.MapParameters;
 
 public class BasicView extends JFrame {
 
+	private static final long serialVersionUID = -8807654664923090784L;
 	private Map map;
+	private Box box;
+	private JPanel guiPanel;
+	private JPanel labelPanel;
+	private JPanel buttonPanel;
+	private JPanel logPanel;
 	private DrawingPanel drawingPanel;
 	private JLabel timeLabel;
 	private JLabel windowCoordinatesLabel;
@@ -57,10 +63,20 @@ public class BasicView extends JFrame {
 
 	private Controller controller;
 
-	private boolean gatheringSelection = false;
-	private boolean drawingShape = false;
-	private Point start;
-	private Point end;
+	private PauseButton pauseButton;
+
+	private JButton placeFurnitureButton;
+	private JButton constructRoomButton;
+
+	private DesignationButton cutDownTreeButton;
+	private DesignationButton removeFurnitureButton;
+	private DesignationButton removeRoomButton;
+	private DesignationButton fruitButton;
+	private DesignationButton digButton;
+	private DesignationButton plantsButton;
+	private DesignationButton attackButton;
+	private DesignationButton removeButton;
+	private ArrayList<DesignationButton> buttons;
 
 	public void setTimeLabel(int time, boolean paused) {
 		if (paused) {
@@ -95,58 +111,117 @@ public class BasicView extends JFrame {
 		this.mapWidth = mapParameters.mapWidth;
 		this.mapHeight = mapParameters.mapHeight;
 
-		Box box = new Box(BoxLayout.Y_AXIS);
+		box = new Box(BoxLayout.Y_AXIS);
 		box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		box.add(Box.createVerticalGlue());
 
-		JPanel labelPanel = new JPanel();
+		guiPanel = new JPanel();
+		guiPanel.setLayout(new GridLayout(1, 3));
+		box.add(guiPanel);
 
-		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
-
-		timeLabel = new JLabel();
-		labelPanel.add(timeLabel);
-
-		windowCoordinatesLabel = new JLabel();
-		setWindowCoordinateLabel();
-		labelPanel.add(windowCoordinatesLabel);
-
-		mouseCoordinatesLabel = new JLabel();
-		setMouseCoordinatesLabel();
-		labelPanel.add(mouseCoordinatesLabel);
-
-		mouseDescriptionLabel = new JLabel();
-		setMouseDescriptionLabel();
-		labelPanel.add(mouseDescriptionLabel);
-
-		labelPanel
-				.setPreferredSize(new Dimension(windowWidth, labelPanelHeight));
-
-		box.add(labelPanel);
-
-		drawingPanel = new DrawingPanel();
-
-		drawingPanel.setPreferredSize(new Dimension(windowWidth,
-				2 * windowHeight / 3));
-
-		box.add(drawingPanel);
+		addLabelPanel();
+		addButtonPanel();
+		addLogPanel();
+		addDrawingPanel();
 
 		add(box);
 		pack();
 
 		this.addKeyListener(new MyKeyListener());
-		drawingPanel.addMouseMotionListener(new MyMotionListener());
-		drawingPanel.addMouseListener(new MyMouseListener());
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
-
-		setLocation(20, 20);
-		setSize(windowWidth, windowHeight);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
+		this.setLocation(20, 20);
+		this.setSize(windowWidth, windowHeight);
 
 		repaint();
 	}
 
+	private void addLabelPanel() {
+		labelPanel = new JPanel();
+		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
+		timeLabel = new JLabel();
+		labelPanel.add(timeLabel);
+		windowCoordinatesLabel = new JLabel();
+		setWindowCoordinateLabel();
+		labelPanel.add(windowCoordinatesLabel);
+		mouseCoordinatesLabel = new JLabel();
+		setMouseCoordinatesLabel();
+		labelPanel.add(mouseCoordinatesLabel);
+		mouseDescriptionLabel = new JLabel();
+		setMouseDescriptionLabel();
+		labelPanel.add(mouseDescriptionLabel);
+		labelPanel
+				.setPreferredSize(new Dimension(windowWidth, labelPanelHeight));
+		guiPanel.add(labelPanel);
+
+	}
+
+	private void addButtonPanel() {
+		buttonPanel = new JPanel();
+		buttonPanel.setLayout(new GridLayout(4, 3));
+
+		pauseButton = new PauseButton(controller, this);
+
+		placeFurnitureButton = new JButton(
+				"<html><center>Place furniture</center></html>");
+		placeFurnitureButton.setFocusable(false);
+
+		constructRoomButton = new JButton(
+				"<html><center>Construct room</center></html>");
+		constructRoomButton.setFocusable(false);
+
+		buttons = new ArrayList<>();
+		cutDownTreeButton = new DesignationButton(controller,
+				Designation.CUTTING_DOWN_TREES, buttons);
+		removeFurnitureButton = new DesignationButton(controller,
+				Designation.REMOVING_FURNITURE, buttons);
+		removeRoomButton = new DesignationButton(controller,
+				Designation.REMOVING_ROOMS, buttons);
+		fruitButton = new DesignationButton(controller,
+				Designation.GATHERING_FRUIT, buttons);
+		digButton = new DesignationButton(controller, Designation.DIGGING,
+				buttons);
+		plantsButton = new DesignationButton(controller,
+				Designation.GATHERING_PLANTS, buttons);
+		attackButton = new DesignationButton(controller, Designation.ATTACKING,
+				buttons);
+		removeButton = new DesignationButton(controller,
+				Designation.REMOVING_DESIGNATIONS, buttons);
+
+		buttonPanel.add(placeFurnitureButton);
+		buttonPanel.add(constructRoomButton);
+		buttonPanel.add(pauseButton);
+		buttonPanel.add(cutDownTreeButton);
+		buttonPanel.add(removeFurnitureButton);
+		buttonPanel.add(removeRoomButton);
+		buttonPanel.add(fruitButton);
+		buttonPanel.add(digButton);
+		buttonPanel.add(plantsButton);
+		buttonPanel.add(attackButton);
+		buttonPanel.add(removeButton);
+
+		guiPanel.add(buttonPanel);
+	}
+
+	private void addLogPanel() {
+		logPanel = new JPanel();
+		guiPanel.add(logPanel);
+	}
+
+	private void addDrawingPanel() {
+		drawingPanel = new DrawingPanel();
+		drawingPanel.setPreferredSize(new Dimension(windowWidth,
+				2 * windowHeight / 3));
+		drawingPanel.addMouseMotionListener(new MyMotionListener());
+		box.add(drawingPanel);
+	}
+
 	private class DrawingPanel extends JPanel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 8717360204333004762L;
 
 		@Override
 		public void paintComponent(Graphics g) {
@@ -207,16 +282,7 @@ public class BasicView extends JFrame {
 
 				}
 			}
-			if (gatheringSelection && drawingShape) {
-				Stroke oldStroke = g2.getStroke();
-				g2.setStroke(new BasicStroke(2));
 
-				int width = Math.abs(start.x - end.x);
-				int height = Math.abs(start.y - end.y);
-				g2.drawRect(Math.min(start.x, end.x), Math.min(start.y, end.y),
-						width, height);
-				g2.setStroke(oldStroke);
-			}
 		}
 	}
 
@@ -254,25 +320,19 @@ public class BasicView extends JFrame {
 				}
 
 				break;
+
 			case KeyEvent.VK_SPACE:
-				if (controller.isPaused()) {
-					controller.startTimer();
-				} else {
-					controller.stopTimer();
-				}
-				setTimeLabel(controller.getTime(), controller.isPaused());
+				pauseButton.toggle();
 				break;
 
-			case KeyEvent.VK_G:
-				// "gathering"
-				if (!gatheringSelection) {
-					controller.stopTimer();
-					gatheringSelection = true;
-				} else {
-					controller.startTimer();
-					gatheringSelection = false;
+			}
+
+			for (DesignationButton button : buttons) {
+				if (button.designation.keyboardShortcut == (char) e
+						.getKeyChar()) {
+					button.toggle();
+					break;
 				}
-				break;
 			}
 
 			setWindowCoordinateLabel();
@@ -306,53 +366,7 @@ public class BasicView extends JFrame {
 			setMouseDescriptionLabel();
 			setMouseCoordinatesLabel();
 
-			if (gatheringSelection && drawingShape) {
-				end = e.getPoint();
-				repaint();
-			}
 		}
-	}
-
-	private class MyMouseListener implements MouseListener {
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			if (gatheringSelection) {
-				if (!drawingShape) {
-					start = e.getPoint();
-					end = e.getPoint();
-				} else {
-					end = e.getPoint();
-
-				}
-				drawingShape = !drawingShape;
-			}
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
 	}
 
 }

@@ -13,6 +13,10 @@ import model.Items.WoodItem;
 //Pool table: 4 wood, 3 stone, 1 iron
 public class PoolTable extends Furniture {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7516101050603185804L;
 	private static int capacity = 4;
 	private List<Item> poolTableList;
 

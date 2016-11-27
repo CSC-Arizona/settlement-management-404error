@@ -1,17 +1,12 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import model.Map.Map;
+import model.Map.MapParameters;
 import view.BasicView;
-import model.Map;
-import model.MapParameters;
-import model.Actors.Actor;
-import model.Actors.Position;
-import model.Furniture.Furniture;
 
 /**
  * Display a map
@@ -23,7 +18,8 @@ public class Controller {
 
 	int time = 0;
 	private boolean paused = false;
-
+	private Designation designatingAction = Designation.NONE;
+	
 	private Map map;
 
 	private BasicView view;
@@ -31,6 +27,22 @@ public class Controller {
 	private Timer timer;
 	private int timeDelta = 1000;
 
+	public void togglePaused() {
+		if (isPaused()) {
+			startTimer();
+		} else {
+			stopTimer();
+		}
+	}
+	
+	public void setDesignatingAction(Designation designation) {
+		this.designatingAction = designation;
+	}
+ 	
+	public Designation getDesignatingAction() {
+		return designatingAction;
+	}
+	
 	public void stopTimer() {
 		this.timer.cancel();
 		paused = true;
@@ -51,11 +63,8 @@ public class Controller {
 	}
 
 	public Controller(MapParameters mapParameters,
-			HashMap<Furniture, Position> hardCodedFurniture,
-			HashMap<Actor, Position> hardCodedActors, Random random,
-			ArrayList<Position> blocksMarkedForGathering) {
-		map = new Map(mapParameters, hardCodedFurniture, hardCodedActors,
-				random, blocksMarkedForGathering);
+			Random random) {
+		map = new Map(mapParameters, random);
 		view = new BasicView(this, map, mapParameters);
 		view.setVisible(true);
 		startTimer();

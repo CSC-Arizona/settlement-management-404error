@@ -3,22 +3,18 @@
  */
 package tests;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.HashMap;
 
 import org.junit.Test;
 
-import model.Map;
-import model.Actors.Actor;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
-import model.BuildingBlocks.IronOreBlock;
+import model.Game.Game;
 import model.Items.AntLarvaItem;
+import model.Map.Map;
 
 /**
  * @author Jonathon Davis
@@ -44,9 +40,10 @@ public class HungerTest {
 
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 },
 				{ 0, 0, 0, 0, 0 } };
-		Map map = generateMap(mapGen);
+		Game.setMap(generateMap(mapGen));
 		
-		PlayerControlledActor test = new PlayerControlledActor(10, -150000, new Position(1,1), null, map);
+		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
+		test.setFatigue(-150000);
 		test.getInventory().addItem(new AntLarvaItem());
 		assertTrue(test.isAlive());
 		for (int i = 0; i < 1000; i++) {
@@ -64,9 +61,10 @@ public class HungerTest {
 		
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 },
 				{ 0, 0, 0, 0, 0 } };
-		Map map = generateMap(mapGen);
+		Game.setMap(generateMap(mapGen));
 		
-		PlayerControlledActor test = new PlayerControlledActor(10, -150000, new Position(1,1), null, map);
+		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
+		test.setFatigue(-150000);
 		assertTrue(test.isAlive());
 		for (int i = 0; i < 1000; i++) {
 			test.update();

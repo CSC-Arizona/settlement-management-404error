@@ -1,33 +1,48 @@
 package model.Actors;
 
-import model.Map;
+import model.Game.Game;
 import model.Items.Item;
 
-public class PickUpItemAction implements Action {
+public class PickUpItemAction extends Action {
 
-	private Map map;
+	private static final long serialVersionUID = 1677097186240103558L;
 	private Position itemPosition;
+	private StoreItemAction store;
+	private MoveAction movement;
 	private Item item;
+	private boolean legacyMovement;
 
-	public PickUpItemAction(Position itemPosition, Item item,
-			Map map) {
-		this.map = map;
+	public PickUpItemAction(Position itemPosition, Item item) {
 		this.item = item;
 		this.itemPosition = itemPosition;
+		legacyMovement = false;
 	}
 
 	@Override
 	public int execute(Actor performer) {
-		if (performer.getPosition().equals(itemPosition)) {
-			map.removeItemFromGround(itemPosition, item);
-			performer.getInventory().addItem(item);
-			return Action.COMPLETED;
-		} else {
-			int action = new MoveAction(itemPosition, map).execute(performer);
-			if (action == Action.COMPLETED) {
-				return Action.MADE_PROGRESS;
+		if(performer.getInventory().canAdd(item)){
+			if (performer.getPosition().equals(itemPosition)) {
+				Game.getMap().removeItemFromGround(itemPosition, item);
+				performer.getInventory().addItem(item);
+				return Action.COMPLETED;
+			} else {
+				if(movement == null)
+					movement = new MoveAction(itemPosition);
+				int action = movement.execute(performer);
+				if(action == Action.CANCELL && legacyMovement){
+					movement = new MoveAction(itemPosition);
+					action = movement.execute(performer);
+				}
+				if (action == Action.COMPLETED) {
+					return Action.MADE_PROGRESS;
+				}
+				return action;
 			}
-			return action;
+		} else {
+			if(store == null)
+				store = new StoreItemAction(performer.getInventory().getItem(0));
+			store.execute(performer);
+			return Action.MADE_PROGRESS;
 		}
 	}
 }

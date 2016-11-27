@@ -3,9 +3,9 @@
  */
 package model.Actors;
 
-import model.Map;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
+import model.Game.Game;
 import model.Items.Item;
 
 /**
@@ -14,18 +14,20 @@ import model.Items.Item;
  * @author Jonathon Davis
  *
  */
-public class GatherAction implements Action {
+public class GatherAction extends Action {
+
+	private static final long serialVersionUID = 5909099133984007954L;
 	Position position;
 	int durability;
 	MoveAction movement;
 	Position moveLocation;
-	private Map map;
 
-	public GatherAction(Position position, Map map) {
-		this.map = map;
+	public GatherAction(Position position) {
 		this.position = position;
 		durability = Integer.MAX_VALUE;
+		Game.getMap().markForGathering(position);
 	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -35,26 +37,29 @@ public class GatherAction implements Action {
 	@Override
 	public int execute(Actor performer) {
 		// if the block can't be gathered cancel the action
-		if (!map.getBuildingBlock(position.getRow(), position.getCol()).isDestroyable())
+		if (!Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable())
 			return Action.CANCELL;
 
 		if (Math.abs(position.getCol() - performer.getPosition().getCol()) <= 1
 				&& Math.abs(position.getRow() - performer.getPosition().getRow()) <= 1) {
-			BuildingBlock block = map.getBuildingBlock(position.getRow(), position.getCol());
+			BuildingBlock block = Game.getMap().getBuildingBlock(position.getRow(), position.getCol());
 			if (durability == Integer.MAX_VALUE)
 				durability = block.getDurability();
-			durability--;
+			durability-=performer.getSkills().getGatheringLevel() + 1;
+			performer.getSkills().addGatheringXP(1);
 			if (durability <= 0) {
-				map.setBuildingBlock(position, new AirBlock());
-				map.unmarkBlockForGathering(position);
+				Game.getMap().setBuildingBlock(position, new AirBlock());
 				if (block.lootBlock() != null)
 					for (Item i : block.lootBlock())
-						performer.getInventory().addItem(i);
-				if (map.getTotalHeight() > performer.getPosition().getRow() + 1
-						&& map.getBuildingBlock(performer.getPosition().getRow() + 1, performer.getPosition().getCol())
-								.getID().equals("Air")) {
-					new MoveAction(new Position(performer.getPosition().getRow() + 1, performer.getPosition().getCol()), map)
-							.execute(performer);
+						if(performer.getInventory().canAdd(i)){
+							performer.getInventory().addItem(i);
+						} else {
+							Game.getMap().addItemToGround(position, i);
+							performer.addActionToPool(new PickUpItemAction(position, i));
+						}
+				if (Game.getMap().getTotalHeight() > performer.getPosition().getRow() + 1
+						&& Game.getMap().getBuildingBlock(performer.getPosition().getRow() + 1, performer.getPosition().getCol()).isOccupiable()) {
+					performer.setPosition(new Position(performer.getPosition().getRow() + 1, performer.getPosition().getCol()));
 				}
 				return Action.COMPLETED;
 			}
@@ -70,7 +75,7 @@ public class GatherAction implements Action {
 
 		// if not nearby move to a valid location
 		if (movement == null)
-			movement = new MoveAction(moveLocation, map);
+			movement = new MoveAction(moveLocation);
 		movement.execute(performer);
 
 		return Action.MADE_PROGRESS;
@@ -85,9 +90,9 @@ public class GatherAction implements Action {
 		// check to see if a nearby location is valid
 		for (int r = position.getRow() - 1; r < position.getRow() + 1; r++) {
 			for (int c = position.getCol() - 1; c < position.getCol() + 1; c++) {
-				if (r > 0 && c > 0 && r < map.getTotalHeight() && c < map.getTotalWidth()
-						&& map.getBuildingBlock(r, c).getID().equals("Air") && r + 1 < map.getTotalHeight()
-						&& !map.getBuildingBlock(r + 1, c).getID().equals("Air"))
+				if (r > 0 && c > 0 && r < Game.getMap().getTotalWidth() && c < Game.getMap().getTotalWidth()
+						&& Game.getMap().getBuildingBlock(r, c).getID().equals("Air") && r + 1 < Game.getMap().getTotalHeight()
+						&& !Game.getMap().getBuildingBlock(r + 1, c).getID().equals("Air"))
 					return new Position(r, c);
 			}
 		}

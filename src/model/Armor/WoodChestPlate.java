@@ -12,6 +12,10 @@ import model.Items.WoodItem;
 
 public class WoodChestPlate extends Armor {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4751978466416272138L;
 	private final static int attackMod = 6;
 	private final static int defenseMod = 12;
 	private List<Item> wcpList;
