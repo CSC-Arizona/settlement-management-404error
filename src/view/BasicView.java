@@ -1,14 +1,17 @@
 package view;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +80,14 @@ public class BasicView extends JFrame {
 	private DesignationButton attackButton;
 	private DesignationButton removeButton;
 	private ArrayList<DesignationButton> buttons;
+
+	private Point designationStart;
+	private Point designationEnd;
+	private int designationStartRow;
+	private int designationStartCol;
+	private int designationEndRow;
+	private int designationEndCol;
+	private boolean currentlyDrawingDesignation = false;
 
 	public void setTimeLabel(int time, boolean paused) {
 		if (paused) {
@@ -213,14 +224,12 @@ public class BasicView extends JFrame {
 		drawingPanel.setPreferredSize(new Dimension(windowWidth,
 				2 * windowHeight / 3));
 		drawingPanel.addMouseMotionListener(new MyMotionListener());
+		drawingPanel.addMouseListener(new MyMouseListener());
 		box.add(drawingPanel);
 	}
 
 	private class DrawingPanel extends JPanel {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 8717360204333004762L;
 
 		@Override
@@ -266,9 +275,12 @@ public class BasicView extends JFrame {
 								(i + 1) * blockSizeY);
 					}
 
-					if (map.getBuildingBlock(row, col).isMarkedForGathering()) {
-						g2.drawString("G", j * blockSizeX + blockSizeX / 2,
-								(i + 1) * blockSizeY);
+					if (map.getBuildingBlock(row, col).isDesignated()) {
+						g2.drawString(""
+								+ map.getBuildingBlock(row, col)
+										.getDesignation().keyboardShortcut, j
+								* blockSizeX + blockSizeX / 2, (i + 1)
+								* blockSizeY);
 					}
 
 					List<Item> itemsOnGround = map.getBuildingBlock(row, col)
@@ -278,6 +290,16 @@ public class BasicView extends JFrame {
 							g2.drawString("#", j * blockSizeX + blockSizeX / 2,
 									(i + 1) * blockSizeY);
 						}
+					}
+
+					if (currentlyDrawingDesignation) {
+
+						g2.drawRect(
+								Math.min(designationStart.x, designationEnd.x),
+								Math.min(designationStart.y, designationEnd.y),
+								Math.abs(designationStart.x - designationEnd.x),
+								Math.abs(designationStart.y - designationEnd.y));
+
 					}
 
 				}
@@ -366,7 +388,78 @@ public class BasicView extends JFrame {
 			setMouseDescriptionLabel();
 			setMouseCoordinatesLabel();
 
+			if (currentlyDrawingDesignation) {
+				designationEnd = e.getPoint();
+				repaint();
+			}
+
 		}
+	}
+
+	private class MyMouseListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (controller.getDesignatingAction() != Designation.NONE) {
+				if (currentlyDrawingDesignation) {
+					designationEnd = e.getPoint();
+
+					designationEndCol = designationEnd.x / blockSizeX
+							+ visibleCornerX;
+					designationEndRow = designationEnd.y / blockSizeY
+							+ visibleCornerY;
+
+					int startRow = Math.min(designationStartRow,
+							designationEndRow);
+					int startCol = Math.min(designationStartCol,
+							designationEndCol);
+					int height = Math.abs(designationStartRow
+							- designationEndRow);
+					int width = Math.abs(designationStartCol
+							- designationEndCol);
+
+					controller.applyDesignation(startRow, startCol, height,
+							width);
+
+					repaint();
+				} else {
+					designationStart = e.getPoint();
+
+					designationStartCol = designationStart.x / blockSizeX
+							+ visibleCornerX;
+					designationStartRow = designationStart.y / blockSizeY
+							+ visibleCornerY;
+
+					designationEnd = e.getPoint();
+				}
+				currentlyDrawingDesignation = !currentlyDrawingDesignation;
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
 	}
 
 }

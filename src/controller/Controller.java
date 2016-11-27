@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import model.BuildingBlocks.EarthBlock;
 import model.Map.Map;
 import model.Map.MapParameters;
 import view.BasicView;
@@ -19,7 +20,7 @@ public class Controller {
 	int time = 0;
 	private boolean paused = false;
 	private Designation designatingAction = Designation.NONE;
-	
+
 	private Map map;
 
 	private BasicView view;
@@ -34,15 +35,35 @@ public class Controller {
 			stopTimer();
 		}
 	}
-	
+
 	public void setDesignatingAction(Designation designation) {
 		this.designatingAction = designation;
 	}
- 	
+
 	public Designation getDesignatingAction() {
 		return designatingAction;
 	}
-	
+
+	public void applyDesignation(int startRow, int startCol, int height,
+			int width) {
+		for (int row = startRow; row <= startRow+height; row++) {
+			for (int j = startCol; j <= startCol+width; j++) {
+				int col = Math.floorMod(j, map.getTotalWidth());
+
+				if (getDesignatingAction() == Designation.REMOVING_DESIGNATIONS) {
+					map.getBuildingBlock(row, col).removeDesignation();
+				}
+				if (getDesignatingAction() == Designation.DIGGING) {
+					if (map.getBuildingBlock(row, col).getID()
+							.equals(EarthBlock.id)) {
+						map.getBuildingBlock(row, col).addDesignation(
+								Designation.DIGGING);
+					}
+				}
+			}
+		}
+	}
+
 	public void stopTimer() {
 		this.timer.cancel();
 		paused = true;
@@ -62,8 +83,7 @@ public class Controller {
 		return time;
 	}
 
-	public Controller(MapParameters mapParameters,
-			Random random) {
+	public Controller(MapParameters mapParameters, Random random) {
 		map = new Map(mapParameters, random);
 		view = new BasicView(this, map, mapParameters);
 		view.setVisible(true);

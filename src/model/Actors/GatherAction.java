@@ -3,6 +3,7 @@
  */
 package model.Actors;
 
+import controller.Designation;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.Game.Game;
@@ -25,9 +26,8 @@ public class GatherAction extends Action {
 	public GatherAction(Position position) {
 		this.position = position;
 		durability = Integer.MAX_VALUE;
-		Game.getMap().markForGathering(position);
+		Game.getMap().addDesignation(position, Designation.GATHERING_FRUIT);
 	}
-
 
 	/*
 	 * (non-Javadoc)

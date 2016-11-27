@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.List;
 
+import controller.Designation;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.Item;
@@ -31,7 +32,7 @@ public abstract class BuildingBlock implements Serializable {
 	private Color color;
 	private String id;
 
-	private boolean markedForGathering = false;
+	private Designation designation = Designation.NONE;
 
 	public BuildingBlock(int durability, boolean destroyable,
 			boolean occupiable, Color color, String id) {// , List<Item>
@@ -122,16 +123,20 @@ public abstract class BuildingBlock implements Serializable {
 
 	}
 
-	public void markForGathering() {
-		markedForGathering = true;
+	public void addDesignation(Designation designation) {
+		this.designation = designation;
 	}
 
-	public void unmarkForGathering() {
-		markedForGathering = false;
+	public void removeDesignation() {
+		this.designation = Designation.NONE;
 	}
-
-	public boolean isMarkedForGathering() {
-		return markedForGathering;
+	
+	public boolean isDesignated() {
+		return designation != Designation.NONE;
+	}
+	
+	public Designation getDesignation() {
+		return designation;
 	}
 
 	public boolean addItemToGround(Item item) {

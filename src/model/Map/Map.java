@@ -3,8 +3,10 @@ package model.Map;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
+import controller.Designation;
 import model.Actors.Actor;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
@@ -43,11 +45,12 @@ public class Map implements Serializable {
 	private MapParameters mapParameters;
 
 	private HashMap<Furniture, Position> hardCodedFurniture;
-	private ArrayList<Position> blocksMarkedForGathering;
+	private HashMap<Position, Designation> blocksMarkedAsDesignated;
+
 	private ArrayList<Position> itemsOnGround = new ArrayList<>();
 
 	public Map(MapParameters mapParameters, Random random) {
-		this.blocksMarkedForGathering = new ArrayList<>();
+		this.blocksMarkedAsDesignated = new HashMap<>();
 		this.random = random;
 		this.mapParameters = mapParameters;
 		this.hardCodedFurniture = new HashMap<>();
@@ -488,25 +491,23 @@ public class Map implements Serializable {
 		return hardCodedFurniture;
 	}
 
-	public void markForGathering(Position position) {
-		map[position.getRow()][position.getCol()].markForGathering();
+	public void addDesignation(Position position, Designation designation) {
+		map[position.getRow()][position.getCol()].addDesignation(designation);
+		blocksMarkedAsDesignated.put(position, designation);
 	}
 
-	public ArrayList<Position> getBlocksMarkedForGathering() {
-		return blocksMarkedForGathering;
+	public HashMap<Position, Designation> getDesignatedBlocks() {
+		return blocksMarkedAsDesignated;
 	}
 
-	public void unmarkBlockForGathering(Position position) {
-		if (blocksMarkedForGathering != null) {
-			getBuildingBlock(position).unmarkForGathering();
-			ArrayList<Position> newBlocksMarkedForGathering = new ArrayList<>();
-
-			for (Position p : blocksMarkedForGathering) {
-				if (!p.equals(position)) {
-					newBlocksMarkedForGathering.add(p);
-				}
-			}
-			blocksMarkedForGathering = newBlocksMarkedForGathering;
+	public void undesignateBlock(Position position) {
+		map[position.getRow()][position.getCol()].removeDesignation();
+		Iterator<HashMap.Entry<Position,Designation>> iter = blocksMarkedAsDesignated.entrySet().iterator();
+		while (iter.hasNext()) {
+		    HashMap.Entry<Position,Designation> entry = iter.next();
+		    if(position.equals(entry.getValue())){
+		        iter.remove();
+		    }
 		}
 	}
 
