@@ -60,7 +60,7 @@ public class Map implements Serializable {
 
 	public Map(BuildingBlock[][] mapTypes) {
 		this.mapParameters = new MapParameters(mapTypes[0].length,
-				mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+				mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		this.hardCodedFurniture = new HashMap<>();
 		this.map = mapTypes;
 	}
@@ -481,7 +481,21 @@ public class Map implements Serializable {
 		return new int[] { -1, -1 };
 	}
 
+	private Position randomStartingPosition() {
+		int x = random.nextInt(40) - 20;
+		x = Math.floorMod(x, mapParameters.mapWidth);
+		int y = mapParameters.airHeight + 1;
+		while (!map[y][x].isOccupiable()) {
+			y -= 1;
+		}
+		return new Position(y, x);
+	}
+
 	private void addPlayerActors() {
+		for (int i = 0; i < mapParameters.numberOfStartingActors; i++) {
+			new PlayerControlledActor(100, randomStartingPosition());
+		}
+
 		if (PlayerControlledActor.allActors != null) {
 			for (Actor actor : PlayerControlledActor.allActors) {
 				Position position = actor.getPosition();

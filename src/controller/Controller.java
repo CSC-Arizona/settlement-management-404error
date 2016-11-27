@@ -55,11 +55,11 @@ public class Controller {
 			for (int j = startCol; j <= startCol + width; j++) {
 				int col = Math.floorMod(j, map.getTotalWidth());
 
-				// todo: attack, trees, remove rooms, remove furniture
-				
+				// todo: attack, remove rooms, remove furniture
+
 				if (getDesignatingAction() == Designation.REMOVING_DESIGNATIONS) {
 					map.getBuildingBlock(row, col).removeDesignation();
-					
+
 					if (map.getBuildingBlock(row, col).getID()
 							.equals(AppleTreeTrunkBlock.id)) {
 						for (Position pos : map.getTrees().keySet()) {
@@ -95,7 +95,7 @@ public class Controller {
 								Designation.GATHERING_FRUIT);
 					}
 				}
-				
+
 				if (getDesignatingAction() == Designation.CUTTING_DOWN_TREES) {
 					if (map.getBuildingBlock(row, col).getID()
 							.equals(AppleTreeTrunkBlock.id)) {

@@ -173,8 +173,10 @@ public class AppleTree {
 
 	public void designate() {
 		for (Position pos : trunk) {
-			map[pos.getRow()][pos.getCol()]
-					.addDesignation(Designation.CUTTING_DOWN_TREES);
+			if (map[pos.getRow()][pos.getCol()].getID().equals(
+					AppleTreeTrunkBlock.id))
+				map[pos.getRow()][pos.getCol()]
+						.addDesignation(Designation.CUTTING_DOWN_TREES);
 		}
 	}
 
