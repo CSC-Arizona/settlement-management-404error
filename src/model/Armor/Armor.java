@@ -1,12 +1,10 @@
 package model.Armor;
 
-import java.util.List;
-
-import model.Items.Item;
+import model.Items.Craftable;
 
 //Author: Maxwell Faridian
 //This class constructs Armor objects, which are themselves extensions of the Item class
-public abstract class Armor extends Item {
+public abstract class Armor extends Craftable {
 
 	/**
 	 * 
@@ -23,8 +21,4 @@ public abstract class Armor extends Item {
 	public int getDefenseModifier() {
 		return this.defenseModifier;
 	}
-	
-	//Returns a linked list of items needed to make a given piece of armor
-	abstract public List<Item> getRequiredMaterials();
-
 }

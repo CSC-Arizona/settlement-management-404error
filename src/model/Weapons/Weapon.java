@@ -1,12 +1,10 @@
 package model.Weapons;
 
-import java.util.List;
-
-import model.Items.Item;
+import model.Items.Craftable;
 
 //Author: Maxwell Faridian
 //This class defines the Weapon object
-public abstract class Weapon extends Item {
+public abstract class Weapon extends Craftable {
 
 	/**
 	 * 
@@ -17,8 +15,5 @@ public abstract class Weapon extends Item {
 	public Weapon(int attackModifier, int healthPts, double weight) {
 		super(false, attackModifier, healthPts, weight);
 	}
-	
-	//Returns a linked list of items needed to make a given piece of weaponry
-	abstract public List<Item> getRequiredMaterials();
 
 }
