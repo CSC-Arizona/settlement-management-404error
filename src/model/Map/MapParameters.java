@@ -28,12 +28,14 @@ public class MapParameters implements Serializable {
 	public final double mountainFrequency;
 	public final double caveFrequency;
 	public final int numberOfAntColonies;
+	
+	public final int numberOfStartingActors;
 
 	public MapParameters(int mapWidth, int airHeight, int dirtDepth,
 			int stoneDepth, int lavaDepth, double ironFrequency,
 			double goldFrequency, double treeFrequency, double grassFrequency,
 			double mountainFrequency, double caveFrequency,
-			int numberOfAntColonies) {
+			int numberOfAntColonies, int numberOfStartingActors) {
 
 		this.mapHeight = airHeight + dirtDepth + stoneDepth + lavaDepth;
 		this.mapWidth = mapWidth;
@@ -48,12 +50,13 @@ public class MapParameters implements Serializable {
 		this.mountainFrequency = mountainFrequency;
 		this.caveFrequency = caveFrequency;
 		this.numberOfAntColonies = numberOfAntColonies;
+		this.numberOfStartingActors = numberOfStartingActors;
 
 	}
 
 	public static MapParameters getDefaultParameters() {
 		return new MapParameters(1000, 70, 20, 30, 10, 0.01, 0.001, 0.1, 0.1,
-				0.1, 0.005, 2);
+				0.1, 0.005, 2, 7);
 	}
 
 }
