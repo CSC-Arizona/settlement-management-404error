@@ -18,9 +18,9 @@ public class IncubationChamber extends Furniture {
 	 */
 	private static final long serialVersionUID = -7475523515065091093L;
 	
-	//Only 1 person can place an egg in an incubation chamber
+	//Only 1 egg can be placed in an incubation chamber at a time
 	private static int capacity = 1;
-	private final static int weightCapacity = 0; //Arbitrary value
+	private final static int weightCapacity = 3; //If capacity is full, then egg is already in chamber
 	private final static String id = "incubation chamber";
 	private List<Item> incubationChamberList;
 
