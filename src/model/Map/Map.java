@@ -62,6 +62,7 @@ public class Map implements Serializable {
 		this.mapParameters = new MapParameters(mapTypes[0].length,
 				mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		this.hardCodedFurniture = new HashMap<>();
+		this.blocksMarkedAsDesignated = new HashMap<>();
 		this.map = mapTypes;
 	}
 
