@@ -25,7 +25,8 @@ public class GatherAction extends Action {
 	public GatherAction(Position position) {
 		this.position = position;
 		durability = Integer.MAX_VALUE;
-		Game.getMap().markForGathering(position);
+		if (Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable())
+			Game.getMap().markForGathering(position);
 	}
 
 
