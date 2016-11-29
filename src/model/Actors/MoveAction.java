@@ -85,7 +85,7 @@ public class MoveAction extends Action {
 		// check to make sure there is a valid block to stand on
 
 		if (row + 1 < Game.getMap().getTotalHeight()
-				&& !Game.getMap().getBuildingBlock(row + 1, col).getID().equals("Air")) {
+				&& !Game.getMap().getBuildingBlock(row + 1, col).isOccupiable()) {
 			// check to see if this node already has a more efficient route
 			if (visited.containsKey(currentPos) && currentNode.distance > visited.get(currentPos).distance)
 				return;
@@ -112,8 +112,7 @@ public class MoveAction extends Action {
 		if (performer.getPosition().equals(desiredDestination))
 			return Action.COMPLETED;
 		if (visited.containsKey(performer.getPosition())) {
-			Position newPosition = visited.get(performer.getPosition()).prev.position;
-				performer.setPosition(newPosition);
+				performer.setPosition(visited.get(performer.getPosition()).prev.position);
 		} else {
 			/*
 			 * TODO: implement once Map can be changed calculatePath(); if

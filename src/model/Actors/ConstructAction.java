@@ -29,7 +29,7 @@ public class ConstructAction extends Action {
 		this.blocksToChange = new LinkedList<>();
 		for (int r = room.getPosition().getRow(); r < room.getPosition().getRow() + room.getRequiredHeight(); r++) {
 			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
-				blocksToChange.add(new Position(r, c));
+				PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(r,c)));
 			}
 		}
 	}
@@ -43,6 +43,8 @@ public class ConstructAction extends Action {
 	public int execute(Actor performer) {
 		// cancel the action if the room is destined to be build on already-used
 		// space
+		return Action.COMPLETED;
+		/*
 		if (corner.isOccupiable())
 			return Action.CANCELL;
 
@@ -71,6 +73,7 @@ public class ConstructAction extends Action {
 			return Action.COMPLETED;
 		// if no progress could be made then delay
 		return Action.DELAY;
+		*/
 	}
 
 }

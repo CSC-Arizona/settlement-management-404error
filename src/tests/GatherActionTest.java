@@ -69,7 +69,7 @@ public class GatherActionTest {
 		int amount = test.getInventory().size();
 
 		assertEquals(amount, testBlock.lootBlock().size());
-		assertEquals("Air", Game.getMap().getBuildingBlock(1, 4).getID());
+		assertEquals("Cavern", Game.getMap().getBuildingBlock(1, 4).getID());
 	}
 
 	@Test
