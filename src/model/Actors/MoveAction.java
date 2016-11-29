@@ -119,12 +119,6 @@ public class MoveAction extends Action {
 		if (visited.containsKey(performer.getPosition())) {
 				performer.setPosition(visited.get(performer.getPosition()).prev.position);
 		} else {
-			/*
-			 * TODO: implement once Map can be changed calculatePath(); if
-			 * (visited.containsKey(currentPosition))
-			 * performer.setPosition(visited
-			 * .get(currentPosition).prev.position); else
-			 */
 			return Action.CANCELL;
 		}
 		return (performer.getPosition().equals(desiredDestination)) ? Action.COMPLETED : Action.MADE_PROGRESS;
