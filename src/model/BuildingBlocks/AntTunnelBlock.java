@@ -15,7 +15,7 @@ import model.Items.Item;
  * 
  * @author Katherine Walters
  */
-public class AnthillBlock extends BuildingBlock {
+public class AntTunnelBlock extends BuildingBlock {
 
 	/**
 	 * 
@@ -25,9 +25,9 @@ public class AnthillBlock extends BuildingBlock {
 	private List<Item> itemsOnGround;
 	private final static int durability = 7;
 	private List<Item> itemsInBlock;
-	public final static String id = "Anthill";
-	public AnthillBlock() {
-		super(durability, true, true, Color.BLACK, id);
+	public final static String id = "Ant tunnel";
+	public AntTunnelBlock() {
+		super(durability, true, false, Color.BLACK, id);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new AntLarvaItem());
 		actorsInBlock = new LinkedList<>();

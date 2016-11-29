@@ -34,7 +34,7 @@ public class Controller {
 	private BasicView view;
 
 	private Timer timer;
-	private int timeDelta = 1000;
+	private int timeDelta = 100;
 
 	public void togglePaused() {
 		if (isPaused()) {
@@ -80,6 +80,8 @@ public class Controller {
 							.equals(EarthBlock.id)) {
 						map.getBuildingBlock(row, col).addDesignation(
 								Designation.DIGGING);
+						PlayerControlledActor.playerActionPool
+								.add(new GatherAction(new Position(row, col)));
 					}
 				}
 
