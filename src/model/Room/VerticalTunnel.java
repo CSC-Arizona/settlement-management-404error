@@ -2,6 +2,7 @@ package model.Room;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
 
 import model.Actors.Position;
 import model.Furniture.Furniture;
@@ -16,16 +17,16 @@ import model.Items.Item;
  */
 public class VerticalTunnel extends Room {
 	
-	private List<Furniture> reqFurniture;
+	private TreeMap<Position, Furniture> reqFurniture;
 	private List<Item> reqItems;
 
 	public VerticalTunnel(Position p) {
 		super(2, 1, 20, 0, p);
-        reqFurniture = new LinkedList<>();
-        reqFurniture.add(new Ladder());
-        reqFurniture.add(new Ladder());
+        reqFurniture = new TreeMap<Position, Furniture>();
+        reqFurniture.put(new Position(0,0), new Ladder());
+        reqFurniture.put(new Position(1,0), new Ladder());
         reqItems = new LinkedList<>();
-        for (Furniture f : reqFurniture) {
+        for (Furniture f : reqFurniture.values()) {
 			for (Item i : f.getRequiredMaterials())
 				this.reqItems.add(i);
 		}
@@ -44,6 +45,14 @@ public class VerticalTunnel extends Room {
 	@Override
 	public int increaseCapacityBy() {
 		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see model.Room.Room#getFurniture()
+	 */
+	@Override
+	public TreeMap<Position, Furniture> getFurniture() {
+		return reqFurniture;
 	}
 
 }

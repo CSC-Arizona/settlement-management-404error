@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import model.Actors.Position;
+import model.Game.Game;
 import model.Items.AppleItem;
 import model.Items.IronItem;
 import model.Items.Item;
@@ -34,6 +35,7 @@ public class RoomTest {
 
 	@Test
 	public void testBedRoom() {
+		Game.reset();
 		Room br = new BedRoom(new Position(0,0));
 		assertEquals(0, br.getPosition().compareTo(new Position(0,0)));
 		assertEquals(12, br.getRequiredWidth());
@@ -61,6 +63,7 @@ public class RoomTest {
 	
 	@Test
 	public void testEntertainmentRoom() {
+		Game.reset();
 		Room er = new EntertainmentRoom(new Position(0,0));
 		assertEquals(0, er.getPosition().compareTo(new Position(0,0)));
 		assertEquals(13, er.getRequiredWidth());
@@ -86,6 +89,7 @@ public class RoomTest {
 	
 	@Test
 	public void testFarmRoom() {
+		Game.reset();
 		FarmRoom er = new FarmRoom(new Position(0,0));
 		assertEquals(0, er.getPosition().compareTo(new Position(0,0)));
 		assertEquals(8, er.getRequiredWidth());
@@ -139,6 +143,7 @@ public class RoomTest {
 	
 	@Test
 	public void testInfirmaryRoom() {
+		Game.reset();
 		Room br = new InfirmaryRoom(new Position(0,0));
 		assertEquals(0, br.getPosition().compareTo(new Position(0,0)));
 		assertEquals(4, br.getRequiredWidth());
@@ -164,6 +169,7 @@ public class RoomTest {
 	
 	@Test
 	public void testKitchenRoom() {
+		Game.reset();
 		Room br = new KitchenRoom(new Position(0,0));
 		assertEquals(0, br.getPosition().compareTo(new Position(0,0)));
 		assertEquals(6, br.getRequiredWidth());
@@ -187,6 +193,7 @@ public class RoomTest {
 	
 	@Test
 	public void testStoreRoom() {
+		Game.reset();
 		Room br = new StoreRoom(new Position(0,0));
 		assertEquals(0, br.getPosition().compareTo(new Position(0,0)));
 		assertEquals(8, br.getRequiredWidth());
@@ -214,6 +221,7 @@ public class RoomTest {
 	
 	@Test
 	public void testVerticalTunnel() {
+		Game.reset();
 		Room br = new VerticalTunnel(new Position(0,0));
 		assertEquals(0, br.getPosition().compareTo(new Position(0,0)));
 		assertEquals(1, br.getRequiredWidth());
@@ -236,6 +244,7 @@ public class RoomTest {
 	
 	@Test
 	public void testHorizontalTunnel() {
+		Game.reset();
 		Room br = new HorizontalTunnel(new Position(0,0));
 		assertEquals(0, br.getPosition().compareTo(new Position(0,0)));
 		assertEquals(2, br.getRequiredWidth());
@@ -258,6 +267,7 @@ public class RoomTest {
 	
 	@Test
 	public void testIncubationRoom() {
+		Game.reset();
 		Room br = new IncubationRoom(new Position(0,0));
 		assertEquals(0, br.getPosition().compareTo(new Position(0,0)));
 		assertEquals(12, br.getRequiredWidth());

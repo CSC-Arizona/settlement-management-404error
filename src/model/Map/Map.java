@@ -59,8 +59,7 @@ public class Map implements Serializable {
 	}
 
 	public Map(BuildingBlock[][] mapTypes) {
-		this.mapParameters = new MapParameters(mapTypes[0].length,
-				mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		this.mapParameters = new MapParameters(mapTypes[0].length, mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		this.hardCodedFurniture = new HashMap<>();
 		this.blocksMarkedAsDesignated = new HashMap<>();
 		this.map = mapTypes;
@@ -162,8 +161,9 @@ public class Map implements Serializable {
 	}
 
 	private void addLava() {
-		for (int i = (mapParameters.airHeight + mapParameters.dirtDepth + mapParameters.stoneDepth); i < (mapParameters.airHeight
-				+ mapParameters.dirtDepth + mapParameters.stoneDepth + mapParameters.lavaDepth); i++) {
+		for (int i = (mapParameters.airHeight + mapParameters.dirtDepth
+				+ mapParameters.stoneDepth); i < (mapParameters.airHeight + mapParameters.dirtDepth
+						+ mapParameters.stoneDepth + mapParameters.lavaDepth); i++) {
 			for (int j = 0; j < getTotalWidth(); j++) {
 				map[i][j] = new LavaBlock();
 			}
@@ -171,8 +171,7 @@ public class Map implements Serializable {
 	}
 
 	private void addIron() {
-		int totalIronClusters = (int) (mapParameters.ironFrequency
-				* mapParameters.stoneDepth * getTotalWidth());
+		int totalIronClusters = (int) (mapParameters.ironFrequency * mapParameters.stoneDepth * getTotalWidth());
 
 		int first_third = totalIronClusters / 10;
 		int second_third = totalIronClusters / 40;
@@ -180,18 +179,16 @@ public class Map implements Serializable {
 
 		for (int i = 0; i < second_third; i++) {
 			int startX = random.nextInt(getTotalWidth());
-			int startY = random.nextInt(mapParameters.stoneDepth / 3)
-					+ mapParameters.dirtDepth + mapParameters.airHeight
-					+ mapParameters.stoneDepth / 3;
+			int startY = random.nextInt(mapParameters.stoneDepth / 3) + mapParameters.dirtDepth
+					+ mapParameters.airHeight + mapParameters.stoneDepth / 3;
 			if (map[startY][startX].getID().equals(StoneBlock.id)) {
 				map[startY][startX] = new IronOreBlock();
 			}
 		}
 		for (int i = 0; i < third_third; i++) {
 			int startX = random.nextInt(getTotalWidth());
-			int startY = random.nextInt(mapParameters.stoneDepth / 3)
-					+ mapParameters.dirtDepth + mapParameters.airHeight + 2
-					* mapParameters.stoneDepth / 3;
+			int startY = random.nextInt(mapParameters.stoneDepth / 3) + mapParameters.dirtDepth
+					+ mapParameters.airHeight + 2 * mapParameters.stoneDepth / 3;
 			if (map[startY][startX].getID().equals(StoneBlock.id)) {
 				map[startY][startX] = new IronOreBlock();
 			}
@@ -199,13 +196,11 @@ public class Map implements Serializable {
 	}
 
 	private void addGold() {
-		int totalGoldClusters = (int) (mapParameters.goldFrequency
-				* mapParameters.stoneDepth * getTotalWidth());
+		int totalGoldClusters = (int) (mapParameters.goldFrequency * mapParameters.stoneDepth * getTotalWidth());
 		for (int i = 0; i < totalGoldClusters; i++) {
 			int startX = random.nextInt(getTotalWidth());
-			int startY = random.nextInt(mapParameters.stoneDepth / 5)
-					+ mapParameters.dirtDepth + mapParameters.airHeight + 4
-					* mapParameters.stoneDepth / 5;
+			int startY = random.nextInt(mapParameters.stoneDepth / 5) + mapParameters.dirtDepth
+					+ mapParameters.airHeight + 4 * mapParameters.stoneDepth / 5;
 			if (map[startY][startX].getID().equals(StoneBlock.id)) {
 				map[startY][startX] = new GoldOreBlock();
 			}
@@ -272,8 +267,7 @@ public class Map implements Serializable {
 		int totalTrees = (int) (mapParameters.treeFrequency * getTotalWidth());
 
 		for (int i = 0; i < totalTrees; i++) {
-			AppleTree tree = new AppleTree(getTotalWidth(),
-					mapParameters.airHeight, map, random);
+			AppleTree tree = new AppleTree(getTotalWidth(), mapParameters.airHeight, map, random);
 			tree.addToMap();
 
 			for (Position pos : tree.getTrunk()) {
@@ -365,13 +359,10 @@ public class Map implements Serializable {
 				newTunnelX = tunnelX + offsetsX[random.nextInt(3)];
 				newTunnelY = tunnelY + offsetsY[random.nextInt(5)];
 				newTunnelX = Math.floorMod(newTunnelX, getTotalWidth());
-				if (newTunnelY > 0
-						&& newTunnelY >= mapParameters.airHeight
-						&& (map[newTunnelY][newTunnelX].getID().equals(
-								EarthBlock.id) || map[newTunnelY][newTunnelX]
-								.getID().equals(CavernBlock.id))
-						&& (map[newTunnelY - 1][newTunnelX].getID()
-								.equals(EarthBlock.id))) {
+				if (newTunnelY > 0 && newTunnelY >= mapParameters.airHeight
+						&& (map[newTunnelY][newTunnelX].getID().equals(EarthBlock.id)
+								|| map[newTunnelY][newTunnelX].getID().equals(CavernBlock.id))
+						&& (map[newTunnelY - 1][newTunnelX].getID().equals(EarthBlock.id))) {
 
 					map[newTunnelY][newTunnelX] = new CavernBlock();
 					tunnelX = newTunnelX;
@@ -386,13 +377,10 @@ public class Map implements Serializable {
 				newTunnelX = tunnelX + directionX;
 				newTunnelY = tunnelY + directionY;
 				newTunnelX = Math.floorMod(newTunnelX, getTotalWidth());
-				if (newTunnelY > 0
-						&& newTunnelY >= mapParameters.airHeight
-						&& (map[newTunnelY][newTunnelX].getID().equals(
-								EarthBlock.id) || map[newTunnelY][newTunnelX]
-								.getID().equals(CavernBlock.id))
-						&& (map[newTunnelY - 1][newTunnelX].getID()
-								.equals(EarthBlock.id))) {
+				if (newTunnelY > 0 && newTunnelY >= mapParameters.airHeight
+						&& (map[newTunnelY][newTunnelX].getID().equals(EarthBlock.id)
+								|| map[newTunnelY][newTunnelX].getID().equals(CavernBlock.id))
+						&& (map[newTunnelY - 1][newTunnelX].getID().equals(EarthBlock.id))) {
 
 					map[newTunnelY][newTunnelX] = new CavernBlock();
 					tunnelX = newTunnelX;
@@ -420,16 +408,13 @@ public class Map implements Serializable {
 			double b = 3 * (random.nextDouble() + 1);
 
 			int originX = random.nextInt(getTotalWidth());
-			int originY = random.nextInt(mapParameters.stoneDepth / 2)
-					+ mapParameters.airHeight + mapParameters.dirtDepth
-					+ mapParameters.stoneDepth / 2;
+			int originY = random.nextInt(mapParameters.stoneDepth / 2) + mapParameters.airHeight
+					+ mapParameters.dirtDepth + mapParameters.stoneDepth / 2;
 
 			for (double t = 0.0; t <= Math.PI; t += 0.01) {
 				int x = originX + (int) (a * Math.cos(t));
-				int y1 = originY
-						+ (int) (b * Math.sin(t) + 4 * random.nextDouble());
-				int y2 = originY
-						- (int) (b * Math.sin(t) + 4 * random.nextDouble());
+				int y1 = originY + (int) (b * Math.sin(t) + 4 * random.nextDouble());
+				int y2 = originY - (int) (b * Math.sin(t) + 4 * random.nextDouble());
 
 				x = Math.floorMod(x, getTotalWidth());
 
@@ -457,10 +442,8 @@ public class Map implements Serializable {
 
 	private void addMushrooms() {
 		for (int i = 0; i < 10; i++) {
-			Integer[] cavernFloorBlock = cavernFloorBlocks.get(random
-					.nextInt(cavernFloorBlocks.size()));
-			Mushroom mushroom = new Mushroom(getTotalWidth(), map, random,
-					cavernFloorBlock);
+			Integer[] cavernFloorBlock = cavernFloorBlocks.get(random.nextInt(cavernFloorBlocks.size()));
+			Mushroom mushroom = new Mushroom(getTotalWidth(), map, random, cavernFloorBlock);
 			mushroom.addToMap();
 		}
 	}
@@ -475,8 +458,7 @@ public class Map implements Serializable {
 			if (y < 0)
 				return new int[] { -1, -1 };
 		}
-		if (y >= 0 && map[y][x].isOccupiable()
-				&& map[y + 1][x].getID().equals(EarthBlock.id)) {
+		if (y >= 0 && map[y][x].isOccupiable() && map[y + 1][x].getID().equals(EarthBlock.id)) {
 			return new int[] { y, x };
 		}
 		return new int[] { -1, -1 };
@@ -509,14 +491,10 @@ public class Map implements Serializable {
 		if (Actor.allActors != null) {
 			for (Actor actor : Actor.allActors) {
 				Position oldPosition = actor.getPosition();
-				map[oldPosition.getRow()][oldPosition.getCol()]
-						.removeActor(actor);
+				map[oldPosition.getRow()][oldPosition.getCol()].removeActor(actor);
 				actor.update();
-				if (actor.isAlive()) {
-					Position newPosition = actor.getPosition();
-					map[newPosition.getRow()][newPosition.getCol()]
-							.addActor(actor);
-				}
+				Position newPosition = actor.getPosition();
+				map[newPosition.getRow()][newPosition.getCol()].addActor(actor);
 			}
 		}
 	}
@@ -525,8 +503,7 @@ public class Map implements Serializable {
 		if (hardCodedFurniture != null) {
 			for (Furniture furniture : hardCodedFurniture.keySet()) {
 				Position position = hardCodedFurniture.get(furniture);
-				map[position.getRow()][position.getCol()]
-						.addFurniture(furniture);
+				map[position.getRow()][position.getCol()].addFurniture(furniture);
 			}
 		}
 	}
@@ -546,8 +523,7 @@ public class Map implements Serializable {
 
 	public void undesignateBlock(Position position) {
 		map[position.getRow()][position.getCol()].removeDesignation();
-		Iterator<HashMap.Entry<Position, Designation>> iter = blocksMarkedAsDesignated
-				.entrySet().iterator();
+		Iterator<HashMap.Entry<Position, Designation>> iter = blocksMarkedAsDesignated.entrySet().iterator();
 		while (iter.hasNext()) {
 			HashMap.Entry<Position, Designation> entry = iter.next();
 			if (position.equals(entry.getValue())) {

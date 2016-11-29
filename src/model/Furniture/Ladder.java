@@ -25,5 +25,10 @@ public class Ladder extends Furniture {
 	public List<Item> getRequiredMaterials() {
 		return ladderMaterials;
 	}
+
+	@Override
+	public String toString() {
+		return "Ladder";
+	}
      
 }

@@ -42,7 +42,8 @@ public class AppleTreeTrunkBlock extends BuildingBlock {
 
 	@Override
 	public boolean addActor(Actor actor) {
-		actorsInBlock.add(actor);
+		if(actor.isAlive())
+			actorsInBlock.add(actor);
 		return true;
 	}
 

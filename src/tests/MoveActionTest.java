@@ -37,6 +37,7 @@ public class MoveActionTest {
 
 	@Test
 	public void testMoveAction() {
+		Game.reset();
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 },
 				{ 0, 0, 0, 0, 0 } };
 		Game.setMap(generateMap(mapGen));
@@ -57,6 +58,7 @@ public class MoveActionTest {
 
 	@Test
 	public void testNonMoveAction() {
+		Game.reset();
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0 }, { 0, 0, 0, 0, 0 },
 				{ 0, 0, 0, 0, 0 } };
 		Game.setMap(generateMap(mapGen));

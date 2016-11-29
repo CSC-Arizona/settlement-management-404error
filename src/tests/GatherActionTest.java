@@ -41,8 +41,12 @@ public class GatherActionTest {
 
 	@Test
 	public void testMoveAndGatherAction() {
-		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 2 }, { 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1 },
-				{ 1, 1, 1, 1, 1 } };
+		Game.reset();
+		int[][] mapGen = new int[][] { { 1, 0, 0, 0, 0 }, 
+										{ 1, 0, 0, 0, 2 }, 
+										{ 1, 1, 1, 1, 1 }, 
+										{ 1, 1, 1, 1, 1 },
+										{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
 		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
 		test.addToActionQueue(new GatherAction(new Position(1, 4)));
@@ -74,8 +78,12 @@ public class GatherActionTest {
 
 	@Test
 	public void testDelay() {
-		int[][] mapGen = new int[][] { { 0, 0, 0, 1, 1 }, { 0, 0, 0, 1, 2 }, { 0, 1, 1, 1, 1 }, { 1, 0, 0, 1, 1 },
-				{ 1, 1, 1, 1, 1 } };
+		Game.reset();
+		int[][] mapGen = new int[][] { { 0, 0, 0, 1, 1 }, 
+										{ 0, 0, 0, 1, 2 }, 
+										{ 0, 1, 1, 1, 1 }, 
+										{ 1, 0, 0, 1, 1 },
+										{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
 		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
 		test.addToActionQueue(new GatherAction(new Position(1, 4)));

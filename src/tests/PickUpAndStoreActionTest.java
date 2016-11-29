@@ -41,6 +41,7 @@ public class PickUpAndStoreActionTest {
 
 	@Test
 	public void testMoveAndGatherAction() {
+		Game.reset();
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, 
 										{ 0, 0, 2, 2, 2 }, 
 										{ 1, 1, 1, 1, 1 }, 

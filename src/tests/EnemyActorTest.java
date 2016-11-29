@@ -42,6 +42,7 @@ public class EnemyActorTest {
 	
 	@Test
 	public void attackTest(){
+		Game.reset();
 		int[][] mapGen = new int[][]	{{0,0,0,0,0},
 				{0,0,0,0,0},
 				{1,1,1,1,0},
@@ -50,8 +51,8 @@ public class EnemyActorTest {
 		Game.setMap(generateMap(mapGen));
 		PlayerControlledActor.allActors = null;
 
-		Actor enemy = new EnemyActor(5, new Position(10,10));
-		Actor player = new PlayerControlledActor(5,new Position(11,10));
+		Actor enemy = new EnemyActor(5, new Position(1,1));
+		Actor player = new PlayerControlledActor(5,new Position(1,2));
 
 		assertEquals(5,player.getHealth());
 		assertEquals(0,enemy.getSkills().getCombatLevel());

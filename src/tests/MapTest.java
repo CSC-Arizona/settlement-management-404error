@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import model.Game.Game;
 import model.Map.Map;
 import model.Map.MapParameters;
 
@@ -19,7 +20,7 @@ public class MapTest {
 
 	@Test
 	public void testMap() {
-
+		Game.reset();
 		Map map = new Map(MapParameters.getDefaultParameters(), new Random());
 		assertEquals(MapParameters.getDefaultParameters().mapHeight, map.getTotalHeight());
 		assertEquals(MapParameters.getDefaultParameters().mapWidth, map.getTotalWidth());
@@ -27,7 +28,7 @@ public class MapTest {
 
 	@Test
 	public void testGameMap() {
-
+		Game.reset();
 		Map map = new Map(MapParameters.getDefaultParameters(), new Random());
 		assertEquals(MapParameters.getDefaultParameters().mapHeight, map.getTotalHeight());
 		assertEquals(MapParameters.getDefaultParameters().mapWidth, map.getTotalWidth());

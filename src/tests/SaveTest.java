@@ -24,6 +24,7 @@ import model.Weapons.BasicSword;
 public class SaveTest {
 
 	public Map generateMap(int[][] map) {
+		Game.reset();
 		BuildingBlock[][] mapTypes = new BuildingBlock[map.length][map[0].length];
 		for (int i = 0; i < mapTypes.length; i++) {
 			for (int j = 0; j < mapTypes[i].length; j++) {
@@ -38,6 +39,7 @@ public class SaveTest {
 
 	@Test
 	public void testSave() {
+		Game.reset();
 		// create an intial state of the game
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 0 }, { 1, 1, 0, 1, 1 },
 				{ 1, 1, 1, 1, 1 } };

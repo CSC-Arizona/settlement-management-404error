@@ -2,6 +2,7 @@ package model.Room;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
 
 import model.Actors.Position;
 import model.Furniture.Bed;
@@ -50,5 +51,14 @@ public class BedRoom extends Room {
 	@Override
 	public int increaseCapacityBy() {
 		return 2;
+	}
+
+	/* (non-Javadoc)
+	 * @see model.Room.Room#getFurniture()
+	 */
+	@Override
+	public TreeMap<Position, Furniture> getFurniture() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
