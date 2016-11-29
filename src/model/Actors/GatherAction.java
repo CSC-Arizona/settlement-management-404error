@@ -28,10 +28,10 @@ public class GatherAction extends Action {
 	public GatherAction(Position position) {
 		this.position = position;
 		durability = Integer.MAX_VALUE;
-		if (Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable()){
+		if (Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable()) {
 			String id = Game.getMap().getBuildingBlock(position).getID();
 			desgination = Designation.DIGGING;
-			if(id.equals("Mushroom fruit"))
+			if (id.equals("Mushroom fruit"))
 				desgination = Designation.GATHERING_FRUIT;
 			else if (id.equals("Wood"))
 				desgination = Designation.CUTTING_DOWN_TREES;
@@ -52,26 +52,15 @@ public class GatherAction extends Action {
 		if (!Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable())
 			return Action.COMPLETED;
 
-		if (Math.abs(position.getCol() - performer.getPosition().getCol()) <= 1
-				&& Math.abs(position.getRow() - performer.getPosition().getRow()) <= 1) {
+		if (isAdjacent(performer)) {
 			BuildingBlock block = Game.getMap().getBuildingBlock(position.getRow(), position.getCol());
-			if (durability == Integer.MAX_VALUE)
-				durability = block.getDurability();
-			durability-=performer.getSkills().getGatheringLevel() + 1;
-			performer.getSkills().addGatheringXP(1);
+			// reduce the durability
+			gather(performer, block);
 			if (durability <= 0) {
-				if(desgination == Designation.DIGGING)
-					Game.getMap().setBuildingBlock(position, new CavernBlock());
-				else
-					Game.getMap().setBuildingBlock(position, new AirBlock());
-				if (block.lootBlock() != null)
-					for (Item i : block.lootBlock())
-						if(performer.getInventory().canAdd(i)){
-							performer.getInventory().addItem(i);
-						} else {
-							Game.getMap().addItemToGround(position, i);
-							performer.addActionToPool(new PickUpItemAction(position, i));
-						}
+				// replace the block
+				replace();
+				// gather the loot from the block
+				lootBlock(performer, block);
 				return Action.COMPLETED;
 			}
 			return Action.MADE_PROGRESS;
@@ -88,13 +77,61 @@ public class GatherAction extends Action {
 		if (movement == null)
 			movement = new MoveAction(moveLocation);
 		int result = movement.execute(performer);
-		if(result == Action.CANCELL){
+		//cancel the action if this actor can not perform
+		if (result == Action.CANCELL) {
 			movement = null;
 			moveLocation = null;
 			return Action.CANCELL;
 		}
 
 		return Action.MADE_PROGRESS;
+	}
+
+	/*
+	 * Checks if the actor is adjacent to the block
+	 */
+	private boolean isAdjacent(Actor performer) {
+		return Math.abs(position.getCol() - performer.getPosition().getCol()) <= 1
+				&& Math.abs(position.getRow() - performer.getPosition().getRow()) <= 1;
+	}
+
+	/* Takes out the loot from the block
+	 * And adds it to the inventory of the Actor,
+	 * or drops it on the ground, and waits for another
+	 * Actor to go and pick it up
+	*/
+	private void lootBlock(Actor performer, BuildingBlock block) {
+		if (block.lootBlock() != null)
+			for (Item i : block.lootBlock())
+				// place the loot in the inventory if possible otherwise the
+				// ground
+				if (performer.getInventory().canAdd(i)) {
+					performer.getInventory().addItem(i);
+				} else {
+					Game.getMap().addItemToGround(position, i);
+					performer.addActionToPool(new PickUpItemAction(position, i));
+				}
+	}
+	
+	/*
+	 * Reduces the durability of the block being gathered
+	 * and increases the actors gather skill
+	 */
+	private void gather(Actor performer, BuildingBlock block){
+		if (durability == Integer.MAX_VALUE)
+			durability = block.getDurability();
+		durability -= performer.getSkills().getGatheringLevel() + 1;
+		performer.getSkills().addGatheringXP(1);
+	}
+	
+	/*
+	 * Replaces the block with the correct replacement
+	 */
+	private void replace(){
+		if (desgination == Designation.DIGGING)
+			Game.getMap().setBuildingBlock(position, new CavernBlock());
+		else
+			Game.getMap().setBuildingBlock(position, new AirBlock());
 	}
 
 	/**
