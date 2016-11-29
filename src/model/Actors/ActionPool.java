@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model.Actors;
 
 import java.io.Serializable;
@@ -31,6 +28,13 @@ public class ActionPool implements Serializable {
 	 */
 	public void priorityAdd(Action newAction) {
 		actionQueue.addFirst(newAction);
+	}
+
+	/**
+	 * @return
+	 */
+	public int size() {
+		return actionQueue.size();
 	}
 
 }

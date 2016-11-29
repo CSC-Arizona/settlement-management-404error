@@ -24,6 +24,7 @@ import model.Map.Map;
 public class SleepActionTest {
 	
 	public Map generateMap(int[][] map) {
+		Game.reset();
 		BuildingBlock[][] mapTypes = new BuildingBlock[map.length][map[0].length];
 		for (int i = 0; i < mapTypes.length; i++) {
 			for (int j = 0; j < mapTypes[i].length; j++) {

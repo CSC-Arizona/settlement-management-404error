@@ -2,6 +2,7 @@ package model.Actors;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
 import model.Game.Game;
 
@@ -68,19 +69,21 @@ public abstract class Actor implements Serializable {
 	public void priorityAddToActionQueue(Action action) {
 		queue.addFirst(action);
 	}
-
-	/**
-	 * Perform once per tick, the Actor performs the next action
-	 */
-	public void update() {
+	
+	// the core logic of the update method
+	// used for recursion
+	private void performAction(int attempts){
 		fall();
+		
+		if(attempts > getActionPool().size() + queue.size())
+			return;
 
 		// if idle get a new action
 		if (idle) {
 			if (queue.size() > 0 && queue.peek() != null) {
 				currentAction = queue.peek();
 			} else {
-				queue.addFirst((getActionFromPool()));
+				queue.addFirst((getActionPool().get()));
 				currentAction = queue.peek();
 			}
 			if (currentAction == null)
@@ -95,15 +98,15 @@ public abstract class Actor implements Serializable {
 		if (result == Action.COMPLETED) {
 			idle = true;
 			queue.poll();
-		}
-		if (result == Action.CANCELL) {
+		} else if (result == Action.Pool) {
 			idle = true;
-			priorityAddActionToPool(queue.poll());
+			getActionPool().add(queue.poll());
+			//performAction();
 		} else if (result == Action.DELAY) {
 			// if the Action needs to be delayed, execute the next action
 			idle = true;
 			Action attemptedAction = queue.poll();
-			update();
+			performAction(attempts + 1);
 			queue.addFirst(attemptedAction);
 		} else {
 			// if the Action is still in progress then set idle to false
@@ -113,13 +116,18 @@ public abstract class Actor implements Serializable {
 		fall();
 	}
 
+	/**
+	 * Perform once per tick, the Actor performs the next action
+	 */
+	public void update() {
+		performAction(0);
+	}
+
 	public void fall() {
 		// ensure that the actor is not floating in air
 		int row = getPosition().getRow(), col = getPosition().getCol();
-		if (row + 1 < Game.getMap().getTotalHeight() && Game.getMap().getBuildingBlock(row + 1, col).isOccupiable()) {
+		if (!Game.validActorLocation(row, col))
 			setPosition(new Position(row + 1, col));
-			return;
-		}
 	}
 
 	/**
@@ -188,8 +196,18 @@ public abstract class Actor implements Serializable {
 		return name;
 	}
 
-	public abstract void addActionToPool(Action action);
-	public abstract Action getActionFromPool();
-	public abstract void priorityAddActionToPool(Action action);
+	public static void reset(){
+		PlayerControlledActor.reset();
+		EnemyActor.reset();
+	}
+	
+	public abstract ActionPool getActionPool();
+
+	/**
+	 * @return the idle
+	 */
+	public boolean isIdle() {
+		return idle;
+	}
 
 }

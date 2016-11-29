@@ -27,7 +27,7 @@ public class AntTunnelBlock extends BuildingBlock {
 	private List<Item> itemsInBlock;
 	public final static String id = "Ant tunnel";
 	public AntTunnelBlock() {
-		super(durability, true, true, Color.BLACK, id);
+		super(durability, true, false, Color.BLACK, id);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new AntLarvaItem());
 		actorsInBlock = new LinkedList<>();

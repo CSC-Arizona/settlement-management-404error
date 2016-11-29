@@ -37,7 +37,7 @@ public class HungerTest {
 	
 	@Test
 	public void testEat() {
-
+		Game.reset();
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 },
 				{ 0, 0, 0, 0, 0 } };
 		Game.setMap(generateMap(mapGen));
@@ -58,7 +58,7 @@ public class HungerTest {
 
 	@Test
 	public void testHunger() {
-		
+		Game.reset();
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 },
 				{ 0, 0, 0, 0, 0 } };
 		Game.setMap(generateMap(mapGen));

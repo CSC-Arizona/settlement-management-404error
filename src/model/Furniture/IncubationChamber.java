@@ -38,4 +38,9 @@ public class IncubationChamber extends Furniture {
 		return incubationChamberList;
 	}
 
+	@Override
+	public String toString() {
+		return "Incubation Chamber";
+	}
+
 }

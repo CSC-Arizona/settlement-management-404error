@@ -9,6 +9,7 @@ import model.Actors.Position;
 import model.Game.Game;
 import model.Map.MapParameters;
 import model.Room.StoreRoom;
+import model.Room.VerticalTunnel;
 
 //Author: Maxwell Faridian
 //This class shows a hard coded demo of building a store room
@@ -24,7 +25,10 @@ public class BuildingScenario {
 
 		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed));
 		Game.setMap(controller.getMap());
-		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new StoreRoom(new Position(45, 983))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(45, 983))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(47, 983))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(49, 983))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new StoreRoom(new Position(49, 983))));
 	}
 
 }

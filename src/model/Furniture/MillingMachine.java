@@ -32,4 +32,9 @@ public class MillingMachine extends Furniture{
 	public List<Item> getRequiredMaterials() {
 		return millingMachineList;
 	}
+
+	@Override
+	public String toString() {
+		return "Milling Machine";
+	}
 }

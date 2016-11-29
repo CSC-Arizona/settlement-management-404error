@@ -37,4 +37,9 @@ public class Couch extends Furniture {
 		return couchList;
 	}
 
+	@Override
+	public String toString() {
+		return "Couch";
+	}
+
 }

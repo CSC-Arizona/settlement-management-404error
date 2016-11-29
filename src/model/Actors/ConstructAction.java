@@ -3,7 +3,6 @@ package model.Actors;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.BuildingBlocks.BuildingBlock;
 import model.Game.Game;
 import model.Room.Room;
 
@@ -19,16 +18,18 @@ import model.Room.Room;
 public class ConstructAction extends Action {
 
 	private static final long serialVersionUID = 3917613009303294799L;
-	private BuildingBlock corner;
-	private List<Action> GatherCommands;
 	private List<Position> blocksToChange;
+	private Room room;
 
 	public ConstructAction(Room room) {
-		this.corner = Game.getMap().getBuildingBlock(room.getPosition());
+		this.room = room;
 		this.blocksToChange = new LinkedList<>();
+		// add all the gather commands to clear out the room
 		for (int r = room.getPosition().getRow(); r < room.getPosition().getRow() + room.getRequiredHeight(); r++) {
 			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
-				PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(r,c)));
+				Position p = new Position(r, c);
+				blocksToChange.add(p);
+				PlayerControlledActor.addActionToPlayerPool(new GatherAction(p));
 			}
 		}
 	}
@@ -40,39 +41,21 @@ public class ConstructAction extends Action {
 	 */
 	@Override
 	public int execute(Actor performer) {
-		// cancel the action if the room is destined to be build on already-used
-		// space
-		return Action.COMPLETED;
-		/*
-		if (corner.isOccupiable())
-			return Action.CANCELL;
-
-		if (GatherCommands == null) {
-			GatherCommands = new LinkedList<>();
-			for (Position block : blocksToChange)
-				GatherCommands.add(new GatherPlantsAction(block));
+		// check to see if the action is complete
+		for (Position p : blocksToChange) {
+			if (!Game.getMap().getBuildingBlock(p).isOccupiable())
+				return Action.Pool;
 		}
-
-		// Mine out the area
-		int result = Action.DELAY;
-		Iterator<Action> it = GatherCommands.iterator();
-		while (result == Action.DELAY && GatherCommands.size() > 0 && it.hasNext()) {
-			Action action = it.next();
-			result = action.execute(performer);
-			if (result == Action.COMPLETED || result == Action.CANCELL) {
-				it.remove();
-				break;
+		// if it is add the furniture
+		if (room.getFurniture() != null)
+			for (Position p : room.getFurniture().keySet()) {
+				Position fp = new Position(room.getPosition().getRow() + p.getRow(),
+						room.getPosition().getCol() + p.getCol());
+				Game.getMap().addFurniture(room.getFurniture().get(p), fp);
 			}
-			if (result == Action.MADE_PROGRESS)
-				return Action.MADE_PROGRESS;
-		}
+		// then return completed
+		return Action.COMPLETED;
 
-		// TODO: fill the room with furniture
-		if (GatherCommands.size() <= 0)
-			return Action.COMPLETED;
-		// if no progress could be made then delay
-		return Action.DELAY;
-		*/
 	}
 
 }

@@ -39,4 +39,9 @@ public class Bed extends Furniture {
 		return bedList;
 	}
 
+	@Override
+	public String toString() {
+		return "Bed";
+	}
+
 }
