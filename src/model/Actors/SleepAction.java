@@ -35,7 +35,7 @@ public class SleepAction extends Action {
 				return action;
 			}
 		}
-		return Action.CANCELL;
+		return Action.Pool;
 	}
 	
 	public Position getNearestBed(Actor performer) {

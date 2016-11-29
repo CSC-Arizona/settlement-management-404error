@@ -3,6 +3,7 @@
  */
 package model.Actors;
 
+import java.util.LinkedList;
 import java.util.TreeMap;
 
 import model.Game.Game;
@@ -16,6 +17,7 @@ public class MoveAction extends Action {
 
 	private static final long serialVersionUID = 6366936476306048341L;
 	private TreeMap<Position, Node> visited;
+	private LinkedList<Node> searchQueue;
 	private Position desiredDestination;
 
 	/**
@@ -53,8 +55,12 @@ public class MoveAction extends Action {
 	 */
 	private void calculatePath() {
 		visited = new TreeMap<>();
+		searchQueue = new LinkedList<>();
 		Node firstNode = new Node(0, desiredDestination, null);
-		calculatePath(desiredDestination, firstNode);
+		searchQueue.add(firstNode);
+		while (searchQueue.size() > 0) {
+			calculatePath(searchQueue.poll());
+		}
 	}
 
 	/**
@@ -65,13 +71,17 @@ public class MoveAction extends Action {
 	 * @param currentNode
 	 *            The current Node
 	 */
-	private void calculatePath(Position currentPos, Node currentNode) {		
+	private void calculatePath(Node currentNode) {
+		Position currentPos = currentNode.position;
 		int row = currentPos.getRow(),
 				col = (currentPos.getCol() > 0) ? currentPos.getCol() % (Game.getMap().getTotalWidth())
 						: Game.getMap().getTotalWidth() + currentPos.getCol();
-		if (currentPos.getCol() == Game.getMap().getTotalWidth()
-				|| currentNode.position.getCol() == Game.getMap().getTotalWidth()
-				|| col == Game.getMap().getTotalWidth()) {
+		int prow = Integer.MIN_VALUE, pcol = Integer.MIN_VALUE;
+		if(currentNode.prev != null){
+			prow = currentNode.prev.position.getRow();
+			pcol = currentNode.prev.position.getCol();
+		}
+		if (currentPos.getCol() == Game.getMap().getTotalWidth() || col == Game.getMap().getTotalWidth()) {
 			currentPos.setCol(0);
 			currentNode.position.setCol(0);
 			col = 0;
@@ -80,12 +90,7 @@ public class MoveAction extends Action {
 		currentPos.setRow(row);
 		currentNode.position.setCol(col);
 		currentNode.position.setRow(row);
-		if (!Game.getMap().getBuildingBlock(row, col).isOccupiable())
-			return;
-		// check to make sure there is a valid block to stand on
-
-		if (row + 1 < Game.getMap().getTotalHeight()
-				&& !Game.getMap().getBuildingBlock(row + 1, col).isOccupiable()) {
+		if (Game.validActorLocation(row, col)) {
 			// check to see if this node already has a more efficient route
 			if (visited.containsKey(currentPos) && currentNode.distance > visited.get(currentPos).distance)
 				return;
@@ -93,11 +98,12 @@ public class MoveAction extends Action {
 			visited.put(currentPos, currentNode);
 			for (int r = row - 1; r <= row + 1; r++)
 				for (int c = col - 1; c <= col + 1; c++)
-					if (!(r == row && c == col) && r < Game.getMap().getTotalHeight() && r >= 0)
-						calculatePath(new Position(r, c),
-								new Node(currentNode.distance + 1, new Position(r, c), currentNode));
+					if (!(r == row && c == col) && Game.validActorLocation(r, c))
+						if((currentNode.prev != null && !(r == prow && c == pcol)) || currentNode.prev == null)
+							searchQueue.add(new Node(currentNode.distance + 1, new Position(r, c), currentNode));
 		}
 	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -112,15 +118,9 @@ public class MoveAction extends Action {
 		if (performer.getPosition().equals(desiredDestination))
 			return Action.COMPLETED;
 		if (visited.containsKey(performer.getPosition())) {
-				performer.setPosition(visited.get(performer.getPosition()).prev.position);
+			performer.setPosition(visited.get(performer.getPosition()).prev.position);
 		} else {
-			/*
-			 * TODO: implement once Map can be changed calculatePath(); if
-			 * (visited.containsKey(currentPosition))
-			 * performer.setPosition(visited
-			 * .get(currentPosition).prev.position); else
-			 */
-			return Action.CANCELL;
+			return Action.Pool;
 		}
 		return (performer.getPosition().equals(desiredDestination)) ? Action.COMPLETED : Action.MADE_PROGRESS;
 	}

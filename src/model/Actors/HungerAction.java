@@ -35,7 +35,7 @@ public class HungerAction extends Action {
 				return Action.COMPLETED;
 			}
 		}
-		return Action.CANCELL;
+		return Action.Pool;
 	}
 
 }

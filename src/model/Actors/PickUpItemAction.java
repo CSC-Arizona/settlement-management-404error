@@ -29,7 +29,7 @@ public class PickUpItemAction extends Action {
 				if(movement == null)
 					movement = new MoveAction(itemPosition);
 				int action = movement.execute(performer);
-				if(action == Action.CANCELL && legacyMovement){
+				if(action == Action.Pool && legacyMovement){
 					movement = new MoveAction(itemPosition);
 					action = movement.execute(performer);
 				}

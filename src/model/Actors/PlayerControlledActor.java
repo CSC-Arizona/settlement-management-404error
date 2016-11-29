@@ -4,6 +4,7 @@
 package model.Actors;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Jonathon Davis The Player Controlled Actor will execute commands
@@ -57,7 +58,7 @@ public class PlayerControlledActor extends Actor {
 		// if one of the needs get to high, then the actor dies
 		if (hunger >= death_threshold || fatigue >= death_threshold) {
 			allActors.remove(this);
-			this.setAlive(false);
+			this.setAlive(false, true);
 		}
 		// call super.update()
 		super.update();
@@ -101,14 +102,6 @@ public class PlayerControlledActor extends Actor {
 		playerActionPool.add(action);
 	}
 	
-	/* (non-Javadoc)
-	 * @see model.Actors.Actor#getActionFromPool()
-	 */
-	@Override
-	public Action getActionFromPool() {
-		return playerActionPool.get();
-	}
-	
 	public Action getActionFromPlayerPool() {
 		return playerActionPool.get();
 	}
@@ -119,15 +112,19 @@ public class PlayerControlledActor extends Actor {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see model.Actors.Actor#priorityAddActionToPool(model.Actors.Action)
-	 */
-	@Override
-	public void priorityAddActionToPool(Action action) {
-		playerActionPool.priorityAdd(action);
+
+	public static void reset() {
+		allActors = null;
+		playerActionPool = null;
 	}
-	
-	
-	
+
+	/* (non-Javadoc)
+	 * @see model.Actors.Actor#getActionPool()
+	 */
+	@SuppressWarnings("static-access")
+	@Override
+	public ActionPool getActionPool() {
+		return this.playerActionPool;
+	}
 
 }
