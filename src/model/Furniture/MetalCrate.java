@@ -38,6 +38,6 @@ public class MetalCrate extends Crate {
 
 	@Override
 	public String toString() {
-		return "Metal Crate";
+		return "Metal crate (remaining capacity " + (weightCapacity-contentsWeight) + ")";
 	}
 }

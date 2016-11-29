@@ -12,6 +12,5 @@ public abstract class Crate extends Furniture {
 	public Crate (int capacity, int weightCapacity) {
 		super(capacity, weightCapacity, "crate");
 	}
-	
 
 }

@@ -34,7 +34,7 @@ public class BasicCrate extends Crate {
 
 	@Override
 	public String toString() {
-		return "Basic Crate";
+		return "Basic crate (remaining capacity " + (weightCapacity-contentsWeight) + ")";
 	}
 
 }
