@@ -32,7 +32,7 @@ import model.Items.Item;
 import model.Map.Map;
 import model.Map.MapParameters;
 
-public class BasicView extends JFrame {
+public class BasicView extends JPanel {
 
 	private static final long serialVersionUID = -8807654664923090784L;
 	private Map map;
@@ -60,7 +60,7 @@ public class BasicView extends JFrame {
 
 	private int visibleCornerY = 35;
 	private int visibleCornerX = (mapWidth - visibleWidth / 2);
-	private int labelPanelHeight = 200;
+	private int labelPanelHeight = 250;
 	private int blockSizeY = (windowHeight - labelPanelHeight) / visibleHeight;
 	private int blockSizeX = windowWidth / visibleWidth;
 
@@ -118,32 +118,29 @@ public class BasicView extends JFrame {
 
 	public BasicView(Controller controller, Map map, MapParameters mapParameters) {
 		this.controller = controller;
+		this.setVisible(true);
 		this.map = map;
 		this.mapWidth = mapParameters.mapWidth;
 		this.mapHeight = mapParameters.mapHeight;
 
-		box = new Box(BoxLayout.Y_AXIS);
-		box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		box.add(Box.createVerticalGlue());
+		//box = new Box(BoxLayout.Y_AXIS);
+		//box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		//box.add(Box.createVerticalGlue());
 
 		guiPanel = new JPanel();
 		guiPanel.setLayout(new GridLayout(1, 3));
-		box.add(guiPanel);
+		guiPanel.setPreferredSize(new Dimension(900,200));
+		this.add(guiPanel);
 
 		addLabelPanel();
 		addButtonPanel();
 		addLogPanel();
 		addDrawingPanel();
 
-		add(box);
-		pack();
+		//add(box);
 
 		this.addKeyListener(new MyKeyListener());
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
-		this.setLocation(20, 20);
-		this.setSize(windowWidth, windowHeight);
-
+		
 		repaint();
 	}
 
@@ -161,8 +158,8 @@ public class BasicView extends JFrame {
 		mouseDescriptionLabel = new JLabel();
 		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
-		labelPanel
-				.setPreferredSize(new Dimension(windowWidth, labelPanelHeight));
+		//labelPanel
+		//		.setPreferredSize(new Dimension(windowWidth, labelPanelHeight));
 		guiPanel.add(labelPanel);
 
 	}
@@ -222,10 +219,10 @@ public class BasicView extends JFrame {
 	private void addDrawingPanel() {
 		drawingPanel = new DrawingPanel();
 		drawingPanel.setPreferredSize(new Dimension(windowWidth,
-				2 * windowHeight / 3));
+				4 * windowHeight / 5));
 		drawingPanel.addMouseMotionListener(new MyMotionListener());
 		drawingPanel.addMouseListener(new MyMouseListener());
-		box.add(drawingPanel);
+		this.add(drawingPanel);
 	}
 
 	private class DrawingPanel extends JPanel {

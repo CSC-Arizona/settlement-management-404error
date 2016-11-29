@@ -3,6 +3,7 @@ package model.Furniture;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import model.Items.Item;
 import model.Menus.RequiredItemsList;
@@ -67,6 +68,10 @@ public abstract class Furniture implements Serializable {
 				ril.addItem(i);
 		}
 		return ril.toString();
+    }
+
+	public boolean removeItem(Item item) {
+		return contentsList.remove(item);
 	}
 	
 	//This method returns a List of items that are needed in order to build a specific piece of furniture
