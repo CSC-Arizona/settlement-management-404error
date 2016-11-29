@@ -163,8 +163,10 @@ public abstract class Actor implements Serializable {
 	 *            the alive to set
 	 */
 	public void setAlive(boolean alive, boolean remove) {
-		if (alive)
+		if (alive){
+			this.alive = alive;
 			return;
+		}
 		if (remove)
 			this.alive = alive;
 		allActors.remove(this);
