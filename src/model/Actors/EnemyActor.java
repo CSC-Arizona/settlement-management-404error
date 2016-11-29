@@ -53,5 +53,10 @@ public class EnemyActor extends Actor {
 	public void priorityAddActionToPool(Action action) {
 		enemyActionPool.priorityAdd(action);		
 	}
+	
+	public static void reset(){
+		allActors = null;
+		enemyActionPool = null;
+	}
 
 }

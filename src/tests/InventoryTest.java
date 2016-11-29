@@ -38,6 +38,7 @@ public class InventoryTest {
 
 	@Test
 	public void test() {
+		Game.reset();
 		Inventory inv = new Inventory();
 		assertEquals(0.0, inv.getWeightCarried(), 0.0001);
 		inv.addItem(new AntLarvaItem());
@@ -61,6 +62,7 @@ public class InventoryTest {
 
 	@Test
 	public void testExceedingCapacity() {
+		Game.reset();
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 },
 				{ 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 }, { 0, 0, 0, 0, 0 } };
 		Game.setMap(generateMap(mapGen));

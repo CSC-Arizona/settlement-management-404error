@@ -126,6 +126,12 @@ public class PlayerControlledActor extends Actor {
 	public void priorityAddActionToPool(Action action) {
 		playerActionPool.priorityAdd(action);
 	}
+
+
+	public static void reset() {
+		allActors = null;
+		playerActionPool = null;
+	}
 	
 	
 	

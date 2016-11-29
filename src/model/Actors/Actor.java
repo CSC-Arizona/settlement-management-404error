@@ -95,8 +95,7 @@ public abstract class Actor implements Serializable {
 		if (result == Action.COMPLETED) {
 			idle = true;
 			queue.poll();
-		}
-		if (result == Action.CANCELL) {
+		} else if (result == Action.CANCELL) {
 			idle = true;
 			priorityAddActionToPool(queue.poll());
 		} else if (result == Action.DELAY) {
@@ -188,8 +187,13 @@ public abstract class Actor implements Serializable {
 		return name;
 	}
 
-	public abstract void addActionToPool(Action action);
+	public static void reset(){
+		PlayerControlledActor.reset();
+		EnemyActor.reset();
+	}
+	
 	public abstract Action getActionFromPool();
+	public abstract void addActionToPool(Action action);
 	public abstract void priorityAddActionToPool(Action action);
 
 }

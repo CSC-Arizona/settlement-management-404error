@@ -41,6 +41,7 @@ public class ConstructActionTest {
 	
 	@Test
 	public void testMoveAndGatherAction(){
+		Game.reset();
 		int[][] mapGen = new int[][]	{{0,0,0,0,0},
 										{0,0,0,0,0},
 										{1,1,1,1,1},
@@ -54,6 +55,7 @@ public class ConstructActionTest {
 		assertEquals(1,test.getPosition().getCol());
 		
 		test.update();
+		test.update();
 		assertEquals(1,test.getPosition().getRow());
 		assertEquals(2,test.getPosition().getCol());
 		
@@ -66,7 +68,7 @@ public class ConstructActionTest {
 		test.update();
 		assertEquals(2,test.getPosition().getRow());
 		assertEquals(3,test.getPosition().getCol());
-		assertEquals("Air",Game.getMap().getBuildingBlock(new Position(2,3)).getID());
+		assertEquals("Cavern",Game.getMap().getBuildingBlock(new Position(2,3)).getID());
 		
 		for(int i = 0; i < Game.getMap().getBuildingBlock(new Position(3,3)).getDurability() - 1; i++){
 			test.update();
@@ -78,7 +80,7 @@ public class ConstructActionTest {
 		assertEquals(3,test.getPosition().getRow());
 		assertEquals(3,test.getPosition().getCol());
 		
-		assertEquals("Air",Game.getMap().getBuildingBlock(new Position(3,3)).getID());
+		assertEquals("Cavern",Game.getMap().getBuildingBlock(new Position(3,3)).getID());
 		
 
 	}

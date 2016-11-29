@@ -3,6 +3,7 @@
  */
 package model.Game;
 
+import model.Actors.Actor;
 import model.Map.Map;
 
 /**
@@ -25,6 +26,11 @@ public final class Game {
 	 */
 	public static void setMap(Map map) {
 		Game.map = map;
+	}
+	
+	public static void reset(){
+		Actor.reset();
+		Game.map = null;
 	}
 	
 }

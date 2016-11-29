@@ -70,7 +70,7 @@ public class GatherAction extends Action {
 	}
 
 	/**
-	 * @return 
+	 * @return
 	 * 
 	 */
 	private int move(Actor performer) {

@@ -42,6 +42,7 @@ public class EnemyActorTest {
 	
 	@Test
 	public void attackTest(){
+		Game.reset();
 		int[][] mapGen = new int[][]	{{0,0,0,0,0},
 				{0,0,0,0,0},
 				{1,1,1,1,0},
