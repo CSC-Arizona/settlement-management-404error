@@ -15,6 +15,6 @@ public class ControllerMain {
 	private static Random random = new Random();
 
 	public static void main(String[] args) {
-		new Controller(MapParameters.getDefaultParameters(), random);
+		new Controller(MapParameters.getDefaultParameters(), random, false);
 	}
 }

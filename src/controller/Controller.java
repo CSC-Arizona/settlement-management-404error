@@ -1,8 +1,13 @@
 package controller;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
@@ -16,6 +21,7 @@ import model.Map.AppleTree;
 import model.Map.Map;
 import model.Map.MapParameters;
 import view.BasicView;
+import view.StartingView;
 
 /**
  * Display a map
@@ -23,18 +29,24 @@ import view.BasicView;
  * @author Ethan Ward
  *
  */
-public class Controller {
+public class Controller extends JFrame {
 
 	int time = 0;
 	private boolean paused = false;
 	private Designation designatingAction = Designation.NONE;
 
 	private Map map;
+	private MapParameters mapParameters;
+	private Random random;
 
-	private BasicView view;
+	private StartingView startingView;
+	private BasicView basicView;
 
 	private Timer timer;
 	private int timeDelta = 100;
+
+	private int windowWidth = 1000;
+	private int windowHeight = 700;
 
 	public void togglePaused() {
 		if (isPaused()) {
@@ -144,12 +156,41 @@ public class Controller {
 		return time;
 	}
 
-	public Controller(MapParameters mapParameters, Random random) {
+	public Controller(MapParameters mapParameters, Random random,
+			boolean skipLoadScreen) {
+		this.mapParameters = mapParameters;
+		this.random = random;
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
+		this.setLocation(20, 20);
+		this.setPreferredSize(new Dimension(windowWidth, windowHeight));
+		this.setSize(new Dimension(windowWidth, windowHeight));
+
+		this.setVisible(true);
+
+		if (skipLoadScreen) {
+			startNewGame();
+		} else {
+
+			startingView = new StartingView(this);
+			this.add(startingView);
+		}
+	}
+
+	public void startNewGame() {
+
 		map = new Map(mapParameters, random);
 		Game.setMap(map);
-		view = new BasicView(this, map, mapParameters);
-		view.setVisible(true);
+		getContentPane().removeAll();
+		basicView = new BasicView(this, map, mapParameters);
+		this.add(basicView);
+
 		startTimer();
+
+		basicView.setFocusable(true);
+		basicView.setRequestFocusEnabled(true);
+		basicView.grabFocus();
+
 	}
 
 	private class MyTimerTasks extends TimerTask {
@@ -157,10 +198,10 @@ public class Controller {
 		@Override
 		public void run() {
 			time += 1;
-			view.setTimeLabel(time, paused);
-			view.setMouseDescriptionLabel();
+			basicView.setTimeLabel(time, paused);
+			basicView.setMouseDescriptionLabel();
 			map.updateActors(timeDelta);
-			view.repaint();
+			basicView.repaint();
 		}
 	}
 

@@ -18,16 +18,22 @@ public class GatheringScenario {
 	}
 
 	public GatheringScenario() {
-		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed));
+		Controller controller = new Controller(
+				MapParameters.getDefaultParameters(), new Random(seed), true);
 		Game.setMap(controller.getMap());
-		Game.getMap().addFurniture(new ReinforcedCrate(), new Position(44, 985));
+		Game.getMap()
+				.addFurniture(new ReinforcedCrate(), new Position(44, 985));
 
-
-		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(44, 987)));
-		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(48, 996)));
-		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(47, 994)));
-		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(46, 991)));
-		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(46, 990)));
+		PlayerControlledActor.addActionToPlayerPool(new GatherAction(
+				new Position(44, 987)));
+		PlayerControlledActor.addActionToPlayerPool(new GatherAction(
+				new Position(48, 996)));
+		PlayerControlledActor.addActionToPlayerPool(new GatherAction(
+				new Position(47, 994)));
+		PlayerControlledActor.addActionToPlayerPool(new GatherAction(
+				new Position(46, 991)));
+		PlayerControlledActor.addActionToPlayerPool(new GatherAction(
+				new Position(46, 990)));
 
 	}
 

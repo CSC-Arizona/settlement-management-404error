@@ -22,7 +22,7 @@ public class SleepScenario {
 	}
 
 	public SleepScenario() {
-		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed));
+		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed), true);
 
 		Game.setMap(controller.getMap());
 		Game.getMap().addFurniture(new Bed(), new Position(48, 982));
