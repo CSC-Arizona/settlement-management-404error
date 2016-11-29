@@ -78,6 +78,9 @@ public class EnemyActorTest {
 		enemy.addToActionQueue(new AttackAction(player));
 		enemy.update();
 		assertEquals(0,player.getHealth());
+		
+		PlayerControlledActor.allActors = null;
+		Actor.allActors = null;
 	}
 
 }
