@@ -35,6 +35,7 @@ public class StartingView extends JPanel {
 
 	public StartingView(Controller controller) {
 		this.setLayout(new GridBagLayout());
+		this.setOpaque(true);
 		this.controller = controller;
 		this.setVisible(true);
 		this.setBackground(Color.black);
