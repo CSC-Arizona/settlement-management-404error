@@ -11,7 +11,7 @@ import model.Actors.Actor;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
-import model.BuildingBlocks.AntTunnelBlock;
+import model.BuildingBlocks.AnthillBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.CavernBlock;
 import model.BuildingBlocks.EarthBlock;
@@ -310,7 +310,7 @@ public class Map implements Serializable {
 			int startY = mapParameters.airHeight;
 			// move up until we are no longer underground
 			while (map[startY][startX].getID().equals(EarthBlock.id)
-					|| map[startY][startX].getID().equals(AntTunnelBlock.id)) {
+					|| map[startY][startX].getID().equals(AnthillBlock.id)) {
 				startY -= 1;
 				if (startY < 0)
 					break;
@@ -328,7 +328,7 @@ public class Map implements Serializable {
 					if (k != 0) {
 
 						if (map[row][col].getID().equals(AirBlock.id)) {
-							map[row][col] = new AntTunnelBlock();
+							map[row][col] = new AnthillBlock();
 						}
 					} else {
 						map[row][col] = new CavernBlock();

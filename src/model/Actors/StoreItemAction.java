@@ -20,29 +20,33 @@ public class StoreItemAction extends Action {
 
 	@Override
 	public int execute(Actor performer) {
-		if (performer.getPosition().equals(cratePosition)) {
-			Furniture crate = Game.getMap().getBuildingBlock(cratePosition)
-					.getFurniture();
-			if (crate != null && performer.getInventory().size() != 0) {
-				if (crate.getRemainingWeightCapacity() >= item.getWeight()) {
-					crate.addItem(item);
-					performer.getInventory().removeItem(item);
+		if (cratePosition != null) {
+			if (performer.getPosition().equals(cratePosition)) {
+				Furniture crate = Game.getMap().getBuildingBlock(cratePosition)
+						.getFurniture();
+				if (crate != null && performer.getInventory().size() != 0) {
+					if (crate.getRemainingWeightCapacity() >= item.getWeight()) {
+						crate.addItem(item);
+						performer.getInventory().removeItem(item);
+					}
 				}
+				return Action.COMPLETED;
+			} else {
+				if (move == null)
+					move = new MoveAction(cratePosition);
+				int action = move.execute(performer);
+				if (action == Action.COMPLETED) {
+					return Action.MADE_PROGRESS;
+				}
+				return action;
 			}
-			return Action.COMPLETED;
-		} else {
-			if (move == null)
-				move =  new MoveAction(cratePosition);
-			int action = move.execute(performer);
-			if (action == Action.COMPLETED) {
-				return Action.MADE_PROGRESS;
-			}
-			return action;
 		}
+		return Action.DELAY;
 	}
-	
+
 	public Position getCrateWithCapacityGreaterThan(double target) {
-		HashMap<Furniture, Position> mapFurniture = Game.getMap().getFurniture();
+		HashMap<Furniture, Position> mapFurniture = Game.getMap()
+				.getFurniture();
 		if (mapFurniture != null) {
 			for (Furniture f : mapFurniture.keySet()) {
 				if (f.getID().equals("crate")) {
