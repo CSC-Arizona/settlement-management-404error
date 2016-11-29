@@ -69,26 +69,19 @@ public abstract class Actor implements Serializable {
 	public void priorityAddToActionQueue(Action action) {
 		queue.addFirst(action);
 	}
-	
+
 	// the core logic of the update method
 	// used for recursion
-	private void performAction(int attempts){
+	private void performAction(int attempts) {
 		fall();
-		
-		if(attempts > getActionPool().size() + queue.size())
+
+		if (attempts > getActionPool().size() + queue.size())
 			return;
 
 		// if idle get a new action
-		if (idle) {
-			if (queue.size() > 0 && queue.peek() != null) {
-				currentAction = queue.peek();
-			} else {
-				queue.addFirst((getActionPool().get()));
-				currentAction = queue.peek();
-			}
-			if (currentAction == null)
-				return;
-		}
+		fetchAction();
+		if (currentAction == null)
+			return;
 
 		// Store the result of the execution
 		int result = currentAction.execute(this);
@@ -98,10 +91,14 @@ public abstract class Actor implements Serializable {
 		if (result == Action.COMPLETED) {
 			idle = true;
 			queue.poll();
+		} else if (result == Action.TRADED) {
+			idle = true;
+			queue.poll();
+			//performAction(attempts + 1);
 		} else if (result == Action.Pool) {
 			idle = true;
 			getActionPool().add(queue.poll());
-			//performAction();
+			//performAction(attempts + 1);
 		} else if (result == Action.DELAY) {
 			// if the Action needs to be delayed, execute the next action
 			idle = true;
@@ -123,7 +120,18 @@ public abstract class Actor implements Serializable {
 		performAction(0);
 	}
 
-	public void fall() {
+	private void fetchAction() {
+		if (idle) {
+			if (queue.size() > 0 && queue.peek() != null) {
+				currentAction = queue.peek();
+			} else {
+				queue.addFirst((getActionPool().get()));
+				currentAction = queue.peek();
+			}
+		}
+	}
+
+	private void fall() {
 		// ensure that the actor is not floating in air
 		int row = getPosition().getRow(), col = getPosition().getCol();
 		if (!Game.validActorLocation(row, col))
@@ -171,7 +179,7 @@ public abstract class Actor implements Serializable {
 	 *            the alive to set
 	 */
 	public void setAlive(boolean alive, boolean remove) {
-		if (alive){
+		if (alive) {
 			this.alive = alive;
 			return;
 		}
@@ -196,11 +204,11 @@ public abstract class Actor implements Serializable {
 		return name;
 	}
 
-	public static void reset(){
+	public static void reset() {
 		PlayerControlledActor.reset();
 		EnemyActor.reset();
 	}
-	
+
 	public abstract ActionPool getActionPool();
 
 	/**
@@ -208,6 +216,13 @@ public abstract class Actor implements Serializable {
 	 */
 	public boolean isIdle() {
 		return idle;
+	}
+
+	/**
+	 * @param b
+	 */
+	public void setIdle(boolean b) {
+		idle = b;
 	}
 
 }

@@ -43,7 +43,7 @@ public class Controller extends JFrame {
 	private BasicView basicView;
 
 	private Timer timer;
-	private int timeDelta = 100;
+	private int timeDelta = 250;
 
 	private int windowWidth = 1000;
 	private int windowHeight = 700;

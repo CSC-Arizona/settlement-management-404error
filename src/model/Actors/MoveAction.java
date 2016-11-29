@@ -124,5 +124,12 @@ public class MoveAction extends Action {
 		}
 		return (performer.getPosition().equals(desiredDestination)) ? Action.COMPLETED : Action.MADE_PROGRESS;
 	}
+	
+	public boolean canMove(Actor performer){
+		if (visited == null) {
+			calculatePath();
+		}
+		return visited.containsKey(performer.getPosition());
+	}
 
 }

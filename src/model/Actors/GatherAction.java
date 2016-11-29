@@ -29,11 +29,8 @@ public class GatherAction extends Action {
 	public GatherAction(Position position) {
 		this.position = position;
 		durability = Integer.MAX_VALUE;
-		if (Game.getMap()
-				.getBuildingBlock(position.getRow(), position.getCol())
-				.isDestroyable()) {
-			this.designation = Game.getMap().getBuildingBlock(position)
-					.getDesignation();
+		if (Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable()) {
+			this.designation = Game.getMap().getBuildingBlock(position).getDesignation();
 
 		}
 	}
@@ -46,14 +43,11 @@ public class GatherAction extends Action {
 	@Override
 	public int execute(Actor performer) {
 		// if the block can't be gathered cancel the action
-		if (!Game.getMap()
-				.getBuildingBlock(position.getRow(), position.getCol())
-				.isDestroyable())
+		if (!Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable())
 			return Action.COMPLETED;
 
 		if (isAdjacent(performer)) {
-			BuildingBlock block = Game.getMap().getBuildingBlock(
-					position.getRow(), position.getCol());
+			BuildingBlock block = Game.getMap().getBuildingBlock(position.getRow(), position.getCol());
 			// reduce the durability
 			gather(performer, block);
 			if (durability <= 0) {
@@ -67,6 +61,7 @@ public class GatherAction extends Action {
 		}
 
 		return move(performer);
+
 	}
 
 	/**
@@ -100,8 +95,7 @@ public class GatherAction extends Action {
 	 */
 	private boolean isAdjacent(Actor performer) {
 		return Math.abs(position.getCol() - performer.getPosition().getCol()) <= 1
-				&& Math.abs(position.getRow()
-						- performer.getPosition().getRow()) <= 1;
+				&& Math.abs(position.getRow() - performer.getPosition().getRow()) <= 1;
 	}
 
 	/*
@@ -118,8 +112,7 @@ public class GatherAction extends Action {
 					performer.getInventory().addItem(i);
 				} else {
 					Game.getMap().addItemToGround(position, i);
-					performer.getActionPool().add(
-							new PickUpItemAction(position, i));
+					performer.getActionPool().add(new PickUpItemAction(position, i));
 				}
 	}
 
@@ -163,6 +156,28 @@ public class GatherAction extends Action {
 			}
 		}
 		return null;
+	}
+
+	private Actor findNearestActor() {
+		if (moveLocation == null)
+			moveLocation = getMoveLocation();
+		if(moveLocation == null)
+			return null;
+		// if not nearby move to a valid location
+		if (movement == null)
+			movement = new MoveAction(moveLocation);
+		Actor nearestActor = null;
+		double closest = Integer.MAX_VALUE;
+		for (Actor p : PlayerControlledActor.allActors) {
+			int x = p.getPosition().getCol(), x2 = position.getCol(), y = p.getPosition().getRow(),
+					y2 = position.getRow();
+			double distance = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y));
+			if (distance < closest && movement.canMove(p) && p.isIdle()) {
+				closest = distance;
+				nearestActor = p;
+			}
+		}
+		return nearestActor;
 	}
 
 }

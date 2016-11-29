@@ -69,7 +69,7 @@ public class ConstructActionTest {
 		test.update();
 		assertEquals(2,test.getPosition().getRow());
 		assertEquals(3,test.getPosition().getCol());
-		assertEquals("Cavern",Game.getMap().getBuildingBlock(new Position(2,3)).getID());
+		assertEquals("Air",Game.getMap().getBuildingBlock(new Position(2,3)).getID());
 		
 		for(int i = 0; i < Game.getMap().getBuildingBlock(new Position(3,3)).getDurability() - 1; i++){
 			test.update();
@@ -81,7 +81,7 @@ public class ConstructActionTest {
 		assertEquals(3,test.getPosition().getRow());
 		assertEquals(3,test.getPosition().getCol());
 		
-		assertEquals("Cavern",Game.getMap().getBuildingBlock(new Position(3,3)).getID());
+		assertEquals("Air",Game.getMap().getBuildingBlock(new Position(3,3)).getID());
 		
 		test.update();
 		

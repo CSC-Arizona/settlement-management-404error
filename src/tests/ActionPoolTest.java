@@ -67,8 +67,8 @@ public class ActionPoolTest {
 		
 		assertTrue(test.getPosition().equals(new Position(1, 1)));
 		assertTrue(test2.getPosition().equals(new Position(1, 3)));
-		assertTrue(Game.getMap().getBuildingBlock(2, 0).getID().equals("Cavern"));
-		assertTrue(Game.getMap().getBuildingBlock(2, 4).getID().equals("Cavern"));
+		assertTrue(Game.getMap().getBuildingBlock(2, 0).getID().equals("Air"));
+		assertTrue(Game.getMap().getBuildingBlock(2, 4).getID().equals("Air"));
 		
 		for (int i = 0; i < durability; i++) {
 			assertTrue(test.getPosition().equals(new Position(1, 1)));
@@ -81,8 +81,8 @@ public class ActionPoolTest {
 		
 		assertTrue(test.getPosition().equals(new Position(2, 1)));
 		assertTrue(test2.getPosition().equals(new Position(2, 3)));
-		assertTrue(Game.getMap().getBuildingBlock(2, 1).getID().equals("Cavern"));
-		assertTrue(Game.getMap().getBuildingBlock(2, 3).getID().equals("Cavern"));
+		assertTrue(Game.getMap().getBuildingBlock(2, 1).getID().equals("Air"));
+		assertTrue(Game.getMap().getBuildingBlock(2, 3).getID().equals("Air"));
 		
 		for (int i = 0; i < durability; i++) {
 			assertTrue(test.getPosition().equals(new Position(2, 1)));
@@ -94,7 +94,7 @@ public class ActionPoolTest {
 		
 		assertTrue(test.getPosition().equals(new Position(2, 1)));
 		assertTrue(test2.getPosition().equals(new Position(2, 3)));
-		assertTrue(Game.getMap().getBuildingBlock(2, 2).getID().equals("Cavern"));
+		assertTrue(Game.getMap().getBuildingBlock(2, 2).getID().equals("Air"));
 	}
 
 }
