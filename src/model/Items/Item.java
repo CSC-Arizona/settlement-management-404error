@@ -90,4 +90,6 @@ public abstract class Item implements Serializable {
     public double getWeight() {
 		return weight;
 	}
+    
+    abstract public String toString();
 }

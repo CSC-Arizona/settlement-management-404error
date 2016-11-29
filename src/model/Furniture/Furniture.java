@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Items.Item;
+import model.Menus.RequiredItemsList;
 
 //Author: Maxwell Faridian
 //This class is abstract and is extended by all pieces of furniture that are placed inside of rooms
@@ -19,6 +20,7 @@ public abstract class Furniture implements Serializable {
 	private String id;
 	public int contentsWeight = 0;
 	private List<Item> contentsList;
+	private RequiredItemsList ril;
 
 	public Furniture(int capacity, int weightCapacity, String id) {
 		contentsList = new LinkedList<>();
@@ -56,6 +58,15 @@ public abstract class Furniture implements Serializable {
 			return true;
 		}
 		return false;
+	}
+	
+	public String reqMaterialsToString() {
+		if (this.ril == null) {
+			ril = new RequiredItemsList();
+			for (Item i : this.getRequiredMaterials())
+				ril.addItem(i);
+		}
+		return ril.toString();
 	}
 	
 	//This method returns a List of items that are needed in order to build a specific piece of furniture

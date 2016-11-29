@@ -22,7 +22,7 @@ public class BasicSword extends Weapon {
 	private List<Item> basicSwordList;
 	
 	public BasicSword() {
-		super(attackMod, 0, 27.0);
+		super(attackMod, 0, 27.0, "Basic sword");
 		basicSwordList = new LinkedList<>();
 		basicSwordList.add(new WoodItem());
 		basicSwordList.add(new StoneItem());

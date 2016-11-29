@@ -13,4 +13,9 @@ public class WheatStemItem extends Item {
 	public WheatStemItem() {
 		super(false, attackMod, 0, 1);
 	}
+
+	@Override
+	public String toString() {
+		return "Wheat stem";
+	}
 }

@@ -21,7 +21,7 @@ public class BasicStoneAxe extends Weapon {
 	private List<Item> basicStoneAxeList;
 	
 	public BasicStoneAxe() {
-		super(attackMod, 0, 11.0);
+		super(attackMod, 0, 11.0, "Basic stone axe");
 		basicStoneAxeList = new LinkedList<>();
 		basicStoneAxeList.add(new WoodItem());
 		basicStoneAxeList.add(new WoodItem());

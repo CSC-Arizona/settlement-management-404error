@@ -21,7 +21,7 @@ public class StoneShield extends Armor {
 	private List<Item> ssList;
 	
 	public StoneShield() {
-		super(false, attackMod, 0, 15.0, defenseMod);
+		super(false, attackMod, 0, 15.0, defenseMod, "Stone shield");
 		ssList = new LinkedList<>();
 		ssList.add(new StoneItem());
 		ssList.add(new StoneItem());

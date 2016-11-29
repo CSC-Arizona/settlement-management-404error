@@ -21,7 +21,7 @@ public class WoodShield extends Armor {
 	private List<Item> wsList;
 	
 	public WoodShield() {
-		super(false, attackMod, 0, 9.0, defenseMod);
+		super(false, attackMod, 0, 9.0, defenseMod, "Wood shield");
 		wsList = new LinkedList<>();
 		wsList.add(new WoodItem());
 		wsList.add(new WoodItem());

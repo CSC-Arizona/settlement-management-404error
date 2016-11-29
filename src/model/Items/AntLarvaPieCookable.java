@@ -22,4 +22,9 @@ public class AntLarvaPieCookable extends CookableItem {
 		reqIngredients.add(new WheatItem());
 		return reqIngredients;
 	}
+
+	@Override
+	public String toString() {
+		return "Ant larva pie (heals 10 hp)";
+	}
 }

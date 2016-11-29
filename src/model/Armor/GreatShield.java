@@ -23,7 +23,7 @@ public class GreatShield extends Armor {
 	private List<Item> gsList;
 	
 	public GreatShield() {
-		super(false, attackMod, 0, 22.0, defenseMod);
+		super(false, attackMod, 0, 22.0, defenseMod, "Great shield");
 		gsList = new LinkedList<>();
 		gsList.add(new WoodItem());
 		gsList.add(new StoneItem());

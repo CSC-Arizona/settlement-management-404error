@@ -6,6 +6,7 @@ import java.util.TreeMap;
 import model.Actors.Position;
 import model.Furniture.Furniture;
 import model.Items.Item;
+import model.Menus.RequiredItemsList;
 
 /**
  * Room is an abstract class that is extended by all the possible structures that can be built.
@@ -41,6 +42,7 @@ public abstract class Room {
 	private int upgradesAllowed;
 	private int numAgentsInRoom;
 	private Position pos;
+	private RequiredItemsList ril;
 	
 	public Room(int requiredHeight, int requiredWidth, int roomCapacity, int upgradesAllowed, Position pos) {
 		this.requiredHeight = requiredHeight;
@@ -135,6 +137,15 @@ public abstract class Room {
 		} else {
 			return false;
 		}
+	}
+	
+	public String reqMaterialsToString() {
+		if (this.ril == null) {
+			ril = new RequiredItemsList();
+			for (Item i : this.getRequiredBuildMaterials())
+				ril.addItem(i);
+		}
+		return ril.toString();
 	}
 	
 	/*

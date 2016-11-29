@@ -19,4 +19,9 @@ public class IronItem extends Item {
 		super(false, attackMod, 0, 7.0);
 	}
 
+	@Override
+	public String toString() {
+		return "Iron";
+	}
+
 }

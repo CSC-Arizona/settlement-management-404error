@@ -28,7 +28,7 @@ import model.Room.VerticalTunnel;
  */
 public class ConstructMenu implements TableModel {
 	
-	private HashMap<String, List<Item>> rooms;
+	private HashMap<String, String> rooms;
 	private static ConstructMenu constructMenu;
 	
 	private ConstructMenu() {
@@ -44,14 +44,14 @@ public class ConstructMenu implements TableModel {
 	}
 	
 	private void addRooms() {
-		rooms.put("Bedroom", new BedRoom(new Position(0,0)).getRequiredBuildMaterials());
-		rooms.put("Entertainment Room", new EntertainmentRoom(new Position(0,0)).getRequiredBuildMaterials());
-		rooms.put("Farm Room", new FarmRoom(new Position(0,0)).getRequiredBuildMaterials());
-		rooms.put("Horizontal Tunnel", new HorizontalTunnel(new Position(0,0)).getRequiredBuildMaterials());
-		rooms.put("Infirmary", new InfirmaryRoom(new Position(0,0)).getRequiredBuildMaterials());
-		rooms.put("Kitchen", new KitchenRoom(new Position(0,0)).getRequiredBuildMaterials());
-		rooms.put("Storeroom", new StoreRoom(new Position(0,0)).getRequiredBuildMaterials());
-		rooms.put("Vertical Tunnel", new VerticalTunnel(new Position(0,0)).getRequiredBuildMaterials());
+		rooms.put("Bedroom", new BedRoom(new Position(0, 0)).reqMaterialsToString());
+		rooms.put("Entertainment Room", new EntertainmentRoom(new Position(0,0)).reqMaterialsToString());
+		rooms.put("Farm Room", new FarmRoom(new Position(0,0)).reqMaterialsToString());
+		rooms.put("Horizontal Tunnel", new HorizontalTunnel(new Position(0,0)).reqMaterialsToString());
+		rooms.put("Infirmary", new InfirmaryRoom(new Position(0,0)).reqMaterialsToString());
+		rooms.put("Kitchen", new KitchenRoom(new Position(0,0)).reqMaterialsToString());
+		rooms.put("Storeroom", new StoreRoom(new Position(0,0)).reqMaterialsToString());
+		rooms.put("Vertical Tunnel", new VerticalTunnel(new Position(0,0)).reqMaterialsToString());
 	}
 
 	@Override

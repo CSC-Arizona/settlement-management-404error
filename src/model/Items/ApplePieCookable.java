@@ -23,4 +23,9 @@ public class ApplePieCookable extends CookableItem {
 		return reqIngredients;
 	}
 
+	@Override
+	public String toString() {
+		return "Apple pie (heals 10 hp)";
+	}
+
 }

@@ -20,7 +20,7 @@ public class StoneChestPlate extends Armor {
 	private List<Item> scpList;
 	
 	public StoneChestPlate() {
-		super(false, attackMod, 0, 20.0, defenseMod);
+		super(false, attackMod, 0, 20.0, defenseMod, "Stone chest plate");
 		scpList = new LinkedList<>();
 		scpList.add(new StoneItem());
 		scpList.add(new StoneItem());

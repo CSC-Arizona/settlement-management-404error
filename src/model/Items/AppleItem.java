@@ -15,4 +15,9 @@ public class AppleItem extends Item {
 		super(true, attackMod, healthPts, 1);
 	}
 
+	@Override
+	public String toString() {
+		return "Apple";
+	}
+
 }
