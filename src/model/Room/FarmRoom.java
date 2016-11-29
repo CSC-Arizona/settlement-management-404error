@@ -3,12 +3,14 @@ package model.Room;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.TreeMap;
 
 import model.Actors.Position;
 import model.BuildingBlocks.AppleTreeLeafBlock;
 import model.BuildingBlocks.AppleTreeTrunkBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.WheatBlock;
+import model.Furniture.Furniture;
 import model.Items.Item;
 
 /**
@@ -96,5 +98,14 @@ public class FarmRoom extends Room {
 			return yield;
 		} else
 			return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see model.Room.Room#getFurniture()
+	 */
+	@Override
+	public TreeMap<Position, Furniture> getFurniture() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

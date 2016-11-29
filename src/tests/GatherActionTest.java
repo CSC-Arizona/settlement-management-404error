@@ -42,8 +42,11 @@ public class GatherActionTest {
 	@Test
 	public void testMoveAndGatherAction() {
 		Game.reset();
-		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 2 }, { 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1 },
-				{ 1, 1, 1, 1, 1 } };
+		int[][] mapGen = new int[][] { { 1, 0, 0, 0, 0 }, 
+										{ 1, 0, 0, 0, 2 }, 
+										{ 1, 1, 1, 1, 1 }, 
+										{ 1, 1, 1, 1, 1 },
+										{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
 		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
 		test.addToActionQueue(new GatherAction(new Position(1, 4)));

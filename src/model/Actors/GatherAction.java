@@ -87,10 +87,10 @@ public class GatherAction extends Action {
 			movement = new MoveAction(moveLocation);
 		int result = movement.execute(performer);
 		// cancel the action if this actor can not perform
-		if (result == Action.CANCELL) {
+		if (result == Action.Pool) {
 			movement = null;
 			moveLocation = null;
-			return Action.CANCELL;
+			return Action.Pool;
 		}
 		return Action.MADE_PROGRESS;
 	}
@@ -151,9 +151,7 @@ public class GatherAction extends Action {
 		// check to see if a nearby location is valid
 		for (int r = position.getRow() - 1; r < position.getRow() + 1; r++) {
 			for (int c = position.getCol() - 1; c < position.getCol() + 1; c++) {
-				if (r > 0 && c > 0 && r < Game.getMap().getTotalWidth() && c < Game.getMap().getTotalWidth()
-						&& Game.getMap().getBuildingBlock(r, c).isOccupiable() && r + 1 < Game.getMap().getTotalHeight()
-						&& !Game.getMap().getBuildingBlock(r + 1, c).isOccupiable())
+				if (Game.validActorLocation(r, c))
 					return new Position(r, c);
 			}
 		}

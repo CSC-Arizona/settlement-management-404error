@@ -1,8 +1,10 @@
 package model.Room;
 
 import java.util.List;
+import java.util.TreeMap;
 
 import model.Actors.Position;
+import model.Furniture.Furniture;
 import model.Items.Item;
 
 /**
@@ -48,6 +50,8 @@ public abstract class Room {
 		this.pos = pos;
 		this.numAgentsInRoom = 0;
 	}
+	
+	public abstract TreeMap<Position, Furniture> getFurniture();
 	
 	/*
 	 * returns the Position of the Room

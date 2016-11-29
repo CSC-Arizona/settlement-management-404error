@@ -120,6 +120,7 @@ public class PlayerControlledActor extends Actor {
 	/* (non-Javadoc)
 	 * @see model.Actors.Actor#getActionPool()
 	 */
+	@SuppressWarnings("static-access")
 	@Override
 	public ActionPool getActionPool() {
 		return this.playerActionPool;

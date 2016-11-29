@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import model.Actors.ConstructAction;
+import model.Actors.MoveAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
@@ -82,6 +83,21 @@ public class ConstructActionTest {
 		
 		assertEquals("Cavern",Game.getMap().getBuildingBlock(new Position(3,3)).getID());
 		
+		test.update();
+		
+		test.addToActionQueue(new MoveAction(new Position(1,1)));
+		
+		test.update();
+		assertEquals(2,test.getPosition().getRow());
+		assertEquals(3,test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(2,test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(1,test.getPosition().getCol());
 
 	}
 

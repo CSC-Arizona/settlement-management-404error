@@ -97,7 +97,7 @@ public abstract class Actor implements Serializable {
 		if (result == Action.COMPLETED) {
 			idle = true;
 			queue.poll();
-		} else if (result == Action.CANCELL) {
+		} else if (result == Action.Pool) {
 			idle = true;
 			getActionPool().add(queue.poll());
 			//performAction();
@@ -125,10 +125,8 @@ public abstract class Actor implements Serializable {
 	public void fall() {
 		// ensure that the actor is not floating in air
 		int row = getPosition().getRow(), col = getPosition().getCol();
-		if (row + 1 < Game.getMap().getTotalHeight() && Game.getMap().getBuildingBlock(row + 1, col).isOccupiable()) {
+		if (!Game.validActorLocation(row, col))
 			setPosition(new Position(row + 1, col));
-			return;
-		}
 	}
 
 	/**
