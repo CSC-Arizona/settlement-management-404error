@@ -45,4 +45,13 @@ public class EnemyActor extends Actor {
 		return enemyActionPool.get();
 	}
 
+
+	/* (non-Javadoc)
+	 * @see model.Actors.Actor#priorityAddActionToPool(model.Actors.Action)
+	 */
+	@Override
+	public void priorityAddActionToPool(Action action) {
+		enemyActionPool.priorityAdd(action);		
+	}
+
 }

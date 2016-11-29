@@ -77,7 +77,7 @@ public abstract class Actor implements Serializable {
 
 		// if idle get a new action
 		if (idle) {
-			if (queue.size() > 0) {
+			if (queue.size() > 0 && queue.peek() != null) {
 				currentAction = queue.peek();
 			} else {
 				queue.addFirst((getActionFromPool()));
@@ -98,7 +98,7 @@ public abstract class Actor implements Serializable {
 		}
 		if (result == Action.CANCELL) {
 			idle = true;
-			addActionToPool(queue.poll());
+			priorityAddActionToPool(queue.poll());
 		} else if (result == Action.DELAY) {
 			// if the Action needs to be delayed, execute the next action
 			idle = true;
@@ -158,8 +158,6 @@ public abstract class Actor implements Serializable {
 		return alive;
 	}
 
-	public abstract void addActionToPool(Action action);
-
 	/**
 	 * @param alive
 	 *            the alive to set
@@ -188,6 +186,8 @@ public abstract class Actor implements Serializable {
 		return name;
 	}
 
+	public abstract void addActionToPool(Action action);
 	public abstract Action getActionFromPool();
+	public abstract void priorityAddActionToPool(Action action);
 
 }

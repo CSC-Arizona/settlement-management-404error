@@ -26,4 +26,11 @@ public class ActionPool implements Serializable {
 		actionQueue.add(newAction);
 	}
 
+	/**
+	 * @param action
+	 */
+	public void priorityAdd(Action newAction) {
+		actionQueue.addFirst(newAction);
+	}
+
 }

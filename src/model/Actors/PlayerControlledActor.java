@@ -118,6 +118,14 @@ public class PlayerControlledActor extends Actor {
 		String result = this.getName() + ": " + Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue; " + hunger + " hunger";
 		return result;
 	}
+
+	/* (non-Javadoc)
+	 * @see model.Actors.Actor#priorityAddActionToPool(model.Actors.Action)
+	 */
+	@Override
+	public void priorityAddActionToPool(Action action) {
+		playerActionPool.priorityAdd(action);
+	}
 	
 	
 	

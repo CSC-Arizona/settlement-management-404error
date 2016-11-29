@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import model.Actors.Actor;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
@@ -44,6 +45,8 @@ public class SleepActionTest {
 										{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
 		Game.getMap().addFurniture(new Bed(), new Position(1,1));
+		PlayerControlledActor.allActors = null;
+		Actor.allActors = null;
 		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 4));
 		test.setFatigue(990);
 		

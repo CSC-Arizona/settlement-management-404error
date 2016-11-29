@@ -85,8 +85,11 @@ public class GatherAction extends Action {
 		if (movement == null)
 			movement = new MoveAction(moveLocation);
 		int result = movement.execute(performer);
-		if(result == Action.CANCELL)
+		if(result == Action.CANCELL){
+			movement = null;
+			moveLocation = null;
 			return Action.CANCELL;
+		}
 
 		return Action.MADE_PROGRESS;
 	}
