@@ -63,6 +63,7 @@ public class BreedAction extends Action {
 															// should be 0 now
 						}
 					}
+					//TODO: Create new player controlled actor? //new Actor(100, incubationChamberPos);
 					return Action.COMPLETED; 
 
 					// Move performer towards incubation chamber
