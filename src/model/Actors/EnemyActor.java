@@ -28,11 +28,15 @@ public class EnemyActor extends Actor {
 		allActors.add(this);
 		enemyActionPool.add(new EnemyHuntAction());
 	}
+
+
 	
 	public static void reset(){
 		allActors = null;
 		enemyActionPool = null;
 	}
+
+
 
 	/* (non-Javadoc)
 	 * @see model.Actors.Actor#getActionPool()
@@ -40,5 +44,9 @@ public class EnemyActor extends Actor {
 	@Override
 	public ActionPool getActionPool() {
 		return enemyActionPool;
+	}
+	
+	public String toString() {
+		return "Fire Ant";
 	}
 }

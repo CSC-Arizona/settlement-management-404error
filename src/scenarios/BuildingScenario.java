@@ -23,7 +23,7 @@ public class BuildingScenario {
 
 	public BuildingScenario() {
 
-		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed));
+		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed), true);
 		Game.setMap(controller.getMap());
 		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(45, 983))));
 		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(47, 983))));

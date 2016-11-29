@@ -9,6 +9,7 @@ import java.util.Random;
 import controller.Designation;
 import model.Actors.Actor;
 import model.Actors.IncubateAction;
+import model.Actors.EnemyActor;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
@@ -49,6 +50,8 @@ public class Map implements Serializable {
 	private HashMap<Position, Designation> blocksMarkedAsDesignated;
 
 	private ArrayList<Position> itemsOnGround = new ArrayList<>();
+	// using anthillLocations to determine "random" spawn points for ants
+    private ArrayList<Position> anthillLocations = new ArrayList<>();
 
 	public Map(MapParameters mapParameters, Random random) {
 		this.blocksMarkedAsDesignated = new HashMap<>();
@@ -108,6 +111,7 @@ public class Map implements Serializable {
 		addCaves();
 		addMushrooms();
 		addPlayerActors();
+		addEnemyActors();
 		addFurniture();
 
 	}
@@ -330,6 +334,8 @@ public class Map implements Serializable {
 
 						if (map[row][col].getID().equals(AirBlock.id)) {
 							map[row][col] = new AnthillBlock();
+							// TODO does this work?
+							anthillLocations.add(new Position(row, col));
 						}
 					} else {
 						map[row][col] = new CavernBlock();
@@ -505,6 +511,19 @@ public class Map implements Serializable {
 		//Make new player visible on map
 		Position p = a.getPosition();
 		map[p.getRow()][p.getCol()].addActor(a);
+	}
+
+	private void addEnemyActors() {
+		for (int i = 0; i < mapParameters.numberOfStartingActors; i++) {
+			new EnemyActor(100, anthillLocations.get(random.nextInt(anthillLocations.size())));
+		}
+		
+		if (EnemyActor.allActors != null) {
+			for (Actor actor : EnemyActor.allActors) {
+				Position position = actor.getPosition();
+				map[position.getRow()][position.getCol()].addActor(actor);
+			}
+		}
 	}
 
 	public void updateActors(int timeDelta) {

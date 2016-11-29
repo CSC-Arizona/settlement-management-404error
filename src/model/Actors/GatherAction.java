@@ -14,7 +14,7 @@ import model.Map.AppleTree;
 /**
  * Creates a Action for an Actor to gather a resource
  * 
- * @author Jonathon Davis
+ * @author Jonathon Davis, Ethan Ward
  *
  */
 public class GatherAction extends Action {
@@ -142,7 +142,6 @@ public class GatherAction extends Action {
 			Game.getMap().setBuildingBlock(position, new CavernBlock());
 		else if (designation == Designation.CUTTING_DOWN_TREES) {
 			AppleTree tree = Game.getMap().getTree(position);
-			System.out.println(position + " " + tree);
 			if (tree != null) {
 				tree.removeFromMap();
 			}
