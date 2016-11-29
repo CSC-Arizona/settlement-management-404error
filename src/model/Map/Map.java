@@ -556,5 +556,17 @@ public class Map implements Serializable {
 	public ArrayList<Position> getItemsOnGround() {
 		return itemsOnGround;
 	}
+	
+	public AppleTree getTree(Position position) {
+		for (Position basePosition : trees.keySet()) {
+			AppleTree tree = trees.get(basePosition);
+			for (Position testPosition : tree.getTrunk()) {
+				if (testPosition.equals(position)) {
+					return tree;
+				}
+			}
+		}
+		return null;
+	}
 
 }

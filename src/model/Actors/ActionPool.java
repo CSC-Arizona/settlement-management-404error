@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model.Actors;
 
 import java.io.Serializable;

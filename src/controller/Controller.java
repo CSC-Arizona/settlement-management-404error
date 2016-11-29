@@ -89,9 +89,8 @@ public class Controller {
 						map.getBuildingBlock(row, col).addDesignation(
 								Designation.GATHERING_PLANTS);
 						PlayerControlledActor.playerActionPool
-								.add(new GatherAction(new Position(row,
-										col)));
-						;
+								.add(new GatherAction(new Position(row, col)));
+
 					}
 
 				}
@@ -111,6 +110,9 @@ public class Controller {
 							if (pos.getRow() == row && pos.getCol() == col) {
 								AppleTree tree = map.getTrees().get(pos);
 								tree.designate();
+								PlayerControlledActor.playerActionPool
+										.add(new GatherAction(new Position(row,
+												col)));
 								break;
 							}
 						}

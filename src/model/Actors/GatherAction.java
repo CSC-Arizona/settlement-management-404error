@@ -9,6 +9,7 @@ import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.CavernBlock;
 import model.Game.Game;
 import model.Items.Item;
+import model.Map.AppleTree;
 
 /**
  * Creates a Action for an Actor to gather a resource
@@ -19,25 +20,21 @@ import model.Items.Item;
 public class GatherAction extends Action {
 
 	private static final long serialVersionUID = 5909099133984007954L;
-	Position position;
-	int durability;
-	MoveAction movement;
-	Position moveLocation;
-	Designation desgination;
+	private Position position;
+	private int durability;
+	private MoveAction movement;
+	private Position moveLocation;
+	private Designation designation;
 
 	public GatherAction(Position position) {
 		this.position = position;
 		durability = Integer.MAX_VALUE;
-		if (Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable()) {
-			String id = Game.getMap().getBuildingBlock(position).getID();
-			desgination = Designation.DIGGING;
-			if (id.equals("Mushroom fruit"))
-				desgination = Designation.GATHERING_FRUIT;
-			else if (id.equals("Wood"))
-				desgination = Designation.CUTTING_DOWN_TREES;
-			else if (id.equals("Wheat") || id.equals("Leaf") || id.equals("Grass"))
-				desgination = Designation.GATHERING_PLANTS;
-			Game.getMap().addDesignation(position, desgination);
+		if (Game.getMap()
+				.getBuildingBlock(position.getRow(), position.getCol())
+				.isDestroyable()) {
+			this.designation = Game.getMap().getBuildingBlock(position)
+					.getDesignation();
+
 		}
 	}
 
@@ -49,11 +46,14 @@ public class GatherAction extends Action {
 	@Override
 	public int execute(Actor performer) {
 		// if the block can't be gathered cancel the action
-		if (!Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable())
+		if (!Game.getMap()
+				.getBuildingBlock(position.getRow(), position.getCol())
+				.isDestroyable())
 			return Action.COMPLETED;
 
 		if (isAdjacent(performer)) {
-			BuildingBlock block = Game.getMap().getBuildingBlock(position.getRow(), position.getCol());
+			BuildingBlock block = Game.getMap().getBuildingBlock(
+					position.getRow(), position.getCol());
 			// reduce the durability
 			gather(performer, block);
 			if (durability <= 0) {
@@ -100,7 +100,8 @@ public class GatherAction extends Action {
 	 */
 	private boolean isAdjacent(Actor performer) {
 		return Math.abs(position.getCol() - performer.getPosition().getCol()) <= 1
-				&& Math.abs(position.getRow() - performer.getPosition().getRow()) <= 1;
+				&& Math.abs(position.getRow()
+						- performer.getPosition().getRow()) <= 1;
 	}
 
 	/*
@@ -117,7 +118,8 @@ public class GatherAction extends Action {
 					performer.getInventory().addItem(i);
 				} else {
 					Game.getMap().addItemToGround(position, i);
-					performer.getActionPool().add(new PickUpItemAction(position, i));
+					performer.getActionPool().add(
+							new PickUpItemAction(position, i));
 				}
 	}
 
@@ -136,9 +138,15 @@ public class GatherAction extends Action {
 	 * Replaces the block with the correct replacement
 	 */
 	private void replace() {
-		if (desgination == Designation.DIGGING)
+		if (designation == Designation.DIGGING)
 			Game.getMap().setBuildingBlock(position, new CavernBlock());
-		else
+		else if (designation == Designation.CUTTING_DOWN_TREES) {
+			AppleTree tree = Game.getMap().getTree(position);
+			System.out.println(position + " " + tree);
+			if (tree != null) {
+				tree.removeFromMap();
+			}
+		} else
 			Game.getMap().setBuildingBlock(position, new AirBlock());
 	}
 
