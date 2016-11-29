@@ -22,11 +22,19 @@ public class RequiredItemsList {
       }
       
       public String toString() {
-    	  String result = "Required Items: ";
+    	  String result = "";
     	  for (String s : reqItems.keySet()) {
-    		  result = result + reqItems.get(s) + " " + s + ", ";
+    		  int amount = reqItems.get(s);
+    		  result = result + amount + " ";
+    		  if (amount > 1) {
+    			  result = result + s + "s, ";
+    		  } else {
+    			  result = result + s + ", ";
+    		  }
+    		  //result = result + reqItems.get(s) + " " + s + ", ";
     	  }
-    	  result = result.substring(0, result.length() - 2);
+    	  if (!result.equals(""))
+    	      result = result.substring(0, result.length() - 2);
     	  return result;
       }
 }

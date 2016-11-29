@@ -21,7 +21,7 @@ public class IronChestPlate extends Armor {
 	private List<Item> icpList;
 	
 	public IronChestPlate() {
-		super(false, attackMod, 0, 28.0, defenseMod, "Iron chest plate");
+		super(false, attackMod, 0, 28.0, defenseMod, "Iron chestplate");
 		icpList = new LinkedList<>();
 		icpList.add(new IronItem());
 		icpList.add(new IronItem());

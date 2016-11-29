@@ -142,8 +142,10 @@ public abstract class Room {
 	public String reqMaterialsToString() {
 		if (this.ril == null) {
 			ril = new RequiredItemsList();
-			for (Item i : this.getRequiredBuildMaterials())
-				ril.addItem(i);
+			if (this.getRequiredBuildMaterials() != null) {
+				for (Item i : this.getRequiredBuildMaterials())
+					ril.addItem(i);
+			}
 		}
 		return ril.toString();
 	}

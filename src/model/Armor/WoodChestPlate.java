@@ -21,7 +21,7 @@ public class WoodChestPlate extends Armor {
 	private List<Item> wcpList;
 	
 	public WoodChestPlate() {
-		super(false, attackMod, 0, 9.0, defenseMod, "Wood chest plate");
+		super(false, attackMod, 0, 9.0, defenseMod, "Wood chestplate");
 		wcpList = new LinkedList<>();
 		wcpList.add(new WoodItem());
 		wcpList.add(new WoodItem());

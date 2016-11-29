@@ -23,7 +23,7 @@ public class GreatChestPlate extends Armor {
 	private List<Item> gcpList;
 	
 	public GreatChestPlate() {
-		super(false, attackMod, 0, 30.0, defenseMod, "Great chest plate");
+		super(false, attackMod, 0, 30.0, defenseMod, "Great chestplate");
 		gcpList = new LinkedList<>();;
 		gcpList.add(new WoodItem());
 		gcpList.add(new WoodItem());
