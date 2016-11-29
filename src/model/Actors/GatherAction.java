@@ -60,7 +60,10 @@ public class GatherAction extends Action {
 			durability-=performer.getSkills().getGatheringLevel() + 1;
 			performer.getSkills().addGatheringXP(1);
 			if (durability <= 0) {
-				Game.getMap().setBuildingBlock(position, new CavernBlock());
+				if(desgination == Designation.DIGGING)
+					Game.getMap().setBuildingBlock(position, new CavernBlock());
+				else
+					Game.getMap().setBuildingBlock(position, new AirBlock());
 				if (block.lootBlock() != null)
 					for (Item i : block.lootBlock())
 						if(performer.getInventory().canAdd(i)){
