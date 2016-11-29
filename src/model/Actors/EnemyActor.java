@@ -41,4 +41,8 @@ public class EnemyActor extends Actor {
 	public ActionPool getActionPool() {
 		return enemyActionPool;
 	}
+	
+	public String toString() {
+		return "Fire Ant";
+	}
 }
