@@ -7,7 +7,7 @@ import model.Map.MapParameters;
 /**
  * @author Ethan Ward
  * 
- *         Any actual random (not seeded or hardcoded) generation should go here
+ *         Intended to be the main entry for when the game is actually played
  *
  */
 public class ControllerMain {

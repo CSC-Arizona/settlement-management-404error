@@ -22,6 +22,7 @@ public class GatheringScenario {
 		Game.setMap(controller.getMap());
 		Game.getMap().addFurniture(new ReinforcedCrate(), new Position(44, 985));
 
+
 		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(44, 987)));
 		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(48, 996)));
 		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(47, 994)));

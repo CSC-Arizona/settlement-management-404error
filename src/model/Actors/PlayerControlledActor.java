@@ -17,7 +17,7 @@ public class PlayerControlledActor extends Actor {
 	private static final int threshold = 1000;
 	private static final int death_threshold = 1100;
 	public static LinkedList<Actor> allActors;
-	private static ActionPool playerActionPool;
+	public static ActionPool playerActionPool;
 
 	/**
 	 * Creates a player controlled actor which will execute commands
