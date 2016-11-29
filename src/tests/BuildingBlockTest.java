@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import org.junit.Test;
 
 import model.BuildingBlocks.AirBlock;
-import model.BuildingBlocks.AntTunnelBlock;
+import model.BuildingBlocks.AnthillBlock;
 import model.BuildingBlocks.AppleTreeLeafBlock;
 import model.BuildingBlocks.AppleTreeTrunkBlock;
 import model.BuildingBlocks.CavernBlock;
@@ -86,7 +86,7 @@ public class BuildingBlockTest {
 	
 	@Test
 	public void testAntTunnelBlock() {
-		AntTunnelBlock atb = new AntTunnelBlock();
+		AnthillBlock atb = new AnthillBlock();
 		assertTrue(atb.isOccupiable());
 		assertTrue(atb.isDestroyable());
 		assertEquals(new AntLarvaItem().getClass(), atb.lootBlock().get(0).getClass());
