@@ -25,38 +25,24 @@ public class EnemyActor extends Actor {
 		if(allActors == null)
 			allActors = new LinkedList<>();
 		allActors.add(this);
-		this.addActionToPool(new EnemyHuntAction());
+		enemyActionPool.add(new EnemyHuntAction());
 	}
 
 
-	/* (non-Javadoc)
-	 * @see model.Actors.Actor#addActionToPool(model.Actors.Action)
-	 */
-	@Override
-	public void addActionToPool(Action action) {
-		enemyActionPool.add(action);
-	}
-
-	/* (non-Javadoc)
-	 * @see model.Actors.Actor#getActionFromPool()
-	 */
-	@Override
-	public Action getActionFromPool() {
-		return enemyActionPool.get();
-	}
-
-
-	/* (non-Javadoc)
-	 * @see model.Actors.Actor#priorityAddActionToPool(model.Actors.Action)
-	 */
-	@Override
-	public void priorityAddActionToPool(Action action) {
-		enemyActionPool.priorityAdd(action);		
-	}
 	
 	public static void reset(){
 		allActors = null;
 		enemyActionPool = null;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see model.Actors.Actor#getActionPool()
+	 */
+	@Override
+	public ActionPool getActionPool() {
+		return enemyActionPool;
 	}
 
 }

@@ -68,19 +68,21 @@ public abstract class Actor implements Serializable {
 	public void priorityAddToActionQueue(Action action) {
 		queue.addFirst(action);
 	}
-
-	/**
-	 * Perform once per tick, the Actor performs the next action
-	 */
-	public void update() {
+	
+	// the core logic of the update method
+	// used for recursion
+	private void performAction(int attempts){
 		fall();
+		
+		if(attempts > getActionPool().size() + queue.size())
+			return;
 
 		// if idle get a new action
 		if (idle) {
 			if (queue.size() > 0 && queue.peek() != null) {
 				currentAction = queue.peek();
 			} else {
-				queue.addFirst((getActionFromPool()));
+				queue.addFirst((getActionPool().get()));
 				currentAction = queue.peek();
 			}
 			if (currentAction == null)
@@ -97,12 +99,13 @@ public abstract class Actor implements Serializable {
 			queue.poll();
 		} else if (result == Action.CANCELL) {
 			idle = true;
-			priorityAddActionToPool(queue.poll());
+			getActionPool().add(queue.poll());
+			//performAction();
 		} else if (result == Action.DELAY) {
 			// if the Action needs to be delayed, execute the next action
 			idle = true;
 			Action attemptedAction = queue.poll();
-			update();
+			performAction(attempts + 1);
 			queue.addFirst(attemptedAction);
 		} else {
 			// if the Action is still in progress then set idle to false
@@ -110,6 +113,13 @@ public abstract class Actor implements Serializable {
 		}
 
 		fall();
+	}
+
+	/**
+	 * Perform once per tick, the Actor performs the next action
+	 */
+	public void update() {
+		performAction(0);
 	}
 
 	public void fall() {
@@ -192,8 +202,6 @@ public abstract class Actor implements Serializable {
 		EnemyActor.reset();
 	}
 	
-	public abstract Action getActionFromPool();
-	public abstract void addActionToPool(Action action);
-	public abstract void priorityAddActionToPool(Action action);
+	public abstract ActionPool getActionPool();
 
 }

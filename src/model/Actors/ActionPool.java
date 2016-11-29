@@ -33,4 +33,11 @@ public class ActionPool implements Serializable {
 		actionQueue.addFirst(newAction);
 	}
 
+	/**
+	 * @return
+	 */
+	public int size() {
+		return actionQueue.size();
+	}
+
 }

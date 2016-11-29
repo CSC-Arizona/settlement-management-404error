@@ -101,14 +101,6 @@ public class PlayerControlledActor extends Actor {
 		playerActionPool.add(action);
 	}
 	
-	/* (non-Javadoc)
-	 * @see model.Actors.Actor#getActionFromPool()
-	 */
-	@Override
-	public Action getActionFromPool() {
-		return playerActionPool.get();
-	}
-	
 	public Action getActionFromPlayerPool() {
 		return playerActionPool.get();
 	}
@@ -119,18 +111,18 @@ public class PlayerControlledActor extends Actor {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see model.Actors.Actor#priorityAddActionToPool(model.Actors.Action)
-	 */
-	@Override
-	public void priorityAddActionToPool(Action action) {
-		playerActionPool.priorityAdd(action);
-	}
-
 
 	public static void reset() {
 		allActors = null;
 		playerActionPool = null;
+	}
+
+	/* (non-Javadoc)
+	 * @see model.Actors.Actor#getActionPool()
+	 */
+	@Override
+	public ActionPool getActionPool() {
+		return this.playerActionPool;
 	}
 	
 	

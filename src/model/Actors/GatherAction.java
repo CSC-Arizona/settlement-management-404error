@@ -117,7 +117,7 @@ public class GatherAction extends Action {
 					performer.getInventory().addItem(i);
 				} else {
 					Game.getMap().addItemToGround(position, i);
-					performer.addActionToPool(new PickUpItemAction(position, i));
+					performer.getActionPool().add(new PickUpItemAction(position, i));
 				}
 	}
 
