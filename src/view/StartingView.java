@@ -28,12 +28,14 @@ import controller.Controller;
 public class StartingView extends JPanel {
 
 	private Controller controller;
+	private JPanel panel;
 	private JLabel titleLabel;
 	private JLabel newGameLabel;
 	private JLabel loadGameLabel;
 	private int menuSelection = 0;
 
 	public StartingView(Controller controller) {
+		panel = new JPanel();
 		this.setLayout(new GridBagLayout());
 		this.setOpaque(true);
 		this.controller = controller;
@@ -63,7 +65,8 @@ public class StartingView extends JPanel {
 
 		verticalBox.add(Box.createVerticalGlue());
 
-		this.add(verticalBox, new GridBagConstraints());
+		panel.add(verticalBox, new GridBagConstraints());
+		this.add(panel);
 		this.addKeyListener(new MyKeyListener());
 		
 		this.setFocusable(true);
