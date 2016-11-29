@@ -2,6 +2,7 @@ package model.Actors;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
 import model.Game.Game;
 
@@ -201,5 +202,12 @@ public abstract class Actor implements Serializable {
 	}
 	
 	public abstract ActionPool getActionPool();
+
+	/**
+	 * @return the idle
+	 */
+	public boolean isIdle() {
+		return idle;
+	}
 
 }

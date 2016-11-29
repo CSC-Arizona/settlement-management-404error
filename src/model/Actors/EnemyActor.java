@@ -1,6 +1,7 @@
 package model.Actors;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The enemy actors used to provide a challenge to 

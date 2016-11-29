@@ -4,6 +4,7 @@
 package model.Actors;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Jonathon Davis The Player Controlled Actor will execute commands
@@ -125,8 +126,5 @@ public class PlayerControlledActor extends Actor {
 	public ActionPool getActionPool() {
 		return this.playerActionPool;
 	}
-	
-	
-	
 
 }
