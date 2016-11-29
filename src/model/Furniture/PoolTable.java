@@ -38,4 +38,9 @@ public class PoolTable extends Furniture {
 		return poolTableList;
 	}
 
+	@Override
+	public String toString() {
+		return "Pool Table";
+	}
+
 }

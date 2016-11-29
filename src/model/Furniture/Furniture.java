@@ -61,5 +61,7 @@ public abstract class Furniture implements Serializable {
 	//This method returns a List of items that are needed in order to build a specific piece of furniture
 	abstract public List<Item> getRequiredMaterials(); 
 	
+	abstract public String toString();
+	
 
 }

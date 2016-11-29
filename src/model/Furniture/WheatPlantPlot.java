@@ -33,4 +33,9 @@ public class WheatPlantPlot extends Furniture {
 		return wheatPlantPlotList;
 	}
 
+	@Override
+	public String toString() {
+		return "Wheat Plot";
+	}
+
 }

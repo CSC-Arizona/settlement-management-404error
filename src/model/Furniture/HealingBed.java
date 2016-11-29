@@ -40,4 +40,9 @@ public class HealingBed extends Furniture {
 		return healingBedList;
 	}
 
+	@Override
+	public String toString() {
+		return "Healing Bed";
+	}
+
 }

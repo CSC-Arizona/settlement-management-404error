@@ -35,4 +35,9 @@ public class MetalCrate extends Crate {
 	public List<Item> getRequiredMaterials() {
 		return metalCrateList;
 	}
+
+	@Override
+	public String toString() {
+		return "Metal Crate";
+	}
 }

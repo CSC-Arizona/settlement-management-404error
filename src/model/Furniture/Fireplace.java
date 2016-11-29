@@ -35,4 +35,9 @@ public class Fireplace extends Furniture {
 		return fireplaceList;
 	}
 
+	@Override
+	public String toString() {
+		return "Fireplace";
+	}
+
 }

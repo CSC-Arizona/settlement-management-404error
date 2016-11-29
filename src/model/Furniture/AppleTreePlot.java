@@ -33,4 +33,9 @@ public class AppleTreePlot extends Furniture {
 		return appleTreePlotList;
 	}
 
+	@Override
+	public String toString() {
+		return "Apple Tree Plot";
+	}
+
 }
