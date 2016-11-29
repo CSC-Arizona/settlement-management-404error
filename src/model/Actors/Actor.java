@@ -3,6 +3,8 @@ package model.Actors;
 import java.io.Serializable;
 import java.util.LinkedList;
 
+import model.Game.Game;
+
 /**
  * 
  */
@@ -42,7 +44,7 @@ public abstract class Actor implements Serializable {
 		this.alive = true;
 		this.name = Names.generateName();
 		skills = new Skills();
-		if(allActors == null)
+		if (allActors == null)
 			allActors = new LinkedList<>();
 		allActors.add(this);
 	}
@@ -71,25 +73,32 @@ public abstract class Actor implements Serializable {
 	 * Perform once per tick, the Actor performs the next action
 	 */
 	public void update() {
+		fall();
+
 		// if idle get a new action
-		if (idle){
-			if (queue.size() > 0)
+		if (idle) {
+			if (queue.size() > 0) {
 				currentAction = queue.peek();
-			else
-				currentAction = getActionFromPool();
-			if(currentAction == null)
-				return; // TODO: set to idle action
+			} else {
+				queue.addFirst((getActionFromPool()));
+				currentAction = queue.peek();
+			}
+			if (currentAction == null)
+				return;
 		}
-		
 
 		// Store the result of the execution
 		int result = currentAction.execute(this);
 
 		// if the Action was Completed or Cancelled, poll the action out of the
 		// queue
-		if (result == Action.COMPLETED || result == Action.CANCELL) {
+		if (result == Action.COMPLETED) {
 			idle = true;
 			queue.poll();
+		}
+		if (result == Action.CANCELL) {
+			idle = true;
+			addActionToPool(queue.poll());
 		} else if (result == Action.DELAY) {
 			// if the Action needs to be delayed, execute the next action
 			idle = true;
@@ -99,6 +108,17 @@ public abstract class Actor implements Serializable {
 		} else {
 			// if the Action is still in progress then set idle to false
 			idle = false;
+		}
+
+		fall();
+	}
+
+	public void fall() {
+		// ensure that the actor is not floating in air
+		int row = getPosition().getRow(), col = getPosition().getCol();
+		if (row + 1 < Game.getMap().getTotalHeight() && Game.getMap().getBuildingBlock(row + 1, col).isOccupiable()) {
+			setPosition(new Position(row + 1, col));
+			return;
 		}
 	}
 
@@ -137,7 +157,7 @@ public abstract class Actor implements Serializable {
 	public boolean isAlive() {
 		return alive;
 	}
-	
+
 	public abstract void addActionToPool(Action action);
 
 	/**
@@ -145,14 +165,14 @@ public abstract class Actor implements Serializable {
 	 *            the alive to set
 	 */
 	public void setAlive(boolean alive) {
-		if(alive)
+		if (alive)
 			return;
 		this.alive = alive;
 		allActors.remove(this);
-		
+
 	}
-	
-	public int getHealth(){
+
+	public int getHealth() {
 		return health;
 	}
 
@@ -161,15 +181,13 @@ public abstract class Actor implements Serializable {
 	 */
 	public void setHealth(int i) {
 		this.health = i;
-		
+
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public abstract Action getActionFromPool();
-	
-	
 
 }

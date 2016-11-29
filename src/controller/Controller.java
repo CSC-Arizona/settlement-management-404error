@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import model.Actors.GatherPlantsAction;
+import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AppleTreeLeafBlock;
@@ -89,7 +89,7 @@ public class Controller {
 						map.getBuildingBlock(row, col).addDesignation(
 								Designation.GATHERING_PLANTS);
 						PlayerControlledActor.playerActionPool
-								.add(new GatherPlantsAction(new Position(row,
+								.add(new GatherAction(new Position(row,
 										col)));
 						;
 					}

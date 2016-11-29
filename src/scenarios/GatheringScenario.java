@@ -3,7 +3,7 @@ package scenarios;
 import java.util.Random;
 
 import controller.Controller;
-import model.Actors.GatherPlantsAction;
+import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.Furniture.ReinforcedCrate;
@@ -21,14 +21,13 @@ public class GatheringScenario {
 		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed));
 		Game.setMap(controller.getMap());
 		Game.getMap().addFurniture(new ReinforcedCrate(), new Position(44, 985));
-		PlayerControlledActor actor = new PlayerControlledActor(100, new Position(44, 985));
-		new PlayerControlledActor(100, new Position(44, 983));
 
-		actor.addActionToPool(new GatherPlantsAction(new Position(44, 987)));
-		actor.addActionToPool(new GatherPlantsAction(new Position(48, 996)));
-		actor.addActionToPool(new GatherPlantsAction(new Position(47, 994)));
-		actor.addActionToPool(new GatherPlantsAction(new Position(46, 991)));
-		actor.addActionToPool(new GatherPlantsAction(new Position(46, 990)));
+
+		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(44, 987)));
+		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(48, 996)));
+		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(47, 994)));
+		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(46, 991)));
+		PlayerControlledActor.addActionToPlayerPool(new GatherAction(new Position(46, 990)));
 
 	}
 

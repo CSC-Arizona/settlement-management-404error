@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import model.Actors.GatherPlantsAction;
+import model.Actors.GatherAction;
 import model.Actors.MoveAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
@@ -45,7 +45,7 @@ public class GatherActionTest {
 				{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
 		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
-		test.addToActionQueue(new GatherPlantsAction(new Position(1, 4)));
+		test.addToActionQueue(new GatherAction(new Position(1, 4)));
 
 		assertEquals(1, test.getPosition().getRow());
 		assertEquals(1, test.getPosition().getCol());
@@ -69,7 +69,7 @@ public class GatherActionTest {
 		int amount = test.getInventory().size();
 
 		assertEquals(amount, testBlock.lootBlock().size());
-		assertEquals("Air", Game.getMap().getBuildingBlock(1, 4).getID());
+		assertEquals("Cavern", Game.getMap().getBuildingBlock(1, 4).getID());
 	}
 
 	@Test
@@ -78,7 +78,7 @@ public class GatherActionTest {
 				{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
 		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
-		test.addToActionQueue(new GatherPlantsAction(new Position(1, 4)));
+		test.addToActionQueue(new GatherAction(new Position(1, 4)));
 		test.addToActionQueue(new MoveAction(new Position(3, 2)));
 
 		assertEquals(1, test.getPosition().getRow());

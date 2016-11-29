@@ -97,12 +97,10 @@ public class PlayerControlledActor extends Actor {
 		playerActionPool.add(action);
 	}
 	
-	@Override
-	public String toString() {
-		String result = this.getName() + ": " + Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue; " + hunger + " hunger";
-		return result;
+	public static void addActionToPlayerPool(Action action){
+		playerActionPool.add(action);
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see model.Actors.Actor#getActionFromPool()
 	 */
@@ -110,5 +108,18 @@ public class PlayerControlledActor extends Actor {
 	public Action getActionFromPool() {
 		return playerActionPool.get();
 	}
+	
+	public Action getActionFromPlayerPool() {
+		return playerActionPool.get();
+	}
+	
+	@Override
+	public String toString() {
+		String result = this.getName() + ": " + Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue; " + hunger + " hunger";
+		return result;
+	}
+	
+	
+	
 
 }

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import model.Actors.GatherPlantsAction;
+import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
@@ -49,9 +49,9 @@ public class PickUpAndStoreActionTest {
 		Game.setMap(generateMap(mapGen));
 		Game.getMap().addFurniture(new ReinforcedCrate(), new Position(1, 0));
 		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
-		test.addToActionQueue(new GatherPlantsAction(new Position(1, 2)));
-		test.addToActionQueue(new GatherPlantsAction(new Position(1, 3)));
-		test.addToActionQueue(new GatherPlantsAction(new Position(1, 4)));
+		test.addToActionQueue(new GatherAction(new Position(1, 2)));
+		test.addToActionQueue(new GatherAction(new Position(1, 3)));
+		test.addToActionQueue(new GatherAction(new Position(1, 4)));
 
 
 		GrassBlock testBlock = new GrassBlock();

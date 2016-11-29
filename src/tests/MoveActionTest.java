@@ -57,7 +57,7 @@ public class MoveActionTest {
 
 	@Test
 	public void testNonMoveAction() {
-		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 },
+		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0 }, { 0, 0, 0, 0, 0 },
 				{ 0, 0, 0, 0, 0 } };
 		Game.setMap(generateMap(mapGen));
 		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
