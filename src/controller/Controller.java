@@ -4,11 +4,14 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import model.Actors.GatherPlantsAction;
+import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AppleTreeLeafBlock;
 import model.BuildingBlocks.AppleTreeTrunkBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.GrassBlock;
+import model.Game.Game;
 import model.Map.AppleTree;
 import model.Map.Map;
 import model.Map.MapParameters;
@@ -85,7 +88,12 @@ public class Controller {
 							.equals(GrassBlock.id)) {
 						map.getBuildingBlock(row, col).addDesignation(
 								Designation.GATHERING_PLANTS);
+						PlayerControlledActor.playerActionPool
+								.add(new GatherPlantsAction(new Position(row,
+										col)));
+						;
 					}
+
 				}
 
 				if (getDesignatingAction() == Designation.GATHERING_FRUIT) {
@@ -134,6 +142,7 @@ public class Controller {
 
 	public Controller(MapParameters mapParameters, Random random) {
 		map = new Map(mapParameters, random);
+		Game.setMap(map);
 		view = new BasicView(this, map, mapParameters);
 		view.setVisible(true);
 		startTimer();

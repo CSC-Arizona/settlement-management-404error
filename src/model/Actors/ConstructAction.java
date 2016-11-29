@@ -49,7 +49,7 @@ public class ConstructAction extends Action {
 		if(GatherCommands == null){
 			GatherCommands = new LinkedList<>();
 			for (Position block : blocksToChange)
-				GatherCommands.add(new GatherAction(block));
+				GatherCommands.add(new GatherPlantsAction(block));
 		}
 		
 		// Mine out the area

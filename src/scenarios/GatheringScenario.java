@@ -3,7 +3,7 @@ package scenarios;
 import java.util.Random;
 
 import controller.Controller;
-import model.Actors.GatherAction;
+import model.Actors.GatherPlantsAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.Furniture.ReinforcedCrate;
@@ -24,11 +24,11 @@ public class GatheringScenario {
 		PlayerControlledActor actor = new PlayerControlledActor(100, new Position(44, 985));
 		new PlayerControlledActor(100, new Position(44, 983));
 
-		actor.addActionToPool(new GatherAction(new Position(44, 987)));
-		actor.addActionToPool(new GatherAction(new Position(48, 996)));
-		actor.addActionToPool(new GatherAction(new Position(47, 994)));
-		actor.addActionToPool(new GatherAction(new Position(46, 991)));
-		actor.addActionToPool(new GatherAction(new Position(46, 990)));
+		actor.addActionToPool(new GatherPlantsAction(new Position(44, 987)));
+		actor.addActionToPool(new GatherPlantsAction(new Position(48, 996)));
+		actor.addActionToPool(new GatherPlantsAction(new Position(47, 994)));
+		actor.addActionToPool(new GatherPlantsAction(new Position(46, 991)));
+		actor.addActionToPool(new GatherPlantsAction(new Position(46, 990)));
 
 	}
 

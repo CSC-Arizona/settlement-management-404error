@@ -15,7 +15,7 @@ import model.Items.Item;
  * @author Jonathon Davis
  *
  */
-public class GatherAction extends Action {
+public class GatherPlantsAction extends Action {
 
 	private static final long serialVersionUID = 5909099133984007954L;
 	Position position;
@@ -23,10 +23,10 @@ public class GatherAction extends Action {
 	MoveAction movement;
 	Position moveLocation;
 
-	public GatherAction(Position position) {
+	public GatherPlantsAction(Position position) {
 		this.position = position;
 		durability = Integer.MAX_VALUE;
-		Game.getMap().addDesignation(position, Designation.GATHERING_FRUIT);
+		Game.getMap().addDesignation(position, Designation.GATHERING_PLANTS);
 	}
 
 	/*
