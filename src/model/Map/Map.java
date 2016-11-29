@@ -8,6 +8,7 @@ import java.util.Random;
 
 import controller.Designation;
 import model.Actors.Actor;
+import model.Actors.IncubateAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
@@ -485,6 +486,25 @@ public class Map implements Serializable {
 				map[position.getRow()][position.getCol()].addActor(actor);
 			}
 		}
+	}
+	
+	public void addPlayerActor(Position p) {
+		PlayerControlledActor pca = new PlayerControlledActor(100, p);
+
+		//Set new actor to "dead" since not born yet
+		pca.setAlive(false, false);
+		
+		//Place 1000 Incubate Actions into actor's queue so that 
+		//Actor can't do anything until "born"
+		for (int i = 0; i < 1000; i++) {
+			pca.addToActionQueue(new IncubateAction(i));
+		}
+	}
+	
+	public void addPlayerToMap(Actor a) {
+		//Make new player visible on map
+		Position p = a.getPosition();
+		map[p.getRow()][p.getCol()].addActor(a);
 	}
 
 	public void updateActors(int timeDelta) {

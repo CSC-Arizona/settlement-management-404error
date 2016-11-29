@@ -6,6 +6,7 @@ import model.Furniture.Furniture;
 import model.Game.Game;
 import model.Items.DragonEggItem;
 import model.Items.Item;
+import model.Map.Map;
 
 //Author: Maxwell Faridian
 //This class will have 2 actors move to the incubation room. Once there, if there is room available in one of the incubation
@@ -63,7 +64,10 @@ public class BreedAction extends Action {
 															// should be 0 now
 						}
 					}
-					//TODO: Create new player controlled actor? //new Actor(100, incubationChamberPos);
+					//Add new Player Controlled Actor to map
+					Map map = Game.getMap();
+					map.addPlayerActor(incubationChamberPos);
+					
 					return Action.COMPLETED; 
 
 					// Move performer towards incubation chamber
@@ -86,8 +90,7 @@ public class BreedAction extends Action {
 		}
 		return 0;
 	}
-
-	// TODO: Implement hatching scenario (remove egg from chamber, create new
-	// actor), implement wait time for egg to hatch when egg is placed in chamber
+	
+	//TODO: Test Breed and Incubate actions
 
 }
