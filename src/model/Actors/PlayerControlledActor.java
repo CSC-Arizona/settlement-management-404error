@@ -57,7 +57,7 @@ public class PlayerControlledActor extends Actor {
 		// if one of the needs get to high, then the actor dies
 		if (hunger >= death_threshold || fatigue >= death_threshold) {
 			allActors.remove(this);
-			this.setAlive(false);
+			this.setAlive(false, true);
 		}
 		// call super.update()
 		super.update();
