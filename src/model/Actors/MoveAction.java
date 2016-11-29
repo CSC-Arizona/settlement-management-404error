@@ -3,6 +3,7 @@
  */
 package model.Actors;
 
+import java.util.LinkedList;
 import java.util.TreeMap;
 
 import model.Game.Game;
@@ -16,6 +17,7 @@ public class MoveAction extends Action {
 
 	private static final long serialVersionUID = 6366936476306048341L;
 	private TreeMap<Position, Node> visited;
+	private LinkedList<Node> searchQueue;
 	private Position desiredDestination;
 
 	/**
@@ -53,8 +55,12 @@ public class MoveAction extends Action {
 	 */
 	private void calculatePath() {
 		visited = new TreeMap<>();
+		searchQueue = new LinkedList<>();
 		Node firstNode = new Node(0, desiredDestination, null);
-		calculatePath(desiredDestination, firstNode);
+		searchQueue.add(firstNode);
+		while(searchQueue.size() > 0){
+			calculatePath(searchQueue.poll());
+		}
 	}
 
 	/**
@@ -65,12 +71,12 @@ public class MoveAction extends Action {
 	 * @param currentNode
 	 *            The current Node
 	 */
-	private void calculatePath(Position currentPos, Node currentNode) {		
+	private void calculatePath(Node currentNode) {
+		Position currentPos = currentNode.position;
 		int row = currentPos.getRow(),
 				col = (currentPos.getCol() > 0) ? currentPos.getCol() % (Game.getMap().getTotalWidth())
 						: Game.getMap().getTotalWidth() + currentPos.getCol();
 		if (currentPos.getCol() == Game.getMap().getTotalWidth()
-				|| currentNode.position.getCol() == Game.getMap().getTotalWidth()
 				|| col == Game.getMap().getTotalWidth()) {
 			currentPos.setCol(0);
 			currentNode.position.setCol(0);
@@ -94,8 +100,7 @@ public class MoveAction extends Action {
 			for (int r = row - 1; r <= row + 1; r++)
 				for (int c = col - 1; c <= col + 1; c++)
 					if (!(r == row && c == col) && r < Game.getMap().getTotalHeight() && r >= 0)
-						calculatePath(new Position(r, c),
-								new Node(currentNode.distance + 1, new Position(r, c), currentNode));
+						searchQueue.add(new Node(currentNode.distance + 1, new Position(r, c), currentNode));
 		}
 	}
 
