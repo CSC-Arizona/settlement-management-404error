@@ -29,7 +29,8 @@ public class ConstructAction extends Action {
 			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
 				Position p = new Position(r, c);
 				blocksToChange.add(p);
-				PlayerControlledActor.addActionToPlayerPool(new GatherAction(p));
+				//PlayerControlledActor.addActionToPlayerPool(new GatherAction(p));
+				PlayerControlledActor.addActionToPlayerPool(new GatherForConstructionAction(p, room));
 			}
 		}
 	}

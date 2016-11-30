@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 import model.Actors.Position;
+import model.BuildingBlocks.BuildingBlock;
 import model.Furniture.Furniture;
 import model.Items.Item;
 import model.Menus.RequiredItemsList;
@@ -164,4 +165,6 @@ public abstract class Room {
 	 * Returns the amount a Room's capacity gets increased by with each upgrade
 	 */
 	abstract public int increaseCapacityBy();
+	
+	abstract public BuildingBlock getAppropriateBlock();
 }

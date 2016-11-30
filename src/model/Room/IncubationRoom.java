@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.TreeMap;
 
 import model.Actors.Position;
+import model.BuildingBlocks.BuildingBlock;
+import model.BuildingBlocks.IncubationRoomBlock;
+import model.BuildingBlocks.TunnelBlock;
 import model.Furniture.Furniture;
 import model.Furniture.IncubationChamber;
 import model.Items.Item;
@@ -66,6 +69,12 @@ public class IncubationRoom extends Room {
 	public TreeMap<Position, Furniture> getFurniture() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public BuildingBlock getAppropriateBlock() {
+		// TODO Auto-generated method stub
+		return new IncubationRoomBlock();
 	}
 
 }
