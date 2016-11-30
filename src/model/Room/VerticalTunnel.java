@@ -22,8 +22,16 @@ public class VerticalTunnel extends Room {
 	private TreeMap<Position, Furniture> reqFurniture;
 	private List<Item> reqItems;
 
+	public static int getHeight() {
+		return 2;
+	}
+	
+	public static int getWidth() {
+		return 1;
+	}
+	
 	public VerticalTunnel(Position p) {
-		super(2, 1, 20, 0, p);
+		super(getHeight(), getWidth(), 20, 0, p);
         reqFurniture = new TreeMap<Position, Furniture>();
         reqFurniture.put(new Position(0,0), new Ladder());
         reqFurniture.put(new Position(1,0), new Ladder());
