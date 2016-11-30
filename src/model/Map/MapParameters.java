@@ -54,6 +54,11 @@ public class MapParameters implements Serializable {
 
 	}
 
+	public static MapParameters getParametersWithNoMountains() {
+		return new MapParameters(1000, 70, 20, 30, 10, 0.01, 0.001, 0.1, 0.1,
+				0.0, 0.005, 0, 7);
+	}
+	
 	public static MapParameters getDefaultParameters() {
 		return new MapParameters(1000, 70, 20, 30, 10, 0.01, 0.001, 0.1, 0.1,
 				0.1, 0.005, 2, 7);

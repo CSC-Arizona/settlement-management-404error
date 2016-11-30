@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Stroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -22,16 +24,28 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.Controller;
 import controller.Designation;
 import model.Actors.Actor;
+import model.Actors.ConstructAction;
+import model.Actors.GatherAction;
+import model.Actors.PlayerControlledActor;
+import model.Actors.Position;
 import model.Furniture.Furniture;
 import model.Game.Game;
 import model.Items.Item;
 import model.Map.Map;
 import model.Map.MapParameters;
+import model.Room.BedRoom;
+import model.Room.EntertainmentRoom;
+import model.Room.FarmRoom;
+import model.Room.IncubationRoom;
+import model.Room.InfirmaryRoom;
+import model.Room.KitchenRoom;
+import model.Room.StoreRoom;
 
 public class BasicView extends JPanel {
 
@@ -89,6 +103,13 @@ public class BasicView extends JPanel {
 	private int designationEndCol;
 	private boolean currentlyDrawingDesignation = false;
 
+	private boolean currentlyPlacingRoom = false;
+	private Point roomCorner;
+	private int roomWidth;
+	private int roomHeight;
+	private int roomX;
+	private int roomY;
+
 	public void setTimeLabel(int time, boolean paused) {
 		if (paused) {
 			timeLabel.setText("Time: " + time + " (paused)");
@@ -108,8 +129,8 @@ public class BasicView extends JPanel {
 	}
 
 	public void setMouseDescriptionLabel() {
-		String mouseDescription = Game.getMap().getBuildingBlock(mouseY, mouseX)
-				.toString();
+		String mouseDescription = Game.getMap()
+				.getBuildingBlock(mouseY, mouseX).toString();
 
 		mouseDescription += "</html>";
 
@@ -124,7 +145,7 @@ public class BasicView extends JPanel {
 
 		guiPanel = new JPanel();
 		guiPanel.setLayout(new GridLayout(1, 3));
-		guiPanel.setPreferredSize(new Dimension(900,200));
+		guiPanel.setPreferredSize(new Dimension(900, 200));
 		this.add(guiPanel);
 
 		addLabelPanel();
@@ -133,7 +154,7 @@ public class BasicView extends JPanel {
 		addDrawingPanel();
 
 		this.addKeyListener(new MyKeyListener());
-		
+
 		repaint();
 	}
 
@@ -151,8 +172,8 @@ public class BasicView extends JPanel {
 		mouseDescriptionLabel = new JLabel();
 		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
-		//labelPanel
-		//		.setPreferredSize(new Dimension(windowWidth, labelPanelHeight));
+		// labelPanel
+		// .setPreferredSize(new Dimension(windowWidth, labelPanelHeight));
 		guiPanel.add(labelPanel);
 
 	}
@@ -170,6 +191,7 @@ public class BasicView extends JPanel {
 		constructRoomButton = new JButton(
 				"<html><center>Construct room</center></html>");
 		constructRoomButton.setFocusable(false);
+		constructRoomButton.addActionListener(new ConstructionListener());
 
 		buttons = new ArrayList<>();
 		cutDownTreeButton = new DesignationButton(controller,
@@ -237,7 +259,8 @@ public class BasicView extends JPanel {
 					int col = visibleCornerX + j;
 					col = Math.floorMod(col, mapWidth);
 
-					Color color = Game.getMap().getBuildingBlock(row, col).getColor();
+					Color color = Game.getMap().getBuildingBlock(row, col)
+							.getColor();
 					g2.setColor(color);
 					g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
 							blockSizeY);
@@ -245,8 +268,8 @@ public class BasicView extends JPanel {
 					g2.drawRect(j * blockSizeX, i * blockSizeY, blockSizeX,
 							blockSizeY);
 
-					List<Actor> actors = Game.getMap().getBuildingBlock(row, col)
-							.getActors();
+					List<Actor> actors = Game.getMap()
+							.getBuildingBlock(row, col).getActors();
 					if (actors != null) {
 						int size = actors.size();
 						if (size != 0) {
@@ -258,23 +281,25 @@ public class BasicView extends JPanel {
 						}
 					}
 
-					Furniture furniture = Game.getMap().getBuildingBlock(row, col)
-							.getFurniture();
+					Furniture furniture = Game.getMap()
+							.getBuildingBlock(row, col).getFurniture();
 					if (furniture != null) {
 						g2.drawString("F", j * blockSizeX + blockSizeX / 2,
 								(i + 1) * blockSizeY);
 					}
 
 					if (Game.getMap().getBuildingBlock(row, col).isDesignated()) {
-						g2.drawString(""
-								+ Game.getMap().getBuildingBlock(row, col)
-										.getDesignation().keyboardShortcut, j
-								* blockSizeX + blockSizeX / 2, (i + 1)
-								* blockSizeY);
+						g2.drawString(
+								""
+										+ Game.getMap()
+												.getBuildingBlock(row, col)
+												.getDesignation().keyboardShortcut,
+								j * blockSizeX + blockSizeX / 2, (i + 1)
+										* blockSizeY);
 					}
 
-					List<Item> itemsOnGround = Game.getMap().getBuildingBlock(row, col)
-							.itemsOnGround();
+					List<Item> itemsOnGround = Game.getMap()
+							.getBuildingBlock(row, col).itemsOnGround();
 					if (itemsOnGround != null) {
 						if (itemsOnGround.size() != 0) {
 							g2.drawString("#", j * blockSizeX + blockSizeX / 2,
@@ -290,6 +315,10 @@ public class BasicView extends JPanel {
 								Math.abs(designationStart.x - designationEnd.x),
 								Math.abs(designationStart.y - designationEnd.y));
 
+					}
+					if (currentlyPlacingRoom) {
+						g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
+								roomHeight);
 					}
 
 				}
@@ -382,6 +411,12 @@ public class BasicView extends JPanel {
 				designationEnd = e.getPoint();
 				repaint();
 			}
+			if (currentlyPlacingRoom) {
+				roomCorner = e.getPoint();
+				roomX = mouseX;
+				roomY = mouseY;
+				repaint();
+			}
 
 		}
 	}
@@ -390,39 +425,57 @@ public class BasicView extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (controller.getDesignatingAction() != Designation.NONE) {
-				if (currentlyDrawingDesignation) {
-					designationEnd = e.getPoint();
+			if (currentlyPlacingRoom) {
+				currentlyPlacingRoom = false;
+				controller.setDesignatingAction(Designation.CONSTRUCTING);
 
-					designationEndCol = designationEnd.x / blockSizeX
-							+ visibleCornerX;
-					designationEndRow = designationEnd.y / blockSizeY
-							+ visibleCornerY;
+				controller.applyDesignation(roomY, roomX, roomHeight
+						/ blockSizeY, roomWidth / blockSizeX);
 
-					int startRow = Math.min(designationStartRow,
-							designationEndRow);
-					int startCol = Math.min(designationStartCol,
-							designationEndCol);
-					int height = Math.abs(designationStartRow
-							- designationEndRow);
-					int width = Math.abs(designationStartCol
-							- designationEndCol);
+				PlayerControlledActor.playerActionPool.add(new ConstructAction(
+						new BedRoom(new Position(roomY, roomX))));
+				
+				controller.setDesignatingAction(Designation.NONE);
 
-					controller.applyDesignation(startRow, startCol, height,
-							width);
+				repaint();
 
-					repaint();
-				} else {
-					designationStart = e.getPoint();
+				
+			} else {
 
-					designationStartCol = designationStart.x / blockSizeX
-							+ visibleCornerX;
-					designationStartRow = designationStart.y / blockSizeY
-							+ visibleCornerY;
+				if (controller.getDesignatingAction() != Designation.NONE) {
+					if (currentlyDrawingDesignation) {
+						designationEnd = e.getPoint();
 
-					designationEnd = e.getPoint();
+						designationEndCol = designationEnd.x / blockSizeX
+								+ visibleCornerX;
+						designationEndRow = designationEnd.y / blockSizeY
+								+ visibleCornerY;
+
+						int startRow = Math.min(designationStartRow,
+								designationEndRow);
+						int startCol = Math.min(designationStartCol,
+								designationEndCol);
+						int height = Math.abs(designationStartRow
+								- designationEndRow);
+						int width = Math.abs(designationStartCol
+								- designationEndCol);
+
+						controller.applyDesignation(startRow, startCol, height,
+								width);
+
+						repaint();
+					} else {
+						designationStart = e.getPoint();
+
+						designationStartCol = designationStart.x / blockSizeX
+								+ visibleCornerX;
+						designationStartRow = designationStart.y / blockSizeY
+								+ visibleCornerY;
+
+						designationEnd = e.getPoint();
+					}
+					currentlyDrawingDesignation = !currentlyDrawingDesignation;
 				}
-				currentlyDrawingDesignation = !currentlyDrawingDesignation;
 			}
 		}
 
@@ -447,6 +500,62 @@ public class BasicView extends JPanel {
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
+
+		}
+
+	}
+
+	private class ConstructionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!currentlyDrawingDesignation) {
+				currentlyPlacingRoom = true;
+				roomCorner = new Point(0, 0);
+				if (controller.isPaused()) {
+					pauseButton.toggle();
+				}
+
+				// this should probably be done with enums or something
+				String[] rooms = new String[] { "Bedroom",
+						"Entertainment room", "Farm room", "Incubation room",
+						"Infirmary room", "Kitchen room", "Store room" };
+
+				String roomChoice = (String) JOptionPane.showInputDialog(
+						controller, "Choose a room to construct", "",
+						JOptionPane.PLAIN_MESSAGE, null, rooms, "Bedroom");
+
+				if (roomChoice != null) {
+
+					if (roomChoice.equals("Bedroom")) {
+						roomHeight = BedRoom.getHeight() * blockSizeY;
+						roomWidth = BedRoom.getWidth() * blockSizeX;
+					} else if (roomChoice.equals("Entertainment room")) {
+						roomHeight = EntertainmentRoom.getHeight() * blockSizeY;
+						roomWidth = EntertainmentRoom.getWidth() * blockSizeX;
+					} else if (roomChoice.equals("Farm room")) {
+						roomHeight = FarmRoom.getHeight() * blockSizeY;
+						roomWidth = FarmRoom.getWidth() * blockSizeX;
+					} else if (roomChoice.equals("Incubation room")) {
+						roomHeight = IncubationRoom.getHeight() * blockSizeY;
+						roomWidth = IncubationRoom.getWidth() * blockSizeX;
+					} else if (roomChoice.equals("Infirmary room")) {
+						roomHeight = InfirmaryRoom.getHeight() * blockSizeY;
+						roomWidth = InfirmaryRoom.getWidth() * blockSizeX;
+					} else if (roomChoice.equals("Kitchen room")) {
+						roomHeight = KitchenRoom.getHeight() * blockSizeY;
+						roomWidth = KitchenRoom.getWidth() * blockSizeX;
+					} else if (roomChoice.equals("Store room")) {
+						roomHeight = StoreRoom.getHeight() * blockSizeY;
+						roomWidth = StoreRoom.getWidth() * blockSizeX;
+					}
+				} else {
+					currentlyPlacingRoom = false;
+				}
+				if (!controller.isPaused()) {
+					pauseButton.toggle();
+				}
+			}
 
 		}
 

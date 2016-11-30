@@ -28,8 +28,16 @@ public class FarmRoom extends Room {
 	private List<BuildingBlock> plantedBlocks;
 	private Random rand;
 	
+	public static int getHeight() {
+		return 2;
+	}
+	
+	public static int getWidth() {
+		return 8;
+	}
+	
 	public FarmRoom(Position p) {
-		super(2, 8, 4, 0, p);
+		super(getHeight(), getWidth(), 4, 0, p);
 		state = 0;
 		plantedBlocks = new LinkedList<>();
 		rand = new Random();

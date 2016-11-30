@@ -25,8 +25,16 @@ public class BedRoom extends Room {
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
+	public static int getHeight() {
+		return 2;
+	}
+	
+	public static int getWidth() {
+		return 12;
+	}
+	
 	public BedRoom(Position p) {
-		super(2, 12, 6, 3, p);
+		super(getHeight(), getWidth(), 6, 3, p);
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 3; i++)
 		    this.furniture.add(new Bed());
