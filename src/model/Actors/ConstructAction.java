@@ -31,7 +31,7 @@ public class ConstructAction extends Action {
 				.getRow() + room.getRequiredHeight(); r++) {
 			for (int c = room.getPosition().getCol(); c < room.getPosition()
 					.getCol() + room.getRequiredWidth(); c++) {
-				Position p = new Position(r, Math.floorMod(r, Game.getMap()
+				Position p = new Position(r, Math.floorMod(c, Game.getMap()
 								.getTotalWidth()));
 				blocksToChange.add(p);
 				// PlayerControlledActor.addActionToPlayerPool(new
