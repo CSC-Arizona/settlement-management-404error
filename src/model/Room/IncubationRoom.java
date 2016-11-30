@@ -31,6 +31,14 @@ public class IncubationRoom extends Room {
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 
+	public static int getHeight() {
+		return requiredHeight;
+	}
+	
+	public static int getWidth() {
+		return requiredWidth;
+	}
+	
 	public IncubationRoom(Position p) {
 		super(requiredHeight, requiredWidth, roomCapacity, upgradesAllowed, p);
 		reqFurniture = new TreeMap<Position, Furniture>();

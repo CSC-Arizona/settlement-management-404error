@@ -1,22 +1,20 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
+import javax.swing.SwingConstants;
 
-import model.Map.Map;
+import model.Save.SaveFile;
 import controller.Controller;
 
 /**
@@ -45,7 +43,6 @@ public class StartingView extends JPanel {
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.setOpaque(true);
 		verticalBox.setBackground(Color.black);
-
 		verticalBox.add(Box.createVerticalGlue());
 
 		titleLabel = new JLabel("This is the name of the game");
@@ -56,7 +53,7 @@ public class StartingView extends JPanel {
 		newGameLabel.setBackground(Color.blue);
 		newGameLabel.setOpaque(true);
 
-		loadGameLabel = new JLabel("Load game (not implemented)");
+		loadGameLabel = new JLabel("Load game");
 		loadGameLabel.setForeground(Color.red);
 
 		verticalBox.add(titleLabel);
@@ -68,27 +65,27 @@ public class StartingView extends JPanel {
 		panel.add(verticalBox, new GridBagConstraints());
 		this.add(panel);
 		this.addKeyListener(new MyKeyListener());
-		
+
 		this.setFocusable(true);
 		this.setRequestFocusEnabled(true);
 		this.grabFocus();
 	}
-	
+
 	private void toggleMenu() {
 		if (menuSelection == 0) {
 			menuSelection = 1;
 			newGameLabel.setBackground(null);
 			newGameLabel.setOpaque(false);
-			
+
 			loadGameLabel.setBackground(Color.blue);
 			loadGameLabel.setOpaque(true);
-			
+
 		} else {
 			menuSelection = 0;
-			
+
 			newGameLabel.setBackground(Color.blue);
 			newGameLabel.setOpaque(true);
-			
+
 			loadGameLabel.setBackground(null);
 			loadGameLabel.setOpaque(false);
 		}
@@ -115,6 +112,16 @@ public class StartingView extends JPanel {
 			case KeyEvent.VK_ENTER:
 				if (menuSelection == 0) {
 					controller.startNewGame();
+				} else {
+					List<String> possibilities = SaveFile.getSavedFiles();
+					String[] array = possibilities.toArray(new String[0]);
+
+					String savename = (String) JOptionPane.showInputDialog(
+							controller, "Choose a file to load", "",
+							JOptionPane.PLAIN_MESSAGE, null, array, "ham");
+					if (savename != null) {
+						controller.loadGame(new SaveFile(savename));
+					}
 				}
 				break;
 			}

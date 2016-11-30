@@ -3,7 +3,10 @@ package model.Save;
 import java.io.Serializable;
 import java.util.LinkedList;
 
+import model.Actors.ActionPool;
 import model.Actors.Actor;
+import model.Actors.EnemyActor;
+import model.Actors.PlayerControlledActor;
 import model.Game.Game;
 import model.Map.Map;
 
@@ -19,6 +22,8 @@ public class Save implements Serializable {
 	private static final long serialVersionUID = 8859099312060885013L;
 	private Map map;
 	private LinkedList<Actor> allActors;
+	private ActionPool playerActionPool = new ActionPool();
+	private ActionPool enemyActionPool = new ActionPool();
 	
 	public Save(){
 		map = Game.getMap();
@@ -28,6 +33,8 @@ public class Save implements Serializable {
 	public void setState(){
 		Game.setMap(map);
 		Actor.allActors = allActors;
+		PlayerControlledActor.playerActionPool = playerActionPool;
+		EnemyActor.enemyActionPool = enemyActionPool;
 	}
 
 }

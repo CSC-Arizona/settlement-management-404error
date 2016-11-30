@@ -124,6 +124,9 @@ public class PlayerControlledActor extends Actor {
 	@SuppressWarnings("static-access")
 	@Override
 	public ActionPool getActionPool() {
+		if (playerActionPool== null) {
+			playerActionPool = new ActionPool();
+		}
 		return this.playerActionPool;
 	}
 

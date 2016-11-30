@@ -14,7 +14,7 @@ import model.Map.Map;
  */
 public final class Game {
 	private static Map map;
-
+	
 	/**
 	 * @return the map
 	 */

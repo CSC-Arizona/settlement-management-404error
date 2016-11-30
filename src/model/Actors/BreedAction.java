@@ -88,6 +88,9 @@ public class BreedAction extends Action {
 					return action;
 			}
 		}
+		else {
+			//TODO: Build new Incubation room
+		}
 		return 0;
 	}
 	

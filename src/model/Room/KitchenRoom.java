@@ -29,8 +29,16 @@ public class KitchenRoom extends Room {
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
+	public static int getHeight() {
+		return 2;
+	}
+	
+	public static int getWidth() {
+		return 6;
+	}
+	
 	public KitchenRoom(Position p) {
-		super(2, 6, 3, 1, p);
+        super(getHeight(), getWidth(), 3, 1, p);
 		this.reqFurniture = new TreeMap<Position, Furniture>();
 		reqFurniture.put(new Position(0,0), new Fireplace());
 		reqFurniture.put(new Position(0,2), new MillingMachine());

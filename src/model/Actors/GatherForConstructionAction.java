@@ -25,7 +25,9 @@ public class GatherForConstructionAction extends Action {
 		this.room = room;
 		durability = Integer.MAX_VALUE;
 		if (Game.getMap()
-				.getBuildingBlock(position.getRow(), position.getCol())
+				.getBuildingBlock(position.getRow(),
+						Math.floorMod(position.getCol(), Game.getMap()
+								.getTotalWidth()))
 				.isDestroyable()) {
 			this.designation = Game.getMap().getBuildingBlock(position)
 					.getDesignation();
@@ -133,17 +135,18 @@ public class GatherForConstructionAction extends Action {
 	 * Replaces the block with the correct replacement
 	 */
 	private void replace() {
-		if (designation == Designation.DIGGING) {
-			Game.getMap().setBuildingBlock(position, room.getAppropriateBlock());
-		} else if (designation == Designation.CUTTING_DOWN_TREES) {
+		if (designation == Designation.DIGGING)
+			Game.getMap()
+					.setBuildingBlock(position, room.getAppropriateBlock());
+		else if (designation == Designation.CUTTING_DOWN_TREES) {
 			AppleTree tree = Game.getMap().getTree(position);
 			if (tree != null) {
 				tree.removeFromMap();
 			}
-		} else {
-			Game.getMap().setBuildingBlock(position, room.getAppropriateBlock());
-			//Game.getMap().setBuildingBlock(position, new AirBlock());
-		}
+		} else
+			Game.getMap()
+					.setBuildingBlock(position, room.getAppropriateBlock());
+		// Game.getMap().setBuildingBlock(position, new AirBlock());
 	}
 
 	/**

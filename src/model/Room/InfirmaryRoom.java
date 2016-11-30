@@ -31,8 +31,16 @@ public class InfirmaryRoom extends Room {
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
+	public static int getHeight() {
+		return 2;
+	}
+	
+	public static int getWidth() {
+		return 4;
+	}
+	
 	public InfirmaryRoom(Position p) {
-		super(2, 4, 8, 2, p);
+        super(getHeight(), getWidth(), 8, 2, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
 		reqFurniture.put(new Position(0,0), new HealingBed());
 		reqFurniture.put(new Position(0,2), new HealingBed());

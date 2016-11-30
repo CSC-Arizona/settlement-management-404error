@@ -1,5 +1,6 @@
 package model.Map;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EarthBlock;
 import model.BuildingBlocks.LeafBlock;
 
-public class AppleTree {
+public class AppleTree implements Serializable {
 
 	private ArrayList<Position> trunk;
 	private ArrayList<Integer[]> leaves;

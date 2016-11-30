@@ -13,7 +13,7 @@ public class EnemyActor extends Actor {
 	
 	private static final long serialVersionUID = 2745479477703967043L;
 	public static LinkedList<Actor> allActors;
-	private static ActionPool enemyActionPool;
+	public static ActionPool enemyActionPool;
 
 	/**
 	 * @param health
@@ -43,6 +43,9 @@ public class EnemyActor extends Actor {
 	 */
 	@Override
 	public ActionPool getActionPool() {
+		if (enemyActionPool== null) {
+			enemyActionPool = new ActionPool();
+		}
 		return enemyActionPool;
 	}
 	
