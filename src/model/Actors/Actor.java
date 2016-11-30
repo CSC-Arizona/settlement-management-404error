@@ -101,7 +101,7 @@ public abstract class Actor implements Serializable {
 		} else if (result == Action.Pool) {
 			idle = true;
 			getActionPool().add(queue.poll());
-			//performAction();
+			performAction(attempts+1);
 		} else if (result == Action.DELAY) {
 			// if the Action needs to be delayed, execute the next action
 			idle = true;
