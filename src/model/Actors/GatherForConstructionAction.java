@@ -151,8 +151,8 @@ public class GatherForConstructionAction extends Action {
 	 */
 	private Position getMoveLocation() {
 		// check to see if a nearby location is valid
-		for (int r = position.getRow() - 1; r < position.getRow() + 1; r++) {
-			for (int c = position.getCol() - 1; c < position.getCol() + 1; c++) {
+		for (int r = position.getRow() - 1; r <= position.getRow() + 1; r++) {
+			for (int c = position.getCol() - 1; c <= position.getCol() + 1; c++) {
 				if (Game.validActorLocation(r, c))
 					return new Position(r, c);
 			}
