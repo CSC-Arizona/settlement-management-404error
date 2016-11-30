@@ -18,5 +18,10 @@ public class AppleSeedItem extends Item {
 	public AppleSeedItem() {
 		super(false, attackMod, healthPts, 0.2);
 	}
+
+	@Override
+	public String toString() {
+		return "Apple seed";
+	}
 	
 }

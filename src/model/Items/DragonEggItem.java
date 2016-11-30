@@ -19,4 +19,9 @@ public class DragonEggItem extends Item {
 		super(edible, attackMod, healthPts, weight);
 	}
 
+	@Override
+	public String toString() {
+		return "Dragon egg";
+	}
+
 }

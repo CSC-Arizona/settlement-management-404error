@@ -22,7 +22,7 @@ public class UltraSword extends Weapon {
 	private List<Item> usList;
 	
 	public UltraSword() {
-		super(attackMod, 0, 39.0);
+		super(attackMod, 0, 39.0, "Ultra sword");
 		usList = new LinkedList<>();
 		usList.add(new WoodItem());
 		usList.add(new StoneItem());

@@ -21,7 +21,7 @@ public class FortifiedStoneAxe extends Weapon {
 	private List<Item> fsaList;
 	
 	public FortifiedStoneAxe() {
-		super(attackMod, 0, 16.0);
+		super(attackMod, 0, 16.0, "Fortified stone axe");
 		fsaList = new LinkedList<>();
 		fsaList.add(new WoodItem());
 		fsaList.add(new WoodItem());

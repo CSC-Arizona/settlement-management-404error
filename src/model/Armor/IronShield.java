@@ -21,7 +21,7 @@ public class IronShield extends Armor {
 	private List<Item> isList;
 	
 	public IronShield() {
-		super(false, attackMod, 0, 21.0, defenseMod);
+		super(false, attackMod, 0, 21.0, defenseMod, "Iron shield");
 		isList = new LinkedList<>();
 		isList.add(new IronItem());
 		isList.add(new IronItem());

@@ -17,4 +17,9 @@ public class StoneItem extends Item {
 	public StoneItem() {
 		super(false, attackMod, 0, 5.0);
 	}
+
+	@Override
+	public String toString() {
+		return "Stone";
+	}
 }

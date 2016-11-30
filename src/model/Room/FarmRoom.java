@@ -9,6 +9,8 @@ import model.Actors.Position;
 import model.BuildingBlocks.AppleTreeLeafBlock;
 import model.BuildingBlocks.AppleTreeTrunkBlock;
 import model.BuildingBlocks.BuildingBlock;
+import model.BuildingBlocks.FarmRoomBlock;
+import model.BuildingBlocks.TunnelBlock;
 import model.BuildingBlocks.WheatBlock;
 import model.Furniture.Furniture;
 import model.Items.Item;
@@ -107,5 +109,11 @@ public class FarmRoom extends Room {
 	public TreeMap<Position, Furniture> getFurniture() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public BuildingBlock getAppropriateBlock() {
+		// TODO Auto-generated method stub
+		return new FarmRoomBlock();
 	}
 }

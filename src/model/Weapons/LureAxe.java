@@ -22,7 +22,7 @@ public class LureAxe extends Weapon {
 	private List<Item> laList;
 	
 	public LureAxe() {
-		super(attackMod, 1, 11.5);
+		super(attackMod, 1, 11.5, "Lure axe");
 		laList = new LinkedList<>();
 		laList.add(new WoodItem());
 		laList.add(new WoodItem());

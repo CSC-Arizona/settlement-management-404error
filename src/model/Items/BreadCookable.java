@@ -21,4 +21,9 @@ public class BreadCookable extends CookableItem {
 		reqIngredients.add(new WheatItem());
 		return reqIngredients;
 	}
+
+	@Override
+	public String toString() {
+		return "Bread (heals 10 hp)";
+	}
 }

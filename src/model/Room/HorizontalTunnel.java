@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.TreeMap;
 
 import model.Actors.Position;
+import model.BuildingBlocks.BuildingBlock;
+import model.BuildingBlocks.TunnelBlock;
 import model.Furniture.Furniture;
 import model.Furniture.Ladder;
 import model.Items.Item;
@@ -40,6 +42,11 @@ public class HorizontalTunnel extends Room {
 	@Override
 	public TreeMap<Position, Furniture> getFurniture() {
 		return null;
+	}
+
+	@Override
+	public BuildingBlock getAppropriateBlock() {
+        return new TunnelBlock();
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.TreeMap;
 
 import model.Actors.Position;
+import model.BuildingBlocks.BuildingBlock;
+import model.BuildingBlocks.StoreRoomBlock;
 import model.Furniture.BasicCrate;
 import model.Furniture.Furniture;
 import model.Items.IronItem;
@@ -72,5 +74,11 @@ public class StoreRoom extends Room{
 	public TreeMap<Position, Furniture> getFurniture() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public BuildingBlock getAppropriateBlock() {
+		// TODO Auto-generated method stub
+		return new StoreRoomBlock();
 	}
 }

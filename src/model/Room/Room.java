@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.TreeMap;
 
 import model.Actors.Position;
+import model.BuildingBlocks.BuildingBlock;
 import model.Furniture.Furniture;
 import model.Items.Item;
+import model.Menus.RequiredItemsList;
 
 /**
  * Room is an abstract class that is extended by all the possible structures that can be built.
@@ -41,6 +43,7 @@ public abstract class Room {
 	private int upgradesAllowed;
 	private int numAgentsInRoom;
 	private Position pos;
+	private RequiredItemsList ril;
 	
 	public Room(int requiredHeight, int requiredWidth, int roomCapacity, int upgradesAllowed, Position pos) {
 		this.requiredHeight = requiredHeight;
@@ -137,6 +140,17 @@ public abstract class Room {
 		}
 	}
 	
+	public String reqMaterialsToString() {
+		if (this.ril == null) {
+			ril = new RequiredItemsList();
+			if (this.getRequiredBuildMaterials() != null) {
+				for (Item i : this.getRequiredBuildMaterials())
+					ril.addItem(i);
+			}
+		}
+		return ril.toString();
+	}
+	
 	/*
 	 * Returns a list of the Items required to build the Room 
 	 */
@@ -151,4 +165,6 @@ public abstract class Room {
 	 * Returns the amount a Room's capacity gets increased by with each upgrade
 	 */
 	abstract public int increaseCapacityBy();
+	
+	abstract public BuildingBlock getAppropriateBlock();
 }

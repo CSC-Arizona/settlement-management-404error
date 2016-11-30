@@ -19,4 +19,9 @@ public class AntLarvaItem extends Item {
 	public AntLarvaItem() {
 		super(true, attackMod, healthPts, 0.5);
 	}
+
+	@Override
+	public String toString() {
+		return "Ant larva";
+	}
 }

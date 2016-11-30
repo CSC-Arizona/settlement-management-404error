@@ -21,13 +21,12 @@ public class BasicIronAxe extends Weapon {
 	private List<Item> basicIronAxeList;
 	
 	public BasicIronAxe() {
-		super(attackMod, 0, 18.0);
+		super(attackMod, 0, 18.0, "Basic iron axe");
 		basicIronAxeList = new LinkedList<>();
 		basicIronAxeList.add(new WoodItem());
 		basicIronAxeList.add(new WoodItem());
 		basicIronAxeList.add(new StoneItem());
 		basicIronAxeList.add(new IronItem());
-		
 	}
 
 	@Override

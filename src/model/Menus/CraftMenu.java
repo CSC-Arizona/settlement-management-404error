@@ -31,7 +31,7 @@ import model.Weapons.UltraSword;
 //and what items they need to craft said item
 public class CraftMenu implements TableModel {
 	
-	private HashMap<String, List<Item>> craftableItems;
+	private HashMap<String, String> craftableItems;
 	private static CraftMenu craftMenu;
 	
 	private CraftMenu() {
@@ -49,28 +49,28 @@ public class CraftMenu implements TableModel {
 	//TODO: Figure out if we want cookable items to be added to this list, or if they should have their own menu/process of creation
 	private void addCraftableItems() {
 		//Cookable Items
-		craftableItems.put("Ant Larva Pie", new AntLarvaPieCookable().getRequiredIngredients());
-		craftableItems.put("Apple Pie", new ApplePieCookable().getRequiredIngredients());
-		craftableItems.put("Bread", new BreadCookable().getRequiredIngredients());
+		craftableItems.put("Ant Larva Pie", new AntLarvaPieCookable().reqMaterialsToString());
+		craftableItems.put("Apple Pie", new ApplePieCookable().reqMaterialsToString());
+		craftableItems.put("Bread", new BreadCookable().reqMaterialsToString());
 		
 		//Armor
-		craftableItems.put("Wood Shield", new WoodShield().getRequiredMaterials());
-		craftableItems.put("Stone Shield", new StoneShield().getRequiredMaterials());
-		craftableItems.put("Iron Shield", new IronShield().getRequiredMaterials());
-		craftableItems.put("Great Shield", new GreatShield().getRequiredMaterials());
-		craftableItems.put("Wood Chest Plate", new WoodChestPlate().getRequiredMaterials());
-		craftableItems.put("Stone Chest Plate", new StoneChestPlate().getRequiredMaterials());
-		craftableItems.put("Iron Chest Plate", new IronChestPlate().getRequiredMaterials());
-		craftableItems.put("Great Chest Plate", new GreatChestPlate().getRequiredMaterials());
+		craftableItems.put("Wood Shield", new WoodShield().reqMaterialsToString());
+		craftableItems.put("Stone Shield", new StoneShield().reqMaterialsToString());
+		craftableItems.put("Iron Shield", new IronShield().reqMaterialsToString());
+		craftableItems.put("Great Shield", new GreatShield().reqMaterialsToString());
+		craftableItems.put("Wood Chest Plate", new WoodChestPlate().reqMaterialsToString());
+		craftableItems.put("Stone Chest Plate", new StoneChestPlate().reqMaterialsToString());
+		craftableItems.put("Iron Chest Plate", new IronChestPlate().reqMaterialsToString());
+		craftableItems.put("Great Chest Plate", new GreatChestPlate().reqMaterialsToString());
 		
 		//Weapons
-		craftableItems.put("Basic Stone Axe", new BasicStoneAxe().getRequiredMaterials());
-		craftableItems.put("Fortified Stone Axe", new FortifiedStoneAxe().getRequiredMaterials());
-		craftableItems.put("Basic Iron Axe", new BasicIronAxe().getRequiredMaterials());
-		craftableItems.put("Fortified Iron Axe", new FortifiedIronAxe().getRequiredMaterials());
-		craftableItems.put("Lure Axe", new LureAxe().getRequiredMaterials());
-		craftableItems.put("Basic Sword", new BasicSword().getRequiredMaterials());
-		craftableItems.put("Ultra Sword", new UltraSword().getRequiredMaterials());
+		craftableItems.put("Basic Stone Axe", new BasicStoneAxe().reqMaterialsToString());
+		craftableItems.put("Fortified Stone Axe", new FortifiedStoneAxe().reqMaterialsToString());
+		craftableItems.put("Basic Iron Axe", new BasicIronAxe().reqMaterialsToString());
+		craftableItems.put("Fortified Iron Axe", new FortifiedIronAxe().reqMaterialsToString());
+		craftableItems.put("Lure Axe", new LureAxe().reqMaterialsToString());
+		craftableItems.put("Basic Sword", new BasicSword().reqMaterialsToString());
+		craftableItems.put("Ultra Sword", new UltraSword().reqMaterialsToString());
 	}
 
 	@Override

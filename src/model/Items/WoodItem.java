@@ -17,4 +17,9 @@ public class WoodItem extends Item {
 	public WoodItem() {
 		super(false, attackMod, 0, 3.0);
 	}
+
+	@Override
+	public String toString() {
+		return "Wood";
+	}
 }

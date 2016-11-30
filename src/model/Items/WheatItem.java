@@ -13,6 +13,11 @@ public class WheatItem extends Item {
 	public WheatItem() {
 		super(true, attackMod, healthPts, 1);
 	}
+
+	@Override
+	public String toString() {
+		return "Wheat";
+	}
 	
 	
 
