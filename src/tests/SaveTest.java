@@ -53,7 +53,7 @@ public class SaveTest {
 		Map oldMap = Game.getMap();
 		
 		// save the current state
-		SaveFile.save();
+		new SaveFile("test").save();
 
 		//flush out the old state and create a new state
 		int[][] mapGen2 = new int[][] {{ 0, 0, 0, 0, 0 }, 
@@ -75,7 +75,7 @@ public class SaveTest {
 		assertTrue(Actor.allActors.contains(bad2));
 		assertTrue(Actor.allActors.contains(bad3));
 		
-		SaveFile.load();
+		new SaveFile().load("test");
 		
 		//test if the map is the same
 		for(int i = 0; i < mapGen.length; i++){

@@ -2,11 +2,14 @@ package controller;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.Actors.GatherAction;
@@ -20,6 +23,7 @@ import model.Game.Game;
 import model.Map.AppleTree;
 import model.Map.Map;
 import model.Map.MapParameters;
+import model.Save.SaveFile;
 import view.BasicView;
 import view.StartingView;
 
@@ -47,6 +51,8 @@ public class Controller extends JFrame {
 
 	private int windowWidth = 1000;
 	private int windowHeight = 700;
+
+	private SaveFile saveFile;
 
 	public void togglePaused() {
 		if (isPaused()) {
@@ -138,7 +144,9 @@ public class Controller extends JFrame {
 	}
 
 	public void stopTimer() {
-		this.timer.cancel();
+		if (timer != null) {
+			this.timer.cancel();
+		}
 		paused = true;
 	}
 
@@ -174,19 +182,40 @@ public class Controller extends JFrame {
 
 			startingView = new StartingView(this);
 			this.add(startingView);
+			this.revalidate();
 		}
 	}
 
+	public void loadGame(SaveFile saveFile) {
+		this.saveFile = saveFile;
+		this.saveFile.load(this.saveFile.getSavename());
+		time = Game.getMap().getTime();
+		setUpMap();
+		
+	}
+
+	/**
+	 * Start a new game from scratch
+	 */
 	public void startNewGame() {
+		this.saveFile = new SaveFile();
 
 		map = new Map(mapParameters, random);
+
 		Game.setMap(map);
+		setUpMap();
+	}
+
+	private void setUpMap() {
 		getContentPane().removeAll();
-		basicView = new BasicView(this, map, mapParameters);
+		basicView = new BasicView(this, mapParameters);
 		this.add(basicView);
 
 		startTimer();
 
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowCloser());
+		
 		basicView.setFocusable(true);
 		basicView.setRequestFocusEnabled(true);
 		basicView.grabFocus();
@@ -200,13 +229,62 @@ public class Controller extends JFrame {
 			time += 1;
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();
-			map.updateActors(timeDelta);
+			Game.getMap().updateActors(timeDelta);
+			Game.getMap().setTime(time);
 			basicView.repaint();
 		}
 	}
 
 	public Map getMap() {
 		return map;
+	}
+
+	private class WindowCloser implements WindowListener {
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+		}
+
+		@Override
+		public void windowOpened(WindowEvent e) {
+		}
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			stopTimer();
+
+			int dialogButton = JOptionPane.YES_NO_CANCEL_OPTION;
+
+			int response = JOptionPane.showConfirmDialog(null,
+					"Do you want to save the game?", "Warning", dialogButton);
+
+			if (response == 0) {
+				// yes
+				saveFile.save();
+				System.exit(0);
+			} else if (response == 1) {
+				// no
+				System.exit(0);
+			} else {
+				startTimer();
+			}
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+		}
+
+		@Override
+		public void windowActivated(WindowEvent e) {
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+		}
 	}
 
 }

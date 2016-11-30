@@ -28,6 +28,7 @@ import controller.Controller;
 import controller.Designation;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
+import model.Game.Game;
 import model.Items.Item;
 import model.Map.Map;
 import model.Map.MapParameters;
@@ -35,7 +36,6 @@ import model.Map.MapParameters;
 public class BasicView extends JPanel {
 
 	private static final long serialVersionUID = -8807654664923090784L;
-	private Map map;
 	private Box box;
 	private JPanel guiPanel;
 	private JPanel labelPanel;
@@ -108,7 +108,7 @@ public class BasicView extends JPanel {
 	}
 
 	public void setMouseDescriptionLabel() {
-		String mouseDescription = map.getBuildingBlock(mouseY, mouseX)
+		String mouseDescription = Game.getMap().getBuildingBlock(mouseY, mouseX)
 				.toString();
 
 		mouseDescription += "</html>";
@@ -116,16 +116,11 @@ public class BasicView extends JPanel {
 		mouseDescriptionLabel.setText("<html>Selected: " + mouseDescription);
 	}
 
-	public BasicView(Controller controller, Map map, MapParameters mapParameters) {
+	public BasicView(Controller controller, MapParameters mapParameters) {
 		this.controller = controller;
 		this.setVisible(true);
-		this.map = map;
 		this.mapWidth = mapParameters.mapWidth;
 		this.mapHeight = mapParameters.mapHeight;
-
-		//box = new Box(BoxLayout.Y_AXIS);
-		//box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		//box.add(Box.createVerticalGlue());
 
 		guiPanel = new JPanel();
 		guiPanel.setLayout(new GridLayout(1, 3));
@@ -136,8 +131,6 @@ public class BasicView extends JPanel {
 		addButtonPanel();
 		addLogPanel();
 		addDrawingPanel();
-
-		//add(box);
 
 		this.addKeyListener(new MyKeyListener());
 		
@@ -244,7 +237,7 @@ public class BasicView extends JPanel {
 					int col = visibleCornerX + j;
 					col = Math.floorMod(col, mapWidth);
 
-					Color color = map.getBuildingBlock(row, col).getColor();
+					Color color = Game.getMap().getBuildingBlock(row, col).getColor();
 					g2.setColor(color);
 					g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
 							blockSizeY);
@@ -252,7 +245,7 @@ public class BasicView extends JPanel {
 					g2.drawRect(j * blockSizeX, i * blockSizeY, blockSizeX,
 							blockSizeY);
 
-					List<Actor> actors = map.getBuildingBlock(row, col)
+					List<Actor> actors = Game.getMap().getBuildingBlock(row, col)
 							.getActors();
 					if (actors != null) {
 						int size = actors.size();
@@ -265,22 +258,22 @@ public class BasicView extends JPanel {
 						}
 					}
 
-					Furniture furniture = map.getBuildingBlock(row, col)
+					Furniture furniture = Game.getMap().getBuildingBlock(row, col)
 							.getFurniture();
 					if (furniture != null) {
 						g2.drawString("F", j * blockSizeX + blockSizeX / 2,
 								(i + 1) * blockSizeY);
 					}
 
-					if (map.getBuildingBlock(row, col).isDesignated()) {
+					if (Game.getMap().getBuildingBlock(row, col).isDesignated()) {
 						g2.drawString(""
-								+ map.getBuildingBlock(row, col)
+								+ Game.getMap().getBuildingBlock(row, col)
 										.getDesignation().keyboardShortcut, j
 								* blockSizeX + blockSizeX / 2, (i + 1)
 								* blockSizeY);
 					}
 
-					List<Item> itemsOnGround = map.getBuildingBlock(row, col)
+					List<Item> itemsOnGround = Game.getMap().getBuildingBlock(row, col)
 							.itemsOnGround();
 					if (itemsOnGround != null) {
 						if (itemsOnGround.size() != 0) {

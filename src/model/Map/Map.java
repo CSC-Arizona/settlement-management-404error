@@ -52,6 +52,8 @@ public class Map implements Serializable {
 	private ArrayList<Position> itemsOnGround = new ArrayList<>();
 	// using anthillLocations to determine "random" spawn points for ants
     private ArrayList<Position> anthillLocations = new ArrayList<>();
+    
+    private int time;
 
 	public Map(MapParameters mapParameters, Random random) {
 		this.blocksMarkedAsDesignated = new HashMap<>();
@@ -606,6 +608,14 @@ public class Map implements Serializable {
 			}
 		}
 		return null;
+	}
+	
+	public void setTime(int time) {
+		this.time = time;
+	}
+	
+	public int getTime() {
+		return time;
 	}
 
 }
