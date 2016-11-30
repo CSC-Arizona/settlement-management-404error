@@ -31,8 +31,6 @@ public class ConstructAction extends Action {
 			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
 				Position p = new Position(r, Math.floorMod(c, Game.getMap().getTotalWidth()));
 				blocksToChange.add(p);
-				// PlayerControlledActor.addActionToPlayerPool(new
-				// GatherAction(p));
 				PlayerControlledActor.addActionToPlayerPool(new GatherAction(p));
 			}
 		}
@@ -48,7 +46,7 @@ public class ConstructAction extends Action {
 		// check to see if the action is complete
 		boolean complete = true;
 		for (Position p : blocksToChange) {
-			if (!Game.getMap().getBuildingBlock(p).isOccupiable())
+			if (Game.getMap().getBuildingBlock(p).isDestroyable())
 				complete = false;
 			else
 				Game.getMap().setBuildingBlock(p, room.getAppropriateBlock());

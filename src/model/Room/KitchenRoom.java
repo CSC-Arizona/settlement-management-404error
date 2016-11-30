@@ -40,8 +40,8 @@ public class KitchenRoom extends Room {
 	public KitchenRoom(Position p) {
         super(getHeight(), getWidth(), 3, 1, p);
 		this.reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0,0), new Fireplace());
-		reqFurniture.put(new Position(0,2), new MillingMachine());
+		reqFurniture.put(new Position(1,0), new Fireplace());
+		reqFurniture.put(new Position(1,2), new MillingMachine());
 		this.furniture = new LinkedList<>();
 
 	    this.furniture.add(new Fireplace());
