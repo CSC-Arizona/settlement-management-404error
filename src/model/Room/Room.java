@@ -132,6 +132,7 @@ public abstract class Room {
 	 */
 	public boolean upgradeRoom() {
 		if (this.getUpgradesAllowed() > 0) {
+			this.performUpgrade(getUpgradesAllowed());
 			this.decreaseUpgradesAllowed();
 		    this.increaseRoomCapacity(this.increaseCapacityBy());
 		    return true;
@@ -151,6 +152,14 @@ public abstract class Room {
 		return ril.toString();
 	}
 	
+	public boolean needsWalls() {
+		if (this.getClass().equals(new VerticalTunnel(new Position(0,0)).getClass()) || 
+				this.getClass().equals(new HorizontalTunnel(new Position(0,0)).getClass())) {
+			return false;
+		}
+		return true;
+	}
+	
 	/*
 	 * Returns a list of the Items required to build the Room 
 	 */
@@ -167,4 +176,6 @@ public abstract class Room {
 	abstract public int increaseCapacityBy();
 	
 	abstract public BuildingBlock getAppropriateBlock();
+	
+	abstract public void performUpgrade(int upgradeNum);
 }

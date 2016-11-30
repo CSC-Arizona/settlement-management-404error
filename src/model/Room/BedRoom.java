@@ -13,7 +13,7 @@ import model.Items.Item;
 
 /**
  * The BedRoom contains 3 Beds and has an initial max occupancy of six. An upgrade 
- * basically adds an additional HealingBed and increases the MaxOccupancy by 2. The
+ * basically adds an additional Bed and increases the MaxOccupancy by 2. The
  * width of the BedRoom is 12 and the number of upgrades allowed is three, so at full
  * upgraded status there will be one Bed per 2 squares in the room.
  * 
@@ -21,12 +21,17 @@ import model.Items.Item;
  */
 public class BedRoom extends Room {
 
+	private TreeMap<Position, Furniture> reqFurniture;
 	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
 	public BedRoom(Position p) {
 		super(2, 12, 6, 3, p);
+		reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0,0), new Bed());
+		reqFurniture.put(new Position(0, 2), new Bed());
+		reqFurniture.put(new Position(0, 4), new Bed());
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 3; i++)
 		    this.furniture.add(new Bed());
@@ -60,12 +65,17 @@ public class BedRoom extends Room {
 	 */
 	@Override
 	public TreeMap<Position, Furniture> getFurniture() {
-		// TODO Auto-generated method stub
-		return null;
+		return reqFurniture;
 	}
 
 	@Override
 	public BuildingBlock getAppropriateBlock() {
 		return new BedRoomBlock();
+	}
+
+	@Override
+	public void performUpgrade(int upgradeNum) {
+		int pos = this.getRequiredWidth() - (2 * upgradeNum);
+		reqFurniture.put(new Position(0, pos), new Bed());
 	}
 }

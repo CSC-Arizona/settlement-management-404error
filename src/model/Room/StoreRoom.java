@@ -9,6 +9,8 @@ import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.StoreRoomBlock;
 import model.Furniture.BasicCrate;
 import model.Furniture.Furniture;
+import model.Furniture.MetalCrate;
+import model.Furniture.ReinforcedCrate;
 import model.Items.IronItem;
 import model.Items.Item;
 import model.Items.StoneItem;
@@ -24,12 +26,19 @@ import model.Items.StoneItem;
  */
 public class StoreRoom extends Room{
 
+	private TreeMap<Position, Furniture> reqFurniture;
 	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
 	public StoreRoom(Position p) {
 		super(2, 8, 3, 2, p);
+		reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0,0), new BasicCrate());
+		reqFurniture.put(new Position(0,2), new BasicCrate());
+		reqFurniture.put(new Position(0,4), new BasicCrate());
+		reqFurniture.put(new Position(0,6), new BasicCrate());
+		
 		this.furniture = new LinkedList<>();
 
 		for (int i = 0; i < 4; i++)
@@ -72,13 +81,22 @@ public class StoreRoom extends Room{
 	 */
 	@Override
 	public TreeMap<Position, Furniture> getFurniture() {
-		// TODO Auto-generated method stub
-		return null;
+		return reqFurniture;
 	}
 
 	@Override
 	public BuildingBlock getAppropriateBlock() {
-		// TODO Auto-generated method stub
 		return new StoreRoomBlock();
+	}
+
+	@Override
+	public void performUpgrade(int upgradeNum) {
+		if (upgradeNum == 2) {
+		    for (Position p : reqFurniture.keySet()) 
+		    	reqFurniture.put(p, new ReinforcedCrate());
+		} else if (upgradeNum == 1) {
+			for (Position p : reqFurniture.keySet()) 
+		    	reqFurniture.put(p, new MetalCrate());
+		}
 	}
 }

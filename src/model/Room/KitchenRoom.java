@@ -10,6 +10,7 @@ import model.BuildingBlocks.KitchenRoomBlock;
 import model.BuildingBlocks.TunnelBlock;
 import model.Furniture.Fireplace;
 import model.Furniture.Furniture;
+import model.Furniture.HealingBed;
 import model.Furniture.MillingMachine;
 import model.Items.Item;
 
@@ -23,12 +24,16 @@ import model.Items.Item;
  */
 public class KitchenRoom extends Room {
 
+	private TreeMap<Position, Furniture> reqFurniture;
 	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
 	public KitchenRoom(Position p) {
 		super(2, 6, 3, 1, p);
+		this.reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0,0), new Fireplace());
+		reqFurniture.put(new Position(0,2), new MillingMachine());
 		this.furniture = new LinkedList<>();
 
 	    this.furniture.add(new Fireplace());
@@ -63,13 +68,17 @@ public class KitchenRoom extends Room {
 	 */
 	@Override
 	public TreeMap<Position, Furniture> getFurniture() {
-		// TODO Auto-generated method stub
-		return null;
+		return reqFurniture;
 	}
 
 	@Override
 	public BuildingBlock getAppropriateBlock() {
-		// TODO Auto-generated method stub
 		return new KitchenRoomBlock();
+	}
+
+	@Override
+	public void performUpgrade(int upgradeNum) {
+		int pos = this.getRequiredWidth() - (2 * upgradeNum);
+		reqFurniture.put(new Position(0, pos), new Fireplace());
 	}
 }

@@ -4,6 +4,7 @@ import controller.Designation;
 import model.BuildingBlocks.AirBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.CavernBlock;
+import model.BuildingBlocks.RoomWallBlock;
 import model.Game.Game;
 import model.Items.Item;
 import model.Map.AppleTree;
@@ -132,16 +133,17 @@ public class GatherForConstructionAction extends Action {
 	 * Replaces the block with the correct replacement
 	 */
 	private void replace() {
-		if (designation == Designation.DIGGING)
+		if (designation == Designation.DIGGING) {
 			Game.getMap().setBuildingBlock(position, room.getAppropriateBlock());
-		else if (designation == Designation.CUTTING_DOWN_TREES) {
+		} else if (designation == Designation.CUTTING_DOWN_TREES) {
 			AppleTree tree = Game.getMap().getTree(position);
 			if (tree != null) {
 				tree.removeFromMap();
 			}
-		} else
+		} else {
 			Game.getMap().setBuildingBlock(position, room.getAppropriateBlock());
 			//Game.getMap().setBuildingBlock(position, new AirBlock());
+		}
 	}
 
 	/**

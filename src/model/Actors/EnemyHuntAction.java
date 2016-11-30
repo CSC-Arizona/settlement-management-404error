@@ -5,7 +5,7 @@ package model.Actors;
 
 /**
  * The action used by the opposition to 
- * hunt and kill the play controlled charcters
+ * hunt and kill the play controlled characters
  * @author Jonathon Davis
  *
  */

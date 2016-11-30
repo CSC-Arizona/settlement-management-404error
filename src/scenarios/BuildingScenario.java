@@ -30,10 +30,6 @@ public class BuildingScenario {
 		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(47, 983))));
 		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(49, 983))));
 		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new StoreRoom(new Position(49, 984))));
-		//PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(51, 983))));
-		//PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(53, 983))));
-		//PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(55, 983))));
-		//PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new EntertainmentRoom(new Position(52, 984))));
 	}
 
 }

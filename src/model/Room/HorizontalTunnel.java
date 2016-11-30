@@ -17,8 +17,11 @@ import model.Items.Item;
  */
 public class HorizontalTunnel extends Room {
 
+	private TreeMap<Position, Furniture> reqFurniture;
+	
 	public HorizontalTunnel(Position p) {
 		super(1, 2, 10, 0, p);
+		reqFurniture = new TreeMap<Position, Furniture>();
 	}
 
 	@Override
@@ -41,12 +44,17 @@ public class HorizontalTunnel extends Room {
 	 */
 	@Override
 	public TreeMap<Position, Furniture> getFurniture() {
-		return null;
+		return reqFurniture;
 	}
 
 	@Override
 	public BuildingBlock getAppropriateBlock() {
         return new TunnelBlock();
+	}
+
+	@Override
+	public void performUpgrade(int upgradeNum) {
+		// do nothing
 	}
 
 }

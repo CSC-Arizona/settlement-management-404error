@@ -62,4 +62,9 @@ public class VerticalTunnel extends Room {
 		return new TunnelBlock();
 	}
 
+	@Override
+	public void performUpgrade(int upgradeNum) {
+		// do nothing
+	}
+
 }

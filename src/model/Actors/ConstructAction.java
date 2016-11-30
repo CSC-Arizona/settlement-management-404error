@@ -4,7 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Game.Game;
+import model.Room.HorizontalTunnel;
 import model.Room.Room;
+import model.Room.VerticalTunnel;
 
 /**
  * Prerequisite for ConstructAction: the square that is selected needs to have a
@@ -25,6 +27,7 @@ public class ConstructAction extends Action {
 		this.room = room;
 		this.blocksToChange = new LinkedList<>();
 		// add all the gather commands to clear out the room
+		Position pos = new Position(0,0);
 		for (int r = room.getPosition().getRow(); r < room.getPosition().getRow() + room.getRequiredHeight(); r++) {
 			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
 				Position p = new Position(r, c);

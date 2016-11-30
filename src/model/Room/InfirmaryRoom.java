@@ -8,6 +8,7 @@ import model.Actors.Position;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.InfirmaryRoomBlock;
 import model.BuildingBlocks.TunnelBlock;
+import model.Furniture.Bed;
 import model.Furniture.Furniture;
 import model.Furniture.HealingBed;
 import model.Items.Item;
@@ -25,12 +26,16 @@ import model.Items.Item;
  */
 public class InfirmaryRoom extends Room {
 
+	private TreeMap<Position, Furniture> reqFurniture;
 	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
 	public InfirmaryRoom(Position p) {
 		super(2, 4, 8, 2, p);
+		reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0,0), new HealingBed());
+		reqFurniture.put(new Position(0,2), new HealingBed());
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 2; i++)
 		    this.furniture.add(new HealingBed());
@@ -64,14 +69,18 @@ public class InfirmaryRoom extends Room {
 	 */
 	@Override
 	public TreeMap<Position, Furniture> getFurniture() {
-		// TODO Auto-generated method stub
-		return null;
+		return reqFurniture;
 	}
 
 	@Override
 	public BuildingBlock getAppropriateBlock() {
-		// TODO Auto-generated method stub
 		return new InfirmaryRoomBlock();
+	}
+
+	@Override
+	public void performUpgrade(int upgradeNum) {
+		int pos = this.getRequiredWidth() - (2 * upgradeNum);
+		reqFurniture.put(new Position(0, pos), new HealingBed());
 	}
 
 }

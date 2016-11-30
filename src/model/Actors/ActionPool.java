@@ -15,11 +15,11 @@ public class ActionPool implements Serializable {
 		actionQueue = new LinkedList<>();
 	}
 	
-	public Action get(){
+	public Action get() {
 		return actionQueue.poll();
 	}
 	
-	public void add(Action newAction){
+	public void add(Action newAction) {
 		actionQueue.add(newAction);
 	}
 

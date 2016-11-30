@@ -8,6 +8,7 @@ import model.Actors.Position;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.IncubationRoomBlock;
 import model.BuildingBlocks.TunnelBlock;
+import model.Furniture.Bed;
 import model.Furniture.Furniture;
 import model.Furniture.IncubationChamber;
 import model.Items.Item;
@@ -25,12 +26,16 @@ public class IncubationRoom extends Room {
 	private static int roomCapacity = 4;
 	private final static int upgradesAllowed = 3;
 	
+	private TreeMap<Position, Furniture> reqFurniture;
 	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 
 	public IncubationRoom(Position p) {
 		super(requiredHeight, requiredWidth, roomCapacity, upgradesAllowed, p);
+		reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0, 0), new IncubationChamber());
+		reqFurniture.put(new Position(0, 0), new IncubationChamber());
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 2; i++) {
 			this.furniture.add(new IncubationChamber());
@@ -67,14 +72,18 @@ public class IncubationRoom extends Room {
 	 */
 	@Override
 	public TreeMap<Position, Furniture> getFurniture() {
-		// TODO Auto-generated method stub
-		return null;
+		return reqFurniture;
 	}
 
 	@Override
 	public BuildingBlock getAppropriateBlock() {
-		// TODO Auto-generated method stub
 		return new IncubationRoomBlock();
+	}
+
+	@Override
+	public void performUpgrade(int upgradeNum) {
+		int pos = this.getRequiredWidth() - (2 * upgradeNum);
+		reqFurniture.put(new Position(0, pos), new IncubationChamber());
 	}
 
 }

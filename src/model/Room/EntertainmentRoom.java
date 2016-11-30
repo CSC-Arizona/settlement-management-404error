@@ -8,6 +8,7 @@ import model.Actors.Position;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.EntertainmentRoomBlock;
 import model.BuildingBlocks.TunnelBlock;
+import model.Furniture.Bed;
 import model.Furniture.Couch;
 import model.Furniture.Furniture;
 import model.Furniture.PoolTable;
@@ -23,12 +24,17 @@ import model.Items.Item;
  */
 public class EntertainmentRoom extends Room{
 
+	private TreeMap<Position, Furniture> reqFurniture;
 	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 
 	public EntertainmentRoom(Position p) {
-		super(2, 13, 8, 2, p);
+		super(2, 10, 8, 2, p);
+		reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0, 0), new Couch());
+		reqFurniture.put(new Position(0, 2), new Couch());
+		reqFurniture.put(new Position(0, 4), new PoolTable());
 		this.furniture = new LinkedList<>();
 		furniture.add(new PoolTable());
 		furniture.add(new Couch());
@@ -63,14 +69,18 @@ public class EntertainmentRoom extends Room{
 	 */
 	@Override
 	public TreeMap<Position, Furniture> getFurniture() {
-		// TODO Auto-generated method stub
-		return null;
+		return reqFurniture;
 	}
 
 	@Override
 	public BuildingBlock getAppropriateBlock() {
-		// TODO Auto-generated method stub
 		return new EntertainmentRoomBlock();
+	}
+
+	@Override
+	public void performUpgrade(int upgradeNum) {
+		int pos = this.getRequiredWidth() - (2 * upgradeNum);
+		reqFurniture.put(new Position(0, pos), new PoolTable());
 	}
 	
 	

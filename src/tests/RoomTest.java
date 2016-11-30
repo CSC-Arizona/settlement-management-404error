@@ -32,6 +32,27 @@ import model.Room.VerticalTunnel;
  *
  */
 public class RoomTest {
+	
+	@Test
+	public void testNeedsWalls() {
+		Position p = new Position(0,0);
+		BedRoom br = new BedRoom(p);
+		assertTrue(br.needsWalls());
+		EntertainmentRoom er = new EntertainmentRoom(p);
+		assertTrue(er.needsWalls());
+		FarmRoom fr = new FarmRoom(p);
+		assertTrue(fr.needsWalls());
+		HorizontalTunnel ht = new HorizontalTunnel(p);
+		assertFalse(ht.needsWalls());
+		IncubationRoom ir = new IncubationRoom(p);
+		assertTrue(ir.needsWalls());
+		KitchenRoom kr = new KitchenRoom(p);
+		assertTrue(kr.needsWalls());
+		StoreRoom sr = new StoreRoom(p);
+		assertTrue(sr.needsWalls());
+		VerticalTunnel vt = new VerticalTunnel(p);
+		assertFalse(vt.needsWalls());
+	}
 
 	@Test
 	public void testBedRoom() {

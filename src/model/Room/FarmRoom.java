@@ -23,6 +23,7 @@ import model.Items.Item;
  */
 public class FarmRoom extends Room {
 
+	private TreeMap<Position, Furniture> reqFurniture;
 	// state of 0 = empty plots, state of 1 = growing plots, state of 2 = ready to harvest
 	private int state;
 	private List<BuildingBlock> plantedBlocks;
@@ -107,13 +108,16 @@ public class FarmRoom extends Room {
 	 */
 	@Override
 	public TreeMap<Position, Furniture> getFurniture() {
-		// TODO Auto-generated method stub
-		return null;
+		return reqFurniture;
 	}
 
 	@Override
 	public BuildingBlock getAppropriateBlock() {
-		// TODO Auto-generated method stub
 		return new FarmRoomBlock();
+	}
+
+	@Override
+	public void performUpgrade(int upgradeNum) {
+		// do nothing
 	}
 }
