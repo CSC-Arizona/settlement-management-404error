@@ -559,6 +559,7 @@ public class Map implements Serializable {
 				Position newPosition = actor.getPosition();
 				map[newPosition.getRow()][newPosition.getCol()].addActor(actor);
 			}
+			//TODO: Every 1000 ticks, call breed action or construct incubation room if none built
 		}
 	}
 
