@@ -3,6 +3,7 @@ package controller;
 public enum Designation {
 	NONE                 ("Not doing anything",         "Doing something",     'n'),
 	ATTACKING            ("Stop attacking",             "Attack",              'a'),
+	CONSTRUCTING         ("Stop constructing",          "Construct",           'c'),
 	DIGGING              ("Stop digging",               "Dig",                 'd'),
 	REMOVING_DESIGNATIONS("Stop removing designations", "Remove designations", 'e'),
 	GATHERING_FRUIT      ("Stop gathering fruit",       "Gather fruit",        'f'),

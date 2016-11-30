@@ -28,8 +28,16 @@ public class StoreRoom extends Room{
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
+	public static int getHeight() {
+		return 2;
+	}
+	
+	public static int getWidth() {
+		return 8;
+	}
+	
 	public StoreRoom(Position p) {
-		super(2, 8, 3, 2, p);
+		super(getHeight(), getWidth(), 3, 2, p);
 		this.furniture = new LinkedList<>();
 
 		for (int i = 0; i < 4; i++)

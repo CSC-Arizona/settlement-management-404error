@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import model.Actors.ConstructAction;
 import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
@@ -91,6 +92,11 @@ public class Controller extends JFrame {
 							}
 						}
 					}
+				}
+				
+				if (getDesignatingAction() == Designation.CONSTRUCTING) {
+					map.getBuildingBlock(row, col).addDesignation(
+							Designation.CONSTRUCTING);
 				}
 
 				if (getDesignatingAction() == Designation.DIGGING) {
