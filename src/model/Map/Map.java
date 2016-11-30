@@ -553,11 +553,10 @@ public class Map implements Serializable {
 		if (Actor.allActors != null) {
 			for (Actor actor : Actor.allActors) {
 				Position oldPosition = actor.getPosition();
-				map[oldPosition.getRow()][oldPosition.getCol()]
-						.removeActor(actor);
+				map[oldPosition.getRow()%getTotalHeight()][oldPosition.getCol()%getTotalWidth()].removeActor(actor);
 				actor.update();
 				Position newPosition = actor.getPosition();
-				map[newPosition.getRow()][newPosition.getCol()].addActor(actor);
+				map[newPosition.getRow()%getTotalHeight()][newPosition.getCol()%getTotalWidth()].addActor(actor);
 			}
 			//TODO: Every 1000 ticks, call breed action or construct incubation room if none built
 		}
