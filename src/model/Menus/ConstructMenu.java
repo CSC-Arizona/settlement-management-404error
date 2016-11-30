@@ -31,7 +31,7 @@ public class ConstructMenu implements TableModel {
 	private HashMap<String, String> rooms;
 	private static ConstructMenu constructMenu;
 	
-	private ConstructMenu() {
+	public ConstructMenu() {
 		rooms = new HashMap<>();
 		addRooms();
 	}
@@ -52,6 +52,10 @@ public class ConstructMenu implements TableModel {
 		rooms.put("Kitchen", new KitchenRoom(new Position(0,0)).reqMaterialsToString());
 		rooms.put("Storeroom", new StoreRoom(new Position(0,0)).reqMaterialsToString());
 		rooms.put("Vertical Tunnel", new VerticalTunnel(new Position(0,0)).reqMaterialsToString());
+	}
+	
+	public HashMap<String, String> getRooms() {
+		return rooms;
 	}
 
 	@Override
