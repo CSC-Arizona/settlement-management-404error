@@ -5,6 +5,8 @@ package model.Actors;
 
 import java.io.Serializable;
 
+import model.Game.Game;
+
 /**
  * A position on the map, uses row col coordinates
  * 
@@ -71,7 +73,16 @@ public class Position implements Comparable<Position>, Serializable {
 	 */
 	public void setRow(int row) {
 		this.row = row;
-		
+	}
+	
+	public boolean isAdjacent(Position position){
+		return Math.abs(Math.floorMod(this.getCol(),Game.getMap().getTotalWidth()-1) - Math.floorMod(position.getCol(),Game.getMap().getTotalWidth()-1)) <= 1
+				&& Math.abs(this.getRow()
+						- position.getRow()) <= 1;
+	}
+	
+	public double distance(Position position){
+		return Math.sqrt(Math.pow((col-position.col),2) + Math.pow((row-position.row),2));
 	}
 
 }
