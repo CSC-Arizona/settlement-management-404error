@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import model.Actors.Actor;
-import model.Actors.BreedAction;
+import model.Actors.OldBreedAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
@@ -52,7 +52,7 @@ public class BreedActionTest {
 		Actor mate = new PlayerControlledActor(100, new Position(1,2));
 		
 		assertEquals(mapTypes[2][4].getFurniture().getRemainingWeightCapacity(), 3);
-		performer.addToActionQueue(new BreedAction(mate));
+		performer.addToActionQueue(new OldBreedAction(mate));
 		
 		performer.update();
 		performer.update();
