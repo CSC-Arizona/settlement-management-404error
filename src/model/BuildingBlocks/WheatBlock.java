@@ -22,7 +22,7 @@ public class WheatBlock extends BuildingBlock {
 	public final static String id = "Wheat";
 
 	public WheatBlock() {
-		super(1, true, false, new Color(244, 209, 66), id);
+		super(1, true, false, new Color(244, 209, 66), null, id, null);
 		itemsInBlock = new LinkedList<>();
 		for (int i = 0; i < 2; i++) {
 		    itemsInBlock.add(new WheatItem());

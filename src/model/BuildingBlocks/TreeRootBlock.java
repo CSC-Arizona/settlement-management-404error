@@ -27,7 +27,7 @@ public class TreeRootBlock extends BuildingBlock {
 	public final static String id = "Tree root";
 	
 	public TreeRootBlock() {
-		super(durability, true, false, Color.GREEN, id);
+		super(durability, true, false, Color.GREEN, null, id, null);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new WoodItem());
 	}

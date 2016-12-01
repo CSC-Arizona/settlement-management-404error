@@ -21,7 +21,7 @@ public class StoreRoomBlock extends BuildingBlock {
 	public final static String id = "Store room";
 	
 	public StoreRoomBlock() {
-		super(durability, false, true, new Color(255, 255, 204), id);
+		super(durability, false, true, new Color(255, 255, 204), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

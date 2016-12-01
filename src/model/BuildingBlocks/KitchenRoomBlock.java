@@ -22,7 +22,7 @@ public class KitchenRoomBlock extends BuildingBlock {
 	public final static String id = "Kitchen";
 	
 	public KitchenRoomBlock() {
-		super(durability, false, true, new Color(255, 255, 204), id);
+		super(durability, false, true, new Color(255, 255, 204), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

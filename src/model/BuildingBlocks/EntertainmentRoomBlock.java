@@ -21,7 +21,7 @@ public class EntertainmentRoomBlock extends BuildingBlock {
 	public final static String id = "Entertainment Lounge";
 	
 	public EntertainmentRoomBlock() {
-		super(durability, false, true, new Color(224, 224, 224), id);
+		super(durability, false, true, new Color(224, 224, 224), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

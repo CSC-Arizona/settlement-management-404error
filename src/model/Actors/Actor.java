@@ -1,6 +1,7 @@
 package model.Actors;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public abstract class Actor implements Serializable {
 	private Inventory inventory;
 	private boolean alive;
 	private String name;
-	public static LinkedList<Actor> allActors;
+	public static List<Actor> allActors;
 
 	/**
 	 * Creates a new actor
@@ -46,7 +47,7 @@ public abstract class Actor implements Serializable {
 		this.name = Names.generateName();
 		skills = new Skills();
 		if (allActors == null)
-			allActors = new LinkedList<>();
+			allActors = Collections.synchronizedList(new LinkedList<>());
 		allActors.add(this);
 	}
 
@@ -123,6 +124,10 @@ public abstract class Actor implements Serializable {
 	 * Perform once per tick, the Actor performs the next action
 	 */
 	public void update() {
+		if (this.health <= 0) {
+			this.setAlive(false, true);
+			return;
+		}
 		performAction(0);
 	}
 

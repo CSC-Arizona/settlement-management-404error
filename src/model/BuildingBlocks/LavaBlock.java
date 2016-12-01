@@ -3,6 +3,7 @@ package model.BuildingBlocks;
 import java.awt.Color;
 import java.util.List;
 
+import Images.ImageEnum;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.Item;
@@ -25,7 +26,7 @@ public class LavaBlock extends BuildingBlock {
 	public final static String id = "Lava";
 	
 	public LavaBlock() {
-		super(durability, false, false, Color.RED, id);
+		super(durability, false, false, Color.RED, null, id, ImageEnum.LAVA);
 	}
 
 	@Override

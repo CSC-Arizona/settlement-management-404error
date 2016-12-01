@@ -3,9 +3,12 @@
  */
 package model.Actors;
 
+import java.util.Iterator;
+
 /**
- * The action used by the opposition to 
- * hunt and kill the play controlled characters
+ * The action used by the opposition to hunt and kill the play controlled
+ * characters
+ * 
  * @author Jonathon Davis
  *
  */
@@ -13,7 +16,9 @@ public class EnemyHuntAction extends Action {
 
 	private static final long serialVersionUID = 7268347888796294194L;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.Actors.Action#execute(model.Actors.Actor)
 	 */
 	@Override
@@ -21,15 +26,21 @@ public class EnemyHuntAction extends Action {
 		Actor prey = findNearestPlayerActor(performer);
 		return new AttackAction(prey).execute(performer);
 	}
-	
-	private Actor findNearestPlayerActor(Actor performer){
+
+	private Actor findNearestPlayerActor(Actor performer) {
 		Actor nearestActor = null;
 		double closest = Integer.MAX_VALUE;
-		for(Actor p : PlayerControlledActor.allActors){
-			int x = performer.getPosition().getCol(), x2 = p.getPosition().getCol(),
-					y = performer.getPosition().getRow(), y2 = p.getPosition().getRow();
-			double distance = Math.sqrt((x2-x)*(x2-x)+(y2-y)*(y2-y));
-			if(distance < closest){
+		Iterator<Actor> iter = PlayerControlledActor.allActors.iterator();
+
+		while (iter.hasNext()) {
+			Actor p = iter.next();
+
+			int x = performer.getPosition().getCol(), x2 = p.getPosition()
+					.getCol(), y = performer.getPosition().getRow(), y2 = p
+					.getPosition().getRow();
+			double distance = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y)
+					* (y2 - y));
+			if (distance < closest) {
 				closest = distance;
 				nearestActor = p;
 			}

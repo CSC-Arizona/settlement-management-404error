@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
@@ -15,10 +16,14 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -28,6 +33,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Images.ImageEnum;
+import Images.imageUtil;
 import controller.Controller;
 import controller.Designation;
 import model.Actors.Actor;
@@ -159,6 +166,10 @@ public class BasicView extends JPanel {
 
 		this.addKeyListener(new MyKeyListener());
 
+		for (ImageEnum e : ImageEnum.values()) {
+			e.createBufferedImages(blockSizeY, blockSizeX);
+		}
+
 		repaint();
 	}
 
@@ -254,68 +265,118 @@ public class BasicView extends JPanel {
 					int col = visibleCornerX + j;
 					col = Math.floorMod(col, mapWidth);
 
-					Color color = Game.getMap().getBuildingBlock(row, col)
-							.getColor();
-					g2.setColor(color);
-					g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
-							blockSizeY);
-					g2.setColor(Color.BLACK);
-					g2.drawRect(j * blockSizeX, i * blockSizeY, blockSizeX,
-							blockSizeY);
 
-					List<Actor> actors = Game.getMap()
-							.getBuildingBlock(row, col).getActors();
-					if (actors != null) {
-						int size = actors.size();
-						if (size != 0) {
-							g2.setColor(Color.RED);
-							g2.drawString(Integer.toString(size), j
-									* blockSizeX + blockSizeX / 2, (i + 1)
-									* blockSizeY);
-							g2.setColor(Color.BLACK);
+					if (Game.getMap().getBuildingBlock(row, col).isOccupiable()) {
+						for (int k = -1; k < 2; k++) {
+							for (int l = -1; l < 2; l++) {
+								int newRow = row + k;
+								int newCol = col + l;
+								newCol = Math.floorMod(newCol, Game.getMap()
+										.getTotalWidth());
+								if (newRow >= 0
+										&& newRow < Game.getMap()
+												.getTotalHeight()) {
+
+									Game.getMap()
+											.getBuildingBlock(newRow , newCol)
+											.setVisibility(true);
+								}
+							}
 						}
 					}
 
-					Furniture furniture = Game.getMap()
-							.getBuildingBlock(row, col).getFurniture();
-					if (furniture != null) {
-						g2.drawString("F", j * blockSizeX + blockSizeX / 2,
-								(i + 1) * blockSizeY);
-					}
+					
+					if (Game.getMap().getBuildingBlock(row, col)
+							.getVisibility()) {
+						if (Game.getMap().getBuildingBlock(row, col).getImage() == null) {
+							Color color = Game.getMap()
+									.getBuildingBlock(row, col).getColor();
+							g2.setColor(color);
+							g2.fillRect(j * blockSizeX, i * blockSizeY,
+									blockSizeX, blockSizeY);
+							// g2.setColor(Color.BLACK);
+							// g2.drawRect(j * blockSizeX, i * blockSizeY,
+							// blockSizeX,
+							// blockSizeY);
+						} else {
+							Color bgcolor = Game.getMap()
+									.getBuildingBlock(row, col)
+									.getBackgroundColor();
+							if (bgcolor != null) {
+								g2.setColor(bgcolor);
+								g2.fillRect(j * blockSizeX, i * blockSizeY,
+										blockSizeX, blockSizeY);
 
-					if (Game.getMap().getBuildingBlock(row, col).isDesignated()) {
-						g2.drawString(
-								""
-										+ Game.getMap()
-												.getBuildingBlock(row, col)
-												.getDesignation().keyboardShortcut,
-								j * blockSizeX + blockSizeX / 2, (i + 1)
+							}
+
+							BufferedImage img = Game.getMap()
+									.getBuildingBlock(row, col).getImage()
+									.getRandomBufferedImage();
+							g2.drawImage(img, j * blockSizeX, i * blockSizeY,
+									null);
+
+						}
+
+						List<Actor> actors = Game.getMap()
+								.getBuildingBlock(row, col).getActors();
+						if (actors != null) {
+							int size = actors.size();
+							if (size != 0) {
+								g2.setColor(Color.RED);
+								g2.drawString(Integer.toString(size), j
+										* blockSizeX + blockSizeX / 2, (i + 1)
 										* blockSizeY);
-					}
+								g2.setColor(Color.BLACK);
+							}
+						}
 
-					List<Item> itemsOnGround = Game.getMap()
-							.getBuildingBlock(row, col).itemsOnGround();
-					if (itemsOnGround != null) {
-						if (itemsOnGround.size() != 0) {
-							g2.drawString("#", j * blockSizeX + blockSizeX / 2,
+						Furniture furniture = Game.getMap()
+								.getBuildingBlock(row, col).getFurniture();
+						if (furniture != null) {
+							g2.drawString("F", j * blockSizeX + blockSizeX / 2,
 									(i + 1) * blockSizeY);
 						}
+
+						if (Game.getMap().getBuildingBlock(row, col)
+								.isDesignated()) {
+							g2.drawString(
+									""
+											+ Game.getMap()
+													.getBuildingBlock(row, col)
+													.getDesignation().keyboardShortcut,
+									j * blockSizeX + blockSizeX / 2, (i + 1)
+											* blockSizeY);
+						}
+
+						List<Item> itemsOnGround = Game.getMap()
+								.getBuildingBlock(row, col).itemsOnGround();
+						if (itemsOnGround != null) {
+							if (itemsOnGround.size() != 0) {
+								g2.drawString("#", j * blockSizeX + blockSizeX
+										/ 2, (i + 1) * blockSizeY);
+							}
+						}
+
+						if (currentlyDrawingDesignation) {
+
+							g2.drawRect(Math.min(designationStart.x,
+									designationEnd.x), Math.min(
+									designationStart.y, designationEnd.y),
+									Math.abs(designationStart.x
+											- designationEnd.x), Math
+											.abs(designationStart.y
+													- designationEnd.y));
+
+						}
+						if (currentlyPlacingRoom) {
+							g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
+									roomHeight);
+						}
+					} else {
+						g2.setColor(Color.black);
+						g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
+								blockSizeY);
 					}
-
-					if (currentlyDrawingDesignation) {
-
-						g2.drawRect(
-								Math.min(designationStart.x, designationEnd.x),
-								Math.min(designationStart.y, designationEnd.y),
-								Math.abs(designationStart.x - designationEnd.x),
-								Math.abs(designationStart.y - designationEnd.y));
-
-					}
-					if (currentlyPlacingRoom) {
-						g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
-								roomHeight);
-					}
-
 				}
 			}
 

@@ -28,7 +28,7 @@ public class CavernBlock extends BuildingBlock {
 	public final static String id = "Cavern";
 	
 	public CavernBlock() {
-		super(durability, false, true, new Color(102,72,32), id);
+		super(durability, false, true, new Color(102,72,32), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

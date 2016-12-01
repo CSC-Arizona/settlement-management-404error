@@ -21,7 +21,7 @@ public class InfirmaryRoomBlock extends BuildingBlock {
 	public final static String id = "Infirmary";
 	
 	public InfirmaryRoomBlock() {
-		super(durability, false, true, new Color(255, 204, 204), id);
+		super(durability, false, true, new Color(255, 204, 204), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

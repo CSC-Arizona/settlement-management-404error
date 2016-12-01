@@ -25,7 +25,7 @@ public class MushroomBlock extends BuildingBlock {
 	
 	
 	public MushroomBlock() {
-		super(durability, true, true, new Color(173, 33, 183), id);
+		super(durability, true, true, new Color(173, 33, 183), null, id, null);
 		itemsInBlock = new LinkedList<>();
 	}
 

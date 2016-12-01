@@ -21,7 +21,7 @@ public class FarmRoomBlock extends BuildingBlock {
 	public final static String id = "Farm Room";
 	
 	public FarmRoomBlock() {
-		super(durability, false, true, new Color(204, 255, 204), id);
+		super(durability, false, true, new Color(204, 255, 204), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

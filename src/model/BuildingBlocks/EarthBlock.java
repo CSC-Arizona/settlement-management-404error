@@ -3,6 +3,7 @@ package model.BuildingBlocks;
 import java.awt.Color;
 import java.util.List;
 
+import Images.ImageEnum;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.Item;
@@ -23,7 +24,7 @@ public class EarthBlock extends BuildingBlock {
 	public final static String id = "Earth";
 	
 	public EarthBlock() {
-		super(durability, true, false, new Color(222,210,140), id);
+		super(durability, true, false, new Color(193,156,125), null, id, null);
 	}
 	
 	@Override

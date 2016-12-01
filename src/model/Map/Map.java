@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Random;
 
+import Images.ImageEnum;
 import controller.Designation;
 import model.Actors.Actor;
 import model.Actors.IncubateAction;
@@ -13,6 +16,7 @@ import model.Actors.EnemyActor;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.BuildingBlocks.AirBlock;
+import model.BuildingBlocks.AntTunnelBlock;
 import model.BuildingBlocks.AnthillBlock;
 import model.BuildingBlocks.BuildingBlock;
 import model.BuildingBlocks.CavernBlock;
@@ -60,7 +64,7 @@ public class Map implements Serializable {
 		this.random = random;
 		this.mapParameters = mapParameters;
 		this.hardCodedFurniture = new HashMap<>();
-
+		
 		constructMap();
 	}
 
@@ -122,7 +126,8 @@ public class Map implements Serializable {
 	private void addAir() {
 		for (int i = 0; i < mapParameters.airHeight; i++) {
 			for (int j = 0; j < getTotalWidth(); j++) {
-				map[i][j] = new AirBlock();
+				AirBlock airblock = new AirBlock();
+				map[i][j] = airblock;
 			}
 		}
 	}
@@ -230,6 +235,7 @@ public class Map implements Serializable {
 			// up
 			for (int j = 0; j < widthEstimate / 2; j++) {
 				map[Y][X] = new EarthBlock();
+				
 				for (int k = Y; k < mapParameters.airHeight; k++) {
 					map[k][X] = new EarthBlock();
 				}
@@ -346,7 +352,7 @@ public class Map implements Serializable {
 							anthillLocations.add(new Position(row, col));
 						}
 					} else {
-						map[row][col] = new CavernBlock();
+						map[row][col] = new AntTunnelBlock();
 					}
 				}
 			}
@@ -378,11 +384,11 @@ public class Map implements Serializable {
 						&& newTunnelY >= mapParameters.airHeight
 						&& (map[newTunnelY][newTunnelX].getID().equals(
 								EarthBlock.id) || map[newTunnelY][newTunnelX]
-								.getID().equals(CavernBlock.id))
-						&& (map[newTunnelY - 1][newTunnelX].getID()
+								.getID().equals(AntTunnelBlock.id))
+						&& (map[newTunnelY][newTunnelX].getID()
 								.equals(EarthBlock.id))) {
 
-					map[newTunnelY][newTunnelX] = new CavernBlock();
+					map[newTunnelY][newTunnelX] = new AntTunnelBlock();
 					tunnelX = newTunnelX;
 					tunnelY = newTunnelY;
 				}
@@ -399,11 +405,11 @@ public class Map implements Serializable {
 						&& newTunnelY >= mapParameters.airHeight
 						&& (map[newTunnelY][newTunnelX].getID().equals(
 								EarthBlock.id) || map[newTunnelY][newTunnelX]
-								.getID().equals(CavernBlock.id))
-						&& (map[newTunnelY - 1][newTunnelX].getID()
+								.getID().equals(AntTunnelBlock.id))
+						&& (map[newTunnelY][newTunnelX].getID()
 								.equals(EarthBlock.id))) {
 
-					map[newTunnelY][newTunnelX] = new CavernBlock();
+					map[newTunnelY][newTunnelX] = new AntTunnelBlock();
 					tunnelX = newTunnelX;
 					tunnelY = newTunnelY;
 				}
@@ -442,7 +448,7 @@ public class Map implements Serializable {
 
 				x = Math.floorMod(x, getTotalWidth());
 
-				if (y1 < getTotalHeight()) {
+				if (y1 < getTotalHeight()-1) {
 					if (!map[y1 + 1][x].getID().equals(LavaBlock.id))
 						cavernFloorBlocks.add(new Integer[] { y1 + 1, x });
 				}
@@ -466,11 +472,11 @@ public class Map implements Serializable {
 
 	private void addMushrooms() {
 		for (int i = 0; i < 10; i++) {
-			Integer[] cavernFloorBlock = cavernFloorBlocks.get(random
-					.nextInt(cavernFloorBlocks.size()));
-			Mushroom mushroom = new Mushroom(getTotalWidth(), map, random,
-					cavernFloorBlock);
-			mushroom.addToMap();
+			//Integer[] cavernFloorBlock = cavernFloorBlocks.get(random
+			//		.nextInt(cavernFloorBlocks.size()));
+			//Mushroom mushroom = new Mushroom(getTotalWidth(), map, random,
+				//	cavernFloorBlock);
+			//mushroom.addToMap();
 		}
 	}
 
@@ -507,7 +513,9 @@ public class Map implements Serializable {
 		}
 
 		if (PlayerControlledActor.allActors != null) {
-			for (Actor actor : PlayerControlledActor.allActors) {
+			Iterator<Actor> iter = PlayerControlledActor.allActors.iterator();
+			while (iter.hasNext()) {
+				Actor actor = iter.next();			
 				Position position = actor.getPosition();
 				map[position.getRow()][position.getCol()].addActor(actor);
 			}
@@ -551,13 +559,22 @@ public class Map implements Serializable {
 
 	public void updateActors(int timeDelta) {
 		if (Actor.allActors != null) {
-			for (Actor actor : Actor.allActors) {
+			
+			
+			LinkedList<Actor> newAllActors = new LinkedList<>();
+			for (Actor actor : Actor.allActors){
+				newAllActors.add(actor);
+			}
+			Iterator<Actor> iter = newAllActors.iterator();
+			while (iter.hasNext()) {
+				Actor actor = iter.next();
 				Position oldPosition = actor.getPosition();
 				map[oldPosition.getRow()%getTotalHeight()][oldPosition.getCol()%getTotalWidth()].removeActor(actor);
 				actor.update();
 				Position newPosition = actor.getPosition();
 				map[newPosition.getRow()%getTotalHeight()][newPosition.getCol()%getTotalWidth()].addActor(actor);
 			}
+			 
 			//TODO: Every 1000 ticks, call breed action or construct incubation room if none built
 		}
 	}

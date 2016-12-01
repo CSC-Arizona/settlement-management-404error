@@ -17,7 +17,7 @@ public class RoomWallBlock extends BuildingBlock {
 	public final static String id = "Room wall";
 	
 	public RoomWallBlock() {
-		super(durability, false, false, new Color(27,47,54), id);
+		super(durability, false, false, new Color(27,47,54), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

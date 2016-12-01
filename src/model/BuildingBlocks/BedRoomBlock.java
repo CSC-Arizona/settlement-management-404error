@@ -21,7 +21,7 @@ public class BedRoomBlock extends BuildingBlock {
 	public final static String id = "Bedroom";
 	
 	public BedRoomBlock() {
-		super(durability, false, true, new Color(204, 204, 255), id);
+		super(durability, false, true, new Color(204, 204, 255), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

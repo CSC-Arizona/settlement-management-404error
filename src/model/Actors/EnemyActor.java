@@ -1,5 +1,6 @@
 package model.Actors;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class EnemyActor extends Actor {
 	
 	private static final long serialVersionUID = 2745479477703967043L;
-	public static LinkedList<Actor> allActors;
+	public static List<Actor> allActors;
 	public static ActionPool enemyActionPool;
 
 	/**
@@ -24,7 +25,7 @@ public class EnemyActor extends Actor {
 		if(enemyActionPool == null)
 			enemyActionPool = new ActionPool();
 		if(allActors == null)
-			allActors = new LinkedList<>();
+			allActors = Collections.synchronizedList(new LinkedList<>());
 		allActors.add(this);
 		enemyActionPool.add(new EnemyHuntAction());
 	}

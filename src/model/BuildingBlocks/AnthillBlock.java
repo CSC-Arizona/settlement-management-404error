@@ -27,7 +27,7 @@ public class AnthillBlock extends BuildingBlock {
 	private List<Item> itemsInBlock;
 	public final static String id = "Anthill";
 	public AnthillBlock() {
-		super(durability, true, false, Color.BLACK, id);
+		super(durability, true, false, Color.GRAY, null, id, null);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new AntLarvaItem());
 		actorsInBlock = new LinkedList<>();

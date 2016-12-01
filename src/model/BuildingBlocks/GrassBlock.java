@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import Images.ImageEnum;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.Item;
@@ -26,7 +27,8 @@ public class GrassBlock extends BuildingBlock {
 	public final static String id = "Grass";
 
 	public GrassBlock() {
-		super(durability, true, true, new Color(0, 87, 3), id);
+		super(durability, true, true, new Color(0, 87, 3), new Color(206, 237,
+				240), id, ImageEnum.GRASS);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new WheatKernelItem());
 		actorsInBlock = new LinkedList<>();
@@ -37,10 +39,10 @@ public class GrassBlock extends BuildingBlock {
 	public List<Item> lootBlock() {
 		return itemsInBlock;
 	}
-	
+
 	@Override
 	public boolean addActor(Actor actor) {
-		if(actor.isAlive())
+		if (actor.isAlive())
 			actorsInBlock.add(actor);
 		return true;
 	}
@@ -53,12 +55,12 @@ public class GrassBlock extends BuildingBlock {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public List<Actor> getActors() {
 		return actorsInBlock;
 	}
-	
+
 	@Override
 	public boolean addFurniture(Furniture furniture) {
 		return false;

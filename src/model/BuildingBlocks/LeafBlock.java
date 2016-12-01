@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import Images.ImageEnum;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.Item;
@@ -19,7 +20,7 @@ public class LeafBlock extends BuildingBlock {
 	public final static String id = "Leaf";
 	
 	public LeafBlock() {
-		super(durability, true, false, new Color(84, 232, 67), id);
+		super(durability, true, false, new Color(84, 232, 67), null, id, ImageEnum.LEAF);
 		itemsInBlock = new LinkedList<>();
 
 	}

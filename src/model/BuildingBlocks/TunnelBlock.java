@@ -21,7 +21,7 @@ public class TunnelBlock extends BuildingBlock {
 	public final static String id = "Tunnel";
 	
 	public TunnelBlock() {
-		super(durability, false, true, new Color(153, 76, 0), id);
+		super(durability, false, true, new Color(153, 76, 0), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

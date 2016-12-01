@@ -17,4 +17,5 @@ public class ControllerMain {
 	public static void main(String[] args) {
 		new Controller(MapParameters.getDefaultParameters(), random, false);
 	}
+	
 }

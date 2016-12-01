@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.List;
 
+import Images.ImageEnum;
 import controller.Designation;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
@@ -30,18 +31,23 @@ public abstract class BuildingBlock implements Serializable {
 	private boolean occupiable;
 
 	private Color color;
+	private Color backgroundColor;
 	private String id;
-
+	private ImageEnum img;
 	private Designation designation = Designation.NONE;
-
+	private boolean isVisible = false;
+	
 	public BuildingBlock(int durability, boolean destroyable,
-			boolean occupiable, Color color, String id) {// , List<Item>
-															// itemsInBlock) {
+			boolean occupiable, Color color, Color backgroundColor, String id,
+			ImageEnum img) {// , List<Item>
+		// itemsInBlock) {
 		this.durability = durability;
 		this.destroyable = destroyable;
 		this.occupiable = occupiable;
 		this.color = color;
+		this.backgroundColor = backgroundColor;
 		this.id = id;
+		this.img = img;
 	}
 
 	/*
@@ -70,8 +76,24 @@ public abstract class BuildingBlock implements Serializable {
 		return color;
 	}
 
+	public Color getBackgroundColor() {
+		return backgroundColor;
+	}
+
 	public String getID() {
 		return id;
+	}
+
+	public ImageEnum getImage() {
+		return img;
+	}
+	
+	public boolean getVisibility() {
+		return isVisible;
+	}
+	
+	public void setVisibility(boolean visibility) {
+		isVisible = visibility;
 	}
 
 	/*
@@ -111,14 +133,15 @@ public abstract class BuildingBlock implements Serializable {
 			result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Furniture: "
 					+ getFurniture().toString();
 		}
-		
+
 		if (itemsOnGround() != null) {
 			result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Items on the ground here:";
 			for (Item item : itemsOnGround()) {
-				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + item.toString();
+				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+						+ item.toString();
 			}
 		}
-		
+
 		return result;
 
 	}
@@ -130,11 +153,11 @@ public abstract class BuildingBlock implements Serializable {
 	public void removeDesignation() {
 		this.designation = Designation.NONE;
 	}
-	
+
 	public boolean isDesignated() {
 		return designation != Designation.NONE;
 	}
-	
+
 	public Designation getDesignation() {
 		return designation;
 	}

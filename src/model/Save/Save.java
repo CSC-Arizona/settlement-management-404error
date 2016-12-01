@@ -2,6 +2,7 @@ package model.Save;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
 import model.Actors.ActionPool;
 import model.Actors.Actor;
@@ -21,7 +22,7 @@ public class Save implements Serializable {
 	 */
 	private static final long serialVersionUID = 8859099312060885013L;
 	private Map map;
-	private LinkedList<Actor> allActors;
+	private List<Actor> allActors;
 	private ActionPool playerActionPool = new ActionPool();
 	private ActionPool enemyActionPool = new ActionPool();
 	

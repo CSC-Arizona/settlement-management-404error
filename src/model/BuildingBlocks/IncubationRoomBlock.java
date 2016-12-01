@@ -21,7 +21,7 @@ public class IncubationRoomBlock extends BuildingBlock {
 	public final static String id = "Incubation Room";
 	
 	public IncubationRoomBlock() {
-		super(durability, false, true, new Color(204, 229, 255), id);
+		super(durability, false, true, new Color(204, 229, 255), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

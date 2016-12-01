@@ -3,6 +3,7 @@
  */
 package model.Actors;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class PlayerControlledActor extends Actor {
 	private int fatigue, hunger;
 	private static final int threshold = 1000;
 	private static final int death_threshold = 1100;
-	public static LinkedList<Actor> allActors;
+	public static List<Actor> allActors;
 	public static ActionPool playerActionPool;
 
 	/**
@@ -33,7 +34,7 @@ public class PlayerControlledActor extends Actor {
 		if(playerActionPool == null)
 			playerActionPool = new ActionPool();
 		if(allActors == null)
-			allActors = new LinkedList<>();
+			allActors = Collections.synchronizedList(new LinkedList<>());
 		allActors.add(this);
 
 	}

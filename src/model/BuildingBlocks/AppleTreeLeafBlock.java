@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import Images.ImageEnum;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.AppleItem;
@@ -27,7 +28,7 @@ public class AppleTreeLeafBlock extends BuildingBlock {
 	public final static String id = "Apple";
 
 	public AppleTreeLeafBlock() {
-		super(durability, true, false, new Color(242, 58, 58), id);
+		super(durability, true, false, new Color(242, 58, 58), new Color(84, 232, 67), id, ImageEnum.APPLE);
 		itemsInBlock = new LinkedList<>();
 		for (int a = 0; a < 3; a++)
 			itemsInBlock.add(new AppleItem());

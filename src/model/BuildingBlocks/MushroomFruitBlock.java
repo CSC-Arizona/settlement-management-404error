@@ -23,7 +23,7 @@ public class MushroomFruitBlock extends BuildingBlock {
 	public final static String id = "Mushroom fruit";
 
 	public MushroomFruitBlock() {
-		super(durability, true, false, new Color(72, 249, 229), id);
+		super(durability, true, false, new Color(72, 249, 229), null, id, null);
 		itemsInBlock = new LinkedList<>();
 
 	}

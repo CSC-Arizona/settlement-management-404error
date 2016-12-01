@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import Images.ImageEnum;
 import model.Actors.Actor;
 import model.Furniture.Furniture;
 import model.Items.IronItem;
@@ -25,7 +26,7 @@ public class IronOreBlock extends BuildingBlock {
 	public final static String id = "Iron ore";
 	
 	public IronOreBlock() {
-		super(durability, true, false, Color.BLACK, id);
+		super(durability, true, false, Color.BLACK, null, id, ImageEnum.IRON);
         itemsInBlock = new LinkedList<>();
         itemsInBlock.add(new IronItem());
 	}

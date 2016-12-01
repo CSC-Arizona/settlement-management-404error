@@ -25,7 +25,7 @@ public class StoneBlock extends BuildingBlock {
 	public final static String id = "Stone";
 	
 	public StoneBlock() {
-		super(durability, true, false, Color.GRAY, id);
+		super(durability, true, false, Color.GRAY, null, id, null);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new StoneItem());
 	}
