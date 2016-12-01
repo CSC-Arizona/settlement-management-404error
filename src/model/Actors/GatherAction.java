@@ -51,7 +51,7 @@ public class GatherAction extends Action {
 				.isDestroyable())
 			return Action.COMPLETED;
 
-		if (isAdjacent(performer)) {
+		if (position.isAdjacent(performer.getPosition())) {
 			BuildingBlock block = Game.getMap().getBuildingBlock(
 					position.getRow(), position.getCol());
 			// reduce the durability
@@ -75,7 +75,7 @@ public class GatherAction extends Action {
 	private int move(Actor performer) {
 		// if the Move Location has not yet been calculated, calculate position
 		if (moveLocation == null)
-			moveLocation = getMoveLocation();
+			moveLocation = MoveAction.getMoveLocationNear(position);
 
 		// delay the action if it can not be moved
 		if (moveLocation == null)
@@ -94,15 +94,6 @@ public class GatherAction extends Action {
 		if(result == Action.DELAY)
 			return Action.Pool;
 		return Action.MADE_PROGRESS;
-	}
-
-	/*
-	 * Checks if the actor is adjacent to the block
-	 */
-	private boolean isAdjacent(Actor performer) {
-		return Math.abs(Math.floorMod(position.getCol(),Game.getMap().getTotalWidth()-1) - Math.floorMod(performer.getPosition().getCol(),Game.getMap().getTotalWidth()-1)) <= 1
-				&& Math.abs(position.getRow()
-						- performer.getPosition().getRow()) <= 1;
 	}
 
 	/*
@@ -146,22 +137,6 @@ public class GatherAction extends Action {
 			}
 		} else
 			Game.getMap().setBuildingBlock(position, new AirBlock());
-	}
-
-	/**
-	 * Finds an adjacent valid location near the block to move the actor to
-	 * 
-	 * @return The Position to move to
-	 */
-	private Position getMoveLocation() {
-		// check to see if a nearby location is valid
-		for (int r = position.getRow() - 1; r <= position.getRow() + 1; r++) {
-			for (int c = position.getCol() - 1; c <= position.getCol() + 1; c++) {
-				if (Game.validActorLocation(r, Math.floorMod(c,Game.getMap().getTotalWidth())))
-					return new Position(r, Math.floorMod(c,Game.getMap().getTotalWidth()));
-			}
-		}
-		return null;
 	}
 
 }

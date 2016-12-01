@@ -22,6 +22,7 @@ public class BreedAction extends Action {
 						// with performer
 	private Position incubationChamberPos;
 
+	
 	public BreedAction(Actor mate) {
 		this.mate = mate;
 		incubationChamberPos = getEmptyIncubationChamber();
@@ -50,7 +51,8 @@ public class BreedAction extends Action {
 				// test to see that the two actors are in the same position
 				int x = Math.abs(performer.getPosition().getCol() - mate.getPosition().getCol());
 				int y = Math.abs(performer.getPosition().getRow() - mate.getPosition().getRow());
-				// if in same position, breed, else have performer move towards mate
+				// if in same position, breed, else have performer move towards
+				// mate
 				if ((x == 0) && (y == 0)) {
 					Furniture incubationChamber = Game.getMap().getBuildingBlock(incubationChamberPos).getFurniture();
 					Item egg = new DragonEggItem();
@@ -64,11 +66,11 @@ public class BreedAction extends Action {
 															// should be 0 now
 						}
 					}
-					//Add new Player Controlled Actor to map
+					// Add new Player Controlled Actor to map
 					Map map = Game.getMap();
 					map.addPlayerActor(incubationChamberPos);
-					
-					return Action.COMPLETED; 
+
+					return Action.COMPLETED;
 
 					// Move performer towards incubation chamber
 				} else {
@@ -81,19 +83,19 @@ public class BreedAction extends Action {
 			}
 			// Move mate towards incubation chamber
 			else {
-				int action = new MoveAction(incubationChamberPos).execute(mate);
-				if (action == Action.COMPLETED)
-					return Action.MADE_PROGRESS;
-				else
-					return action;
+					System.out.print("New move action");
+					int action = new MoveAction(incubationChamberPos).execute(mate);
+					if (action == Action.COMPLETED)
+						return Action.MADE_PROGRESS;
+					else
+						return action;
 			}
-		}
-		else {
-			//TODO: Build new Incubation room
+		} else {
+			// TODO: Build new Incubation room
 		}
 		return 0;
 	}
-	
-	//TODO: Test Breed and Incubate actions
+
+	// TODO: Test Breed and Incubate actions
 
 }

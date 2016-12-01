@@ -13,25 +13,31 @@ public class IncubateAction extends Action {
 	 */
 	private static final long serialVersionUID = -6706123216153923355L;
 	
-	private static int incubationPeriod;
+	private int incubationPeriod;
 	
 	public IncubateAction(int ticker) {
 		incubationPeriod = ticker;
+		System.out.println("New Incubate Action " + ticker);
 	}
 
 	@Override
 	public int execute(Actor performer) {
 		//Check to see if done incubating
-		if(incubationPeriod == 999) {
+		//TODO: Change back to higher value
+		
+		//This next line is never printing
+		System.out.println(incubationPeriod);
+		if(incubationPeriod == 49) {
 			performer.setAlive(true, false);
 			Map map = Game.getMap();
-			map.addPlayerToMap(performer);
+			//map.addPlayerToMap(performer);
 			
 			//Remove egg from incubation chamber
 			Furniture incubationChamber = Game.getMap().getBuildingBlock(performer.getPosition()).getFurniture();
 			if(incubationChamber.getRemainingWeightCapacity() == 0) {
 				incubationChamber.removeItem(new DragonEggItem());
 			}
+			System.out.println("Actor should be on map now");
 		}
 
 		return Action.COMPLETED;

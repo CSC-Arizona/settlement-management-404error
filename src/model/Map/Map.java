@@ -54,6 +54,9 @@ public class Map implements Serializable {
 	private ArrayList<Position> anthillLocations = new ArrayList<>();
 
 	private int time;
+	
+	private boolean addActor;
+	private Position positionToAdd;
 
 	public Map(MapParameters mapParameters, Random random) {
 		this.blocksMarkedAsDesignated = new HashMap<>();
@@ -515,20 +518,25 @@ public class Map implements Serializable {
 	}
 
 	public void addPlayerActor(Position p) {
-		PlayerControlledActor pca = new PlayerControlledActor(100, p);
+		addActor = true;
+		positionToAdd = p;
+		/*PlayerControlledActor pca = new PlayerControlledActor(100, p);
 
 		// Set new actor to "dead" since not born yet
 		pca.setAlive(false, false);
 
 		// Place 1000 Incubate Actions into actor's queue so that
 		// Actor can't do anything until "born"
+		
+		//TODO: Change this back to larger value
 		for (int i = 0; i < 1000; i++) {
 			pca.addToActionQueue(new IncubateAction(i));
-		}
+		}*/
 	}
 
 	public void addPlayerToMap(Actor a) {
 		// Make new player visible on map
+		//TODO: May need to move this code to update actor
 		Position p = a.getPosition();
 		map[p.getRow()][p.getCol()].addActor(a);
 	}
@@ -560,6 +568,38 @@ public class Map implements Serializable {
 			}
 			//TODO: Every 1000 ticks, call breed action or construct incubation room if none built
 		}
+		if(addActor == true) {
+			System.out.println(Actor.allActors.size());
+			
+			
+			PlayerControlledActor pca = new PlayerControlledActor(100, positionToAdd);
+
+			// Set new actor to "dead" since not born yet
+			pca.setAlive(false, false);
+
+			// Place 1000 Incubate Actions into actor's queue so that
+			// Actor can't do anything until "born"
+			
+			//TODO: Change this back to larger value
+			
+			
+			//TODO: Push BreedScenario code
+			
+			
+			//pca.addToActionQueue(new IncubateAction(0));
+			/*for (int i = 0; i < 999; i++) {
+				pca.addToActionQueue(new IncubateAction(i));
+			}*/
+			for (int i = 0; i < 50; i++) {
+				pca.addToActionQueue(new IncubateAction(i));
+			}
+			System.out.println("Actor created");
+			Actor.allActors.add(pca);
+			System.out.println(Actor.allActors.size());
+
+			addActor = false;
+		}
+		
 	}
 
 	private void addFurniture() {

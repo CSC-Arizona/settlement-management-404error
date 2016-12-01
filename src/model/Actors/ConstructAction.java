@@ -3,6 +3,7 @@ package model.Actors;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Furniture.Furniture;
 import model.Game.Game;
 import model.Room.HorizontalTunnel;
 import model.Room.Room;
@@ -22,6 +23,7 @@ public class ConstructAction extends Action {
 	private static final long serialVersionUID = 3917613009303294799L;
 	private List<Position> blocksToChange;
 	private Room room;
+	boolean cleared, blocksAsigned, blocksPlaced, furnitureAsigned, furniturePlaced;
 
 	public ConstructAction(Room room) {
 		this.room = room;
@@ -44,26 +46,93 @@ public class ConstructAction extends Action {
 	@Override
 	public int execute(Actor performer) {
 		// check to see if the action is complete
-		boolean complete = true;
-		for (Position p : blocksToChange) {
-			if (Game.getMap().getBuildingBlock(p).isDestroyable())
-				complete = false;
-			else
-				Game.getMap().setBuildingBlock(p, room.getAppropriateBlock());
-		}
-		
-		if(!complete)
+		if (!clearedArea())
 			return Action.Pool;
-		// if it is add the furniture
-		if (room.getFurniture() != null)
-			for (Position p : room.getFurniture().keySet()) {
-				Position fp = new Position(room.getPosition().getRow() + p.getRow(),
-						room.getPosition().getCol() + p.getCol());
-				Game.getMap().addFurniture(room.getFurniture().get(p), fp);
-			}
-		// then return completed
-		return Action.COMPLETED;
 
+		// asign blocks for placement
+		asignBlockPlacement(performer);
+
+		// check if the walls were built
+		if (!wallsBuilt())
+			return Action.Pool;
+		
+		placeFurniture(performer);
+
+		if(furnitureIsPlaced())
+			return Action.COMPLETED;
+		else
+			return Action.Pool;
+
+	}
+
+	private boolean furnitureIsPlaced() {
+		if (!furniturePlaced) {
+			for (Position p : room.getFurniture().keySet()){
+				Position fp = new Position(room.getPosition().getRow() + p.getRow(), room.getPosition().getCol() + p.getCol());
+				Furniture f = room.getFurniture().get(p);
+				if(Game.getMap().getBuildingBlock(p).getFurniture() != null &&
+						Game.getMap().getBuildingBlock(p).getFurniture().getID().equals(f.getID()));
+					return false;
+			}
+			furniturePlaced = true;
+		}
+		return furniturePlaced;
+	}
+
+	/*
+	 * Once the area has been cleared the room will need to be built
+	 */
+	private void asignBlockPlacement(Actor performer) {
+		// asign the actors to build the walls
+		if (!blocksAsigned) {
+			for (Position p : blocksToChange)
+				performer.getActionPool().add(new PlaceRoomBlockAction(p, room.getAppropriateBlock()));
+			blocksAsigned = true;
+		}
+
+	}
+
+	/*
+	 * Clear the area so that the room can be built
+	 */
+	private boolean clearedArea() {
+		// check to see if the action is complete
+		if (!cleared) {
+			cleared = true;
+			for (Position p : blocksToChange) {
+				if (Game.getMap().getBuildingBlock(p).isDestroyable())
+					cleared = false;
+			}
+		}
+		return cleared;
+	}
+
+	/*
+	 * Checks to see if the walls have been built
+	 */
+	private boolean wallsBuilt() {
+		if (!blocksPlaced) {
+			blocksPlaced = true;
+			for (Position p : blocksToChange) {
+				if (!Game.getMap().getBuildingBlock(p).getID().equals(room.getAppropriateBlock().getID()))
+					blocksPlaced = false;
+			}
+		}
+		return blocksPlaced;
+	}
+
+	/*
+	 * Places the furniture in the correct locations
+	 */
+	private void placeFurniture(Actor performer) {
+		if (!furnitureAsigned) {
+			for (Position p : room.getFurniture().keySet()){
+				Position fp = new Position(room.getPosition().getRow() + p.getRow(), room.getPosition().getCol() + p.getCol());
+				Furniture f = room.getFurniture().get(p);
+				performer.getActionPool().add(new PlaceFurnitureAction(fp, f));
+			}
+			furnitureAsigned = true;
+		}
 	}
 
 }
