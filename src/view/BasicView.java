@@ -87,11 +87,9 @@ public class BasicView extends JPanel {
 
 	private PauseButton pauseButton;
 
-	private JButton placeFurnitureButton;
 	private JButton constructRoomButton;
 
 	private DesignationButton cutDownTreeButton;
-	private DesignationButton removeFurnitureButton;
 	private DesignationButton removeRoomButton;
 	private DesignationButton fruitButton;
 	private DesignationButton digButton;
@@ -178,21 +176,16 @@ public class BasicView extends JPanel {
 		mouseDescriptionLabel = new JLabel();
 		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
-		// labelPanel
-		// .setPreferredSize(new Dimension(windowWidth, labelPanelHeight));
+
 		guiPanel.add(labelPanel);
 
 	}
 
 	private void addButtonPanel() {
 		buttonPanel = new JPanel();
-		buttonPanel.setLayout(new GridLayout(4, 3));
+		buttonPanel.setLayout(new GridLayout(3, 3));
 
 		pauseButton = new PauseButton(controller, this);
-
-		placeFurnitureButton = new JButton(
-				"<html><center>Place furniture</center></html>");
-		placeFurnitureButton.setFocusable(false);
 
 		constructRoomButton = new JButton(
 				"<html><center>Construct room</center></html>");
@@ -202,8 +195,6 @@ public class BasicView extends JPanel {
 		buttons = new ArrayList<>();
 		cutDownTreeButton = new DesignationButton(controller,
 				Designation.CUTTING_DOWN_TREES, buttons);
-		removeFurnitureButton = new DesignationButton(controller,
-				Designation.REMOVING_FURNITURE, buttons);
 		removeRoomButton = new DesignationButton(controller,
 				Designation.REMOVING_ROOMS, buttons);
 		fruitButton = new DesignationButton(controller,
@@ -217,11 +208,9 @@ public class BasicView extends JPanel {
 		removeButton = new DesignationButton(controller,
 				Designation.REMOVING_DESIGNATIONS, buttons);
 
-		buttonPanel.add(placeFurnitureButton);
 		buttonPanel.add(constructRoomButton);
 		buttonPanel.add(pauseButton);
 		buttonPanel.add(cutDownTreeButton);
-		buttonPanel.add(removeFurnitureButton);
 		buttonPanel.add(removeRoomButton);
 		buttonPanel.add(fruitButton);
 		buttonPanel.add(digButton);
