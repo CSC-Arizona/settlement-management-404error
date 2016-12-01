@@ -70,7 +70,8 @@ public class ConstructAction extends Action {
 			for (Position p : room.getFurniture().keySet()){
 				Position fp = new Position(room.getPosition().getRow() + p.getRow(), room.getPosition().getCol() + p.getCol());
 				Furniture f = room.getFurniture().get(p);
-				if(!Game.getMap().getBuildingBlock(p).getFurniture().getID().equals(f.getID()));
+				if(Game.getMap().getBuildingBlock(p).getFurniture() != null &&
+						Game.getMap().getBuildingBlock(p).getFurniture().getID().equals(f.getID()));
 					return false;
 			}
 			furniturePlaced = true;
@@ -113,7 +114,7 @@ public class ConstructAction extends Action {
 		if (!blocksPlaced) {
 			blocksPlaced = true;
 			for (Position p : blocksToChange) {
-				if (!Game.getMap().getBuildingBlock(p).equals(room.getAppropriateBlock()))
+				if (!Game.getMap().getBuildingBlock(p).getID().equals(room.getAppropriateBlock().getID()))
 					blocksPlaced = false;
 			}
 		}

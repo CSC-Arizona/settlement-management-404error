@@ -23,9 +23,7 @@ public class PlaceRoomBlockAction extends Action {
 	@Override
 	public int execute(Actor performer) {
 		// if the block can't be gathered cancel the action
-		if (!Game.getMap()
-				.getBuildingBlock(position.getRow(), position.getCol())
-				.isDestroyable())
+		if (Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).getID().equals(type.getID()))
 			return Action.COMPLETED;
 
 		if (isAdjacent(performer)) {
