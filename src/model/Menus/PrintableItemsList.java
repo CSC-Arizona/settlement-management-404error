@@ -1,13 +1,18 @@
 package model.Menus;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 import model.Items.Item;
 
-public class PrintableItemsList {
+public class PrintableItemsList implements Serializable {
 	
-      private HashMap<String, Integer> reqItems;
+      /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7234719053724862161L;
+	private HashMap<String, Integer> reqItems;
       
       public PrintableItemsList() {
     	  reqItems = new HashMap<>();
