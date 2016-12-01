@@ -74,5 +74,16 @@ public class InventoryTest {
 		}
 		assertFalse(inv.canAdd(new StoneItem()));
 	}
+	
+	@Test
+	public void testingSimpleContainsAndRemove() {
+		Inventory inv = new Inventory();
+		assertTrue(inv.addItem(new StoneItem()));
+		assertEquals("5.0/100.0 weight carried (1 Stone)", inv.toString());
+		assertTrue(inv.contains(new StoneItem()));
+		assertTrue(inv.removeItem(new StoneItem()));
+		assertFalse(inv.contains(new StoneItem()));
+		assertFalse(inv.removeItem(new StoneItem()));
+	}
 
 }

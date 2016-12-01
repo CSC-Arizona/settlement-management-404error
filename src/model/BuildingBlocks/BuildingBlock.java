@@ -2,6 +2,7 @@ package model.BuildingBlocks;
 
 import java.awt.Color;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
 import controller.Designation;
@@ -148,15 +149,39 @@ public abstract class BuildingBlock implements Serializable {
 		}
 		return false;
 	}
+	
+	/**
+	 * @param required
+	 * @return
+	 */
+	public boolean contains(Item required) {
+		for (Item it : itemsOnGround()) {
+			if (it.getClass().equals(required.getClass()))
+				return true;
+		}
+		return false;
+	}
 
 	public boolean removeItemFromGround(Item item) {
+//		if (isOccupiable()) {
+//			if (itemsOnGround() != null) {
+//				itemsOnGround().remove(0);
+//				return true;
+//			}
+//		}
+//		return false;
 		if (isOccupiable()) {
 			if (itemsOnGround() != null) {
-				itemsOnGround().remove(0);
-				return true;
+				for (Item it : itemsOnGround()) {
+					if (it.getClass().equals(item.getClass()))
+						itemsOnGround().remove(it);
+						return true;
+				}
 			}
 		}
 		return false;
 	}
+	
+	
 
 }

@@ -2,14 +2,14 @@ package model.Items;
 
 import java.util.List;
 
-import model.Menus.RequiredItemsList;
+import model.Menus.PrintableItemsList;
 
 //Author: Maxwell Faridian
 //This class constructs Craftable items, which require a list of needed materials to craft said item
 public abstract class Craftable extends Item {
 
 	private static final long serialVersionUID = -6120651370931295074L;
-	private RequiredItemsList ril;
+	private PrintableItemsList ril;
 
 	public Craftable(boolean edible, int attackModifier, int healthPts, double weight) {
 		super(edible, attackModifier, healthPts, weight);
@@ -18,7 +18,7 @@ public abstract class Craftable extends Item {
 	
 	public String reqMaterialsToString() {
 		if (this.ril == null) {
-			ril = new RequiredItemsList();
+			ril = new PrintableItemsList();
 			for (Item i : this.getRequiredMaterials())
 				ril.addItem(i);
 		}

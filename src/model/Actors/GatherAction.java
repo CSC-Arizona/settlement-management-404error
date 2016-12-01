@@ -115,9 +115,7 @@ public class GatherAction extends Action {
 			for (Item i : block.lootBlock())
 				// place the loot in the inventory if possible otherwise the
 				// ground
-				if (performer.getInventory().canAdd(i)) {
-					performer.getInventory().addItem(i);
-				} else {
+				if (!performer.getInventory().addItem(i)) {
 					Game.getMap().addItemToGround(position, i);
 					performer.getActionPool().add(
 							new PickUpItemAction(position, i));
