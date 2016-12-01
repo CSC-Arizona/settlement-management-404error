@@ -11,19 +11,17 @@ import model.Map.Map;
 //Author: Maxwell Faridian
 //This class will have 2 actors move to the incubation room. Once there, if there is room available in one of the incubation
 //chambers, the actors will "create" a new egg item and place it in an empty incubation chamber
-public class BreedAction extends Action {
+public class OldBreedAction extends Action {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2168888324400311918L;
 
 	private Actor mate; // Need to make sure other actor is in incubation room
 						// with performer
 	private Position incubationChamberPos;
-
 	
-	public BreedAction(Actor mate) {
+	private MoveAction action;
+
+	public OldBreedAction(Actor mate) {
 		this.mate = mate;
 		incubationChamberPos = getEmptyIncubationChamber();
 	}
@@ -48,12 +46,7 @@ public class BreedAction extends Action {
 	public int execute(Actor performer) {
 		if (incubationChamberPos != null) {
 			if (mate.getPosition().equals(incubationChamberPos)) {
-				// test to see that the two actors are in the same position
-				int x = Math.abs(performer.getPosition().getCol() - mate.getPosition().getCol());
-				int y = Math.abs(performer.getPosition().getRow() - mate.getPosition().getRow());
-				// if in same position, breed, else have performer move towards
-				// mate
-				if ((x == 0) && (y == 0)) {
+				if (mate.getPosition().distance(performer.getPosition()) == 0) {
 					Furniture incubationChamber = Game.getMap().getBuildingBlock(incubationChamberPos).getFurniture();
 					Item egg = new DragonEggItem();
 					if (incubationChamber != null) {
@@ -74,21 +67,23 @@ public class BreedAction extends Action {
 
 					// Move performer towards incubation chamber
 				} else {
-					int action = new MoveAction(incubationChamberPos).execute(performer);
-					if (action == Action.COMPLETED)
+					if(action == null)
+						action = new MoveAction(incubationChamberPos);
+					int result = action.execute(performer);
+					if (result == Action.COMPLETED)
 						return Action.MADE_PROGRESS;
 					else
-						return action;
+						return result;
 				}
 			}
 			// Move mate towards incubation chamber
 			else {
-					System.out.print("New move action");
-					int action = new MoveAction(incubationChamberPos).execute(mate);
-					if (action == Action.COMPLETED)
-						return Action.MADE_PROGRESS;
-					else
-						return action;
+				System.out.print("New move action");
+				int action = new MoveAction(incubationChamberPos).execute(mate);
+				if (action == Action.COMPLETED)
+					return Action.MADE_PROGRESS;
+				else
+					return action;
 			}
 		} else {
 			// TODO: Build new Incubation room

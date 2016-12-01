@@ -8,6 +8,7 @@ import controller.Controller;
 import model.Actors.Actor;
 import model.Actors.AttackAction;
 import model.Actors.BreedAction;
+import model.Actors.OldBreedAction;
 import model.Actors.ConstructAction;
 import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
@@ -33,30 +34,8 @@ public class BreedScenario {
 		new BreedScenario();
 	}
 	
-	public Map generateMap(int[][] map){
-		BuildingBlock[][] mapTypes = new BuildingBlock[map.length][map[0].length];
-		for (int i = 0; i < mapTypes.length; i++) {
-			for (int j = 0; j < mapTypes[i].length; j++) {
-				if(map[i][j] == 0)
-					mapTypes[i][j] = new AirBlock();
-				else if (map[i][j] == 2)
-					mapTypes[i][j] = new IronOreBlock();
-				else
-					mapTypes[i][j] = new EarthBlock();
-			}
-		}
-		mapTypes[2][4].addFurniture(new IncubationChamber());
-		return new Map(mapTypes);
-	}
-	
 	public BreedScenario() {
 		Game.reset();
-		int[][] mapGen = new int[][]	
-			{{0,0,0,0,0},
-			{0,0,0,0,0},
-			{1,1,1,1,0},
-			{1,1,1,1,1},
-			{1,1,1,1,1}};
 		/*Controller controller = new Controller(
 				MapParameters.getParametersWithNoMountains(), new Random(seed),
 				true);*/
@@ -68,8 +47,8 @@ public class BreedScenario {
 		//Actor mate = new PlayerControlledActor(100, new Position(69, 991));
 		
 		//performer.addToActionQueue(new BreedAction(mate));
+		PlayerControlledActor.addActionToPlayerPool(new BreedAction());
 		
-		Actor a = PlayerControlledActor.allActors.getLast();
-		PlayerControlledActor.addActionToPlayerPool(new BreedAction(a));
+		//TODO: Try using iterator to go over list of actors or create new actor in map class
 	}
 }

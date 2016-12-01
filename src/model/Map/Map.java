@@ -568,38 +568,6 @@ public class Map implements Serializable {
 			}
 			//TODO: Every 1000 ticks, call breed action or construct incubation room if none built
 		}
-		if(addActor == true) {
-			System.out.println(Actor.allActors.size());
-			
-			
-			PlayerControlledActor pca = new PlayerControlledActor(100, positionToAdd);
-
-			// Set new actor to "dead" since not born yet
-			pca.setAlive(false, false);
-
-			// Place 1000 Incubate Actions into actor's queue so that
-			// Actor can't do anything until "born"
-			
-			//TODO: Change this back to larger value
-			
-			
-			//TODO: Push BreedScenario code
-			
-			
-			//pca.addToActionQueue(new IncubateAction(0));
-			/*for (int i = 0; i < 999; i++) {
-				pca.addToActionQueue(new IncubateAction(i));
-			}*/
-			for (int i = 0; i < 50; i++) {
-				pca.addToActionQueue(new IncubateAction(i));
-			}
-			System.out.println("Actor created");
-			Actor.allActors.add(pca);
-			System.out.println(Actor.allActors.size());
-
-			addActor = false;
-		}
-		
 	}
 
 	private void addFurniture() {
