@@ -42,10 +42,10 @@ public class StoreRoom extends Room{
 	public StoreRoom(Position p) {
         super(getHeight(), getWidth(), 3, 2, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0,0), new BasicCrate());
-		reqFurniture.put(new Position(0,2), new BasicCrate());
-		reqFurniture.put(new Position(0,4), new BasicCrate());
-		reqFurniture.put(new Position(0,6), new BasicCrate());
+		reqFurniture.put(new Position(1,0), new BasicCrate());
+		reqFurniture.put(new Position(1,2), new BasicCrate());
+		reqFurniture.put(new Position(1,4), new BasicCrate());
+		reqFurniture.put(new Position(1,6), new BasicCrate());
 		this.furniture = new LinkedList<>();
 
 		for (int i = 0; i < 4; i++)

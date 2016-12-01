@@ -40,9 +40,9 @@ public class EntertainmentRoom extends Room{
 	public EntertainmentRoom(Position p) {
         super(getHeight(), getWidth(), 8, 2, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0, 0), new Couch());
-		reqFurniture.put(new Position(0, 2), new Couch());
-		reqFurniture.put(new Position(0, 4), new PoolTable());
+		reqFurniture.put(new Position(1, 0), new Couch());
+		reqFurniture.put(new Position(1, 2), new Couch());
+		reqFurniture.put(new Position(1, 4), new PoolTable());
 		this.furniture = new LinkedList<>();
 		furniture.add(new PoolTable());
 		furniture.add(new Couch());

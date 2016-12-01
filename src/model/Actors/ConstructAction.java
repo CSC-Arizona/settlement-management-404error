@@ -27,18 +27,11 @@ public class ConstructAction extends Action {
 		this.room = room;
 		this.blocksToChange = new LinkedList<>();
 		// add all the gather commands to clear out the room
-		for (int r = room.getPosition().getRow(); r < room.getPosition()
-				.getRow() + room.getRequiredHeight(); r++) {
-			for (int c = room.getPosition().getCol(); c < room.getPosition()
-					.getCol() + room.getRequiredWidth(); c++) {
-				Position p = new Position(r, Math.floorMod(r, Game.getMap()
-								.getTotalWidth()));
+		for (int r = room.getPosition().getRow(); r < room.getPosition().getRow() + room.getRequiredHeight(); r++) {
+			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
+				Position p = new Position(r, Math.floorMod(c, Game.getMap().getTotalWidth()));
 				blocksToChange.add(p);
-				// PlayerControlledActor.addActionToPlayerPool(new
-				// GatherAction(p));
-				PlayerControlledActor
-						.addActionToPlayerPool(new GatherForConstructionAction(
-								p, room));
+				PlayerControlledActor.addActionToPlayerPool(new GatherAction(p));
 			}
 		}
 	}
@@ -51,15 +44,21 @@ public class ConstructAction extends Action {
 	@Override
 	public int execute(Actor performer) {
 		// check to see if the action is complete
+		boolean complete = true;
 		for (Position p : blocksToChange) {
-			if (!Game.getMap().getBuildingBlock(p).isOccupiable())
-				return Action.Pool;
+			if (Game.getMap().getBuildingBlock(p).isDestroyable())
+				complete = false;
+			else
+				Game.getMap().setBuildingBlock(p, room.getAppropriateBlock());
 		}
+		
+		if(!complete)
+			return Action.Pool;
 		// if it is add the furniture
 		if (room.getFurniture() != null)
 			for (Position p : room.getFurniture().keySet()) {
-				Position fp = new Position(room.getPosition().getRow()
-						+ p.getRow(), room.getPosition().getCol() + p.getCol());
+				Position fp = new Position(room.getPosition().getRow() + p.getRow(),
+						room.getPosition().getCol() + p.getCol());
 				Game.getMap().addFurniture(room.getFurniture().get(p), fp);
 			}
 		// then return completed

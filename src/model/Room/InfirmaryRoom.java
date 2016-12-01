@@ -42,8 +42,8 @@ public class InfirmaryRoom extends Room {
 	public InfirmaryRoom(Position p) {
         super(getHeight(), getWidth(), 8, 2, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0,0), new HealingBed());
-		reqFurniture.put(new Position(0,2), new HealingBed());
+		reqFurniture.put(new Position(1,0), new HealingBed());
+		reqFurniture.put(new Position(1,2), new HealingBed());
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 2; i++)
 		    this.furniture.add(new HealingBed());

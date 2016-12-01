@@ -100,7 +100,7 @@ public class GatherAction extends Action {
 	 * Checks if the actor is adjacent to the block
 	 */
 	private boolean isAdjacent(Actor performer) {
-		return Math.abs(position.getCol()%(Game.getMap().getTotalWidth()) - (performer.getPosition().getCol()%Game.getMap().getTotalWidth())) <= 1
+		return Math.abs(Math.floorMod(position.getCol(),Game.getMap().getTotalWidth()-1) - Math.floorMod(performer.getPosition().getCol(),Game.getMap().getTotalWidth()-1)) <= 1
 				&& Math.abs(position.getRow()
 						- performer.getPosition().getRow()) <= 1;
 	}
@@ -159,9 +159,8 @@ public class GatherAction extends Action {
 		// check to see if a nearby location is valid
 		for (int r = position.getRow() - 1; r <= position.getRow() + 1; r++) {
 			for (int c = position.getCol() - 1; c <= position.getCol() + 1; c++) {
-				int col = (c >= 0)?c%(Game.getMap().getTotalWidth()-1):Game.getMap().getTotalWidth()-c;
-				if (Game.validActorLocation(r, col))
-					return new Position(r, col);
+				if (Game.validActorLocation(r, Math.floorMod(c,Game.getMap().getTotalWidth())))
+					return new Position(r, Math.floorMod(c,Game.getMap().getTotalWidth()));
 			}
 		}
 		return null;

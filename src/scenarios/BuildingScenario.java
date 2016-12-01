@@ -8,7 +8,6 @@ import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
 import model.Game.Game;
 import model.Map.MapParameters;
-import model.Room.EntertainmentRoom;
 import model.Room.StoreRoom;
 import model.Room.VerticalTunnel;
 

@@ -42,8 +42,8 @@ public class IncubationRoom extends Room {
 	public IncubationRoom(Position p) {
 		super(requiredHeight, requiredWidth, roomCapacity, upgradesAllowed, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0, 0), new IncubationChamber());
-		reqFurniture.put(new Position(0, 0), new IncubationChamber());
+		reqFurniture.put(new Position(1, 0), new IncubationChamber());
+		reqFurniture.put(new Position(1, 2), new IncubationChamber());
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 2; i++) {
 			this.furniture.add(new IncubationChamber());
