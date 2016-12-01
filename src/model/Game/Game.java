@@ -55,7 +55,8 @@ public final class Game {
 				&& row < Game.getMap().getTotalHeight() &&
 				(!map.getBuildingBlock(row1 + 1, col1).isOccupiable()
 						|| (map.getBuildingBlock(row1, col1).getFurniture() != null
-								&& map.getBuildingBlock(row1, col1).getFurniture().getID().equals("ladder")));
+								&& (map.getBuildingBlock(row1, col1).getFurniture().getID().equals("ladder"))) ||
+										map.getBuildingBlock(row1, col1).getID().equals("Anthill"));
 	}
 
 }

@@ -65,7 +65,6 @@ public class GatherAction extends Action {
 			}
 			return Action.MADE_PROGRESS;
 		}
-
 		return move(performer);
 	}
 
@@ -80,7 +79,7 @@ public class GatherAction extends Action {
 
 		// delay the action if it can not be moved
 		if (moveLocation == null)
-			return Action.DELAY;
+			return Action.Pool;
 
 		// if not nearby move to a valid location
 		if (movement == null)
@@ -92,6 +91,8 @@ public class GatherAction extends Action {
 			moveLocation = null;
 			return Action.Pool;
 		}
+		if(result == Action.DELAY)
+			return Action.Pool;
 		return Action.MADE_PROGRESS;
 	}
 
@@ -99,7 +100,7 @@ public class GatherAction extends Action {
 	 * Checks if the actor is adjacent to the block
 	 */
 	private boolean isAdjacent(Actor performer) {
-		return Math.abs(position.getCol() - performer.getPosition().getCol()) <= 1
+		return Math.abs(Math.floorMod(position.getCol(),Game.getMap().getTotalWidth()-1) - Math.floorMod(performer.getPosition().getCol(),Game.getMap().getTotalWidth()-1)) <= 1
 				&& Math.abs(position.getRow()
 						- performer.getPosition().getRow()) <= 1;
 	}
@@ -158,8 +159,8 @@ public class GatherAction extends Action {
 		// check to see if a nearby location is valid
 		for (int r = position.getRow() - 1; r <= position.getRow() + 1; r++) {
 			for (int c = position.getCol() - 1; c <= position.getCol() + 1; c++) {
-				if (Game.validActorLocation(r, c))
-					return new Position(r, c);
+				if (Game.validActorLocation(r, Math.floorMod(c,Game.getMap().getTotalWidth())))
+					return new Position(r, Math.floorMod(c,Game.getMap().getTotalWidth()));
 			}
 		}
 		return null;
