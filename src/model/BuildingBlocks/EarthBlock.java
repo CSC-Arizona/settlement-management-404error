@@ -66,4 +66,9 @@ public class EarthBlock extends BuildingBlock {
 		return null;
 	}
 
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return new CavernBlock();
+	}
+
 }

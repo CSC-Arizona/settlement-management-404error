@@ -80,5 +80,10 @@ public class IncubationRoomBlock extends BuildingBlock {
 		return itemsOnGround;
 	}
 
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return null;
+	}
+
 
 }

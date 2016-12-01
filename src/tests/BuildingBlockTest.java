@@ -20,7 +20,6 @@ import model.BuildingBlocks.GrassBlock;
 import model.BuildingBlocks.IronOreBlock;
 import model.BuildingBlocks.LavaBlock;
 import model.BuildingBlocks.StoneBlock;
-import model.BuildingBlocks.TreeRootBlock;
 import model.Items.AntLarvaItem;
 import model.Items.IronItem;
 import model.Items.StoneItem;
@@ -136,15 +135,6 @@ public class BuildingBlockTest {
 		assertTrue(sb.isDestroyable());
 		assertEquals(new StoneItem().getClass(), sb.lootBlock().get(0).getClass());
 		assertEquals(8, sb.getDurability());
-	}
-	
-	@Test
-	public void testTreeRootBlock() {
-		TreeRootBlock trb = new TreeRootBlock();
-		assertFalse(trb.isOccupiable());
-		assertTrue(trb.isDestroyable());
-		assertEquals(new WoodItem().getClass(), trb.lootBlock().get(0).getClass());
-		assertEquals(5, trb.getDurability());
 	}
 
 }

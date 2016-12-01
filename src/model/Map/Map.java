@@ -559,13 +559,22 @@ public class Map implements Serializable {
 
 	public void updateActors(int timeDelta) {
 		if (Actor.allActors != null) {
-			for (Actor actor : Actor.allActors) {
+			Iterator<Actor> iter = Actor.allActors.iterator();
+			while (iter.hasNext()) {
+				Actor actor = iter.next();
 				Position oldPosition = actor.getPosition();
 				map[oldPosition.getRow()%getTotalHeight()][oldPosition.getCol()%getTotalWidth()].removeActor(actor);
 				actor.update();
 				Position newPosition = actor.getPosition();
 				map[newPosition.getRow()%getTotalHeight()][newPosition.getCol()%getTotalWidth()].addActor(actor);
 			}
+//			for (Actor actor : Actor.allActors) {
+//				Position oldPosition = actor.getPosition();
+//				map[oldPosition.getRow()%getTotalHeight()][oldPosition.getCol()%getTotalWidth()].removeActor(actor);
+//				actor.update();
+//				Position newPosition = actor.getPosition();
+//				map[newPosition.getRow()%getTotalHeight()][newPosition.getCol()%getTotalWidth()].addActor(actor);
+//			}
 			//TODO: Every 1000 ticks, call breed action or construct incubation room if none built
 		}
 		if(addActor == true) {

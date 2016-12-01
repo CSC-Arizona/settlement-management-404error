@@ -135,8 +135,11 @@ public class GatherAction extends Action {
 			if (tree != null) {
 				tree.removeFromMap();
 			}
-		} else
-			Game.getMap().setBuildingBlock(position, new AirBlock());
+		} else {
+			BuildingBlock inQuestion = Game.getMap().getBuildingBlock(position.getRow(), position.getCol());
+			Game.getMap().setBuildingBlock(position, inQuestion.getAppropriateReplacement());
+			// Game.getMap().setBuildingBlock(position, new AirBlock()); TODO: get appropriate block from BuildingBlock
+		}
 	}
 
 }

@@ -94,6 +94,8 @@ public abstract class BuildingBlock implements Serializable {
 	abstract public boolean removeFurniture();
 
 	abstract public Furniture getFurniture();
+	
+	abstract public BuildingBlock getAppropriateReplacement();
 
 	@Override
 	public String toString() {

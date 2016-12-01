@@ -27,6 +27,7 @@ public class MushroomBlock extends BuildingBlock {
 	public MushroomBlock() {
 		super(durability, true, true, new Color(173, 33, 183), id);
 		itemsInBlock = new LinkedList<>();
+		actorsInBlock = new LinkedList<>();
 	}
 
 	@Override
@@ -72,6 +73,11 @@ public class MushroomBlock extends BuildingBlock {
 	@Override
 	public List<Item> itemsOnGround() {
 		return null;
+	}
+
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return new CavernBlock();
 	}
 
 }
