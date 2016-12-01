@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Items.Item;
+import model.Menus.PrintableItemsList;
 
 /**
  * Inventory holds a collection of Items as a List. It implements a weight limit
@@ -19,6 +20,7 @@ public class Inventory implements Iterable<Item>, Serializable {
 	private static final long serialVersionUID = 2935773370312109536L;
 	public static final double MAXWEIGHT = 100.0;
 	private double weight;
+	private PrintableItemsList piList;
 	/*
 	 * I made this a list instead of a HashMap so that it can be displayed on
 	 * the GUI as a JList
@@ -28,6 +30,7 @@ public class Inventory implements Iterable<Item>, Serializable {
 	public Inventory() {
 		this.weight = 0;
 		items = new LinkedList<>();
+		piList = new PrintableItemsList();
 	}
 
 	/*
@@ -35,9 +38,14 @@ public class Inventory implements Iterable<Item>, Serializable {
 	 * inventory exceed its weight limit, the item is added and it returns true.
 	 * Else, drop the item on the ground.
 	 */
-	public void addItem(Item it) {
+	public boolean addItem(Item it) {
+		if (this.canAdd(it)) {
 			items.add(it);
 			weight += it.getWeight();
+			piList.addItem(it);
+			return true;
+		}
+		return false;
 	}
 
 	/*
@@ -87,11 +95,12 @@ public class Inventory implements Iterable<Item>, Serializable {
 
 	@Override
 	public String toString() {
-		String result = "";
-		for (Item item : items) {
-			result += item.toString() + " ";
+		String result = "" + getWeightCarried() + "/" + MAXWEIGHT + 
+				" weight carried";
+		if (!piList.toString().equals("")) {
+			result = result + " (" + piList.toString() + ")";
 		}
-		return result.trim();
+		return result;
 	}
 	
 	/**
@@ -112,16 +121,16 @@ public class Inventory implements Iterable<Item>, Serializable {
 	/**
 	 * @param required
 	 */
-	public void removeItem(Item required) {
+	public boolean removeItem(Item required) {
 		Iterator<Item> it = items.iterator();
 		while(it.hasNext()){
 			Item item = it.next();
 			if(item.getClass().equals(required.getClass())){
 				this.weight -= item.getWeight();
 				it.remove();
-				return;
+				return true;
 			}
 		}
-		
+		return false;
 	}
 }

@@ -82,4 +82,9 @@ public class AppleTreeTrunkBlock extends BuildingBlock {
 		return itemsOnGround;
 	}
 
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return new AirBlock();
+	}
+
 }

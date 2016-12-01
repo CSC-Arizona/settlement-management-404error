@@ -10,7 +10,7 @@ import model.Items.AntLarvaItem;
 import model.Items.Item;
 
 /**
- * AntTunnelBlock make up ant tunnels. When they are destroyed they drop 
+ * AntTunnelBlock make up ant tunnels. When they are destroyed they drop
  * AntLarvaItems.
  * 
  * @author Katherine Walters
@@ -26,8 +26,10 @@ public class AntTunnelBlock extends BuildingBlock {
 	private final static int durability = 7;
 	private List<Item> itemsInBlock;
 	public final static String id = "Ant tunnel";
+
 	public AntTunnelBlock() {
-		super(durability, true, true, new Color(102,72,32), null, id, null);
+		super(durability, true, true, new Color(102, 72, 32), null, id, null);
+
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new AntLarvaItem());
 		actorsInBlock = new LinkedList<>();
@@ -38,10 +40,10 @@ public class AntTunnelBlock extends BuildingBlock {
 	public List<Item> lootBlock() {
 		return itemsInBlock;
 	}
-	
+
 	@Override
 	public boolean addActor(Actor actor) {
-		if(actor.isAlive())
+		if (actor.isAlive())
 			actorsInBlock.add(actor);
 		return true;
 	}
@@ -54,12 +56,12 @@ public class AntTunnelBlock extends BuildingBlock {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public List<Actor> getActors() {
 		return actorsInBlock;
 	}
-	
+
 	@Override
 	public boolean addFurniture(Furniture furniture) {
 		return false;
@@ -78,6 +80,11 @@ public class AntTunnelBlock extends BuildingBlock {
 	@Override
 	public List<Item> itemsOnGround() {
 		return itemsOnGround;
+	}
+
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return null;
 	}
 
 }

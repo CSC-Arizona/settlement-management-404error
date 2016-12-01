@@ -16,7 +16,7 @@ public class MetalCrate extends Crate {
 	 * 
 	 */
 	private static final long serialVersionUID = -3910896217729131037L;
-	private final static int weightCapacity = 70;
+	private final static double weightCapacity = 70.0;
 	private List<Item> metalCrateList;
 	
 	public MetalCrate() {
@@ -38,6 +38,6 @@ public class MetalCrate extends Crate {
 
 	@Override
 	public String toString() {
-		return "Metal crate (remaining capacity " + (weightCapacity-contentsWeight) + ")";
+		return "Metal crate " + super.toString();
 	}
 }

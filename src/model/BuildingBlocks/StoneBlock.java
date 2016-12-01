@@ -70,4 +70,9 @@ public class StoneBlock extends BuildingBlock {
 		return null;
 	}
 
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return new CavernBlock();
+	}
+
 }

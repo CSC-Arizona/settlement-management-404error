@@ -58,6 +58,9 @@ public class Map implements Serializable {
 	private ArrayList<Position> anthillLocations = new ArrayList<>();
 
 	private int time;
+	
+	private boolean addActor;
+	private Position positionToAdd;
 
 	public Map(MapParameters mapParameters, Random random) {
 		this.blocksMarkedAsDesignated = new HashMap<>();
@@ -523,20 +526,25 @@ public class Map implements Serializable {
 	}
 
 	public void addPlayerActor(Position p) {
-		PlayerControlledActor pca = new PlayerControlledActor(100, p);
+		addActor = true;
+		positionToAdd = p;
+		/*PlayerControlledActor pca = new PlayerControlledActor(100, p);
 
 		// Set new actor to "dead" since not born yet
 		pca.setAlive(false, false);
 
 		// Place 1000 Incubate Actions into actor's queue so that
 		// Actor can't do anything until "born"
+		
+		//TODO: Change this back to larger value
 		for (int i = 0; i < 1000; i++) {
 			pca.addToActionQueue(new IncubateAction(i));
-		}
+		}*/
 	}
 
 	public void addPlayerToMap(Actor a) {
 		// Make new player visible on map
+		//TODO: May need to move this code to update actor
 		Position p = a.getPosition();
 		map[p.getRow()][p.getCol()].addActor(a);
 	}
@@ -559,13 +567,13 @@ public class Map implements Serializable {
 
 	public void updateActors(int timeDelta) {
 		if (Actor.allActors != null) {
-			
-			
+
 			LinkedList<Actor> newAllActors = new LinkedList<>();
 			for (Actor actor : Actor.allActors){
 				newAllActors.add(actor);
 			}
 			Iterator<Actor> iter = newAllActors.iterator();
+
 			while (iter.hasNext()) {
 				Actor actor = iter.next();
 				Position oldPosition = actor.getPosition();
@@ -574,7 +582,6 @@ public class Map implements Serializable {
 				Position newPosition = actor.getPosition();
 				map[newPosition.getRow()%getTotalHeight()][newPosition.getCol()%getTotalWidth()].addActor(actor);
 			}
-			 
 			//TODO: Every 1000 ticks, call breed action or construct incubation room if none built
 		}
 	}

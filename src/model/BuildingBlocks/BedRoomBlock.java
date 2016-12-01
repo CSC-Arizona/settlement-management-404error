@@ -80,4 +80,9 @@ public class BedRoomBlock extends BuildingBlock {
 		return itemsOnGround;
 	}
 
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return null;
+	}
+
 }

@@ -42,6 +42,8 @@ import model.Actors.ConstructAction;
 import model.Actors.GatherAction;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
+import model.BuildingBlocks.AirBlock;
+import model.BuildingBlocks.BuildingBlock;
 import model.Furniture.Furniture;
 import model.Game.Game;
 import model.Items.Item;
@@ -482,18 +484,44 @@ public class BasicView extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (currentlyPlacingRoom) {
-				currentlyPlacingRoom = false;
-				controller.setDesignatingAction(Designation.CONSTRUCTING);
+				boolean canBuildHere = true;
+				BuildingBlock obstacle = new AirBlock();
+				System.out.println("Calling the mouseClicked function");
+				System.out.println("roomX = " + roomX + ", roomY = " + roomY + ", roomHeight = " + room.getHeight()
+						+ ", roomWidth = " + room.getWidth());
+				for (int r = roomX; r < roomX + room.getWidth(); r++) {
+					for (int c = roomY; c < roomY + room.getHeight(); c++) {
+						System.out.println("Room at (" + c + "," + r + ")");
+						int x = Math.floorMod(c, mapHeight);
+						int y = Math.floorMod(r, mapWidth);
+						BuildingBlock inQuestion = Game.getMap().getBuildingBlock(x,y);
+						if (!inQuestion.isDestroyable()) {
+							canBuildHere = false;
+							obstacle = inQuestion;
+							break;
+						}
+					}
+				}
+				if (canBuildHere) {
+					currentlyPlacingRoom = false;
+					controller.setDesignatingAction(Designation.CONSTRUCTING);
 
-				controller.applyDesignation(roomY, roomX, roomHeight
-						/ blockSizeY, roomWidth / blockSizeX);
+					controller.applyDesignation(roomY, roomX, roomHeight / blockSizeY, roomWidth / blockSizeX);
 
-				PlayerControlledActor.playerActionPool.add(new ConstructAction(
-						room.constructObject(new Position(roomY, roomX))));
+					PlayerControlledActor.playerActionPool
+							.add(new ConstructAction(room.constructObject(new Position(roomY, roomX))));
 
-				controller.setDesignatingAction(Designation.NONE);
+					controller.setDesignatingAction(Designation.NONE);
 
-				repaint();
+					repaint();
+				} else {
+					String err = "";
+					if (obstacle.getClass().equals(new AirBlock().getClass()))
+						err = "You can't build a room above ground.";
+				    else
+				    	err = "You can't build a room over a " + obstacle.getID() + " block.";
+					JOptionPane.showMessageDialog(null, err);
+				}
 
 			} else {
 
@@ -501,31 +529,22 @@ public class BasicView extends JPanel {
 					if (currentlyDrawingDesignation) {
 						designationEnd = e.getPoint();
 
-						designationEndCol = designationEnd.x / blockSizeX
-								+ visibleCornerX;
-						designationEndRow = designationEnd.y / blockSizeY
-								+ visibleCornerY;
+						designationEndCol = designationEnd.x / blockSizeX + visibleCornerX;
+						designationEndRow = designationEnd.y / blockSizeY + visibleCornerY;
 
-						int startRow = Math.min(designationStartRow,
-								designationEndRow);
-						int startCol = Math.min(designationStartCol,
-								designationEndCol);
-						int height = Math.abs(designationStartRow
-								- designationEndRow);
-						int width = Math.abs(designationStartCol
-								- designationEndCol);
+						int startRow = Math.min(designationStartRow, designationEndRow);
+						int startCol = Math.min(designationStartCol, designationEndCol);
+						int height = Math.abs(designationStartRow - designationEndRow);
+						int width = Math.abs(designationStartCol - designationEndCol);
 
-						controller.applyDesignation(startRow, startCol, height,
-								width);
+						controller.applyDesignation(startRow, startCol, height, width);
 
 						repaint();
 					} else {
 						designationStart = e.getPoint();
 
-						designationStartCol = designationStart.x / blockSizeX
-								+ visibleCornerX;
-						designationStartRow = designationStart.y / blockSizeY
-								+ visibleCornerY;
+						designationStartCol = designationStart.x / blockSizeX + visibleCornerX;
+						designationStartRow = designationStart.y / blockSizeY + visibleCornerY;
 
 						designationEnd = e.getPoint();
 					}

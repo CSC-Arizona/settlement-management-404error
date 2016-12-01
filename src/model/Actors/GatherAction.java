@@ -51,7 +51,7 @@ public class GatherAction extends Action {
 				.isDestroyable())
 			return Action.COMPLETED;
 
-		if (isAdjacent(performer)) {
+		if (position.isAdjacent(performer.getPosition())) {
 			BuildingBlock block = Game.getMap().getBuildingBlock(
 					position.getRow(), position.getCol());
 			// reduce the durability
@@ -75,7 +75,7 @@ public class GatherAction extends Action {
 	private int move(Actor performer) {
 		// if the Move Location has not yet been calculated, calculate position
 		if (moveLocation == null)
-			moveLocation = getMoveLocation();
+			moveLocation = MoveAction.getMoveLocationNear(position);
 
 		// delay the action if it can not be moved
 		if (moveLocation == null)
@@ -97,15 +97,6 @@ public class GatherAction extends Action {
 	}
 
 	/*
-	 * Checks if the actor is adjacent to the block
-	 */
-	private boolean isAdjacent(Actor performer) {
-		return Math.abs(Math.floorMod(position.getCol(),Game.getMap().getTotalWidth()-1) - Math.floorMod(performer.getPosition().getCol(),Game.getMap().getTotalWidth()-1)) <= 1
-				&& Math.abs(position.getRow()
-						- performer.getPosition().getRow()) <= 1;
-	}
-
-	/*
 	 * Takes out the loot from the block And adds it to the inventory of the
 	 * Actor, or drops it on the ground, and waits for another Actor to go and
 	 * pick it up
@@ -115,9 +106,7 @@ public class GatherAction extends Action {
 			for (Item i : block.lootBlock())
 				// place the loot in the inventory if possible otherwise the
 				// ground
-				if (performer.getInventory().canAdd(i)) {
-					performer.getInventory().addItem(i);
-				} else {
+				if (!performer.getInventory().addItem(i)) {
 					Game.getMap().addItemToGround(position, i);
 					performer.getActionPool().add(
 							new PickUpItemAction(position, i));
@@ -146,24 +135,11 @@ public class GatherAction extends Action {
 			if (tree != null) {
 				tree.removeFromMap();
 			}
-		} else
-			Game.getMap().setBuildingBlock(position, new AirBlock());
-	}
-
-	/**
-	 * Finds an adjacent valid location near the block to move the actor to
-	 * 
-	 * @return The Position to move to
-	 */
-	private Position getMoveLocation() {
-		// check to see if a nearby location is valid
-		for (int r = position.getRow() - 1; r <= position.getRow() + 1; r++) {
-			for (int c = position.getCol() - 1; c <= position.getCol() + 1; c++) {
-				if (Game.validActorLocation(r, Math.floorMod(c,Game.getMap().getTotalWidth())))
-					return new Position(r, Math.floorMod(c,Game.getMap().getTotalWidth()));
-			}
+		} else {
+			BuildingBlock inQuestion = Game.getMap().getBuildingBlock(position.getRow(), position.getCol());
+			Game.getMap().setBuildingBlock(position, inQuestion.getAppropriateReplacement());
+			// Game.getMap().setBuildingBlock(position, new AirBlock()); TODO: get appropriate block from BuildingBlock
 		}
-		return null;
 	}
 
 }

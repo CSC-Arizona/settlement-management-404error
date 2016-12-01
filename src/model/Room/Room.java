@@ -7,7 +7,7 @@ import model.Actors.Position;
 import model.BuildingBlocks.BuildingBlock;
 import model.Furniture.Furniture;
 import model.Items.Item;
-import model.Menus.RequiredItemsList;
+import model.Menus.PrintableItemsList;
 
 /**
  * Room is an abstract class that is extended by all the possible structures that can be built.
@@ -43,7 +43,7 @@ public abstract class Room {
 	private int upgradesAllowed;
 	private int numAgentsInRoom;
 	private Position pos;
-	private RequiredItemsList ril;
+	private PrintableItemsList ril;
 	
 	public Room(int requiredHeight, int requiredWidth, int roomCapacity, int upgradesAllowed, Position pos) {
 		this.requiredHeight = requiredHeight;
@@ -143,7 +143,7 @@ public abstract class Room {
 	
 	public String reqMaterialsToString() {
 		if (this.ril == null) {
-			ril = new RequiredItemsList();
+			ril = new PrintableItemsList();
 			if (this.getRequiredBuildMaterials() != null) {
 				for (Item i : this.getRequiredBuildMaterials())
 					ril.addItem(i);

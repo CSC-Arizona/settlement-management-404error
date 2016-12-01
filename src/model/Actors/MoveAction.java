@@ -124,5 +124,29 @@ public class MoveAction extends Action {
 		}
 		return (performer.getPosition().equals(desiredDestination)) ? Action.COMPLETED : Action.MADE_PROGRESS;
 	}
+	
+	/**
+	 * Finds an adjacent valid location near the block to move the actor to
+	 * 
+	 * @return The Position to move to
+	 */
+	public static Position getMoveLocationNear(Position position) {
+		// check to see if a nearby location is valid
+		Position nearest = null;
+		double distance = Double.MAX_VALUE;
+		for (int r = position.getRow() - 1; r <= position.getRow() + 1; r++) {
+			for (int c = position.getCol() - 1; c <= position.getCol() + 1; c++) {
+				if (Game.validActorLocation(r, Math.floorMod(c, Game.getMap().getTotalWidth()))){
+					Position p = new Position(r, Math.floorMod(c, Game.getMap().getTotalWidth()));
+					double calc = p.distance(position);
+					if(calc < distance){
+						distance = calc;
+						nearest = p;
+					}
+				}
+			}
+		}
+		return nearest;
+	}
 
 }

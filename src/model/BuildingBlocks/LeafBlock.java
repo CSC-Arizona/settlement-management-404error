@@ -65,4 +65,9 @@ public class LeafBlock extends BuildingBlock {
 		return null;
 	}
 
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return new AirBlock();
+	}
+
 }

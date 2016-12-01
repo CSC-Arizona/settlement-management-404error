@@ -70,4 +70,9 @@ public class IronOreBlock extends BuildingBlock {
 	public List<Item> itemsOnGround() {
 		return null;
 	}
+
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return new CavernBlock();
+	}
 }

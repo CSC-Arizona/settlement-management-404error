@@ -5,95 +5,61 @@ import java.util.HashMap;
 import model.Furniture.Furniture;
 import model.Game.Game;
 import model.Items.DragonEggItem;
-import model.Items.Item;
 import model.Map.Map;
 
-//Author: Maxwell Faridian
-//This class will have 2 actors move to the incubation room. Once there, if there is room available in one of the incubation
-//chambers, the actors will "create" a new egg item and place it in an empty incubation chamber
-public class BreedAction extends Action {
+public class BreedAction extends Action{
+	
+	private Position toGoTo;
+	private MoveAction ma;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2168888324400311918L;
+	@Override
+	public int execute(Actor performer) {
+		// TODO Auto-generated method stub
+		if(toGoTo == null) {
+			findEmptyIncubationChamber();
+			if(toGoTo == null) {
+				return Action.Pool;
+			}
+		}
+		if(performer.getPosition().equals(toGoTo)) {
+			Furniture chamber = Game.getMap().getBuildingBlock(toGoTo).getFurniture();
+			if(chamber.getRemainingWeightCapacity() == 3) {
+				chamber.addItem(new DragonEggItem());
+				
+				PlayerControlledActor pca = new PlayerControlledActor(10, toGoTo);
+				pca.setAlive(false, false);
+				pca.addToActionQueue(new IncubateAction());
+				return Action.COMPLETED;
 
-	private Actor mate; // Need to make sure other actor is in incubation room
-						// with performer
-	private Position incubationChamberPos;
-
-	public BreedAction(Actor mate) {
-		this.mate = mate;
-		incubationChamberPos = getEmptyIncubationChamber();
+			}
+			return Action.Pool;
+		}
+		
+		if(ma == null) {
+			ma = new MoveAction(toGoTo);
+		}
+		int result = ma.execute(performer);
+		if(result == Action.COMPLETED)
+			return Action.MADE_PROGRESS;
+		else
+			return result;
 	}
+//FInd nearest empty incubation chamber
+//Drop off egg, wait, and then new egg will hatch
 
-	// This method finds an empty incubation chamber that the actor(s) can move
-	// towards
-	private Position getEmptyIncubationChamber() {
+	private void findEmptyIncubationChamber() {
+		// TODO Auto-generated method stub
 		HashMap<Furniture, Position> mapFurniture = Game.getMap().getFurniture();
 		if (mapFurniture != null) {
 			for (Furniture f : mapFurniture.keySet()) {
 				if (f.getID().equals("incubation chamber")) {
 					if (f.getRemainingWeightCapacity() == 3) {
-						return mapFurniture.get(f);
+						toGoTo = mapFurniture.get(f);
 					}
 				}
 			}
 		}
-		return null;
-	}
-
-	@Override
-	public int execute(Actor performer) {
-		if (incubationChamberPos != null) {
-			if (mate.getPosition().equals(incubationChamberPos)) {
-				// test to see that the two actors are in the same position
-				int x = Math.abs(performer.getPosition().getCol() - mate.getPosition().getCol());
-				int y = Math.abs(performer.getPosition().getRow() - mate.getPosition().getRow());
-				// if in same position, breed, else have performer move towards mate
-				if ((x == 0) && (y == 0)) {
-					Furniture incubationChamber = Game.getMap().getBuildingBlock(incubationChamberPos).getFurniture();
-					Item egg = new DragonEggItem();
-					if (incubationChamber != null) {
-						if (incubationChamber.getRemainingWeightCapacity() == egg.getWeight()) {
-							incubationChamber.addItem(egg); // Egg is in
-															// incubation
-															// chamber,
-															// remaining
-															// weightCapacity
-															// should be 0 now
-						}
-					}
-					//Add new Player Controlled Actor to map
-					Map map = Game.getMap();
-					map.addPlayerActor(incubationChamberPos);
-					
-					return Action.COMPLETED; 
-
-					// Move performer towards incubation chamber
-				} else {
-					int action = new MoveAction(incubationChamberPos).execute(performer);
-					if (action == Action.COMPLETED)
-						return Action.MADE_PROGRESS;
-					else
-						return action;
-				}
-			}
-			// Move mate towards incubation chamber
-			else {
-				int action = new MoveAction(incubationChamberPos).execute(mate);
-				if (action == Action.COMPLETED)
-					return Action.MADE_PROGRESS;
-				else
-					return action;
-			}
-		}
-		else {
-			//TODO: Build new Incubation room
-		}
-		return 0;
 	}
 	
-	//TODO: Test Breed and Incubate actions
 
 }

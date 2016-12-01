@@ -82,4 +82,9 @@ public class AirBlock extends BuildingBlock {
 		return itemsOnGround;
 	}
 
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return null;
+	}
+
 }
