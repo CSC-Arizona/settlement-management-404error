@@ -48,6 +48,7 @@ import model.Room.HorizontalTunnel;
 import model.Room.IncubationRoom;
 import model.Room.InfirmaryRoom;
 import model.Room.KitchenRoom;
+import model.Room.RoomEnum;
 import model.Room.StoreRoom;
 import model.Room.VerticalTunnel;
 
@@ -109,6 +110,7 @@ public class BasicView extends JPanel {
 
 	private boolean currentlyPlacingRoom = false;
 	private Point roomCorner;
+	private RoomEnum room;
 	private int roomWidth;
 	private int roomHeight;
 	private int roomX;
@@ -437,7 +439,7 @@ public class BasicView extends JPanel {
 						/ blockSizeY, roomWidth / blockSizeX);
 
 				PlayerControlledActor.playerActionPool.add(new ConstructAction(
-						new BedRoom(new Position(roomY, roomX))));
+						room.constructObject(new Position(roomY, roomX))));
 
 				controller.setDesignatingAction(Designation.NONE);
 
@@ -515,53 +517,25 @@ public class BasicView extends JPanel {
 			if (!currentlyDrawingDesignation) {
 				currentlyPlacingRoom = true;
 				roomCorner = new Point(0, 0);
-				if (controller.isPaused()) {
+				if (!controller.isPaused()) {
 					pauseButton.toggle();
 				}
 
-				// this should probably be done with enums or something
-
-				String[] rooms = new ConstructMenu().getRooms().keySet()
-						.toArray(new String[0]);
+				String[] roomNames = RoomEnum.getAllRoomNames();
 
 				String roomChoice = (String) JOptionPane.showInputDialog(
 						controller, "Choose a room to construct", "",
-						JOptionPane.PLAIN_MESSAGE, null, rooms, "Bedroom");
+						JOptionPane.PLAIN_MESSAGE, null, roomNames,
+						roomNames[0]);
 
 				if (roomChoice != null) {
-
-					if (roomChoice.equals("Bedroom")) {
-						roomHeight = BedRoom.getHeight() * blockSizeY;
-						roomWidth = BedRoom.getWidth() * blockSizeX;
-					} else if (roomChoice.equals("Entertainment Room")) {
-						roomHeight = EntertainmentRoom.getHeight() * blockSizeY;
-						roomWidth = EntertainmentRoom.getWidth() * blockSizeX;
-					} else if (roomChoice.equals("Farm Room")) {
-						roomHeight = FarmRoom.getHeight() * blockSizeY;
-						roomWidth = FarmRoom.getWidth() * blockSizeX;
-					} else if (roomChoice.equals("Incubation Room")) {
-						roomHeight = IncubationRoom.getHeight() * blockSizeY;
-						roomWidth = IncubationRoom.getWidth() * blockSizeX;
-					} else if (roomChoice.equals("Infirmary")) {
-						roomHeight = InfirmaryRoom.getHeight() * blockSizeY;
-						roomWidth = InfirmaryRoom.getWidth() * blockSizeX;
-					} else if (roomChoice.equals("Kitchen")) {
-						roomHeight = KitchenRoom.getHeight() * blockSizeY;
-						roomWidth = KitchenRoom.getWidth() * blockSizeX;
-					} else if (roomChoice.equals("Storeroom")) {
-						roomHeight = StoreRoom.getHeight() * blockSizeY;
-						roomWidth = StoreRoom.getWidth() * blockSizeX;
-					} else if (roomChoice.equals("Horizontal Tunnel")) {
-						roomHeight = HorizontalTunnel.getHeight() * blockSizeY;
-						roomWidth = HorizontalTunnel.getWidth() * blockSizeX;
-					} else if (roomChoice.equals("Vertical Tunnel")) {
-						roomHeight = VerticalTunnel.getHeight() * blockSizeY;
-						roomWidth = VerticalTunnel.getWidth() * blockSizeX;
-					}
+					room = RoomEnum.getRoomFromString(roomChoice);
+					roomHeight = room.getHeight() * blockSizeY - 1;
+					roomWidth = room.getWidth() * blockSizeX - 1;
 				} else {
 					currentlyPlacingRoom = false;
 				}
-				if (!controller.isPaused()) {
+				if (controller.isPaused()) {
 					pauseButton.toggle();
 				}
 			}

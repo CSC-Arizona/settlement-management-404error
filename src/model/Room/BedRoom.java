@@ -25,13 +25,14 @@ public class BedRoom extends Room {
 	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
+	private static RoomEnum room = RoomEnum.BEDROOM;
 	
 	public static int getHeight() {
-		return 2;
+		return room.getHeight();
 	}
 	
 	public static int getWidth() {
-		return 12;
+		return room.getWidth();
 	}
 	
 	public BedRoom(Position p) {
