@@ -5,11 +5,11 @@ import java.util.LinkedList;
 
 import model.Items.Item;
 
-public class RequiredItemsList {
+public class PrintableItemsList {
 	
       private HashMap<String, Integer> reqItems;
       
-      public RequiredItemsList() {
+      public PrintableItemsList() {
     	  reqItems = new HashMap<>();
       }
       
@@ -19,6 +19,18 @@ public class RequiredItemsList {
     		  reqItems.put(item.toString(), currVal + 1);
     	  } else 
     		  reqItems.put(item.toString(), 1);
+      }
+      
+      public boolean removeItem(Item item) {
+    	  if (reqItems.containsKey(item.toString())) {
+    		  int newVal = reqItems.get(item.toString()) - 1;
+    		  if (newVal == 0)
+    			  reqItems.remove(item.toString());
+    		  else
+    		      reqItems.put(item.toString(), newVal);
+    		  return true;
+    	  }
+    	  return false;
       }
       
       public String toString() {

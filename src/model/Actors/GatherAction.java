@@ -106,9 +106,7 @@ public class GatherAction extends Action {
 			for (Item i : block.lootBlock())
 				// place the loot in the inventory if possible otherwise the
 				// ground
-				if (performer.getInventory().canAdd(i)) {
-					performer.getInventory().addItem(i);
-				} else {
+				if (!performer.getInventory().addItem(i)) {
 					Game.getMap().addItemToGround(position, i);
 					performer.getActionPool().add(
 							new PickUpItemAction(position, i));
@@ -137,8 +135,11 @@ public class GatherAction extends Action {
 			if (tree != null) {
 				tree.removeFromMap();
 			}
-		} else
-			Game.getMap().setBuildingBlock(position, new AirBlock());
+		} else {
+			BuildingBlock inQuestion = Game.getMap().getBuildingBlock(position.getRow(), position.getCol());
+			Game.getMap().setBuildingBlock(position, inQuestion.getAppropriateReplacement());
+			// Game.getMap().setBuildingBlock(position, new AirBlock()); TODO: get appropriate block from BuildingBlock
+		}
 	}
 
 }

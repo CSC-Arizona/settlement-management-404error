@@ -225,7 +225,7 @@ public class Controller extends JFrame {
 		basicView.setFocusable(true);
 		basicView.setRequestFocusEnabled(true);
 		basicView.grabFocus();
-
+        
 	}
 
 	private class MyTimerTasks extends TimerTask {

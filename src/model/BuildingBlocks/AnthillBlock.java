@@ -27,7 +27,7 @@ public class AnthillBlock extends BuildingBlock {
 	private List<Item> itemsInBlock;
 	public final static String id = "Anthill";
 	public AnthillBlock() {
-		super(durability, true, false, Color.BLACK, id);
+		super(durability, false, false, Color.BLACK, id);
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new AntLarvaItem());
 		actorsInBlock = new LinkedList<>();
@@ -78,6 +78,11 @@ public class AnthillBlock extends BuildingBlock {
 	@Override
 	public List<Item> itemsOnGround() {
 		return itemsOnGround;
+	}
+
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return null;
 	}
 
 }

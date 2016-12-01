@@ -80,4 +80,9 @@ public class KitchenRoomBlock extends BuildingBlock {
 	public List<Item> itemsOnGround() {
 		return itemsOnGround;
 	}
+
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return null;
+	}
 }

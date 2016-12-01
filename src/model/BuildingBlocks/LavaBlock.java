@@ -67,4 +67,9 @@ public class LavaBlock extends BuildingBlock {
 	public List<Item> itemsOnGround() {
 		return null;
 	}
+
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return null;
+	}
 }

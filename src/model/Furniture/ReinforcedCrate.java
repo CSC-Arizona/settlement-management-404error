@@ -15,7 +15,7 @@ public class ReinforcedCrate extends Crate {
 	 * 
 	 */
 	private static final long serialVersionUID = -4875461862312912501L;
-	private final static int weightCapacity = 500;
+	private final static double weightCapacity = 500.0;
 	private List<Item> reinforcedCrateList;
 	
 	public ReinforcedCrate() {
@@ -35,6 +35,6 @@ public class ReinforcedCrate extends Crate {
 	
 	@Override
 	public String toString() {
-		return "Reinforced crate (remaining capacity " + (weightCapacity-contentsWeight) + ")";
+		return "Reinforced crate " + super.toString();
 	}
 }

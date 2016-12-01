@@ -15,7 +15,7 @@ public class BasicCrate extends Crate {
 	 * 
 	 */
 	private static final long serialVersionUID = 4679484485182352115L;
-	private final static int weightCapacity = 30;
+	private final static double weightCapacity = 30.0;
 	private List<Item> basicCrateList;
 	
 	public BasicCrate() {
@@ -34,7 +34,7 @@ public class BasicCrate extends Crate {
 
 	@Override
 	public String toString() {
-		return "Basic crate (remaining capacity " + (weightCapacity-contentsWeight) + ")";
+		return "Basic crate " + super.toString();
 	}
 
 }

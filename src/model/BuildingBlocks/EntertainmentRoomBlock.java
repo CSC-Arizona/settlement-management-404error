@@ -80,5 +80,10 @@ public class EntertainmentRoomBlock extends BuildingBlock {
 		return itemsOnGround;
 	}
 
+	@Override
+	public BuildingBlock getAppropriateReplacement() {
+		return null;
+	}
+
 
 }
