@@ -20,7 +20,7 @@ public class MillingMachine extends Furniture{
 	private List<Item> millingMachineList;
 	
 	public MillingMachine() {
-		super(capacity, 0, "milling machine");
+		super(capacity, 0, "milling machine", null);
 		millingMachineList = new LinkedList<>();
 		millingMachineList.add(new StoneItem());
 		millingMachineList.add(new StoneItem());

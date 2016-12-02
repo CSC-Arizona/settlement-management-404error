@@ -8,6 +8,8 @@ import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.game.Game;
 import model.map.MapParameters;
+import model.room.BedRoom;
+import model.room.HorizontalTunnel;
 import model.room.StoreRoom;
 import model.room.VerticalTunnel;
 
@@ -24,16 +26,13 @@ public class BuildingScenario {
 	public BuildingScenario() {
         Controller controller = new Controller(MapParameters.getParametersWithNoMountains(), new Random(seed), true);
 		Game.setMap(controller.getMap());
-		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(70, 983))));
-		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(72, 983))));
-		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(74, 983))));
-		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new StoreRoom(new Position(74, 984))));
-//		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed), true);
-//		Game.setMap(controller.getMap());
-//		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(45, 983))));
-//		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(47, 983))));
-//		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(49, 983))));
-//		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new StoreRoom(new Position(49, 984))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(70, 986))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(72, 986))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(74, 986))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new HorizontalTunnel(new Position(75, 987))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new HorizontalTunnel(new Position(75, 984))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new StoreRoom(new Position(74, 988))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new BedRoom(new Position(74, 973))));
 	}
 
 }

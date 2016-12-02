@@ -3,6 +3,7 @@ package model.furniture;
 import java.util.LinkedList;
 import java.util.List;
 
+import images.ImageEnum;
 import model.items.Item;
 import model.items.StoneItem;
 import model.items.WheatStemItem;
@@ -21,7 +22,7 @@ public class Bed extends Furniture {
 	private List<Item> bedList;
 
 	public Bed() {
-		super(capacity, 0, "bed");
+		super(capacity, 0, "bed", ImageEnum.BED);
 		bedList = new LinkedList<>();
 		for (int i = 0; i < 4; i++) {
 			bedList.add(new WoodItem());

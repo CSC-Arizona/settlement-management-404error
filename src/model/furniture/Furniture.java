@@ -1,10 +1,11 @@
 package model.furniture;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
+import images.ImageEnum;
 import model.items.Item;
 import model.menus.PrintableItemsList;
 
@@ -22,12 +23,14 @@ public abstract class Furniture implements Serializable {
 	public int contentsWeight = 0;
 	private List<Item> contentsList;
 	private PrintableItemsList ril;
+	private ImageEnum img;
 
-	public Furniture(int capacity, int weightCapacity, String id) {
+	public Furniture(int capacity, int weightCapacity, String id, ImageEnum img) {
 		contentsList = new LinkedList<>();
 		this.capacity = capacity;
 		this.weightCapacity = weightCapacity;
 		this.id = id;
+		this.img = img;
 	}
 	
 	public String getID() {
@@ -72,6 +75,10 @@ public abstract class Furniture implements Serializable {
 
 	public boolean removeItem(Item item) {
 		return contentsList.remove(item);
+	}
+	
+	public ImageEnum getImage(){
+		return img;
 	}
 	
 	//This method returns a List of items that are needed in order to build a specific piece of furniture

@@ -21,7 +21,7 @@ public class PoolTable extends Furniture {
 	private List<Item> poolTableList;
 
 	public PoolTable() {
-		super(capacity, 0, "pool table");
+		super(capacity, 0, "pool table", null);
 		poolTableList = new LinkedList<>();
 		for (int i = 0; i < 4; i++) {
 			poolTableList.add(new WoodItem());

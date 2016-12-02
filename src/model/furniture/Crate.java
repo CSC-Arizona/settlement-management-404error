@@ -3,6 +3,7 @@ package model.furniture;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import images.ImageEnum;
 import model.items.Item;
 import model.menus.PrintableItemsList;
 
@@ -21,7 +22,7 @@ public abstract class Crate extends Furniture {
 	private double weightCarried;
 	
 	public Crate (int capacity, double weightCapacity) {
-		super(capacity, (int) weightCapacity, "crate");
+		super(capacity, (int) weightCapacity, "crate", ImageEnum.CRATE);
 		this.weightCapacity = weightCapacity;
 		containedItems = new LinkedList<>();
 		piList = new PrintableItemsList();

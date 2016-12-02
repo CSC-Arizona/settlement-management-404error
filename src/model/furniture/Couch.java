@@ -21,7 +21,7 @@ public class Couch extends Furniture {
 	private List<Item> couchList;
 
 	public Couch() {
-		super(capacity, 0, "couch");
+		super(capacity, 0, "couch", null);
 		couchList = new LinkedList<>();
 		for (int i = 0; i < 4; i++) {
 			couchList.add(new WoodItem());

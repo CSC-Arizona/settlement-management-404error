@@ -25,7 +25,7 @@ public class IncubationChamber extends Furniture {
 	private List<Item> incubationChamberList;
 
 	public IncubationChamber() {
-		super(capacity, weightCapacity, id);
+		super(capacity, weightCapacity, id, null);
 		incubationChamberList = new LinkedList<>();
 		incubationChamberList.add(new IronItem());
 		incubationChamberList.add(new IronItem());

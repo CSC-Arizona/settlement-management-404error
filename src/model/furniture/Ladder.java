@@ -3,6 +3,7 @@ package model.furniture;
 import java.util.LinkedList;
 import java.util.List;
 
+import images.ImageEnum;
 import model.items.Item;
 import model.items.WoodItem;
 
@@ -15,7 +16,7 @@ public class Ladder extends Furniture {
 	private List<Item> ladderMaterials;
 	
 	public Ladder() {
-		super(10, 0, "ladder");
+		super(10, 0, "ladder", ImageEnum.LADDER);
         ladderMaterials = new LinkedList<>();
         ladderMaterials.add(new WoodItem());
         ladderMaterials.add(new WoodItem());
