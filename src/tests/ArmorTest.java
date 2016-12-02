@@ -8,18 +8,18 @@ import java.util.ListIterator;
 
 import org.junit.Test;
 
-import model.Armor.GreatChestPlate;
-import model.Armor.GreatShield;
-import model.Armor.IronChestPlate;
-import model.Armor.IronShield;
-import model.Armor.StoneChestPlate;
-import model.Armor.StoneShield;
-import model.Armor.WoodChestPlate;
-import model.Armor.WoodShield;
-import model.Items.IronItem;
-import model.Items.Item;
-import model.Items.StoneItem;
-import model.Items.WoodItem;
+import model.armor.GreatChestPlate;
+import model.armor.GreatShield;
+import model.armor.IronChestPlate;
+import model.armor.IronShield;
+import model.armor.StoneChestPlate;
+import model.armor.StoneShield;
+import model.armor.WoodChestPlate;
+import model.armor.WoodShield;
+import model.items.IronItem;
+import model.items.Item;
+import model.items.StoneItem;
+import model.items.WoodItem;
 
 //Author: Maxwell Faridian
 //This class tests the construction of Armor items

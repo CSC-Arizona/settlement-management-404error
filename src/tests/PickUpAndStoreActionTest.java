@@ -7,16 +7,16 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import model.Actors.GatherAction;
-import model.Actors.PlayerControlledActor;
-import model.Actors.Position;
-import model.BuildingBlocks.AirBlock;
-import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.EarthBlock;
-import model.BuildingBlocks.GrassBlock;
-import model.Furniture.ReinforcedCrate;
-import model.Game.Game;
-import model.Map.Map;
+import model.actors.GatherAction;
+import model.actors.PlayerControlledActor;
+import model.actors.Position;
+import model.building_blocks.AirBlock;
+import model.building_blocks.BuildingBlock;
+import model.building_blocks.EarthBlock;
+import model.building_blocks.GrassBlock;
+import model.furniture.ReinforcedCrate;
+import model.game.Game;
+import model.map.Map;
 
 /**
  * @author Jonathon Davis

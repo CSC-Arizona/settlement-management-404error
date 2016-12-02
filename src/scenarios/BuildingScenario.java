@@ -3,13 +3,13 @@ package scenarios;
 import java.util.Random;
 
 import controller.Controller;
-import model.Actors.ConstructAction;
-import model.Actors.PlayerControlledActor;
-import model.Actors.Position;
-import model.Game.Game;
-import model.Map.MapParameters;
-import model.Room.StoreRoom;
-import model.Room.VerticalTunnel;
+import model.actors.ConstructAction;
+import model.actors.PlayerControlledActor;
+import model.actors.Position;
+import model.game.Game;
+import model.map.MapParameters;
+import model.room.StoreRoom;
+import model.room.VerticalTunnel;
 
 //Author: Maxwell Faridian
 //This class shows a hard coded demo of building a store room

@@ -7,23 +7,23 @@ import java.util.List;
 
 import org.junit.Test;
 
-import model.Actors.Position;
-import model.Game.Game;
-import model.Items.AppleItem;
-import model.Items.IronItem;
-import model.Items.Item;
-import model.Items.StoneItem;
-import model.Items.WheatKernelItem;
-import model.Room.BedRoom;
-import model.Room.EntertainmentRoom;
-import model.Room.FarmRoom;
-import model.Room.HorizontalTunnel;
-import model.Room.IncubationRoom;
-import model.Room.InfirmaryRoom;
-import model.Room.KitchenRoom;
-import model.Room.Room;
-import model.Room.StoreRoom;
-import model.Room.VerticalTunnel;
+import model.actors.Position;
+import model.game.Game;
+import model.items.AppleItem;
+import model.items.IronItem;
+import model.items.Item;
+import model.items.StoneItem;
+import model.items.WheatKernelItem;
+import model.room.BedRoom;
+import model.room.EntertainmentRoom;
+import model.room.FarmRoom;
+import model.room.HorizontalTunnel;
+import model.room.IncubationRoom;
+import model.room.InfirmaryRoom;
+import model.room.KitchenRoom;
+import model.room.Room;
+import model.room.StoreRoom;
+import model.room.VerticalTunnel;
 
 /**
  * Tests for all classes contained in model.Room

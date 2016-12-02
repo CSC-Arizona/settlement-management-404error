@@ -5,24 +5,24 @@ import static org.junit.Assert.assertEquals;
 import java.util.Random;
 
 import controller.Controller;
-import model.Actors.Actor;
-import model.Actors.AttackAction;
-import model.Actors.BreedAction;
-import model.Actors.OldBreedAction;
-import model.Actors.ConstructAction;
-import model.Actors.GatherAction;
-import model.Actors.PlayerControlledActor;
-import model.Actors.Position;
-import model.BuildingBlocks.AirBlock;
-import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.EarthBlock;
-import model.BuildingBlocks.IronOreBlock;
-import model.Furniture.IncubationChamber;
-import model.Furniture.ReinforcedCrate;
-import model.Game.Game;
-import model.Map.Map;
-import model.Map.MapParameters;
-import model.Room.VerticalTunnel;
+import model.actors.Actor;
+import model.actors.AttackAction;
+import model.actors.BreedAction;
+import model.actors.ConstructAction;
+import model.actors.GatherAction;
+import model.actors.OldBreedAction;
+import model.actors.PlayerControlledActor;
+import model.actors.Position;
+import model.building_blocks.AirBlock;
+import model.building_blocks.BuildingBlock;
+import model.building_blocks.EarthBlock;
+import model.building_blocks.IronOreBlock;
+import model.furniture.IncubationChamber;
+import model.furniture.ReinforcedCrate;
+import model.game.Game;
+import model.map.Map;
+import model.map.MapParameters;
+import model.room.VerticalTunnel;
 
 //Author: Maxwell Faridian
 //This class models the breed action in the GUI

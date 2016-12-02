@@ -4,16 +4,16 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import model.Items.AntLarvaItem;
-import model.Items.AppleItem;
-import model.Items.AppleSeedItem;
-import model.Items.DragonEggItem;
-import model.Items.IronItem;
-import model.Items.StoneItem;
-import model.Items.WheatItem;
-import model.Items.WheatKernelItem;
-import model.Items.WheatStemItem;
-import model.Items.WoodItem;
+import model.items.AntLarvaItem;
+import model.items.AppleItem;
+import model.items.AppleSeedItem;
+import model.items.DragonEggItem;
+import model.items.IronItem;
+import model.items.StoneItem;
+import model.items.WheatItem;
+import model.items.WheatKernelItem;
+import model.items.WheatStemItem;
+import model.items.WoodItem;
 
 /**
  * ItemTest covers all of the functionality of the Item constructor and 

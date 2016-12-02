@@ -6,9 +6,9 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import model.Game.Game;
-import model.Map.Map;
-import model.Map.MapParameters;
+import model.game.Game;
+import model.map.Map;
+import model.map.MapParameters;
 
 /**
  * Tests the map and game map classes

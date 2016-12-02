@@ -7,18 +7,18 @@ import java.util.ListIterator;
 
 import org.junit.Test;
 
-import model.Items.AntLarvaItem;
-import model.Items.IronItem;
-import model.Items.Item;
-import model.Items.StoneItem;
-import model.Items.WoodItem;
-import model.Weapons.BasicIronAxe;
-import model.Weapons.BasicStoneAxe;
-import model.Weapons.BasicSword;
-import model.Weapons.FortifiedIronAxe;
-import model.Weapons.FortifiedStoneAxe;
-import model.Weapons.LureAxe;
-import model.Weapons.UltraSword;
+import model.items.AntLarvaItem;
+import model.items.IronItem;
+import model.items.Item;
+import model.items.StoneItem;
+import model.items.WoodItem;
+import model.weapons.BasicIronAxe;
+import model.weapons.BasicStoneAxe;
+import model.weapons.BasicSword;
+import model.weapons.FortifiedIronAxe;
+import model.weapons.FortifiedStoneAxe;
+import model.weapons.LureAxe;
+import model.weapons.UltraSword;
 
 public class WeaponTest {
 	

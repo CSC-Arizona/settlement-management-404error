@@ -2,12 +2,12 @@ package scenarios;
 
 import java.util.Random;
 
-import model.Actors.ConstructAction;
-import model.Actors.PlayerControlledActor;
-import model.Actors.Position;
-import model.Game.Game;
-import model.Map.MapParameters;
-import model.Room.VerticalTunnel;
+import model.actors.ConstructAction;
+import model.actors.PlayerControlledActor;
+import model.actors.Position;
+import model.game.Game;
+import model.map.MapParameters;
+import model.room.VerticalTunnel;
 import controller.Controller;
 
 /**

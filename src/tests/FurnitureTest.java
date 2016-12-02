@@ -7,27 +7,27 @@ import java.util.ListIterator;
 
 import org.junit.Test;
 
-import model.Furniture.AppleTreePlot;
-import model.Furniture.BasicCrate;
-import model.Furniture.Bed;
-import model.Furniture.Couch;
-import model.Furniture.Fireplace;
-import model.Furniture.HealingBed;
-import model.Furniture.IncubationChamber;
-import model.Furniture.Ladder;
-import model.Furniture.MetalCrate;
-import model.Furniture.MillingMachine;
-import model.Furniture.PoolTable;
-import model.Furniture.ReinforcedCrate;
-import model.Furniture.WheatPlantPlot;
-import model.Items.AntLarvaItem;
-import model.Items.AppleSeedItem;
-import model.Items.IronItem;
-import model.Items.Item;
-import model.Items.StoneItem;
-import model.Items.WheatKernelItem;
-import model.Items.WheatStemItem;
-import model.Items.WoodItem;
+import model.furniture.AppleTreePlot;
+import model.furniture.BasicCrate;
+import model.furniture.Bed;
+import model.furniture.Couch;
+import model.furniture.Fireplace;
+import model.furniture.HealingBed;
+import model.furniture.IncubationChamber;
+import model.furniture.Ladder;
+import model.furniture.MetalCrate;
+import model.furniture.MillingMachine;
+import model.furniture.PoolTable;
+import model.furniture.ReinforcedCrate;
+import model.furniture.WheatPlantPlot;
+import model.items.AntLarvaItem;
+import model.items.AppleSeedItem;
+import model.items.IronItem;
+import model.items.Item;
+import model.items.StoneItem;
+import model.items.WheatKernelItem;
+import model.items.WheatStemItem;
+import model.items.WoodItem;
 
 //Author: Maxwell Faridian
 //This class tests the construction of furniture items and the methods within furniture classes
