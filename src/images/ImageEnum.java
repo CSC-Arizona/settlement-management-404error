@@ -30,7 +30,7 @@ public enum ImageEnum {
 		BufferedImage img;
 		try {
 			for (String filename : filenames) {
-				File file = new File("src/images/" + filename);
+				File file = new File("src/images/resources/" + filename);
 				img = ImageIO.read(file);
 				BufferedImage resizedImg = imageUtil.resizeImage(img, width,
 						height);
