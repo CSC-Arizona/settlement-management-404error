@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
@@ -15,10 +16,14 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -27,32 +32,36 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import controller.Controller;
 import controller.Designation;
-import model.Actors.Actor;
-import model.Actors.ConstructAction;
-import model.Actors.GatherAction;
-import model.Actors.PlayerControlledActor;
-import model.Actors.Position;
-import model.BuildingBlocks.AirBlock;
-import model.BuildingBlocks.BuildingBlock;
-import model.Furniture.Furniture;
-import model.Game.Game;
-import model.Items.Item;
-import model.Map.Map;
-import model.Map.MapParameters;
-import model.Menus.ConstructMenu;
-import model.Room.BedRoom;
-import model.Room.EntertainmentRoom;
-import model.Room.FarmRoom;
-import model.Room.HorizontalTunnel;
-import model.Room.IncubationRoom;
-import model.Room.InfirmaryRoom;
-import model.Room.KitchenRoom;
-import model.Room.RoomEnum;
-import model.Room.StoreRoom;
-import model.Room.VerticalTunnel;
+import images.ImageEnum;
+import images.imageUtil;
+import model.actors.Actor;
+import model.actors.ConstructAction;
+import model.actors.GatherAction;
+import model.actors.PlayerControlledActor;
+import model.actors.Position;
+import model.building_blocks.AirBlock;
+import model.building_blocks.BuildingBlock;
+import model.furniture.Furniture;
+import model.game.Game;
+import model.game.Log;
+import model.items.Item;
+import model.map.Map;
+import model.map.MapParameters;
+import model.menus.ConstructMenu;
+import model.room.BedRoom;
+import model.room.EntertainmentRoom;
+import model.room.FarmRoom;
+import model.room.HorizontalTunnel;
+import model.room.IncubationRoom;
+import model.room.InfirmaryRoom;
+import model.room.KitchenRoom;
+import model.room.RoomEnum;
+import model.room.StoreRoom;
+import model.room.VerticalTunnel;
 
 public class BasicView extends JPanel {
 
@@ -62,6 +71,7 @@ public class BasicView extends JPanel {
 	private JPanel labelPanel;
 	private JPanel buttonPanel;
 	private JPanel logPanel;
+	private JTextArea logText;
 	private DrawingPanel drawingPanel;
 	private JLabel timeLabel;
 	private JLabel windowCoordinatesLabel;
@@ -161,6 +171,10 @@ public class BasicView extends JPanel {
 
 		this.addKeyListener(new MyKeyListener());
 
+		for (ImageEnum e : ImageEnum.values()) {
+			e.createBufferedImages(blockSizeY, blockSizeX);
+		}
+
 		repaint();
 	}
 
@@ -225,7 +239,14 @@ public class BasicView extends JPanel {
 
 	private void addLogPanel() {
 		logPanel = new JPanel();
+		logText = new JTextArea();
+		logText.setEditable(false);
+		logPanel.add(logText);
 		guiPanel.add(logPanel);
+	}
+
+	public void setLogText(String text) {
+		logText.setText(text);
 	}
 
 	private void addDrawingPanel() {
@@ -256,61 +277,114 @@ public class BasicView extends JPanel {
 					int col = visibleCornerX + j;
 					col = Math.floorMod(col, mapWidth);
 
-					Color color = Game.getMap().getBuildingBlock(row, col)
-							.getColor();
-					g2.setColor(color);
-					g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
-							blockSizeY);
-					g2.setColor(Color.BLACK);
-					g2.drawRect(j * blockSizeX, i * blockSizeY, blockSizeX,
-							blockSizeY);
+					if (Game.getMap().getBuildingBlock(row, col).isOccupiable()) {
+						for (int k = -1; k < 2; k++) {
+							for (int l = -1; l < 2; l++) {
+								int newRow = row + k;
+								int newCol = col + l;
+								newCol = Math.floorMod(newCol, Game.getMap()
+										.getTotalWidth());
+								if (newRow >= 0
+										&& newRow < Game.getMap()
+												.getTotalHeight()) {
 
-					List<Actor> actors = Game.getMap()
-							.getBuildingBlock(row, col).getActors();
-					if (actors != null) {
-						int size = actors.size();
-						if (size != 0) {
-							g2.setColor(Color.RED);
-							g2.drawString(Integer.toString(size), j
-									* blockSizeX + blockSizeX / 2, (i + 1)
-									* blockSizeY);
-							g2.setColor(Color.BLACK);
+									Game.getMap()
+											.getBuildingBlock(newRow, newCol)
+											.setVisibility(true);
+								}
+							}
 						}
 					}
 
-					Furniture furniture = Game.getMap()
-							.getBuildingBlock(row, col).getFurniture();
-					if (furniture != null) {
-						g2.drawString("F", j * blockSizeX + blockSizeX / 2,
-								(i + 1) * blockSizeY);
-					}
+					if (Game.getMap().getBuildingBlock(row, col)
+							.getVisibility()) {
+						if (Game.getMap().getBuildingBlock(row, col).getImage() == null) {
+							Color color = Game.getMap()
+									.getBuildingBlock(row, col).getColor();
+							g2.setColor(color);
+							g2.fillRect(j * blockSizeX, i * blockSizeY,
+									blockSizeX, blockSizeY);
+							// g2.setColor(Color.BLACK);
+							// g2.drawRect(j * blockSizeX, i * blockSizeY,
+							// blockSizeX,
+							// blockSizeY);
+						} else {
+							Color bgcolor = Game.getMap()
+									.getBuildingBlock(row, col)
+									.getBackgroundColor();
+							if (bgcolor != null) {
+								g2.setColor(bgcolor);
+								g2.fillRect(j * blockSizeX, i * blockSizeY,
+										blockSizeX, blockSizeY);
 
-					if (Game.getMap().getBuildingBlock(row, col).isDesignated()) {
-						g2.drawString(
-								""
-										+ Game.getMap()
-												.getBuildingBlock(row, col)
-												.getDesignation().keyboardShortcut,
-								j * blockSizeX + blockSizeX / 2, (i + 1)
+							}
+
+							BufferedImage img = Game.getMap()
+									.getBuildingBlock(row, col).getImage()
+									.getRandomBufferedImage();
+							g2.drawImage(img, j * blockSizeX, i * blockSizeY,
+									null);
+
+						}
+
+						List<Actor> actors = Game.getMap()
+								.getBuildingBlock(row, col).getActors();
+						if (actors != null) {
+							int count = 0;
+
+							for (Actor actor : actors) {
+								if (actor.getImage() != null) {
+									g2.drawImage(actor.getImage()
+											.getRandomBufferedImage(), j
+											* blockSizeX, i * blockSizeY, null);
+								} else {
+									count += 1;
+								}
+							}
+							if (count != 0) {
+								g2.setColor(Color.RED);
+								g2.drawString(Integer.toString(count), j
+										* blockSizeX + blockSizeX / 2, (i + 1)
 										* blockSizeY);
-					}
-
-					List<Item> itemsOnGround = Game.getMap()
-							.getBuildingBlock(row, col).itemsOnGround();
-					if (itemsOnGround != null) {
-						if (itemsOnGround.size() != 0) {
-							g2.drawString("#", j * blockSizeX + blockSizeX / 2,
-									(i + 1) * blockSizeY);
+								g2.setColor(Color.BLACK);
+							}
 						}
-					}
 
-					if (currentlyDrawingDesignation) {
+						Furniture furniture = Game.getMap()
+								.getBuildingBlock(row, col).getFurniture();
+						if (furniture != null) {
+							ImageEnum furnitureType = furniture.getImage();
+							BufferedImage furnitureIcon = null;
+							if (furnitureType != null)
+								furnitureIcon = furniture.getImage()
+										.getRandomBufferedImage();
+							if (furnitureIcon != null)
+								g2.drawImage(furnitureIcon, j * blockSizeX, i
+										* blockSizeY, null);
+							else
+								g2.drawString("f", j * blockSizeX + blockSizeX
+										/ 2, (i + 1) * blockSizeY);
+						}
 
-						g2.drawRect(
-								Math.min(designationStart.x, designationEnd.x),
-								Math.min(designationStart.y, designationEnd.y),
-								Math.abs(designationStart.x - designationEnd.x),
-								Math.abs(designationStart.y - designationEnd.y));
+						if (Game.getMap().getBuildingBlock(row, col)
+								.isDesignated()) {
+							g2.drawString(
+									""
+											+ Game.getMap()
+													.getBuildingBlock(row, col)
+													.getDesignation().keyboardShortcut,
+									j * blockSizeX + blockSizeX / 2, (i + 1)
+											* blockSizeY);
+						}
+
+						List<Item> itemsOnGround = Game.getMap()
+								.getBuildingBlock(row, col).itemsOnGround();
+						if (itemsOnGround != null) {
+							if (itemsOnGround.size() != 0) {
+								g2.drawString("#", j * blockSizeX + blockSizeX
+										/ 2, (i + 1) * blockSizeY);
+							}
+						}
 
 					}
 					if (currentlyPlacingRoom) {
@@ -320,7 +394,25 @@ public class BasicView extends JPanel {
 							g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, (roomHeight * 2));
 						}
 					}
+						if (currentlyDrawingDesignation) {
+							g2.drawRect(Math.min(designationStart.x,
+									designationEnd.x), Math.min(
+									designationStart.y, designationEnd.y),
+									Math.abs(designationStart.x
+											- designationEnd.x), Math
+											.abs(designationStart.y
+													- designationEnd.y));
 
+						}
+						if (currentlyPlacingRoom) {
+							g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
+									roomHeight);
+						}
+					} else {
+						g2.setColor(Color.black);
+						g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
+								blockSizeY);
+					}
 				}
 			}
 
@@ -432,7 +524,8 @@ public class BasicView extends JPanel {
 					for (int c = roomY; c < roomY + room.getHeight(); c++) {
 						int x = Math.floorMod(c, mapHeight);
 						int y = Math.floorMod(r, mapWidth);
-						BuildingBlock inQuestion = Game.getMap().getBuildingBlock(x,y);
+						BuildingBlock inQuestion = Game.getMap()
+								.getBuildingBlock(x, y);
 						if (!inQuestion.isDestroyable()) {
 							canBuildHere = false;
 							obstacle = inQuestion;
@@ -444,10 +537,13 @@ public class BasicView extends JPanel {
 					currentlyPlacingRoom = false;
 					controller.setDesignatingAction(Designation.CONSTRUCTING);
 
-					controller.applyDesignation(roomY, roomX, roomHeight / blockSizeY, roomWidth / blockSizeX);
+					controller.applyDesignation(roomY, roomX, roomHeight
+							/ blockSizeY, roomWidth / blockSizeX);
 
 					PlayerControlledActor.playerActionPool
-							.add(new ConstructAction(room.constructObject(new Position(roomY, roomX))));
+							.add(new ConstructAction(
+									room.constructObject(new Position(roomY,
+											roomX))));
 
 					controller.setDesignatingAction(Designation.NONE);
 
@@ -456,9 +552,10 @@ public class BasicView extends JPanel {
 					String err = "";
 					if (obstacle.getClass().equals(new AirBlock().getClass()))
 						err = "You can't build a room above ground.";
-				    else
-				    	err = "You can't build a room over a " + obstacle.getID() + " block.";
-					JOptionPane.showMessageDialog(null, err);
+					else
+						err = "You can't build a room over a "
+								+ obstacle.getID() + " block.";
+					Log.add(err);
 				}
 
 			} else {
@@ -467,22 +564,31 @@ public class BasicView extends JPanel {
 					if (currentlyDrawingDesignation) {
 						designationEnd = e.getPoint();
 
-						designationEndCol = designationEnd.x / blockSizeX + visibleCornerX;
-						designationEndRow = designationEnd.y / blockSizeY + visibleCornerY;
+						designationEndCol = designationEnd.x / blockSizeX
+								+ visibleCornerX;
+						designationEndRow = designationEnd.y / blockSizeY
+								+ visibleCornerY;
 
-						int startRow = Math.min(designationStartRow, designationEndRow);
-						int startCol = Math.min(designationStartCol, designationEndCol);
-						int height = Math.abs(designationStartRow - designationEndRow);
-						int width = Math.abs(designationStartCol - designationEndCol);
+						int startRow = Math.min(designationStartRow,
+								designationEndRow);
+						int startCol = Math.min(designationStartCol,
+								designationEndCol);
+						int height = Math.abs(designationStartRow
+								- designationEndRow);
+						int width = Math.abs(designationStartCol
+								- designationEndCol);
 
-						controller.applyDesignation(startRow, startCol, height, width);
+						controller.applyDesignation(startRow, startCol, height,
+								width);
 
 						repaint();
 					} else {
 						designationStart = e.getPoint();
 
-						designationStartCol = designationStart.x / blockSizeX + visibleCornerX;
-						designationStartRow = designationStart.y / blockSizeY + visibleCornerY;
+						designationStartCol = designationStart.x / blockSizeX
+								+ visibleCornerX;
+						designationStartRow = designationStart.y / blockSizeY
+								+ visibleCornerY;
 
 						designationEnd = e.getPoint();
 					}

@@ -9,21 +9,21 @@ import java.util.LinkedList;
 
 import org.junit.Test;
 
-import model.BuildingBlocks.AirBlock;
-import model.BuildingBlocks.AnthillBlock;
-import model.BuildingBlocks.AppleTreeLeafBlock;
-import model.BuildingBlocks.AppleTreeTrunkBlock;
-import model.BuildingBlocks.CavernBlock;
-import model.BuildingBlocks.EarthBlock;
-import model.BuildingBlocks.GoldOreBlock;
-import model.BuildingBlocks.GrassBlock;
-import model.BuildingBlocks.IronOreBlock;
-import model.BuildingBlocks.LavaBlock;
-import model.BuildingBlocks.StoneBlock;
-import model.Items.AntLarvaItem;
-import model.Items.IronItem;
-import model.Items.StoneItem;
-import model.Items.WoodItem;
+import model.building_blocks.AirBlock;
+import model.building_blocks.AnthillBlock;
+import model.building_blocks.AppleTreeLeafBlock;
+import model.building_blocks.AppleTreeTrunkBlock;
+import model.building_blocks.CavernBlock;
+import model.building_blocks.EarthBlock;
+import model.building_blocks.GoldOreBlock;
+import model.building_blocks.GrassBlock;
+import model.building_blocks.IronOreBlock;
+import model.building_blocks.LavaBlock;
+import model.building_blocks.StoneBlock;
+import model.items.AntLarvaItem;
+import model.items.IronItem;
+import model.items.StoneItem;
+import model.items.WoodItem;
 
 /**
  * BuildingBlockTest tests the functionality of all of the BuildingBlocks.

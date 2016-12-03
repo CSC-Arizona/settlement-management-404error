@@ -18,8 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import model.Save.SaveFile;
 import controller.Controller;
+import model.save.SaveFile;
 
 /**
  * This is what is shown when the game is started

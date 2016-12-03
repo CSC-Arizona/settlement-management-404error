@@ -12,12 +12,12 @@ import model.Actors.AttackAction;
 import model.Actors.EnemyActor;
 import model.Actors.PlayerControlledActor;
 import model.Actors.Position;
-import model.BuildingBlocks.AirBlock;
-import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.EarthBlock;
-import model.BuildingBlocks.IronOreBlock;
 import model.Game.Game;
 import model.Map.Map;
+import model.building_blocks.AirBlock;
+import model.building_blocks.BuildingBlock;
+import model.building_blocks.EarthBlock;
+import model.building_blocks.IronOreBlock;
 
 /**
  * @author Jonathon Davis

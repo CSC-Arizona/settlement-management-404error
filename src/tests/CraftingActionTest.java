@@ -8,18 +8,18 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import model.Actors.CraftAction;
-import model.Actors.PlayerControlledActor;
-import model.Actors.Position;
-import model.BuildingBlocks.AirBlock;
-import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.EarthBlock;
-import model.Game.Game;
-import model.Items.IronItem;
-import model.Items.StoneItem;
-import model.Items.WoodItem;
-import model.Map.Map;
-import model.Weapons.BasicSword;
+import model.actors.CraftAction;
+import model.actors.PlayerControlledActor;
+import model.actors.Position;
+import model.building_blocks.AirBlock;
+import model.building_blocks.BuildingBlock;
+import model.building_blocks.EarthBlock;
+import model.game.Game;
+import model.items.IronItem;
+import model.items.StoneItem;
+import model.items.WoodItem;
+import model.map.Map;
+import model.weapons.BasicSword;
 
 /**
  * @author Jonathon Davis

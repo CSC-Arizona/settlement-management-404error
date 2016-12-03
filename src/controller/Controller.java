@@ -1,7 +1,6 @@
 package controller;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Random;
@@ -10,21 +9,20 @@ import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
-import model.Actors.ConstructAction;
-import model.Actors.GatherAction;
-import model.Actors.PlayerControlledActor;
-import model.Actors.Position;
-import model.BuildingBlocks.AppleTreeLeafBlock;
-import model.BuildingBlocks.AppleTreeTrunkBlock;
-import model.BuildingBlocks.EarthBlock;
-import model.BuildingBlocks.GrassBlock;
-import model.Game.Game;
-import model.Map.AppleTree;
-import model.Map.Map;
-import model.Map.MapParameters;
-import model.Save.SaveFile;
+import model.actors.GatherAction;
+import model.actors.PlayerControlledActor;
+import model.actors.Position;
+import model.building_blocks.AppleTreeLeafBlock;
+import model.building_blocks.AppleTreeTrunkBlock;
+import model.building_blocks.EarthBlock;
+import model.building_blocks.GrassBlock;
+import model.game.Game;
+import model.game.Log;
+import model.map.AppleTree;
+import model.map.Map;
+import model.map.MapParameters;
+import model.save.SaveFile;
 import view.BasicView;
 import view.StartingView;
 
@@ -47,14 +45,14 @@ public class Controller extends JFrame {
 	private StartingView startingView;
 	private BasicView basicView;
 
-	private Timer timer;
+	private Timer gameTimer;
 	private int timeDelta = 100;
 
 	private int windowWidth = 1000;
 	private int windowHeight = 700;
 
 	private SaveFile saveFile;
-
+	
 	public void togglePaused() {
 		if (isPaused()) {
 			startTimer();
@@ -150,15 +148,15 @@ public class Controller extends JFrame {
 	}
 
 	public void stopTimer() {
-		if (timer != null) {
-			this.timer.cancel();
+		if (gameTimer != null) {
+			this.gameTimer.cancel();
 		}
 		paused = true;
 	}
 
 	public void startTimer() {
-		timer = new Timer();
-		timer.schedule(new MyTimerTasks(), 0, timeDelta);
+		gameTimer = new Timer();
+		gameTimer.schedule(new GameTimerTask(), 0, timeDelta);
 		paused = false;
 	}
 
@@ -205,10 +203,10 @@ public class Controller extends JFrame {
 	 */
 	public void startNewGame() {
 		this.saveFile = new SaveFile();
-
+		Game.reset();
 		map = new Map(mapParameters, random);
-
 		Game.setMap(map);
+		Log.add("Welcome");
 		setUpMap();
 	}
 
@@ -228,15 +226,16 @@ public class Controller extends JFrame {
         
 	}
 
-	private class MyTimerTasks extends TimerTask {
+	private class GameTimerTask extends TimerTask {
 
 		@Override
 		public void run() {
 			time += 1;
-			basicView.setTimeLabel(time, paused);
-			basicView.setMouseDescriptionLabel();
+
 			Game.getMap().updateActors(timeDelta);
 			Game.getMap().setTime(time);
+			basicView.setTimeLabel(time, paused);
+			basicView.setMouseDescriptionLabel();
 			basicView.repaint();
 		}
 	}
@@ -268,9 +267,11 @@ public class Controller extends JFrame {
 				// yes
 				saveFile.save();
 				System.exit(0);
+				Game.reset();
 			} else if (response == 1) {
 				// no
 				System.exit(0);
+				Game.reset();
 			} else {
 				startTimer();
 			}

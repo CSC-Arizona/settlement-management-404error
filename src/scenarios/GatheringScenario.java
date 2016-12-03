@@ -3,12 +3,12 @@ package scenarios;
 import java.util.Random;
 
 import controller.Controller;
-import model.Actors.GatherAction;
-import model.Actors.PlayerControlledActor;
-import model.Actors.Position;
-import model.Furniture.ReinforcedCrate;
-import model.Game.Game;
-import model.Map.MapParameters;
+import model.actors.GatherAction;
+import model.actors.PlayerControlledActor;
+import model.actors.Position;
+import model.furniture.ReinforcedCrate;
+import model.game.Game;
+import model.map.MapParameters;
 
 public class GatheringScenario {
 	private int seed = 8412372;

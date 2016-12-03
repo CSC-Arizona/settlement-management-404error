@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import model.Furniture.BasicCrate;
-import model.Furniture.MetalCrate;
-import model.Furniture.ReinforcedCrate;
-import model.Items.StoneItem;
+import model.furniture.BasicCrate;
+import model.furniture.MetalCrate;
+import model.furniture.ReinforcedCrate;
+import model.items.StoneItem;
 
 public class CrateTests {
 

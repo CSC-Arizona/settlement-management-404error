@@ -3,11 +3,11 @@ package scenarios;
 import java.util.Random;
 
 import controller.Controller;
-import model.Actors.PlayerControlledActor;
-import model.Actors.Position;
-import model.Furniture.Bed;
-import model.Game.Game;
-import model.Map.MapParameters;
+import model.actors.PlayerControlledActor;
+import model.actors.Position;
+import model.furniture.Bed;
+import model.game.Game;
+import model.map.MapParameters;
 
 /**
  * @author Ethan Ward
