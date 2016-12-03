@@ -15,6 +15,8 @@ import java.util.Iterator;
 public class EnemyHuntAction extends Action {
 
 	private static final long serialVersionUID = 7268347888796294194L;
+	private Actor prey;
+	private AttackAction attack;
 
 	/*
 	 * (non-Javadoc)
@@ -23,8 +25,14 @@ public class EnemyHuntAction extends Action {
 	 */
 	@Override
 	public int execute(Actor performer) {
-		Actor prey = findNearestPlayerActor(performer);
-		return new AttackAction(prey).execute(performer);
+		Actor prey2 = findNearestPlayerActor(performer);
+		if (prey != null) {
+			if (!prey.equals(prey2) || attack == null)
+				attack = new AttackAction(prey);
+			return attack.execute(performer);
+		} else {
+			return Action.Pool;
+		}
 	}
 
 	private Actor findNearestPlayerActor(Actor performer) {
@@ -34,12 +42,7 @@ public class EnemyHuntAction extends Action {
 
 		while (iter.hasNext()) {
 			Actor p = iter.next();
-
-			int x = performer.getPosition().getCol(), x2 = p.getPosition()
-					.getCol(), y = performer.getPosition().getRow(), y2 = p
-					.getPosition().getRow();
-			double distance = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y)
-					* (y2 - y));
+			double distance = performer.getPosition().distance(p.getPosition());
 			if (distance < closest) {
 				closest = distance;
 				nearestActor = p;
