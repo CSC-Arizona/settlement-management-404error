@@ -11,7 +11,9 @@ public class IncubateAction extends Action {
 	private static final long serialVersionUID = -6706123216153923355L;
 	
 	private int incubationPeriod;
-	private static final int INCUBATION_TIME = 500;
+	//TODO: Change value back
+	//private static final int INCUBATION_TIME = 500;
+	private static final int INCUBATION_TIME = 100;
 	
 	@Override
 	public int execute(Actor performer) {
@@ -20,6 +22,11 @@ public class IncubateAction extends Action {
 			performer.setAlive(true, false);
 			Furniture incubationChamber = Game.getMap().getBuildingBlock(performer.getPosition()).getFurniture();
 			incubationChamber.removeItem(new DragonEggItem());
+			//Add pca to map
+			
+			//TODO: WHat does removing this line do?
+			//Game.getMap().addPlayerToMap(performer);
+			//Actor.allActors.add(performer);
 			return Action.COMPLETED;
 		}
 		return Action.MADE_PROGRESS;

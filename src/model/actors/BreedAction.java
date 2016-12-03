@@ -26,9 +26,12 @@ public class BreedAction extends Action{
 			if(chamber.getRemainingWeightCapacity() == 3) {
 				chamber.addItem(new DragonEggItem());
 				
-				PlayerControlledActor pca = new PlayerControlledActor(10, toGoTo);
+				/*PlayerControlledActor pca = new PlayerControlledActor(10, toGoTo);
 				pca.setAlive(false, false);
-				pca.addToActionQueue(new IncubateAction());
+				pca.addToActionQueue(new IncubateAction());*/
+				//TODO: Add pca to map
+				Game.getMap().addPlayerActor(toGoTo);
+				
 				return Action.COMPLETED;
 
 			}

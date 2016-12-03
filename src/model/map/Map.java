@@ -528,7 +528,11 @@ public class Map implements Serializable {
 	public void addPlayerActor(Position p) {
 		addActor = true;
 		positionToAdd = p;
-		/*PlayerControlledActor pca = new PlayerControlledActor(100, p);
+		System.out.println(Actor.allActors.size());
+		PlayerControlledActor pca = new PlayerControlledActor(100, p);
+		System.out.println(Actor.allActors.size());
+		
+		//These previous print statements show that actor is added to list of actors
 
 		// Set new actor to "dead" since not born yet
 		pca.setAlive(false, false);
@@ -537,14 +541,20 @@ public class Map implements Serializable {
 		// Actor can't do anything until "born"
 		
 		//TODO: Change this back to larger value
-		for (int i = 0; i < 1000; i++) {
+		/*for (int i = 0; i < 1000; i++) {
 			pca.addToActionQueue(new IncubateAction(i));
 		}*/
+		
+		pca.addToActionQueue(new IncubateAction());
+		
+		//TODO: See what this does
+		//Actor.allActors.add(pca);
 	}
 
 	public void addPlayerToMap(Actor a) {
 		// Make new player visible on map
 		//TODO: May need to move this code to update actor
+		
 		Position p = a.getPosition();
 		map[p.getRow()][p.getCol()].addActor(a);
 	}
