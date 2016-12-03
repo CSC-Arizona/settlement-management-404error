@@ -525,40 +525,6 @@ public class Map implements Serializable {
 		}
 	}
 
-	public void addPlayerActor(Position p) {
-		addActor = true;
-		positionToAdd = p;
-		System.out.println(Actor.allActors.size());
-		PlayerControlledActor pca = new PlayerControlledActor(100, p);
-		System.out.println(Actor.allActors.size());
-		
-		//These previous print statements show that actor is added to list of actors
-
-		// Set new actor to "dead" since not born yet
-		pca.setAlive(false, false);
-
-		// Place 1000 Incubate Actions into actor's queue so that
-		// Actor can't do anything until "born"
-		
-		//TODO: Change this back to larger value
-		/*for (int i = 0; i < 1000; i++) {
-			pca.addToActionQueue(new IncubateAction(i));
-		}*/
-		
-		pca.addToActionQueue(new IncubateAction());
-		
-		//TODO: See what this does
-		//Actor.allActors.add(pca);
-	}
-
-	public void addPlayerToMap(Actor a) {
-		// Make new player visible on map
-		//TODO: May need to move this code to update actor
-		
-		Position p = a.getPosition();
-		map[p.getRow()][p.getCol()].addActor(a);
-	}
-
 	private void addEnemyActors() {
 		if (anthillLocations.size() != 0) {
 			for (int i = 0; i < mapParameters.numberOfStartingActors; i++) {
@@ -592,7 +558,6 @@ public class Map implements Serializable {
 				Position newPosition = actor.getPosition();
 				map[newPosition.getRow()%getTotalHeight()][newPosition.getCol()%getTotalWidth()].addActor(actor);
 			}
-			//TODO: Every 1000 ticks, call breed action or construct incubation room if none built
 		}
 	}
 
