@@ -10,7 +10,7 @@ import model.items.StoneItem;
 //Author: Maxwell Faridian
 //This class defines the Milling Machine Furniture, which will be used in the kitchen
 //Milling Machine: 2 stone, 2 iron
-public class MillingMachine extends Furniture{
+public class CraftingMachine extends Furniture{
 
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class MillingMachine extends Furniture{
 	private static int capacity = 0; //This value should be irrelevant since Milling Machine is decorative
 	private List<Item> millingMachineList;
 	
-	public MillingMachine() {
+	public CraftingMachine() {
 		super(capacity, 0, "milling machine", null);
 		millingMachineList = new LinkedList<>();
 		millingMachineList.add(new StoneItem());

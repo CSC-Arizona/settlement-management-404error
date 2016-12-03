@@ -16,7 +16,7 @@ import model.furniture.HealingBed;
 import model.furniture.IncubationChamber;
 import model.furniture.Ladder;
 import model.furniture.MetalCrate;
-import model.furniture.MillingMachine;
+import model.furniture.CraftingMachine;
 import model.furniture.PoolTable;
 import model.furniture.ReinforcedCrate;
 import model.furniture.WheatPlantPlot;
@@ -172,7 +172,7 @@ public class FurnitureTest {
 	
 	@Test
 	public void testMillingMachine() {
-		MillingMachine mm = new MillingMachine();
+		CraftingMachine mm = new CraftingMachine();
 		assertEquals(0, mm.getCapacity());
 		mm.increaseCapacityBy(1);
 		assertEquals(1, mm.getCapacity());

@@ -20,7 +20,7 @@ import model.room.FarmRoom;
 import model.room.HorizontalTunnel;
 import model.room.IncubationRoom;
 import model.room.InfirmaryRoom;
-import model.room.KitchenRoom;
+import model.room.CraftingRoom;
 import model.room.Room;
 import model.room.StoreRoom;
 import model.room.VerticalTunnel;
@@ -46,7 +46,7 @@ public class RoomTest {
 		assertFalse(ht.needsWalls());
 		IncubationRoom ir = new IncubationRoom(p);
 		assertTrue(ir.needsWalls());
-		KitchenRoom kr = new KitchenRoom(p);
+		CraftingRoom kr = new CraftingRoom(p);
 		assertTrue(kr.needsWalls());
 		StoreRoom sr = new StoreRoom(p);
 		assertTrue(sr.needsWalls());
@@ -191,7 +191,7 @@ public class RoomTest {
 	@Test
 	public void testKitchenRoom() {
 		Game.reset();
-		Room br = new KitchenRoom(new Position(0,0));
+		Room br = new CraftingRoom(new Position(0,0));
 		assertEquals(0, br.getPosition().compareTo(new Position(0,0)));
 		assertEquals(6, br.getRequiredWidth());
 		assertEquals(2, br.getRequiredHeight());
