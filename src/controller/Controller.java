@@ -207,7 +207,7 @@ public class Controller extends JFrame {
 		this.saveFile = new SaveFile();
 
 		map = new Map(mapParameters, random);
-
+		Game.reset();
 		Game.setMap(map);
 		setUpMap();
 	}
@@ -268,9 +268,11 @@ public class Controller extends JFrame {
 				// yes
 				saveFile.save();
 				System.exit(0);
+				Game.reset();
 			} else if (response == 1) {
 				// no
 				System.exit(0);
+				Game.reset();
 			} else {
 				startTimer();
 			}
