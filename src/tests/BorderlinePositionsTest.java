@@ -1,15 +1,13 @@
 package tests;
+import model.building_blocks.*;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import model.Actors.Position;
-import model.BuildingBlocks.AirBlock;
-import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.EarthBlock;
-import model.Game.Game;
-import model.Map.Map;
+import model.actors.Position;
+import model.game.Game;
+import model.map.Map;
 
 public class BorderlinePositionsTest {
 	

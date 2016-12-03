@@ -3,21 +3,13 @@ package model.actors;
 import java.util.LinkedList;
 import java.util.List;
 
-<<<<<<< HEAD:src/model/Actors/ConstructAction.java
-import model.BuildingBlocks.RoomWallBlock;
-import model.BuildingBlocks.TrapDoorBlock;
-import model.Furniture.Furniture;
-import model.Game.Game;
-import model.Room.HorizontalTunnel;
-import model.Room.Room;
-import model.Room.VerticalTunnel;
-=======
+import model.building_blocks.RoomWallBlock;
+import model.building_blocks.TrapDoorBlock;
 import model.furniture.Furniture;
 import model.game.Game;
 import model.room.HorizontalTunnel;
 import model.room.Room;
 import model.room.VerticalTunnel;
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/actors/ConstructAction.java
 
 /**
  * Prerequisite for ConstructAction: the square that is selected needs to have a
@@ -72,7 +64,7 @@ public class ConstructAction extends Action {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see model.Actors.Action#execute(model.Actors.Actor)
+	 * @see model.actors.Action#execute(model.actors.Actor)
 	 */
 	@Override
 	public int execute(Actor performer) {

@@ -4,18 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
-<<<<<<< HEAD:src/model/Room/EntertainmentRoom.java
-import model.Actors.Position;
-import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.EntertainmentRoomBlock;
-import model.BuildingBlocks.TunnelBlock;
-import model.Furniture.Bed;
-import model.Furniture.Couch;
-import model.Furniture.Furniture;
-import model.Furniture.Ladder;
-import model.Furniture.PoolTable;
-import model.Items.Item;
-=======
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.EntertainmentRoomBlock;
@@ -23,9 +11,9 @@ import model.building_blocks.TunnelBlock;
 import model.furniture.Bed;
 import model.furniture.Couch;
 import model.furniture.Furniture;
+import model.furniture.Ladder;
 import model.furniture.PoolTable;
 import model.items.Item;
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/room/EntertainmentRoom.java
 
 /**
  * The EntertainmentRoom contains 2 Couches and 1 PoolTable. An upgrade basically 

@@ -59,7 +59,7 @@ public class StartingView extends JPanel {
 		controller.setVisible(true);
 	}
 	
-	private void startNewGame() {
+	private void newGame() {
 		controller.startNewGame();
 	}
 	
@@ -81,7 +81,7 @@ public class StartingView extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == newGameButton) {
 				System.out.println("Pressed new game button");
-				startNewGame();
+				newGame();
 			} else {
 				System.out.println("Pressed load game button");
 				loadOldGame();
@@ -111,7 +111,7 @@ public class StartingView extends JPanel {
 				break;
 			case KeyEvent.VK_ENTER:
 				if (newGameButton.hasFocus())
-					startNewGame();
+					newGame();
 				else
 					loadOldGame();
 				break;

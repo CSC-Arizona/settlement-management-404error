@@ -44,7 +44,7 @@ public class PlayerControlledActor extends Actor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see model.Actors.Actor#update()
+	 * @see model.actors.Actor#update()
 	 */
 	@Override
 	public void update() {
@@ -125,7 +125,7 @@ public class PlayerControlledActor extends Actor {
 	}
 
 	/* (non-Javadoc)
-	 * @see model.Actors.Actor#getActionPool()
+	 * @see model.actors.Actor#getActionPool()
 	 */
 	@SuppressWarnings("static-access")
 	@Override

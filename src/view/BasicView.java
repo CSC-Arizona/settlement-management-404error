@@ -393,7 +393,7 @@ public class BasicView extends JPanel {
 						} else {
 							g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, (roomHeight * 2));
 						}
-					}
+					
 						if (currentlyDrawingDesignation) {
 							g2.drawRect(Math.min(designationStart.x,
 									designationEnd.x), Math.min(
@@ -402,12 +402,8 @@ public class BasicView extends JPanel {
 											- designationEnd.x), Math
 											.abs(designationStart.y
 													- designationEnd.y));
+						}
 
-						}
-						if (currentlyPlacingRoom) {
-							g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
-									roomHeight);
-						}
 					} else {
 						g2.setColor(Color.black);
 						g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,

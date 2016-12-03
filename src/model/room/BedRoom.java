@@ -4,22 +4,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
-<<<<<<< HEAD:src/model/Room/BedRoom.java
-import model.Actors.Position;
-import model.BuildingBlocks.BedRoomBlock;
-import model.BuildingBlocks.BuildingBlock;
-import model.Furniture.Bed;
-import model.Furniture.Furniture;
-import model.Furniture.Ladder;
-import model.Items.Item;
-=======
 import model.actors.Position;
 import model.building_blocks.BedRoomBlock;
 import model.building_blocks.BuildingBlock;
 import model.furniture.Bed;
 import model.furniture.Furniture;
+import model.furniture.Ladder;
 import model.items.Item;
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/room/BedRoom.java
 
 /**
  * The BedRoom contains 3 Beds and has an initial max occupancy of six. An upgrade 

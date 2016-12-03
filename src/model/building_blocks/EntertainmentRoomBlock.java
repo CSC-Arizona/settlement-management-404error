@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Actors.Actor;
-import model.Furniture.Furniture;
-import model.Items.Item;
+import model.actors.Actor;
+import model.furniture.Furniture;
+import model.items.Item;
 
 public class EntertainmentRoomBlock extends BuildingBlock {
 

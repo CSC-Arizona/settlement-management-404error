@@ -5,18 +5,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 
-<<<<<<< HEAD:src/model/Room/FarmRoom.java
-import model.Actors.Position;
-import model.BuildingBlocks.AppleTreeLeafBlock;
-import model.BuildingBlocks.AppleTreeTrunkBlock;
-import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.FarmRoomBlock;
-import model.BuildingBlocks.TunnelBlock;
-import model.BuildingBlocks.WheatBlock;
-import model.Furniture.Furniture;
-import model.Furniture.Ladder;
-import model.Items.Item;
-=======
 import model.actors.Position;
 import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
@@ -25,8 +13,8 @@ import model.building_blocks.FarmRoomBlock;
 import model.building_blocks.TunnelBlock;
 import model.building_blocks.WheatBlock;
 import model.furniture.Furniture;
+import model.furniture.Ladder;
 import model.items.Item;
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/room/FarmRoom.java
 
 /**
  * The FarmRoom can't be upgraded but it can be replanted. It contains a state instance variable

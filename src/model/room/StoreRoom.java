@@ -4,30 +4,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
-<<<<<<< HEAD:src/model/Room/StoreRoom.java
-import model.Actors.Position;
-import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.StoreRoomBlock;
-import model.Furniture.BasicCrate;
-import model.Furniture.Furniture;
-import model.Furniture.Ladder;
-import model.Furniture.MetalCrate;
-import model.Furniture.ReinforcedCrate;
-import model.Items.IronItem;
-import model.Items.Item;
-import model.Items.StoneItem;
-=======
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.StoreRoomBlock;
 import model.furniture.BasicCrate;
 import model.furniture.Furniture;
+import model.furniture.Ladder;
 import model.furniture.MetalCrate;
 import model.furniture.ReinforcedCrate;
 import model.items.IronItem;
 import model.items.Item;
 import model.items.StoneItem;
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/room/StoreRoom.java
 
 /**
  * The StoreRoom contains 4 small Chests and has an initial max occupancy of three. 

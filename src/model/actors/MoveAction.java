@@ -73,12 +73,8 @@ public class MoveAction extends Action {
 	 */
 	private void calculatePath(Node currentNode) {
 		Position currentPos = currentNode.position;
-<<<<<<< HEAD:src/model/Actors/MoveAction.java
-		int row = currentPos.getRow(),  col = (currentPos.getCol() > 0) ? Math.floorMod(currentPos.getCol(), Game.getMap().getTotalWidth()) 
-=======
 		int row = currentPos.getRow(),
 				col = (currentPos.getCol() > 0) ? Math.floorMod(currentPos.getCol(), Game.getMap().getTotalWidth())
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/actors/MoveAction.java
 						: Game.getMap().getTotalWidth() + currentPos.getCol();
 		int prow = Integer.MIN_VALUE, pcol = Integer.MIN_VALUE;
 		if(currentNode.prev != null){

@@ -4,17 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
-<<<<<<< HEAD:src/model/Room/IncubationRoom.java
-import model.Actors.Position;
-import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.IncubationRoomBlock;
-import model.BuildingBlocks.TunnelBlock;
-import model.Furniture.Bed;
-import model.Furniture.Furniture;
-import model.Furniture.IncubationChamber;
-import model.Furniture.Ladder;
-import model.Items.Item;
-=======
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.IncubationRoomBlock;
@@ -22,8 +11,8 @@ import model.building_blocks.TunnelBlock;
 import model.furniture.Bed;
 import model.furniture.Furniture;
 import model.furniture.IncubationChamber;
+import model.furniture.Ladder;
 import model.items.Item;
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/room/IncubationRoom.java
 
 //Author: Maxwell Faridian
 //This class defines the Incubation Room, where 2 actors meet to breed and place their new egg item into an incubation chamber

@@ -4,18 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
-<<<<<<< HEAD:src/model/Room/KitchenRoom.java
-import model.Actors.Position;
-import model.BuildingBlocks.BuildingBlock;
-import model.BuildingBlocks.KitchenRoomBlock;
-import model.BuildingBlocks.TunnelBlock;
-import model.Furniture.Fireplace;
-import model.Furniture.Furniture;
-import model.Furniture.HealingBed;
-import model.Furniture.Ladder;
-import model.Furniture.MillingMachine;
-import model.Items.Item;
-=======
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.KitchenRoomBlock;
@@ -23,9 +11,9 @@ import model.building_blocks.TunnelBlock;
 import model.furniture.Fireplace;
 import model.furniture.Furniture;
 import model.furniture.HealingBed;
+import model.furniture.Ladder;
 import model.furniture.MillingMachine;
 import model.items.Item;
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/room/KitchenRoom.java
 
 /**
  * The KitchenRoom contains one MillingMachine (that converts wheat to flour) and 

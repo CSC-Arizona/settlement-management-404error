@@ -23,16 +23,8 @@ public class AttackAction extends Action {
 	 */
 	@Override
 	public int execute(Actor performer) {
-<<<<<<< HEAD:src/model/Actors/AttackAction.java
-		// test to see that the two actors are adjacent (no fighting across the
-		// map)
-		
-		int x = Math.abs(performer.getPosition().getCol() - target.getPosition().getCol());
-		int y = Math.abs(performer.getPosition().getRow() - target.getPosition().getRow());
-=======
 		if (target.getHealth() <= 0)
 			return Action.COMPLETED;
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/actors/AttackAction.java
 
 		if (target.getHealth() <= 0)
 			return Action.COMPLETED; // moved this from below the x,y declaration

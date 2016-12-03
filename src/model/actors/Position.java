@@ -76,13 +76,8 @@ public class Position implements Comparable<Position>, Serializable {
 	}
 	
 	public boolean isAdjacent(Position position){
-<<<<<<< HEAD:src/model/Actors/Position.java
-		System.out.println("Map's width: " + Game.getMap().getTotalWidth());
-		return Math.abs(Math.floorMod(this.getCol(),Game.getMap().getTotalWidth()-1) - Math.floorMod(position.getCol(),Game.getMap().getTotalWidth()-1)) <= 1
-=======
 		int col = Math.abs(Math.floorMod(this.getCol(),Game.getMap().getTotalWidth()) - Math.floorMod(position.getCol(),Game.getMap().getTotalWidth()));
 		return (col <= 1 || col == Game.getMap().getTotalWidth() -1)
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/actors/Position.java
 				&& Math.abs(this.getRow()
 						- position.getRow()) <= 1;
 	}

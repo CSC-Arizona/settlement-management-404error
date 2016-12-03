@@ -18,7 +18,7 @@ public class PlaceRoomBlockAction extends Action {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see model.Actors.Action#execute(model.Actors.Actor)
+	 * @see model.actors.Action#execute(model.actors.Actor)
 	 */
 	@Override
 	public int execute(Actor performer) {

@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-<<<<<<< HEAD:src/model/Map/Map.java
-=======
 import java.util.LinkedHashSet;
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/map/Map.java
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -534,21 +531,11 @@ public class Map implements Serializable {
 
 	public void updateActors(int timeDelta) {
 		if (Actor.allActors != null) {
-<<<<<<< HEAD:src/model/Map/Map.java
-			//Iterator<Actor> iter = Actor.allActors.iterator();
-			
-=======
-
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/map/Map.java
 			LinkedList<Actor> newAllActors = new LinkedList<>();
 			for (Actor actor : Actor.allActors) {
 				newAllActors.add(actor);
 			}
 			Iterator<Actor> iter = newAllActors.iterator();
-<<<<<<< HEAD:src/model/Map/Map.java
-=======
-
->>>>>>> a678d7c4addc6c1b8d57d87eda252190a69e027e:src/model/map/Map.java
 			while (iter.hasNext()) {
 				Actor actor = iter.next();
 				if (actor != null) {

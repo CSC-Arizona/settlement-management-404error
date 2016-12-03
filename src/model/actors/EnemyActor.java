@@ -45,7 +45,7 @@ public class EnemyActor extends Actor {
 	}
 
 	/* (non-Javadoc)
-	 * @see model.Actors.Actor#getActionPool()
+	 * @see model.actors.Actor#getActionPool()
 	 */
 	@Override
 	public ActionPool getActionPool() {
