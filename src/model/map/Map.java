@@ -513,7 +513,6 @@ public class Map implements Serializable {
 		}
 	}
 
-
 	private void addEnemyActors() {
 		if (anthillLocations.size() != 0) {
 			for (int i = 0; i < mapParameters.numberOfStartingActors; i++) {
@@ -552,8 +551,6 @@ public class Map implements Serializable {
 
 				}
 			}
-			// TODO: Every 1000 ticks, call breed action or construct incubation
-			// room if none built
 		}
 	}
 

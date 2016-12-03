@@ -5,16 +5,18 @@ import java.util.HashMap;
 import model.furniture.Furniture;
 import model.game.Game;
 import model.items.DragonEggItem;
-import model.map.Map;
 
 public class BreedAction extends Action{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7811588793188166971L;
 	private Position toGoTo;
 	private MoveAction ma;
 
 	@Override
 	public int execute(Actor performer) {
-		// TODO Auto-generated method stub
 		if(toGoTo == null) {
 			findEmptyIncubationChamber();
 			if(toGoTo == null) {
@@ -25,12 +27,9 @@ public class BreedAction extends Action{
 			Furniture chamber = Game.getMap().getBuildingBlock(toGoTo).getFurniture();
 			if(chamber.getRemainingWeightCapacity() == 3) {
 				chamber.addItem(new DragonEggItem());
-				
-				PlayerControlledActor pca = new PlayerControlledActor(10, toGoTo);
+				PlayerControlledActor pca = new PlayerControlledActor(100, toGoTo);
 				pca.setAlive(false, false);
 				pca.addToActionQueue(new IncubateAction());
-				//TODO: Add pca to map
-				
 				return Action.COMPLETED;
 
 			}
@@ -50,7 +49,6 @@ public class BreedAction extends Action{
 //Drop off egg, wait, and then new egg will hatch
 
 	private void findEmptyIncubationChamber() {
-		// TODO Auto-generated method stub
 		HashMap<Furniture, Position> mapFurniture = Game.getMap().getFurniture();
 		if (mapFurniture != null) {
 			for (Furniture f : mapFurniture.keySet()) {
