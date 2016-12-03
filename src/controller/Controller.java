@@ -1,7 +1,6 @@
 package controller;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Random;
@@ -10,9 +9,7 @@ import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
-import model.actors.ConstructAction;
 import model.actors.GatherAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
@@ -48,7 +45,7 @@ public class Controller extends JFrame {
 	private StartingView startingView;
 	private BasicView basicView;
 
-	private Timer timer;
+	private Timer gameTimer;
 	private int timeDelta = 100;
 
 	private int windowWidth = 1000;
@@ -151,15 +148,15 @@ public class Controller extends JFrame {
 	}
 
 	public void stopTimer() {
-		if (timer != null) {
-			this.timer.cancel();
+		if (gameTimer != null) {
+			this.gameTimer.cancel();
 		}
 		paused = true;
 	}
 
 	public void startTimer() {
-		timer = new Timer();
-		timer.schedule(new MyTimerTasks(), 0, timeDelta);
+		gameTimer = new Timer();
+		gameTimer.schedule(new GameTimerTask(), 0, timeDelta);
 		paused = false;
 	}
 
@@ -206,9 +203,8 @@ public class Controller extends JFrame {
 	 */
 	public void startNewGame() {
 		this.saveFile = new SaveFile();
-
-		map = new Map(mapParameters, random);
 		Game.reset();
+		map = new Map(mapParameters, random);
 		Game.setMap(map);
 		Log.add("Welcome");
 		setUpMap();
@@ -230,16 +226,16 @@ public class Controller extends JFrame {
         
 	}
 
-	private class MyTimerTasks extends TimerTask {
+	private class GameTimerTask extends TimerTask {
 
 		@Override
 		public void run() {
 			time += 1;
-			basicView.setTimeLabel(time, paused);
-			basicView.setMouseDescriptionLabel();
-			basicView.setLogText(Log.getLog());
+
 			Game.getMap().updateActors(timeDelta);
 			Game.getMap().setTime(time);
+			basicView.setTimeLabel(time, paused);
+			basicView.setMouseDescriptionLabel();
 			basicView.repaint();
 		}
 	}

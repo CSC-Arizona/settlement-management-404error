@@ -79,8 +79,6 @@ public abstract class Actor implements Serializable {
 	// the core logic of the update method
 	// used for recursion
 	private void performAction(int attempts){
-		fall();
-		
 		if(attempts > getActionPool().size() + queue.size())
 			return;
 
@@ -121,8 +119,6 @@ public abstract class Actor implements Serializable {
 			// if the Action is still in progress then set idle to false
 			idle = false;
 		}
-
-		fall();
 	}
 
 	/**
@@ -134,6 +130,7 @@ public abstract class Actor implements Serializable {
 			return;
 		}
 		performAction(0);
+		fall();
 	}
 
 	public void fall() {

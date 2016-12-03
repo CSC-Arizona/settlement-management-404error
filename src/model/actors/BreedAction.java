@@ -29,6 +29,8 @@ public class BreedAction extends Action{
 				PlayerControlledActor pca = new PlayerControlledActor(10, toGoTo);
 				pca.setAlive(false, false);
 				pca.addToActionQueue(new IncubateAction());
+				//TODO: Add pca to map
+				
 				return Action.COMPLETED;
 
 			}
