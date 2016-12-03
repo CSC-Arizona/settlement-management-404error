@@ -11,8 +11,8 @@ public enum RoomEnum {
 			"Farm room", FarmRoom.class), HORIZONTAL_TUNNEL(1, 2,
 			"Horizontal tunnel", HorizontalTunnel.class), INCUBATION_ROOM(2,
 			12, "Incubation room", IncubationRoom.class), INFIRMARY_ROOM(2, 4,
-			"Infirmary", InfirmaryRoom.class), KITCHEN_ROOM(2, 6, "Kitchen",
-			KitchenRoom.class), STORE_ROOM(2, 8, "Store room", StoreRoom.class), VERTICAL_TUNNEL(
+			"Infirmary", InfirmaryRoom.class), CRAFTING_ROOM(2, 6, "Crafting room",
+			CraftingRoom.class), STORE_ROOM(2, 8, "Store room", StoreRoom.class), VERTICAL_TUNNEL(
 			2, 1, "Vertical tunnel", VerticalTunnel.class);
 
 	private int height;

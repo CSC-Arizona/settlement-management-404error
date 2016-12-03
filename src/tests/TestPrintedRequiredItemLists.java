@@ -22,7 +22,7 @@ import model.furniture.HealingBed;
 import model.furniture.IncubationChamber;
 import model.furniture.Ladder;
 import model.furniture.MetalCrate;
-import model.furniture.MillingMachine;
+import model.furniture.CraftingMachine;
 import model.furniture.PoolTable;
 import model.furniture.ReinforcedCrate;
 import model.furniture.WheatPlantPlot;
@@ -118,7 +118,7 @@ public class TestPrintedRequiredItemLists {
 		assertEquals("6 Woods, 2 Irons, 2 Stones", mc.reqMaterialsToString());
 		PoolTable pt = new PoolTable();
 		assertEquals("4 Woods, 1 Iron, 3 Stones", pt.reqMaterialsToString());
-		MillingMachine mm = new MillingMachine();
+		CraftingMachine mm = new CraftingMachine();
 		assertEquals("2 Irons, 2 Stones", mm.reqMaterialsToString());
 		ReinforcedCrate rc = new ReinforcedCrate();
 		assertEquals("6 Woods, 2 Stones", rc.reqMaterialsToString());

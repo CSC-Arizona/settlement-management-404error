@@ -6,12 +6,12 @@ import java.util.TreeMap;
 
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
-import model.building_blocks.KitchenRoomBlock;
+import model.building_blocks.CraftingRoomBlock;
 import model.building_blocks.TunnelBlock;
 import model.furniture.Fireplace;
 import model.furniture.Furniture;
 import model.furniture.HealingBed;
-import model.furniture.MillingMachine;
+import model.furniture.CraftingMachine;
 import model.items.Item;
 
 /**
@@ -22,7 +22,7 @@ import model.items.Item;
  * 
  * @author Katherine Walters
  */
-public class KitchenRoom extends Room {
+public class CraftingRoom extends Room {
 
 	private TreeMap<Position, Furniture> reqFurniture;
 	private List<Furniture> furniture;
@@ -37,15 +37,15 @@ public class KitchenRoom extends Room {
 		return 6;
 	}
 	
-	public KitchenRoom(Position p) {
+	public CraftingRoom(Position p) {
         super(getHeight(), getWidth(), 3, 1, p);
 		this.reqFurniture = new TreeMap<Position, Furniture>();
 		reqFurniture.put(new Position(1,0), new Fireplace());
-		reqFurniture.put(new Position(1,2), new MillingMachine());
+		reqFurniture.put(new Position(1,2), new CraftingMachine());
 		this.furniture = new LinkedList<>();
 
 	    this.furniture.add(new Fireplace());
-	    this.furniture.add(new MillingMachine());
+	    this.furniture.add(new CraftingMachine());
 		this.requiredBuildingMaterials = new LinkedList<>();
 		for (Furniture f : furniture) {
 			for (Item i : f.getRequiredMaterials())
@@ -81,7 +81,7 @@ public class KitchenRoom extends Room {
 
 	@Override
 	public BuildingBlock getAppropriateBlock() {
-		return new KitchenRoomBlock();
+		return new CraftingRoomBlock();
 	}
 
 	@Override

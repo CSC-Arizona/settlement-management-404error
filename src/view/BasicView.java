@@ -58,7 +58,7 @@ import model.room.FarmRoom;
 import model.room.HorizontalTunnel;
 import model.room.IncubationRoom;
 import model.room.InfirmaryRoom;
-import model.room.KitchenRoom;
+import model.room.CraftingRoom;
 import model.room.RoomEnum;
 import model.room.StoreRoom;
 import model.room.VerticalTunnel;
@@ -262,6 +262,150 @@ public class BasicView extends JPanel {
 
 		private static final long serialVersionUID = 8717360204333004762L;
 
+		private void setVisibleTiles(int row, int col) {
+			if (Game.getMap().getBuildingBlock(row, col).isOccupiable()) {
+				for (int k = -1; k < 2; k++) {
+					for (int l = -1; l < 2; l++) {
+						int newRow = row + k;
+						int newCol = col + l;
+						newCol = Math.floorMod(newCol, Game.getMap()
+								.getTotalWidth());
+						if (newRow >= 0
+								&& newRow < Game.getMap().getTotalHeight()) {
+
+							Game.getMap().getBuildingBlock(newRow, newCol)
+									.setVisibility(true);
+						}
+					}
+				}
+			}
+		}
+
+		private void drawBuildingBlock(Graphics2D g2, int row, int col, int i,
+				int j) {
+			if (Game.getMap().getBuildingBlock(row, col).getImage() == null) {
+				Color color = Game.getMap().getBuildingBlock(row, col)
+						.getColor();
+				g2.setColor(color);
+				g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
+						blockSizeY);
+
+			} else {
+				Color bgcolor = Game.getMap().getBuildingBlock(row, col)
+						.getBackgroundColor();
+				if (bgcolor != null) {
+					g2.setColor(bgcolor);
+					g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
+							blockSizeY);
+
+				}
+
+				BufferedImage img = Game.getMap().getBuildingBlock(row, col)
+						.getImage().getRandomBufferedImage();
+				g2.drawImage(img, j * blockSizeX, i * blockSizeY, null);
+
+			}
+		}
+
+		private void drawActors(Graphics2D g2, int row, int col, int i, int j) {
+			List<Actor> actors = Game.getMap().getBuildingBlock(row, col)
+					.getActors();
+			if (actors != null) {
+				int count = 0;
+
+				for (Actor actor : actors) {
+					if (actor.getImage() != null) {
+						g2.drawImage(actor.getImage().getRandomBufferedImage(),
+								j * blockSizeX, i * blockSizeY, null);
+					} else {
+						count += 1;
+					}
+				}
+				if (count != 0) {
+					g2.setColor(Color.RED);
+					g2.drawString(Integer.toString(count), j * blockSizeX
+							+ blockSizeX / 2, (i + 1) * blockSizeY);
+					g2.setColor(Color.BLACK);
+				}
+			}
+		}
+
+		private void drawFurniture(Graphics2D g2, int row, int col, int i, int j) {
+			Furniture furniture = Game.getMap().getBuildingBlock(row, col)
+					.getFurniture();
+			if (furniture != null) {
+				ImageEnum furnitureType = furniture.getImage();
+				BufferedImage furnitureIcon = null;
+				if (furnitureType != null)
+					furnitureIcon = furniture.getImage()
+							.getRandomBufferedImage();
+				if (furnitureIcon != null)
+					g2.drawImage(furnitureIcon, j * blockSizeX, i * blockSizeY,
+							null);
+				else
+					g2.drawString("f", j * blockSizeX + blockSizeX / 2, (i + 1)
+							* blockSizeY);
+			}
+		}
+
+		private void drawItemsOnGround(Graphics2D g2, int row, int col, int i,
+				int j) {
+			List<Item> itemsOnGround = Game.getMap().getBuildingBlock(row, col)
+					.itemsOnGround();
+			if (itemsOnGround != null) {
+				if (itemsOnGround.size() != 0) {
+					g2.drawString("#", j * blockSizeX + blockSizeX / 2, (i + 1)
+							* blockSizeY);
+				}
+			}
+		}
+
+		private void drawDesignation(Graphics2D g2, int row, int col, int i,
+				int j) {
+			if (Game.getMap().getBuildingBlock(row, col).isDesignated()) {
+				g2.setColor(Color.BLACK);
+				g2.drawString(""
+						+ Game.getMap().getBuildingBlock(row, col)
+								.getDesignation().keyboardShortcut, j
+						* blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+			}
+		}
+
+		private void drawTile(Graphics2D g2, int row, int col, int i, int j) {
+
+			if (Game.getMap().getBuildingBlock(row, col).getVisibility()) {
+
+				drawBuildingBlock(g2, row, col, i, j);
+
+				drawActors(g2, row, col, i, j);
+
+				drawFurniture(g2, row, col, i, j);
+
+				drawItemsOnGround(g2, row, col, i, j);
+
+			} else {
+				g2.setColor(Color.black);
+				g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
+						blockSizeY);
+			}
+
+			if (currentlyDrawingDesignation) {
+
+				g2.drawRect(Math.min(designationStart.x, designationEnd.x),
+						Math.min(designationStart.y, designationEnd.y),
+						Math.abs(designationStart.x - designationEnd.x),
+						Math.abs(designationStart.y - designationEnd.y));
+
+			}
+
+			if (currentlyPlacingRoom) {
+				g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, roomHeight);
+			}
+
+			drawDesignation(g2, row, col, i, j);
+
+		}
+
 		@Override
 		public void paintComponent(Graphics g) {
 
@@ -277,135 +421,9 @@ public class BasicView extends JPanel {
 					int col = visibleCornerX + j;
 					col = Math.floorMod(col, mapWidth);
 
-					if (Game.getMap().getBuildingBlock(row, col).isOccupiable()) {
-						for (int k = -1; k < 2; k++) {
-							for (int l = -1; l < 2; l++) {
-								int newRow = row + k;
-								int newCol = col + l;
-								newCol = Math.floorMod(newCol, Game.getMap()
-										.getTotalWidth());
-								if (newRow >= 0
-										&& newRow < Game.getMap()
-												.getTotalHeight()) {
+					setVisibleTiles(row, col);
 
-									Game.getMap()
-											.getBuildingBlock(newRow, newCol)
-											.setVisibility(true);
-								}
-							}
-						}
-					}
-
-					if (Game.getMap().getBuildingBlock(row, col)
-							.getVisibility()) {
-						if (Game.getMap().getBuildingBlock(row, col).getImage() == null) {
-							Color color = Game.getMap()
-									.getBuildingBlock(row, col).getColor();
-							g2.setColor(color);
-							g2.fillRect(j * blockSizeX, i * blockSizeY,
-									blockSizeX, blockSizeY);
-							// g2.setColor(Color.BLACK);
-							// g2.drawRect(j * blockSizeX, i * blockSizeY,
-							// blockSizeX,
-							// blockSizeY);
-						} else {
-							Color bgcolor = Game.getMap()
-									.getBuildingBlock(row, col)
-									.getBackgroundColor();
-							if (bgcolor != null) {
-								g2.setColor(bgcolor);
-								g2.fillRect(j * blockSizeX, i * blockSizeY,
-										blockSizeX, blockSizeY);
-
-							}
-
-							BufferedImage img = Game.getMap()
-									.getBuildingBlock(row, col).getImage()
-									.getRandomBufferedImage();
-							g2.drawImage(img, j * blockSizeX, i * blockSizeY,
-									null);
-
-						}
-
-						List<Actor> actors = Game.getMap()
-								.getBuildingBlock(row, col).getActors();
-						if (actors != null) {
-							int count = 0;
-
-							for (Actor actor : actors) {
-								if (actor.getImage() != null) {
-									g2.drawImage(actor.getImage()
-											.getRandomBufferedImage(), j
-											* blockSizeX, i * blockSizeY, null);
-								} else {
-									count += 1;
-								}
-							}
-							if (count != 0) {
-								g2.setColor(Color.RED);
-								g2.drawString(Integer.toString(count), j
-										* blockSizeX + blockSizeX / 2, (i + 1)
-										* blockSizeY);
-								g2.setColor(Color.BLACK);
-							}
-						}
-
-						Furniture furniture = Game.getMap()
-								.getBuildingBlock(row, col).getFurniture();
-						if (furniture != null) {
-							ImageEnum furnitureType = furniture.getImage();
-							BufferedImage furnitureIcon = null;
-							if (furnitureType != null)
-								furnitureIcon = furniture.getImage()
-										.getRandomBufferedImage();
-							if (furnitureIcon != null)
-								g2.drawImage(furnitureIcon, j * blockSizeX, i
-										* blockSizeY, null);
-							else
-								g2.drawString("f", j * blockSizeX + blockSizeX
-										/ 2, (i + 1) * blockSizeY);
-						}
-
-						if (Game.getMap().getBuildingBlock(row, col)
-								.isDesignated()) {
-							g2.drawString(
-									""
-											+ Game.getMap()
-													.getBuildingBlock(row, col)
-													.getDesignation().keyboardShortcut,
-									j * blockSizeX + blockSizeX / 2, (i + 1)
-											* blockSizeY);
-						}
-
-						List<Item> itemsOnGround = Game.getMap()
-								.getBuildingBlock(row, col).itemsOnGround();
-						if (itemsOnGround != null) {
-							if (itemsOnGround.size() != 0) {
-								g2.drawString("#", j * blockSizeX + blockSizeX
-										/ 2, (i + 1) * blockSizeY);
-							}
-						}
-
-						if (currentlyDrawingDesignation) {
-
-							g2.drawRect(Math.min(designationStart.x,
-									designationEnd.x), Math.min(
-									designationStart.y, designationEnd.y),
-									Math.abs(designationStart.x
-											- designationEnd.x), Math
-											.abs(designationStart.y
-													- designationEnd.y));
-
-						}
-						if (currentlyPlacingRoom) {
-							g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
-									roomHeight);
-						}
-					} else {
-						g2.setColor(Color.black);
-						g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
-								blockSizeY);
-					}
+					drawTile(g2, row, col, i, j);
 				}
 			}
 
@@ -510,6 +528,7 @@ public class BasicView extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+
 			if (currentlyPlacingRoom) {
 				boolean canBuildHere = true;
 				BuildingBlock obstacle = new AirBlock();
@@ -591,6 +610,8 @@ public class BasicView extends JPanel {
 						designationEnd = e.getPoint();
 					}
 					currentlyDrawingDesignation = !currentlyDrawingDesignation;
+				} else {
+					// test if clicked on a crafting room
 				}
 			}
 		}

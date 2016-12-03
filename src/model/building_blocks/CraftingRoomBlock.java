@@ -9,7 +9,7 @@ import model.furniture.Furniture;
 import model.game.Game;
 import model.items.Item;
 
-public class KitchenRoomBlock extends BuildingBlock {
+public class CraftingRoomBlock extends BuildingBlock {
 
 	/**
 	 * 
@@ -19,9 +19,9 @@ public class KitchenRoomBlock extends BuildingBlock {
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsOnGround;
 	private final static int durability = 0;
-	public final static String id = "Kitchen";
+	public final static String id = "Crafting";
 	
-	public KitchenRoomBlock() {
+	public CraftingRoomBlock() {
 		super(durability, false, true, new Color(255, 255, 204), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
