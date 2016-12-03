@@ -74,7 +74,7 @@ public class MoveAction extends Action {
 	private void calculatePath(Node currentNode) {
 		Position currentPos = currentNode.position;
 		int row = currentPos.getRow(),
-				col = (currentPos.getCol() > 0) ? currentPos.getCol() % (Game.getMap().getTotalWidth())
+				col = (currentPos.getCol() > 0) ? Math.floorMod(currentPos.getCol(), Game.getMap().getTotalWidth())
 						: Game.getMap().getTotalWidth() + currentPos.getCol();
 		int prow = Integer.MIN_VALUE, pcol = Integer.MIN_VALUE;
 		if(currentNode.prev != null){
