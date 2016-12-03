@@ -1,6 +1,5 @@
 package scenarios;
 
-import static org.junit.Assert.assertEquals;
 
 import java.util.Random;
 
@@ -49,6 +48,7 @@ public class BreedScenario {
 		//performer.addToActionQueue(new BreedAction(mate));
 		PlayerControlledActor.addActionToPlayerPool(new BreedAction());
 		
-		//TODO: Try using iterator to go over list of actors or create new actor in map class
+		//TODO: Make sure new actor appears on map after being born
+		//Make Incubate Action work
 	}
 }
