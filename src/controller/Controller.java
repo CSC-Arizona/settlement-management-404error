@@ -45,7 +45,6 @@ public class Controller extends JFrame {
 	private BasicView basicView;
 
 	private Timer gameTimer;
-	private Timer viewTimer;
 	private int timeDelta = 100;
 
 	private int windowWidth = 1000;
@@ -156,9 +155,7 @@ public class Controller extends JFrame {
 
 	public void startTimer() {
 		gameTimer = new Timer();
-		viewTimer = new Timer();
-		gameTimer.schedule(new GameTimer(), 0, timeDelta);
-		viewTimer.schedule(new ViewTimer(), 0, timeDelta);
+		gameTimer.schedule(new GameTimerTask(), 0, timeDelta);
 		paused = false;
 	}
 
@@ -227,20 +224,13 @@ public class Controller extends JFrame {
         
 	}
 
-	private class GameTimer extends TimerTask {
+	private class GameTimerTask extends TimerTask {
 
 		@Override
 		public void run() {
 			time += 1;
 			Game.getMap().updateActors(timeDelta);
 			Game.getMap().setTime(time);
-		}
-	}
-	
-	private class ViewTimer extends TimerTask {
-
-		@Override
-		public void run() {
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();
 			basicView.repaint();

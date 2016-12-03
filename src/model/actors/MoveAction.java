@@ -112,6 +112,8 @@ public class MoveAction extends Action {
 	 */
 	@Override
 	public int execute(Actor performer) {
+		if(!Game.validActorLocation(performer.getPosition().getRow(),performer.getPosition().getCol()))
+			return Action.DELAY;
 		if (visited == null) {
 			calculatePath();
 		}
