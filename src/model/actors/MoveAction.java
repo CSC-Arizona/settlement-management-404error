@@ -92,7 +92,7 @@ public class MoveAction extends Action {
 		currentNode.position.setRow(row);
 		if (Game.validActorLocation(row, col)) {
 			// check to see if this node already has a more efficient route
-			if (visited.containsKey(currentPos) && currentNode.distance > visited.get(currentPos).distance)
+			if (visited.containsKey(currentPos) && currentNode.distance >= visited.get(currentPos).distance)
 				return;
 			// add this node to the list of routes
 			visited.put(currentPos, currentNode);

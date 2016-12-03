@@ -1,11 +1,14 @@
 package model.actors;
 
+import images.ImageEnum;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import model.game.Game;
+import model.game.Log;
 
 /**
  * 
@@ -28,7 +31,8 @@ public abstract class Actor implements Serializable {
 	private boolean alive;
 	private String name;
 	public static List<Actor> allActors;
-
+	private ImageEnum image;
+	
 	/**
 	 * Creates a new actor
 	 * 
@@ -37,9 +41,10 @@ public abstract class Actor implements Serializable {
 	 * @param position
 	 *            The current position of the actor
 	 */
-	public Actor(int health, Position position) {
+	public Actor(int health, Position position, ImageEnum image) {
 		this.health = health;
 		this.position = position;
+		this.image = image;
 		this.idle = true;
 		this.queue = new LinkedList<Action>();
 		this.inventory = new Inventory();
@@ -178,6 +183,7 @@ public abstract class Actor implements Serializable {
 	public void setAlive(boolean alive, boolean remove) {
 		if (alive){
 			this.alive = alive;
+			Log.add(this.getName() + " has died");
 			return;
 		}
 		if (remove) {
@@ -219,6 +225,10 @@ public abstract class Actor implements Serializable {
 	 */
 	public boolean isIdle() {
 		return idle;
+	}
+	
+	public ImageEnum getImage() {
+		return image;
 	}
 
 }

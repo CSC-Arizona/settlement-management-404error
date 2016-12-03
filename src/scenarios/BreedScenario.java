@@ -5,6 +5,8 @@ import java.util.Random;
 
 import controller.Controller;
 import model.actors.BreedAction;
+import model.actors.ConstructAction;
+import model.actors.GatherAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.furniture.IncubationChamber;

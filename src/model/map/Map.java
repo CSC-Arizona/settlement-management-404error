@@ -58,7 +58,7 @@ public class Map implements Serializable {
 	private ArrayList<Position> anthillLocations = new ArrayList<>();
 
 	private int time;
-	
+
 	private boolean addActor;
 	private Position positionToAdd;
 
@@ -67,7 +67,7 @@ public class Map implements Serializable {
 		this.random = random;
 		this.mapParameters = mapParameters;
 		this.hardCodedFurniture = new HashMap<>();
-		
+
 		constructMap();
 	}
 
@@ -238,7 +238,7 @@ public class Map implements Serializable {
 			// up
 			for (int j = 0; j < widthEstimate / 2; j++) {
 				map[Y][X] = new EarthBlock();
-				
+
 				for (int k = Y; k < mapParameters.airHeight; k++) {
 					map[k][X] = new EarthBlock();
 				}
@@ -451,7 +451,7 @@ public class Map implements Serializable {
 
 				x = Math.floorMod(x, getTotalWidth());
 
-				if (y1 < getTotalHeight()-1) {
+				if (y1 < getTotalHeight() - 1) {
 					if (!map[y1 + 1][x].getID().equals(LavaBlock.id))
 						cavernFloorBlocks.add(new Integer[] { y1 + 1, x });
 				}
@@ -475,36 +475,23 @@ public class Map implements Serializable {
 
 	private void addMushrooms() {
 		for (int i = 0; i < 10; i++) {
-			//Integer[] cavernFloorBlock = cavernFloorBlocks.get(random
-			//		.nextInt(cavernFloorBlocks.size()));
-			//Mushroom mushroom = new Mushroom(getTotalWidth(), map, random,
-				//	cavernFloorBlock);
-			//mushroom.addToMap();
+			if (cavernFloorBlocks.size() != 0) {
+				Integer[] cavernFloorBlock = cavernFloorBlocks.get(random
+						.nextInt(cavernFloorBlocks.size()));
+				Mushroom mushroom = new Mushroom(getTotalWidth(), map, random,
+						cavernFloorBlock);
+				mushroom.addToMap();
+			}
 		}
-	}
-
-	private int[] getRandomOccupiablePosition(int centerX, int range) {
-		int x = random.nextInt(range) - range / 2;
-		int y = mapParameters.airHeight;
-		x = Math.floorMod(x, getTotalWidth());
-
-		while (!map[y][x].getID().equals(AirBlock.id)) {
-			y -= 1;
-			if (y < 0)
-				return new int[] { -1, -1 };
-		}
-		if (y >= 0 && map[y][x].isOccupiable()
-				&& map[y + 1][x].getID().equals(EarthBlock.id)) {
-			return new int[] { y, x };
-		}
-		return new int[] { -1, -1 };
 	}
 
 	private Position randomStartingPosition() {
 		int x = random.nextInt(40) - 20;
 		x = Math.floorMod(x, mapParameters.mapWidth);
+
 		int y = mapParameters.airHeight + 1;
-		while (!map[y][x].isOccupiable()) {
+		while (!(map[y][x].isOccupiable() && !map[y][x].getID().equals(
+				AntTunnelBlock.id))) {
 			y -= 1;
 		}
 		return new Position(y, x);
@@ -518,7 +505,8 @@ public class Map implements Serializable {
 		if (PlayerControlledActor.allActors != null) {
 			Iterator<Actor> iter = PlayerControlledActor.allActors.iterator();
 			while (iter.hasNext()) {
-				Actor actor = iter.next();			
+				Actor actor = iter.next();
+
 				Position position = actor.getPosition();
 				map[position.getRow()][position.getCol()].addActor(actor);
 			}
@@ -545,18 +533,23 @@ public class Map implements Serializable {
 		if (Actor.allActors != null) {
 
 			LinkedList<Actor> newAllActors = new LinkedList<>();
-			for (Actor actor : Actor.allActors){
+			for (Actor actor : Actor.allActors) {
 				newAllActors.add(actor);
 			}
 			Iterator<Actor> iter = newAllActors.iterator();
 
 			while (iter.hasNext()) {
 				Actor actor = iter.next();
-				Position oldPosition = actor.getPosition();
-				map[oldPosition.getRow()%getTotalHeight()][oldPosition.getCol()%getTotalWidth()].removeActor(actor);
-				actor.update();
-				Position newPosition = actor.getPosition();
-				map[newPosition.getRow()%getTotalHeight()][newPosition.getCol()%getTotalWidth()].addActor(actor);
+				if (actor != null) {
+					Position oldPosition = actor.getPosition();
+					map[oldPosition.getRow() % getTotalHeight()][oldPosition
+							.getCol() % getTotalWidth()].removeActor(actor);
+					actor.update();
+					Position newPosition = actor.getPosition();
+					map[newPosition.getRow() % getTotalHeight()][newPosition
+							.getCol() % getTotalWidth()].addActor(actor);
+
+				}
 			}
 		}
 	}
