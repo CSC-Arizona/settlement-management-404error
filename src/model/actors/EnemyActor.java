@@ -1,5 +1,7 @@
 package model.actors;
 
+import images.ImageEnum;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class EnemyActor extends Actor {
 	 * @param position
 	 */
 	public EnemyActor(int health, Position position) {
-		super(health, position);
+		super(health, position, ImageEnum.ANT);
 		if(enemyActionPool == null)
 			enemyActionPool = new ActionPool();
 		if(allActors == null)

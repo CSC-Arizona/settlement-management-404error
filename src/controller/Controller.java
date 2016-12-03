@@ -21,6 +21,7 @@ import model.building_blocks.AppleTreeTrunkBlock;
 import model.building_blocks.EarthBlock;
 import model.building_blocks.GrassBlock;
 import model.game.Game;
+import model.game.Log;
 import model.map.AppleTree;
 import model.map.Map;
 import model.map.MapParameters;
@@ -54,7 +55,7 @@ public class Controller extends JFrame {
 	private int windowHeight = 700;
 
 	private SaveFile saveFile;
-
+	
 	public void togglePaused() {
 		if (isPaused()) {
 			startTimer();
@@ -209,6 +210,7 @@ public class Controller extends JFrame {
 		map = new Map(mapParameters, random);
 		Game.reset();
 		Game.setMap(map);
+		Log.add("Welcome");
 		setUpMap();
 	}
 
@@ -235,6 +237,7 @@ public class Controller extends JFrame {
 			time += 1;
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();
+			basicView.setLogText(Log.getLog());
 			Game.getMap().updateActors(timeDelta);
 			Game.getMap().setTime(time);
 			basicView.repaint();

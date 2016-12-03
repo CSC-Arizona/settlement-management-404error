@@ -32,6 +32,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import controller.Controller;
 import controller.Designation;
@@ -46,6 +47,7 @@ import model.building_blocks.AirBlock;
 import model.building_blocks.BuildingBlock;
 import model.furniture.Furniture;
 import model.game.Game;
+import model.game.Log;
 import model.items.Item;
 import model.map.Map;
 import model.map.MapParameters;
@@ -69,6 +71,7 @@ public class BasicView extends JPanel {
 	private JPanel labelPanel;
 	private JPanel buttonPanel;
 	private JPanel logPanel;
+	private JTextArea logText;
 	private DrawingPanel drawingPanel;
 	private JLabel timeLabel;
 	private JLabel windowCoordinatesLabel;
@@ -132,15 +135,18 @@ public class BasicView extends JPanel {
 	}
 
 	private void setWindowCoordinateLabel() {
-		windowCoordinatesLabel.setText("Window coordinates: (" + visibleCornerY + ", " + visibleCornerX + ")");
+		windowCoordinatesLabel.setText("Window coordinates: (" + visibleCornerY
+				+ ", " + visibleCornerX + ")");
 	}
 
 	private void setMouseCoordinatesLabel() {
-		mouseCoordinatesLabel.setText("Mouse coordinates: (" + mouseY + ", " + mouseX + ")");
+		mouseCoordinatesLabel.setText("Mouse coordinates: (" + mouseY + ", "
+				+ mouseX + ")");
 	}
 
 	public void setMouseDescriptionLabel() {
-		String mouseDescription = Game.getMap().getBuildingBlock(mouseY, mouseX).toString();
+		String mouseDescription = Game.getMap()
+				.getBuildingBlock(mouseY, mouseX).toString();
 
 		mouseDescription += "</html>";
 
@@ -197,18 +203,26 @@ public class BasicView extends JPanel {
 
 		pauseButton = new PauseButton(controller, this);
 
-		constructRoomButton = new JButton("<html><center>Construct room</center></html>");
+		constructRoomButton = new JButton(
+				"<html><center>Construct room</center></html>");
 		constructRoomButton.setFocusable(false);
 		constructRoomButton.addActionListener(new ConstructionListener());
 
 		buttons = new ArrayList<>();
-		cutDownTreeButton = new DesignationButton(controller, Designation.CUTTING_DOWN_TREES, buttons);
-		removeRoomButton = new DesignationButton(controller, Designation.REMOVING_ROOMS, buttons);
-		fruitButton = new DesignationButton(controller, Designation.GATHERING_FRUIT, buttons);
-		digButton = new DesignationButton(controller, Designation.DIGGING, buttons);
-		plantsButton = new DesignationButton(controller, Designation.GATHERING_PLANTS, buttons);
-		attackButton = new DesignationButton(controller, Designation.ATTACKING, buttons);
-		removeButton = new DesignationButton(controller, Designation.REMOVING_DESIGNATIONS, buttons);
+		cutDownTreeButton = new DesignationButton(controller,
+				Designation.CUTTING_DOWN_TREES, buttons);
+		removeRoomButton = new DesignationButton(controller,
+				Designation.REMOVING_ROOMS, buttons);
+		fruitButton = new DesignationButton(controller,
+				Designation.GATHERING_FRUIT, buttons);
+		digButton = new DesignationButton(controller, Designation.DIGGING,
+				buttons);
+		plantsButton = new DesignationButton(controller,
+				Designation.GATHERING_PLANTS, buttons);
+		attackButton = new DesignationButton(controller, Designation.ATTACKING,
+				buttons);
+		removeButton = new DesignationButton(controller,
+				Designation.REMOVING_DESIGNATIONS, buttons);
 
 		buttonPanel.add(constructRoomButton);
 		buttonPanel.add(pauseButton);
@@ -225,12 +239,20 @@ public class BasicView extends JPanel {
 
 	private void addLogPanel() {
 		logPanel = new JPanel();
+		logText = new JTextArea();
+		logText.setEditable(false);
+		logPanel.add(logText);
 		guiPanel.add(logPanel);
+	}
+
+	public void setLogText(String text) {
+		logText.setText(text);
 	}
 
 	private void addDrawingPanel() {
 		drawingPanel = new DrawingPanel();
-		drawingPanel.setPreferredSize(new Dimension(windowWidth, 4 * windowHeight / 5));
+		drawingPanel.setPreferredSize(new Dimension(windowWidth,
+				4 * windowHeight / 5));
 		drawingPanel.addMouseMotionListener(new MyMotionListener());
 		drawingPanel.addMouseListener(new MyMouseListener());
 		this.add(drawingPanel);
@@ -260,88 +282,129 @@ public class BasicView extends JPanel {
 							for (int l = -1; l < 2; l++) {
 								int newRow = row + k;
 								int newCol = col + l;
-								newCol = Math.floorMod(newCol, Game.getMap().getTotalWidth());
-								if (newRow >= 0 && newRow < Game.getMap().getTotalHeight()) {
+								newCol = Math.floorMod(newCol, Game.getMap()
+										.getTotalWidth());
+								if (newRow >= 0
+										&& newRow < Game.getMap()
+												.getTotalHeight()) {
 
-									Game.getMap().getBuildingBlock(newRow, newCol).setVisibility(true);
+									Game.getMap()
+											.getBuildingBlock(newRow, newCol)
+											.setVisibility(true);
 								}
 							}
 						}
 					}
 
-					if (Game.getMap().getBuildingBlock(row, col).getVisibility()) {
+					if (Game.getMap().getBuildingBlock(row, col)
+							.getVisibility()) {
 						if (Game.getMap().getBuildingBlock(row, col).getImage() == null) {
-							Color color = Game.getMap().getBuildingBlock(row, col).getColor();
+							Color color = Game.getMap()
+									.getBuildingBlock(row, col).getColor();
 							g2.setColor(color);
-							g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
+							g2.fillRect(j * blockSizeX, i * blockSizeY,
+									blockSizeX, blockSizeY);
 							// g2.setColor(Color.BLACK);
 							// g2.drawRect(j * blockSizeX, i * blockSizeY,
 							// blockSizeX,
 							// blockSizeY);
 						} else {
-							Color bgcolor = Game.getMap().getBuildingBlock(row, col).getBackgroundColor();
+							Color bgcolor = Game.getMap()
+									.getBuildingBlock(row, col)
+									.getBackgroundColor();
 							if (bgcolor != null) {
 								g2.setColor(bgcolor);
-								g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
+								g2.fillRect(j * blockSizeX, i * blockSizeY,
+										blockSizeX, blockSizeY);
 
 							}
 
-							BufferedImage img = Game.getMap().getBuildingBlock(row, col).getImage()
+							BufferedImage img = Game.getMap()
+									.getBuildingBlock(row, col).getImage()
 									.getRandomBufferedImage();
-							g2.drawImage(img, j * blockSizeX, i * blockSizeY, null);
+							g2.drawImage(img, j * blockSizeX, i * blockSizeY,
+									null);
 
 						}
 
-						List<Actor> actors = Game.getMap().getBuildingBlock(row, col).getActors();
+						List<Actor> actors = Game.getMap()
+								.getBuildingBlock(row, col).getActors();
 						if (actors != null) {
-							int size = actors.size();
-							if (size != 0) {
+							int count = 0;
+
+							for (Actor actor : actors) {
+								if (actor.getImage() != null) {
+									g2.drawImage(actor.getImage()
+											.getRandomBufferedImage(), j
+											* blockSizeX, i * blockSizeY, null);
+								} else {
+									count += 1;
+								}
+							}
+							if (count != 0) {
 								g2.setColor(Color.RED);
-								g2.drawString(Integer.toString(size), j * blockSizeX + blockSizeX / 2,
-										(i + 1) * blockSizeY);
+								g2.drawString(Integer.toString(count), j
+										* blockSizeX + blockSizeX / 2, (i + 1)
+										* blockSizeY);
 								g2.setColor(Color.BLACK);
 							}
 						}
 
-						Furniture furniture = Game.getMap().getBuildingBlock(row, col).getFurniture();
+						Furniture furniture = Game.getMap()
+								.getBuildingBlock(row, col).getFurniture();
 						if (furniture != null) {
 							ImageEnum furnitureType = furniture.getImage();
 							BufferedImage furnitureIcon = null;
-							if(furnitureType != null)
-								furnitureIcon = furniture.getImage().getRandomBufferedImage();
-							if(furnitureIcon != null)
-								g2.drawImage(furnitureIcon, j * blockSizeX, i * blockSizeY, null);
+							if (furnitureType != null)
+								furnitureIcon = furniture.getImage()
+										.getRandomBufferedImage();
+							if (furnitureIcon != null)
+								g2.drawImage(furnitureIcon, j * blockSizeX, i
+										* blockSizeY, null);
 							else
-								g2.drawString("f", j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+								g2.drawString("f", j * blockSizeX + blockSizeX
+										/ 2, (i + 1) * blockSizeY);
 						}
 
-						if (Game.getMap().getBuildingBlock(row, col).isDesignated()) {
+						if (Game.getMap().getBuildingBlock(row, col)
+								.isDesignated()) {
 							g2.drawString(
-									"" + Game.getMap().getBuildingBlock(row, col).getDesignation().keyboardShortcut,
-									j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+									""
+											+ Game.getMap()
+													.getBuildingBlock(row, col)
+													.getDesignation().keyboardShortcut,
+									j * blockSizeX + blockSizeX / 2, (i + 1)
+											* blockSizeY);
 						}
 
-						List<Item> itemsOnGround = Game.getMap().getBuildingBlock(row, col).itemsOnGround();
+						List<Item> itemsOnGround = Game.getMap()
+								.getBuildingBlock(row, col).itemsOnGround();
 						if (itemsOnGround != null) {
 							if (itemsOnGround.size() != 0) {
-								g2.drawString("#", j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+								g2.drawString("#", j * blockSizeX + blockSizeX
+										/ 2, (i + 1) * blockSizeY);
 							}
 						}
 
 						if (currentlyDrawingDesignation) {
 
-							g2.drawRect(Math.min(designationStart.x, designationEnd.x),
-									Math.min(designationStart.y, designationEnd.y),
-									Math.abs(designationStart.x - designationEnd.x),
-									Math.abs(designationStart.y - designationEnd.y));
+							g2.drawRect(Math.min(designationStart.x,
+									designationEnd.x), Math.min(
+									designationStart.y, designationEnd.y),
+									Math.abs(designationStart.x
+											- designationEnd.x), Math
+											.abs(designationStart.y
+													- designationEnd.y));
 
 						}
 						if (currentlyPlacingRoom) {
-							g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, roomHeight);
+							g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
+									roomHeight);
 						}
 					} else {
 						g2.setColor(Color.black);
-						g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
+						g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
+								blockSizeY);
 					}
 				}
 			}
@@ -391,7 +454,8 @@ public class BasicView extends JPanel {
 			}
 
 			for (DesignationButton button : buttons) {
-				if (button.designation.keyboardShortcut == (char) e.getKeyChar()) {
+				if (button.designation.keyboardShortcut == (char) e
+						.getKeyChar()) {
 					button.toggle();
 					break;
 				}
@@ -450,14 +514,16 @@ public class BasicView extends JPanel {
 				boolean canBuildHere = true;
 				BuildingBlock obstacle = new AirBlock();
 				System.out.println("Calling the mouseClicked function");
-				System.out.println("roomX = " + roomX + ", roomY = " + roomY + ", roomHeight = " + room.getHeight()
+				System.out.println("roomX = " + roomX + ", roomY = " + roomY
+						+ ", roomHeight = " + room.getHeight()
 						+ ", roomWidth = " + room.getWidth());
 				for (int r = roomX; r < roomX + room.getWidth(); r++) {
 					for (int c = roomY; c < roomY + room.getHeight(); c++) {
 						System.out.println("Room at (" + c + "," + r + ")");
 						int x = Math.floorMod(c, mapHeight);
 						int y = Math.floorMod(r, mapWidth);
-						BuildingBlock inQuestion = Game.getMap().getBuildingBlock(x, y);
+						BuildingBlock inQuestion = Game.getMap()
+								.getBuildingBlock(x, y);
 						if (!inQuestion.isDestroyable()) {
 							canBuildHere = false;
 							obstacle = inQuestion;
@@ -469,10 +535,13 @@ public class BasicView extends JPanel {
 					currentlyPlacingRoom = false;
 					controller.setDesignatingAction(Designation.CONSTRUCTING);
 
-					controller.applyDesignation(roomY, roomX, roomHeight / blockSizeY, roomWidth / blockSizeX);
+					controller.applyDesignation(roomY, roomX, roomHeight
+							/ blockSizeY, roomWidth / blockSizeX);
 
 					PlayerControlledActor.playerActionPool
-							.add(new ConstructAction(room.constructObject(new Position(roomY, roomX))));
+							.add(new ConstructAction(
+									room.constructObject(new Position(roomY,
+											roomX))));
 
 					controller.setDesignatingAction(Designation.NONE);
 
@@ -482,8 +551,9 @@ public class BasicView extends JPanel {
 					if (obstacle.getClass().equals(new AirBlock().getClass()))
 						err = "You can't build a room above ground.";
 					else
-						err = "You can't build a room over a " + obstacle.getID() + " block.";
-					JOptionPane.showMessageDialog(null, err);
+						err = "You can't build a room over a "
+								+ obstacle.getID() + " block.";
+					Log.add(err);
 				}
 
 			} else {
@@ -492,22 +562,31 @@ public class BasicView extends JPanel {
 					if (currentlyDrawingDesignation) {
 						designationEnd = e.getPoint();
 
-						designationEndCol = designationEnd.x / blockSizeX + visibleCornerX;
-						designationEndRow = designationEnd.y / blockSizeY + visibleCornerY;
+						designationEndCol = designationEnd.x / blockSizeX
+								+ visibleCornerX;
+						designationEndRow = designationEnd.y / blockSizeY
+								+ visibleCornerY;
 
-						int startRow = Math.min(designationStartRow, designationEndRow);
-						int startCol = Math.min(designationStartCol, designationEndCol);
-						int height = Math.abs(designationStartRow - designationEndRow);
-						int width = Math.abs(designationStartCol - designationEndCol);
+						int startRow = Math.min(designationStartRow,
+								designationEndRow);
+						int startCol = Math.min(designationStartCol,
+								designationEndCol);
+						int height = Math.abs(designationStartRow
+								- designationEndRow);
+						int width = Math.abs(designationStartCol
+								- designationEndCol);
 
-						controller.applyDesignation(startRow, startCol, height, width);
+						controller.applyDesignation(startRow, startCol, height,
+								width);
 
 						repaint();
 					} else {
 						designationStart = e.getPoint();
 
-						designationStartCol = designationStart.x / blockSizeX + visibleCornerX;
-						designationStartRow = designationStart.y / blockSizeY + visibleCornerY;
+						designationStartCol = designationStart.x / blockSizeX
+								+ visibleCornerX;
+						designationStartRow = designationStart.y / blockSizeY
+								+ visibleCornerY;
 
 						designationEnd = e.getPoint();
 					}
@@ -555,8 +634,10 @@ public class BasicView extends JPanel {
 
 				String[] roomNames = RoomEnum.getAllRoomNames();
 
-				String roomChoice = (String) JOptionPane.showInputDialog(controller, "Choose a room to construct", "",
-						JOptionPane.PLAIN_MESSAGE, null, roomNames, roomNames[0]);
+				String roomChoice = (String) JOptionPane.showInputDialog(
+						controller, "Choose a room to construct", "",
+						JOptionPane.PLAIN_MESSAGE, null, roomNames,
+						roomNames[0]);
 
 				if (roomChoice != null) {
 					room = RoomEnum.getRoomFromString(roomChoice);

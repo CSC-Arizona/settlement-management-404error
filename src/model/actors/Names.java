@@ -87,7 +87,7 @@ public class Names {
 		frequencies = new int[26][26];
 		probabilities = new HashMap<>();
 
-		File namesFile = new File("src/model/Actors/dragon_names.txt");
+		File namesFile = new File("src/model/actors/dragon_names.txt");
 
 		try (Stream<String> idsStream = Files.lines(namesFile.toPath(),
 				StandardCharsets.US_ASCII)) {

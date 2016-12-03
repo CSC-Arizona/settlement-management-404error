@@ -3,6 +3,8 @@
  */
 package model.actors;
 
+import images.ImageEnum;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,7 +19,7 @@ public class PlayerControlledActor extends Actor {
 	private static final long serialVersionUID = 7431678886074775948L;
 	private int fatigue, hunger;
 	private static final int threshold = 1000;
-	private static final int death_threshold = 1100;
+	private static final int death_threshold = 100;
 	public static List<Actor> allActors;
 	public static ActionPool playerActionPool;
 
@@ -28,7 +30,7 @@ public class PlayerControlledActor extends Actor {
 	 * @param location The location this player will begin with
 	 */
 	public PlayerControlledActor(int health, Position location) {
-		super(health, location);
+		super(health, location, ImageEnum.DRAGON);
 		fatigue = 0;
 		hunger = 0;
 		if(playerActionPool == null)
@@ -46,6 +48,8 @@ public class PlayerControlledActor extends Actor {
 	 */
 	@Override
 	public void update() {
+		if(allActors == null)
+			allActors = Collections.synchronizedList(new LinkedList<>());
 		// update the needs
 		fatigue += 1;
 		hunger += 1;
@@ -58,6 +62,7 @@ public class PlayerControlledActor extends Actor {
 			this.priorityAddToActionQueue(new SleepAction());
 		// if one of the needs get to high, then the actor dies
 		if (hunger >= death_threshold || fatigue >= death_threshold) {
+			System.out.println(allActors);
 			allActors.remove(this);
 			this.setAlive(false, true);
 		}

@@ -14,8 +14,9 @@ public enum ImageEnum {
 			new String[] { "dirt1.png" }), LAVA(new String[] { "lava1.png",
 			"lava2.png", "lava3.png", "lava4.png", "lava5.png" }), IRON(
 			new String[] { "iron.png" }), GOLD(new String[] { "gold.png" }), STONE(
-			new String[] { "stone.png" }), LADDER(new String[] {"ladder.png"}), BED(new String[] {"bed.png"}), 
-					CRATE(new String[] {"crate.png"});
+			new String[] { "stone.png" }), LADDER(new String[] { "ladder.png" }), BED(
+			new String[] { "bed.png" }), CRATE(new String[] { "crate.png" }), ANT(
+			new String[] { "ant.png" }), DRAGON(new String[] { "dragon.png" });
 
 	private String[] filenames;
 	private ArrayList<BufferedImage> images;
@@ -39,7 +40,7 @@ public enum ImageEnum {
 						resizedImg, width, height);
 
 				images.add(transparentImg);
-				
+
 			}
 
 		} catch (IOException e) {
