@@ -550,8 +550,11 @@ public class BasicView extends JPanel {
 				if (canBuildHere) {
 					currentlyPlacingRoom = false;
 					controller.setDesignatingAction(Designation.CONSTRUCTING);
-
-					controller.applyDesignation(roomY, roomX, roomHeight
+					// adding the rows for room walls with every room type except tunnels
+                    int height = roomHeight;
+					if (!room.toString().equals("Vertical tunnel") && !room.toString().equals("Horizontal tunnel"))
+					    height += 2;
+					controller.applyDesignation(roomY, roomX, height
 							/ blockSizeY, roomWidth / blockSizeX);
 
 					PlayerControlledActor.playerActionPool
