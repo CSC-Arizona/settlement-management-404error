@@ -37,7 +37,10 @@ public class EnemyActor extends Actor {
 		enemyActionPool = null;
 	}
 
-
+	@Override
+	public void update() {
+		super.update();
+	}
 
 	/* (non-Javadoc)
 	 * @see model.Actors.Actor#getActionPool()
