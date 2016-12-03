@@ -1,14 +1,18 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,68 +30,62 @@ import controller.Controller;
 public class StartingView extends JPanel {
 
 	private Controller controller;
-	private JPanel panel;
-	private JLabel titleLabel;
-	private JLabel newGameLabel;
-	private JLabel loadGameLabel;
-	private int menuSelection = 0;
+	private JButton newGameButton, loadGameButton;
 
 	public StartingView(Controller controller) {
-		panel = new JPanel();
-		this.setLayout(new GridBagLayout());
-		this.setOpaque(true);
-		this.controller = controller;
-		this.setVisible(true);
-		this.setBackground(Color.black);
-
-		Box verticalBox = Box.createVerticalBox();
-		verticalBox.setOpaque(true);
+	    this.controller = controller;
+	    this.setLayout(new GridBagLayout());
+	    this.setBackground(Color.black);
+	    Box verticalBox = Box.createVerticalBox();
 		verticalBox.setBackground(Color.black);
 		verticalBox.add(Box.createVerticalGlue());
-
-		titleLabel = new JLabel("This is the name of the game");
+		JLabel titleLabel = new JLabel("This is the name of the game");
 		titleLabel.setForeground(Color.red);
-
-		newGameLabel = new JLabel("New game");
-		newGameLabel.setForeground(Color.red);
-		newGameLabel.setBackground(Color.blue);
-		newGameLabel.setOpaque(true);
-
-		loadGameLabel = new JLabel("Load game");
-		loadGameLabel.setForeground(Color.red);
-
+		newGameButton = new JButton("New game");
+		newGameButton.setForeground(Color.green);
+		newGameButton.addKeyListener(new MyKeyListener());
+		newGameButton.addActionListener(new MyButtonListener());
+		loadGameButton = new JButton("Load game");
+		loadGameButton.setForeground(Color.green);
+		loadGameButton.addKeyListener(new MyKeyListener());
+		loadGameButton.addActionListener(new MyButtonListener());
 		verticalBox.add(titleLabel);
-		verticalBox.add(newGameLabel);
-		verticalBox.add(loadGameLabel);
-
-		verticalBox.add(Box.createVerticalGlue());
-
-		panel.add(verticalBox, new GridBagConstraints());
-		this.add(panel);
-		this.addKeyListener(new MyKeyListener());
-
-		this.setFocusable(true);
-		this.setRequestFocusEnabled(true);
-		this.grabFocus();
+		verticalBox.add(newGameButton);
+		verticalBox.add(loadGameButton);
+		this.add(verticalBox);
+		controller.getContentPane().add(this);
+		controller.pack();
+		newGameButton.requestFocusInWindow();
+		controller.setVisible(true);
 	}
+	
+	private void startNewGame() {
+		controller.startNewGame();
+	}
+	
+	private void loadOldGame() {
+		List<String> possibilities = SaveFile.getSavedFiles();
+		String[] array = possibilities.toArray(new String[0]);
 
-	private void toggleMenu() {
-		if (menuSelection == 0) {
-			menuSelection = 1;
-			newGameLabel.setBackground(null);
-			newGameLabel.setOpaque(false);
+		String savename = (String) JOptionPane.showInputDialog(
+				controller, "Choose a file to load", "",
+				JOptionPane.PLAIN_MESSAGE, null, array, "ham");
+		if (savename != null) {
+			controller.loadGame(new SaveFile(savename));
+		}
+	}
+	
+	private class MyButtonListener implements ActionListener {
 
-			loadGameLabel.setBackground(Color.blue);
-			loadGameLabel.setOpaque(true);
-
-		} else {
-			menuSelection = 0;
-
-			newGameLabel.setBackground(Color.blue);
-			newGameLabel.setOpaque(true);
-
-			loadGameLabel.setBackground(null);
-			loadGameLabel.setOpaque(false);
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if (arg0.getSource() == newGameButton) {
+				System.out.println("Pressed new game button");
+				startNewGame();
+			} else {
+				System.out.println("Pressed load game button");
+				loadOldGame();
+			}
 		}
 	}
 
@@ -95,42 +93,34 @@ public class StartingView extends JPanel {
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-
+            System.out.println("Calling the keyTyped event");
 		}
 
 		@Override
 		public void keyPressed(KeyEvent e) {
+			System.out.println("Calling the keyPressed event");
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case KeyEvent.VK_DOWN:
-				toggleMenu();
+				if (newGameButton.isFocusOwner())
+					loadGameButton.requestFocusInWindow();
 				break;
 			case KeyEvent.VK_UP:
-				toggleMenu();
+				if (loadGameButton.isFocusOwner())
+					newGameButton.requestFocusInWindow();
 				break;
 			case KeyEvent.VK_ENTER:
-				if (menuSelection == 0) {
-					controller.startNewGame();
-				} else {
-					List<String> possibilities = SaveFile.getSavedFiles();
-					String[] array = possibilities.toArray(new String[0]);
-
-					String savename = (String) JOptionPane.showInputDialog(
-							controller, "Choose a file to load", "",
-							JOptionPane.PLAIN_MESSAGE, null, array, "ham");
-					if (savename != null) {
-						controller.loadGame(new SaveFile(savename));
-					}
-				}
+				if (newGameButton.hasFocus())
+					startNewGame();
+				else
+					loadOldGame();
 				break;
 			}
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-
+			System.out.println("Calling the keyReleased event");
 		}
 
 	}

@@ -76,9 +76,14 @@ public class Position implements Comparable<Position>, Serializable {
 	}
 	
 	public boolean isAdjacent(Position position){
+		System.out.println("Map's width: " + Game.getMap().getTotalWidth());
 		return Math.abs(Math.floorMod(this.getCol(),Game.getMap().getTotalWidth()-1) - Math.floorMod(position.getCol(),Game.getMap().getTotalWidth()-1)) <= 1
 				&& Math.abs(this.getRow()
 						- position.getRow()) <= 1;
+	}
+	
+	public boolean isTwoAbove(Position position) {
+		return Math.abs(Math.floorMod(this.getCol(),Game.getMap().getTotalWidth()-1) - Math.floorMod(position.getCol(),Game.getMap().getTotalWidth()-1)) <= 1 && ((position.getRow() - this.getRow()) == 2 || (position.getRow() - this.getRow()) == 1);
 	}
 	
 	public double distance(Position position){

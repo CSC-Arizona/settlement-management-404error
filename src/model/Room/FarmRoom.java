@@ -13,6 +13,7 @@ import model.BuildingBlocks.FarmRoomBlock;
 import model.BuildingBlocks.TunnelBlock;
 import model.BuildingBlocks.WheatBlock;
 import model.Furniture.Furniture;
+import model.Furniture.Ladder;
 import model.Items.Item;
 
 /**
@@ -39,6 +40,15 @@ public class FarmRoom extends Room {
 	
 	public FarmRoom(Position p) {
 		super(getHeight(), getWidth(), 4, 0, p);
+		reqFurniture = new TreeMap<>();
+		reqFurniture.put(new Position(0,0), new Ladder());
+		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(1,0), new Ladder());
+		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,0), new Ladder());
+		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(3,0), new Ladder());
+		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
 		state = 0;
 		plantedBlocks = new LinkedList<>();
 		rand = new Random();

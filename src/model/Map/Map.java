@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 
 import controller.Designation;
@@ -559,7 +560,13 @@ public class Map implements Serializable {
 
 	public void updateActors(int timeDelta) {
 		if (Actor.allActors != null) {
-			Iterator<Actor> iter = Actor.allActors.iterator();
+			//Iterator<Actor> iter = Actor.allActors.iterator();
+			
+			LinkedList<Actor> newAllActors = new LinkedList<>();
+			for (Actor actor : Actor.allActors) {
+				newAllActors.add(actor);
+			}
+			Iterator<Actor> iter = newAllActors.iterator();
 			while (iter.hasNext()) {
 				Actor actor = iter.next();
 				Position oldPosition = actor.getPosition();

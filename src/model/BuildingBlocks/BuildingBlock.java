@@ -3,6 +3,7 @@ package model.BuildingBlocks;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import controller.Designation;
@@ -104,10 +105,20 @@ public abstract class BuildingBlock implements Serializable {
 		result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Block type: " + id;
 
 		if (getActors() != null) {
+			LinkedList<Actor> newAllActors = new LinkedList<>();
 			for (Actor actor : getActors()) {
-				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Actor: "
-						+ actor.toString();
+				newAllActors.add(actor);
 			}
+			Iterator<Actor> iter = newAllActors.iterator();
+			while (iter.hasNext()) {
+				Actor actor = iter.next();
+				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;"
+						+ actor.toString() + "; " + actor.getInventory().toString();
+			}
+//			for (Actor actor : getActors()) {
+//				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;"
+//						+ actor.toString() + "; " + actor.getInventory().toString();
+//			}
 		}
 
 		if (getFurniture() != null) {

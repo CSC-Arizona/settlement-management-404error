@@ -22,11 +22,13 @@ public class AttackAction extends Action {
 	public int execute(Actor performer) {
 		// test to see that the two actors are adjacent (no fighting across the
 		// map)
+		
 		int x = Math.abs(performer.getPosition().getCol() - target.getPosition().getCol());
 		int y = Math.abs(performer.getPosition().getRow() - target.getPosition().getRow());
-		if (target.getHealth() <= 0)
-			return Action.COMPLETED;
 
+		if (target.getHealth() <= 0)
+			return Action.COMPLETED; // moved this from below the x,y declaration
+        
 		// if adjacent fight, else move towards target
 		if ((x == 1 || x == 0) && (y == 1 || y == 0)) {
 			// TODO: add actual combat system

@@ -11,6 +11,7 @@ import model.BuildingBlocks.TunnelBlock;
 import model.Furniture.Bed;
 import model.Furniture.Furniture;
 import model.Furniture.HealingBed;
+import model.Furniture.Ladder;
 import model.Items.Item;
 
 
@@ -42,8 +43,16 @@ public class InfirmaryRoom extends Room {
 	public InfirmaryRoom(Position p) {
         super(getHeight(), getWidth(), 8, 2, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(1,0), new HealingBed());
-		reqFurniture.put(new Position(1,2), new HealingBed());
+		reqFurniture.put(new Position(0,0), new Ladder());
+		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(1,0), new Ladder());
+		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,0), new Ladder());
+		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(3,0), new Ladder());
+		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,1), new HealingBed());
+		reqFurniture.put(new Position(2,2), new HealingBed());
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 2; i++)
 		    this.furniture.add(new HealingBed());

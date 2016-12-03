@@ -11,6 +11,7 @@ import model.BuildingBlocks.TunnelBlock;
 import model.Furniture.Fireplace;
 import model.Furniture.Furniture;
 import model.Furniture.HealingBed;
+import model.Furniture.Ladder;
 import model.Furniture.MillingMachine;
 import model.Items.Item;
 
@@ -40,8 +41,16 @@ public class KitchenRoom extends Room {
 	public KitchenRoom(Position p) {
         super(getHeight(), getWidth(), 3, 1, p);
 		this.reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(1,0), new Fireplace());
-		reqFurniture.put(new Position(1,2), new MillingMachine());
+		reqFurniture.put(new Position(0,0), new Ladder());
+		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(1,0), new Ladder());
+		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,0), new Ladder());
+		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(3,0), new Ladder());
+		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,1), new Fireplace());
+		reqFurniture.put(new Position(2,2), new MillingMachine());
 		this.furniture = new LinkedList<>();
 
 	    this.furniture.add(new Fireplace());

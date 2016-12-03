@@ -108,7 +108,7 @@ public class PlayerControlledActor extends Actor {
 	
 	@Override
 	public String toString() {
-		String result = this.getName() + ": " + Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue; " + hunger + " hunger";
+		String result = "Dragon " + this.getName() + ": " + Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue; " + hunger + " hunger";
 		return result;
 	}
 
