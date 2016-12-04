@@ -26,7 +26,7 @@ public class EnemyHuntAction extends Action {
 	@Override
 	public int execute(Actor performer) {
 		Actor prey2 = findNearestPlayerActor(performer);
-		if (prey2 != null) {
+		if (prey2 != null && EnemyActor.attack) {
 			if (attack == null || !prey.equals(prey2)){
 				prey = prey2;
 				attack = new AttackAction(prey);
