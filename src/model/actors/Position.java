@@ -82,6 +82,10 @@ public class Position implements Comparable<Position>, Serializable {
 						- position.getRow()) <= 1;
 	}
 	
+	public boolean isTwoAbove(Position position) {
+		return Math.abs(Math.floorMod(this.getCol(),Game.getMap().getTotalWidth()-1) - Math.floorMod(position.getCol(),Game.getMap().getTotalWidth()-1)) <= 1 && ((position.getRow() - this.getRow()) == 2 || (position.getRow() - this.getRow()) == 1);
+	}
+	
 	public double distance(Position position){
 		return Math.sqrt(Math.pow((Math.floorMod(col,Game.getMap().getTotalWidth())-Math.floorMod(position.col,Game.getMap().getTotalWidth())),2) + Math.pow((row-position.row),2));
 	}

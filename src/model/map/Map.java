@@ -531,13 +531,11 @@ public class Map implements Serializable {
 
 	public void updateActors(int timeDelta) {
 		if (Actor.allActors != null) {
-
 			LinkedList<Actor> newAllActors = new LinkedList<>();
 			for (Actor actor : Actor.allActors) {
 				newAllActors.add(actor);
 			}
 			Iterator<Actor> iter = newAllActors.iterator();
-
 			while (iter.hasNext()) {
 				Actor actor = iter.next();
 				if (actor != null) {

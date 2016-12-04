@@ -14,6 +14,7 @@ public class StoreItemAction extends Action {
 	private MoveAction move;
 
 	public StoreItemAction(Item item) {
+		System.out.println(item.toString());
 		this.item = item;
 		cratePosition = getCrateWithCapacityGreaterThan(item.getWeight());
 	}

@@ -44,7 +44,7 @@ public class PlayerControlledActor extends Actor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see model.Actors.Actor#update()
+	 * @see model.actors.Actor#update()
 	 */
 	@Override
 	public void update() {
@@ -114,7 +114,7 @@ public class PlayerControlledActor extends Actor {
 	
 	@Override
 	public String toString() {
-		String result = this.getName() + ": " + Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue; " + hunger + " hunger";
+		String result = "Dragon " + this.getName() + ": " + Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue; " + hunger + " hunger";
 		return result;
 	}
 
@@ -125,7 +125,7 @@ public class PlayerControlledActor extends Actor {
 	}
 
 	/* (non-Javadoc)
-	 * @see model.Actors.Actor#getActionPool()
+	 * @see model.actors.Actor#getActionPool()
 	 */
 	@SuppressWarnings("static-access")
 	@Override

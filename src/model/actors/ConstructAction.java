@@ -3,6 +3,8 @@ package model.actors;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.building_blocks.RoomWallBlock;
+import model.building_blocks.TrapDoorBlock;
 import model.furniture.Furniture;
 import model.game.Game;
 import model.room.HorizontalTunnel;
@@ -28,12 +30,33 @@ public class ConstructAction extends Action {
 	public ConstructAction(Room room) {
 		this.room = room;
 		this.blocksToChange = new LinkedList<>();
-		// add all the gather commands to clear out the room
-		for (int r = room.getPosition().getRow(); r < room.getPosition().getRow() + room.getRequiredHeight(); r++) {
+		int startRow = room.getPosition().getRow();
+		if (room.needsWalls()) {
+			startRow++;
+		}
+
+		for (int r = startRow; r < startRow + room.getRequiredHeight(); r++) {
 			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
 				Position p = new Position(r, Math.floorMod(c, Game.getMap().getTotalWidth()));
 				blocksToChange.add(p);
 				PlayerControlledActor.addActionToPlayerPool(new GatherAction(p));
+			}
+		}
+		if (room.needsWalls()) {
+			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
+				Position roof = new Position(room.getPosition().getRow(),
+						Math.floorMod(c, Game.getMap().getTotalWidth()));
+				Position floor = new Position(room.getPosition().getRow() + 3,
+						Math.floorMod(c, Game.getMap().getTotalWidth()));
+				//if (c == room.getPosition().getCol() || c == room.getPosition().getCol() + room.getRequiredWidth() - 1) {
+				if (c == room.getPosition().getCol() || c == Math.floorMod(room.getPosition().getCol() + room.getRequiredWidth() - 1, 
+						Game.getMap().getTotalWidth())) {
+					PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(roof, new TrapDoorBlock()));
+					PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(floor, new TrapDoorBlock()));
+				} else {
+					PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(roof, new RoomWallBlock()));
+					PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(floor, new RoomWallBlock()));
+				}
 			}
 		}
 	}
@@ -41,7 +64,7 @@ public class ConstructAction extends Action {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see model.Actors.Action#execute(model.Actors.Actor)
+	 * @see model.actors.Action#execute(model.actors.Actor)
 	 */
 	@Override
 	public int execute(Actor performer) {
