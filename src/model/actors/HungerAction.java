@@ -17,7 +17,7 @@ public class HungerAction extends Action {
 	private static final long serialVersionUID = -780586674243835086L;
 
 	/* (non-Javadoc)
-	 * @see model.Actors.Action#execute(model.Actors.Actor)
+	 * @see model.actors.Action#execute(model.actors.Actor)
 	 */
 	@Override
 	public int execute(Actor performer) {

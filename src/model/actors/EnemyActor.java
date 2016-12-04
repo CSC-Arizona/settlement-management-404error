@@ -41,11 +41,13 @@ public class EnemyActor extends Actor {
 
 	@Override
 	public void update() {
+		if(enemyActionPool.size() <= 0)
+			enemyActionPool.add(new EnemyHuntAction());
 		super.update();
 	}
 
 	/* (non-Javadoc)
-	 * @see model.Actors.Actor#getActionPool()
+	 * @see model.actors.Actor#getActionPool()
 	 */
 	@Override
 	public ActionPool getActionPool() {

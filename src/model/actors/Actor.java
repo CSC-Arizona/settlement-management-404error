@@ -79,6 +79,10 @@ public abstract class Actor implements Serializable {
 	// the core logic of the update method
 	// used for recursion
 	private void performAction(int attempts){
+		if(!Game.validActorLocation(position.getRow(), getPosition().getCol()))
+			fall();
+		if(Game.getMap().getBuildingBlock(position).getID().equals("Lava"))
+			this.health = 0;
 		if(attempts > getActionPool().size() + queue.size())
 			return;
 
@@ -130,7 +134,6 @@ public abstract class Actor implements Serializable {
 			return;
 		}
 		performAction(0);
-		fall();
 	}
 
 	public void fall() {

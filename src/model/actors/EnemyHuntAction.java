@@ -21,14 +21,16 @@ public class EnemyHuntAction extends Action {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see model.Actors.Action#execute(model.Actors.Actor)
+	 * @see model.actors.Action#execute(model.actors.Actor)
 	 */
 	@Override
 	public int execute(Actor performer) {
 		Actor prey2 = findNearestPlayerActor(performer);
-		if (prey != null) {
-			if (!prey.equals(prey2) || attack == null)
+		if (prey2 != null) {
+			if (attack == null || !prey.equals(prey2)){
+				prey = prey2;
 				attack = new AttackAction(prey);
+			}
 			return attack.execute(performer);
 		} else {
 			return Action.Pool;
@@ -43,7 +45,7 @@ public class EnemyHuntAction extends Action {
 		while (iter.hasNext()) {
 			Actor p = iter.next();
 			double distance = performer.getPosition().distance(p.getPosition());
-			if (distance < closest) {
+			if (distance < closest && p.getHealth() > 0) {
 				closest = distance;
 				nearestActor = p;
 			}

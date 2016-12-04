@@ -397,9 +397,12 @@ public class BasicView extends JPanel {
 						Math.abs(designationStart.y - designationEnd.y));
 
 			}
-
 			if (currentlyPlacingRoom) {
-				g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, roomHeight);
+				if (room.toString().equals("Vertical tunnel") || room.toString().equals("Horizontal tunnel")) {
+				    g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, roomHeight);
+				} else {
+					g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, (roomHeight * 2));
+				}
 			}
 
 			drawDesignation(g2, row, col, i, j);
@@ -422,7 +425,6 @@ public class BasicView extends JPanel {
 					col = Math.floorMod(col, mapWidth);
 
 					setVisibleTiles(row, col);
-
 					drawTile(g2, row, col, i, j);
 				}
 			}
@@ -532,13 +534,8 @@ public class BasicView extends JPanel {
 			if (currentlyPlacingRoom) {
 				boolean canBuildHere = true;
 				BuildingBlock obstacle = new AirBlock();
-				System.out.println("Calling the mouseClicked function");
-				System.out.println("roomX = " + roomX + ", roomY = " + roomY
-						+ ", roomHeight = " + room.getHeight()
-						+ ", roomWidth = " + room.getWidth());
 				for (int r = roomX; r < roomX + room.getWidth(); r++) {
 					for (int c = roomY; c < roomY + room.getHeight(); c++) {
-						System.out.println("Room at (" + c + "," + r + ")");
 						int x = Math.floorMod(c, mapHeight);
 						int y = Math.floorMod(r, mapWidth);
 						BuildingBlock inQuestion = Game.getMap()
@@ -553,8 +550,11 @@ public class BasicView extends JPanel {
 				if (canBuildHere) {
 					currentlyPlacingRoom = false;
 					controller.setDesignatingAction(Designation.CONSTRUCTING);
-
-					controller.applyDesignation(roomY, roomX, roomHeight
+					// adding the rows for room walls with every room type except tunnels
+                    int height = roomHeight;
+					if (!room.toString().equals("Vertical tunnel") && !room.toString().equals("Horizontal tunnel"))
+					    height += 2;
+					controller.applyDesignation(roomY, roomX, height
 							/ blockSizeY, roomWidth / blockSizeX);
 
 					PlayerControlledActor.playerActionPool
