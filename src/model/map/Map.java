@@ -82,15 +82,15 @@ public class Map implements Serializable {
 	}
 
 	public BuildingBlock getBuildingBlock(Position position) {
-		return map[position.getRow()][position.getCol()];
+		return map[position.getRow()][Math.floorMod(position.getCol(),this.getTotalWidth())];
 	}
 
 	public BuildingBlock getBuildingBlock(int row, int col) {
-		return map[row][col];
+		return map[row][Math.floorMod(col,this.getTotalWidth())];
 	}
 
 	public void setBuildingBlock(Position position, BuildingBlock newBlock) {
-		map[position.getRow()][position.getCol()] = newBlock;
+		map[position.getRow()][Math.floorMod(position.getCol(),this.getTotalWidth())] = newBlock;
 	}
 
 	/**
@@ -631,7 +631,7 @@ public class Map implements Serializable {
 
 	public void addFurniture(Furniture f, Position p) {
 		hardCodedFurniture.put(f, p);
-		map[p.getRow()][p.getCol()].addFurniture(f);
+		map[p.getRow()][Math.floorMod(p.getCol(),this.getTotalWidth())].addFurniture(f);
 	}
 
 	public ArrayList<Position> getItemsOnGround() {

@@ -1,11 +1,10 @@
 package model.actors;
 
-import model.building_blocks.BuildingBlock;
 import model.furniture.Furniture;
 import model.game.Game;
 
 public class PlaceFurnitureAction extends Action {
-	
+
 	private Position position;
 	private Furniture type;
 	private MoveAction movement;
@@ -25,13 +24,13 @@ public class PlaceFurnitureAction extends Action {
 	@Override
 	public int execute(Actor performer) {
 		// if the block can't be gathered cancel the action
-		if (Game.getMap()
-				.getBuildingBlock(position.getRow(), position.getCol()).getFurniture()!= null &&
-				Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).getFurniture().getID().equals(type.getID()))
+		if (Game.getMap().getBuildingBlock(position).getFurniture() != null
+				&& Game.getMap().getBuildingBlock(position).getFurniture().getID().equals(type.getID()))
 			return Action.COMPLETED;
 
 		if (position.isAdjacent(performer.getPosition())) {
 			Game.getMap().getBuildingBlock(position).addFurniture(type);
+			Game.getMap().addFurniture(type, position);
 			return Action.COMPLETED;
 		}
 		return move(performer);
@@ -60,7 +59,7 @@ public class PlaceFurnitureAction extends Action {
 			moveLocation = null;
 			return Action.Pool;
 		}
-		if(result == Action.DELAY)
+		if (result == Action.DELAY)
 			return Action.Pool;
 		return Action.MADE_PROGRESS;
 	}
