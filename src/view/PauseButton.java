@@ -9,6 +9,7 @@ import controller.Controller;
 
 public class PauseButton extends JButton {
 
+	private static final long serialVersionUID = -243975296052394955L;
 	private Controller controller;
 	private BasicView view;
 
