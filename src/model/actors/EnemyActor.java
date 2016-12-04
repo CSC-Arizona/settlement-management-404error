@@ -41,6 +41,8 @@ public class EnemyActor extends Actor {
 
 	@Override
 	public void update() {
+		if(enemyActionPool.size() <= 0)
+			enemyActionPool.add(new EnemyHuntAction());
 		super.update();
 	}
 
