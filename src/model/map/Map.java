@@ -116,8 +116,8 @@ public class Map implements Serializable {
 		addIron();
 		addGold();
 		addMountains();
-		addGrassBlocks();
 		addAntColonies();
+		addGrassBlocks();
 		addTrees();
 		addBushes();
 		addCaves();
