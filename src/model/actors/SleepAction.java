@@ -33,7 +33,7 @@ public class SleepAction extends Action {
 					return Action.MADE_PROGRESS;
 				}
 			} else {
-				int action = new MoveAction(nearestBed).execute(performer);
+				new MoveAction(nearestBed).execute(performer);
 				return Action.MADE_PROGRESS;
 			}
 		}

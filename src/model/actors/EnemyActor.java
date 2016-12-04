@@ -20,6 +20,9 @@ public class EnemyActor extends Actor {
 	public static List<Actor> allActors;
 	public static ActionPool enemyActionPool;
 	public static boolean attack = false;
+	private int timeSinceLastAttack = 0;
+	private int timeTillAttack = 10000;
+	private static int attackTime = 500;
 
 	/**
 	 * @param health
@@ -48,6 +51,14 @@ public class EnemyActor extends Actor {
 
 	@Override
 	public void update() {
+		timeSinceLastAttack++;
+		if(timeSinceLastAttack >= timeTillAttack){
+			attack = true;
+			if ((timeSinceLastAttack / allActors.size()) >= timeTillAttack + attackTime){
+				attack = false;
+				timeSinceLastAttack = 0;
+			}
+		}
 		if(enemyActionPool.size() <= 0)
 			enemyActionPool.add(new EnemyHuntAction());
 		super.update();

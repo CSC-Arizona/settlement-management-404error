@@ -40,8 +40,10 @@ public class AttackAction extends Action {
 		if (performer.getPosition().isAdjacent(target.getPosition())) {
 			getBestWeapon(performer);
 			getBestArmor(target);
+			int attackMod = (bestWeapon == null)?0:bestWeapon.getAttackModifier();
+			int defenseMod = (bestArmor == null)?0:bestArmor.getDefenseModifier();
 			//Add attack mod to total damage
-			int performerAttack = 1 + performer.getSkills().getCombatLevel() + bestWeapon.getAttackModifier() - bestArmor.getDefenseModifier();
+			int performerAttack = 1 + performer.getSkills().getCombatLevel() + attackMod - defenseMod;
 			if(performerAttack < 0) {
 				performerAttack = 0;
 			}
@@ -55,19 +57,8 @@ public class AttackAction extends Action {
 				}
 				
 				return Action.COMPLETED;
-			}/* else {
-				//Deal out enemy damage to performer
-				int enemyAttack = 1 + target.getSkills().getCombatLevel() + enemySword.getAttackModifier() - bestArmor.getDefenseModifier();
-				if(enemyAttack < 0) {
-					enemyAttack = 0;
-				}
-				performer.setHealth(performer.getHealth() - enemyAttack);
-				if(performer.getHealth() <= 0) {
-					return Action.COMPLETED;
-				}
-				//Actor.update will get rid of the performer if health <= 0 
-			} */
-			
+			}
+			new AttackAction(performer).execute(target);
 			return Action.MADE_PROGRESS; 
 		} else {
 			if (target.getPosition().equals(previousLocation) && move != null) {
@@ -84,9 +75,7 @@ public class AttackAction extends Action {
 	private void getBestArmor(Actor performer) {
 		//Iterate through performer's inventory to find best armor
 		for(Item currItem : performer.getInventory()) {
-			//TODO: Make sure this comparison is doing what I want it to do
 			if(currItem.getClass().equals(Armor.class)) {
-				//TODO: Make sure this comparison works, or use .equals
 				if(bestArmor == null) {
 					if(currItem != bestWeapon) {
 						bestArmor = (Armor) currItem;
