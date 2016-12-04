@@ -19,6 +19,7 @@ public class EnemyActor extends Actor {
 	private static final long serialVersionUID = 2745479477703967043L;
 	public static List<Actor> allActors;
 	public static ActionPool enemyActionPool;
+	public static boolean attack = false;
 
 	/**
 	 * @param health
@@ -47,11 +48,13 @@ public class EnemyActor extends Actor {
 
 	@Override
 	public void update() {
+		if(enemyActionPool.size() <= 0)
+			enemyActionPool.add(new EnemyHuntAction());
 		super.update();
 	}
 
 	/* (non-Javadoc)
-	 * @see model.Actors.Actor#getActionPool()
+	 * @see model.actors.Actor#getActionPool()
 	 */
 	@Override
 	public ActionPool getActionPool() {

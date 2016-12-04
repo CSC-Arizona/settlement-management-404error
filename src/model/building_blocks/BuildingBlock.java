@@ -134,14 +134,10 @@ public abstract class BuildingBlock implements Serializable {
 			}
 			Iterator<Actor> iter = newGetActors.iterator();
 			while(iter.hasNext()) {
+				Actor actor = iter.next();
 				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Actor: "
-						+ iter.next().toString();
+						+ actor.toString() + "; " + actor.getInventory().toString();
 			}
-			
-			/*for (Actor actor : getActors()) {
-				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Actor: "
-						+ actor.toString();
-			}*/
 		}
 
 		if (getFurniture() != null) {

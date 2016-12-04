@@ -95,7 +95,7 @@ public class Inventory implements Iterable<Item>, Serializable {
 
 	@Override
 	public String toString() {
-		String result = "" + getWeightCarried() + "/" + MAXWEIGHT + 
+		String result = "Inventory: " + getWeightCarried() + "/" + MAXWEIGHT + 
 				" weight carried";
 		if (!piList.toString().equals("")) {
 			result = result + " (" + piList.toString() + ")";

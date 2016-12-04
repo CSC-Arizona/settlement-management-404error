@@ -11,6 +11,7 @@ import model.building_blocks.TunnelBlock;
 import model.furniture.Bed;
 import model.furniture.Furniture;
 import model.furniture.IncubationChamber;
+import model.furniture.Ladder;
 import model.items.Item;
 
 //Author: Maxwell Faridian
@@ -21,8 +22,6 @@ import model.items.Item;
 * upgraded status there will be one IncubationChamber per 2 squares in the room.*/
 public class IncubationRoom extends Room {
 	
-	private final static int requiredHeight = 2;
-	private final static int requiredWidth = 12;
 	private static int roomCapacity = 4;
 	private final static int upgradesAllowed = 3;
 	
@@ -32,18 +31,26 @@ public class IncubationRoom extends Room {
 	private List<Item> requiredUpgradeMaterials;
 
 	public static int getHeight() {
-		return requiredHeight;
+		return 2;
 	}
 	
 	public static int getWidth() {
-		return requiredWidth;
+		return 12;
 	}
 	
 	public IncubationRoom(Position p) {
-		super(requiredHeight, requiredWidth, roomCapacity, upgradesAllowed, p);
+		super(getHeight(), getWidth(), roomCapacity, upgradesAllowed, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(1, 0), new IncubationChamber());
-		reqFurniture.put(new Position(1, 2), new IncubationChamber());
+		reqFurniture.put(new Position(0,0), new Ladder());
+		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(1,0), new Ladder());
+		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,0), new Ladder());
+		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(3,0), new Ladder());
+		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2, 1), new IncubationChamber());
+		reqFurniture.put(new Position(2, 2), new IncubationChamber());
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 2; i++) {
 			this.furniture.add(new IncubationChamber());

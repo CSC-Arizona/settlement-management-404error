@@ -33,6 +33,9 @@ public class AttackAction extends Action {
 		if (target.getHealth() <= 0)
 			return Action.COMPLETED;
 
+		if (target.getHealth() <= 0)
+			return Action.COMPLETED; // moved this from below the x,y declaration
+        
 		// if adjacent fight, else move towards target
 		if (performer.getPosition().isAdjacent(target.getPosition())) {
 			// TODO: add actual combat system

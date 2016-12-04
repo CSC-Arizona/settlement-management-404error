@@ -11,7 +11,7 @@ public class WheatKernelItem extends Item {
 	private final static int healthPts = 1;
 	
 	public WheatKernelItem() {
-		super(true, attackMod, healthPts, 70);
+		super(true, attackMod, healthPts, 0.5);
 	}
 	
 	@Override
