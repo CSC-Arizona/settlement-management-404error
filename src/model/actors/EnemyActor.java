@@ -1,6 +1,8 @@
 package model.actors;
 
 import images.ImageEnum;
+import model.armor.AntArmor;
+import model.weapons.AntSword;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -30,6 +32,10 @@ public class EnemyActor extends Actor {
 			allActors = Collections.synchronizedList(new LinkedList<>());
 		allActors.add(this);
 		enemyActionPool.add(new EnemyHuntAction());
+		
+		//Give all enemy actors an Ant Sword and Ant Armor upon creation
+		this.getInventory().addItem(new AntSword());
+		this.getInventory().addItem(new AntArmor());
 	}
 
 
