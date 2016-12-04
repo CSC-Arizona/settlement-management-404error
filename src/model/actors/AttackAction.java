@@ -38,8 +38,6 @@ public class AttackAction extends Action {
         
 		// if adjacent fight, else move towards target
 		if (performer.getPosition().isAdjacent(target.getPosition())) {
-			// TODO: add actual combat system
-			//TODO: Check boolean for enemy attacker
 			getBestWeapon(performer);
 			getBestArmor(target);
 			//Add attack mod to total damage
