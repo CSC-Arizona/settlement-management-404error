@@ -23,8 +23,10 @@ import model.building_blocks.CavernBlock;
 import model.building_blocks.EarthBlock;
 import model.building_blocks.GoldOreBlock;
 import model.building_blocks.GrassBlock;
+import model.building_blocks.GrassEarthBlock;
 import model.building_blocks.IronOreBlock;
 import model.building_blocks.LavaBlock;
+import model.building_blocks.SpaceShipBlock;
 import model.building_blocks.StoneBlock;
 import model.furniture.Furniture;
 import model.items.Item;
@@ -73,7 +75,7 @@ public class Map implements Serializable {
 
 	public Map(BuildingBlock[][] mapTypes) {
 		this.mapParameters = new MapParameters(mapTypes[0].length,
-				mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+				mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		this.hardCodedFurniture = new HashMap<>();
 		this.blocksMarkedAsDesignated = new HashMap<>();
 		this.map = mapTypes;
@@ -116,6 +118,7 @@ public class Map implements Serializable {
 		addGold();
 		addMountains();
 		addAntColonies();
+		addGrassBlocks();
 		addTrees();
 		addBushes();
 		addCaves();
@@ -282,6 +285,29 @@ public class Map implements Serializable {
 		}
 	}
 
+	private void addGrassBlocks() {
+		int totalGrass = (int) (mapParameters.grassBlockFrequency * mapParameters.mapWidth);
+		for (int i = 0; i < totalGrass; i++) {
+			int startX = random.nextInt(getTotalWidth());
+			for (int j = startX - random.nextInt(10); j < startX
+					+ random.nextInt(10); j++) {
+				int grassX = Math.floorMod(j, mapParameters.mapWidth);
+				// move up until we are no longer underground
+				int grassY = mapParameters.airHeight;
+				while (!map[grassY][grassX].getID().equals(AirBlock.id)) {
+					grassY -= 1;
+					if (grassY < 0)
+						break;
+				}
+				if (map[grassY + 1][grassX].getID().equals(EarthBlock.id)) {
+					if (map[grassY][grassX].getID().equals(AirBlock.id)) {
+						map[grassY + 1][grassX] = new GrassEarthBlock();
+					}
+				}
+			}
+		}
+	}
+	
 	private void addTrees() {
 		trees = new HashMap<>();
 
