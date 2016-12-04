@@ -26,6 +26,7 @@ import model.building_blocks.GrassBlock;
 import model.building_blocks.GrassEarthBlock;
 import model.building_blocks.IronOreBlock;
 import model.building_blocks.LavaBlock;
+import model.building_blocks.SpaceShipBlock;
 import model.building_blocks.StoneBlock;
 import model.furniture.Furniture;
 import model.items.Item;
@@ -285,8 +286,7 @@ public class Map implements Serializable {
 	}
 
 	private void addGrassBlocks() {
-		int totalGrass = (int) (mapParameters.grassBlockFrequency
-				* mapParameters.mapWidth);
+		int totalGrass = (int) (mapParameters.grassBlockFrequency * mapParameters.mapWidth);
 		for (int i = 0; i < totalGrass; i++) {
 			int startX = random.nextInt(getTotalWidth());
 			for (int j = startX - random.nextInt(10); j < startX
@@ -301,13 +301,13 @@ public class Map implements Serializable {
 				}
 				if (map[grassY + 1][grassX].getID().equals(EarthBlock.id)) {
 					if (map[grassY][grassX].getID().equals(AirBlock.id)) {
-						map[grassY+1][grassX] = new GrassEarthBlock();
+						map[grassY + 1][grassX] = new GrassEarthBlock();
 					}
 				}
 			}
 		}
 	}
-
+	
 	private void addTrees() {
 		trees = new HashMap<>();
 

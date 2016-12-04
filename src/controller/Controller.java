@@ -183,7 +183,6 @@ public class Controller extends JFrame {
 		if (skipLoadScreen) {
 			startNewGame();
 		} else {
-
 			startingView = new StartingView(this);
 			this.add(startingView);
 			this.revalidate();
@@ -195,7 +194,6 @@ public class Controller extends JFrame {
 		this.saveFile.load(this.saveFile.getSavename());
 		time = Game.getMap().getTime();
 		setUpMap();
-		
 	}
 
 	/**
