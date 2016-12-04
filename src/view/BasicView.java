@@ -1,15 +1,12 @@
 package view;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Point;
-import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -18,32 +15,21 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import javax.imageio.ImageIO;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import controller.Controller;
 import controller.Designation;
 import images.ImageEnum;
-import images.imageUtil;
 import model.actors.Actor;
 import model.actors.ConstructAction;
-import model.actors.GatherAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.AirBlock;
@@ -52,24 +38,12 @@ import model.furniture.Furniture;
 import model.game.Game;
 import model.game.Log;
 import model.items.Item;
-import model.map.Map;
 import model.map.MapParameters;
-import model.menus.ConstructMenu;
-import model.room.BedRoom;
-import model.room.EntertainmentRoom;
-import model.room.FarmRoom;
-import model.room.HorizontalTunnel;
-import model.room.IncubationRoom;
-import model.room.InfirmaryRoom;
-import model.room.CraftingRoom;
 import model.room.RoomEnum;
-import model.room.StoreRoom;
-import model.room.VerticalTunnel;
 
 public class BasicView extends JPanel {
 
 	private static final long serialVersionUID = -8807654664923090784L;
-	private Box box;
 	private JPanel guiPanel;
 	private JPanel labelPanel;
 	private JPanel buttonPanel;
@@ -214,32 +188,32 @@ public class BasicView extends JPanel {
 		constructRoomComboBox
 				.addActionListener(new ConstructionComboBoxListener());
 		constructRoomComboBox.setFocusable(false);
-		constructRoomComboBox.setPreferredSize(new Dimension(100,30));
-		
+		constructRoomComboBox.setPreferredSize(new Dimension(100, 30));
+
 		constructRoomComboBox.setFont(new Font("Arial", Font.PLAIN, 10));
 		constructRoomButton = new JButton(
 				"<html><center>Construct rooms</center></html>");
 		constructRoomButton.setFocusable(false);
 		constructRoomButton.addActionListener(new ConstructionButtonListener());
 		constructRoomButton.setFont(new Font("Arial", Font.PLAIN, 9));
-		constructRoomButton.setPreferredSize(new Dimension(100,30));
+		constructRoomButton.setPreferredSize(new Dimension(100, 30));
 		constructRoomPanel.add(constructRoomButton);
 		constructRoomPanel.add(constructRoomComboBox);
 
 		buttons = new ArrayList<>();
-		cutDownTreeButton = new DesignationButton(controller,
+		cutDownTreeButton = new DesignationButton(controller, this,
 				Designation.CUTTING_DOWN_TREES, buttons);
-		removeRoomButton = new DesignationButton(controller,
+		removeRoomButton = new DesignationButton(controller, this,
 				Designation.REMOVING_ROOMS, buttons);
-		fruitButton = new DesignationButton(controller,
+		fruitButton = new DesignationButton(controller, this,
 				Designation.GATHERING_FRUIT, buttons);
-		digButton = new DesignationButton(controller, Designation.DIGGING,
-				buttons);
-		plantsButton = new DesignationButton(controller,
+		digButton = new DesignationButton(controller, this,
+				Designation.DIGGING, buttons);
+		plantsButton = new DesignationButton(controller, this,
 				Designation.GATHERING_PLANTS, buttons);
-		attackButton = new DesignationButton(controller, Designation.ATTACKING,
-				buttons);
-		removeButton = new DesignationButton(controller,
+		attackButton = new DesignationButton(controller, this,
+				Designation.ATTACKING, buttons);
+		removeButton = new DesignationButton(controller, this,
 				Designation.REMOVING_DESIGNATIONS, buttons);
 
 		buttonPanel.add(constructRoomPanel);
@@ -408,7 +382,7 @@ public class BasicView extends JPanel {
 			}
 
 			if (currentlyDrawingDesignation) {
-
+				g2.setColor(Color.WHITE);
 				g2.drawRect(Math.min(designationStart.x, designationEnd.x),
 						Math.min(designationStart.y, designationEnd.y),
 						Math.abs(designationStart.x - designationEnd.x),
@@ -416,6 +390,7 @@ public class BasicView extends JPanel {
 
 			}
 			if (currentlyPlacingRoom) {
+				g2.setColor(Color.WHITE);
 				if (room.toString().equals("Vertical tunnel")
 						|| room.toString().equals("Horizontal tunnel")) {
 					g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
@@ -494,16 +469,40 @@ public class BasicView extends JPanel {
 
 			}
 
-			for (DesignationButton button : buttons) {
-				if (button.designation.keyboardShortcut == (char) e
-						.getKeyChar()) {
-					button.toggle();
-					break;
+			if ((char) e.getKeyChar() == 'c') {
+				for (DesignationButton button : buttons) {
+					button.deactivate();
+				}
+				toggleConstructionSelection();
+			} else {
+
+				char keyboardSelection = '\u0000';
+				boolean madeSelection = false;
+				for (DesignationButton button : buttons) {
+					if (button.designation.keyboardShortcut == (char) e
+							.getKeyChar()) {
+						keyboardSelection = (char) e.getKeyChar();
+						madeSelection = true;
+						break;
+					}
+				}
+
+				if (madeSelection) {
+					deactivateConstructionSelection();
+
+					for (DesignationButton button : buttons) {
+						if (button.designation.keyboardShortcut == keyboardSelection) {
+							button.toggle();
+						} else {
+							button.deactivate();
+						}
+					}
 				}
 			}
 
 			setWindowCoordinateLabel();
 			repaint();
+
 		}
 
 		@Override
@@ -598,7 +597,6 @@ public class BasicView extends JPanel {
 				}
 
 			} else {
-
 				if (controller.getDesignatingAction() != Designation.NONE) {
 					if (currentlyDrawingDesignation) {
 						designationEnd = e.getPoint();
@@ -664,44 +662,64 @@ public class BasicView extends JPanel {
 
 	}
 
+	public boolean constructionSelected() {
+		return currentlyPlacingRoom;
+	}
+
+	public void toggleConstructionSelection() {
+		if (currentlyPlacingRoom) {
+			deactivateConstructionSelection();
+		} else {
+			activateConstructionSelection();
+		}
+	}
+
+	public void activateConstructionSelection() {
+		for (DesignationButton button : buttons) {
+			button.deactivate();
+		}
+		currentlyPlacingRoom = true;
+		constructRoomButton
+				.setText("<html><center>Stop constructing rooms (c)</center></html>");
+		constructRoomButton.setBackground(new Color(124, 163, 226));
+		controller.setDesignatingAction(Designation.CONSTRUCTING);
+		
+		String roomChoice = constructRoomComboBox.getSelectedItem()
+				.toString();
+
+		if (roomChoice != null) {
+			room = RoomEnum.getRoomFromString(roomChoice);
+			roomHeight = room.getHeight() * blockSizeY - 1;
+			roomWidth = room.getWidth() * blockSizeX - 1;
+			
+			roomCorner = new Point(0,0);
+			roomX = 0;
+			roomY = 0;
+			
+		}
+		repaint();
+		
+	}
+
+	public void deactivateConstructionSelection() {
+		currentlyPlacingRoom = false;
+		constructRoomButton
+				.setText("<html><center>Construct rooms (c)</center></html>");
+		constructRoomButton.setBackground(null);
+		controller.setDesignatingAction(Designation.NONE);
+		repaint();
+	}
+
 	private class ConstructionButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (controller.getDesignatingAction() == Designation.CONSTRUCTING
-					|| controller.getDesignatingAction() == Designation.NONE) {
-				if (currentlyPlacingRoom) {
-					currentlyPlacingRoom = false;
-					constructRoomButton
-							.setText("<html><center>Construct rooms</center></html>");
-					constructRoomButton.setBackground(null);
-					controller.setDesignatingAction(Designation.NONE);
-					repaint();
-				} else {
-					currentlyPlacingRoom = true;
-					constructRoomButton
-							.setText("<html><center>Stop constructing rooms</center></html>");
-					constructRoomButton.setBackground(new Color(124, 163, 226));
-					controller.setDesignatingAction(Designation.CONSTRUCTING);
-					roomCorner = new Point(0, 0);
-
-					String roomChoice = constructRoomComboBox.getSelectedItem()
-							.toString();
-
-					if (roomChoice != null) {
-						room = RoomEnum.getRoomFromString(roomChoice);
-						roomHeight = room.getHeight() * blockSizeY - 1;
-						roomWidth = room.getWidth() * blockSizeX - 1;
-					}
-				}
+			for (DesignationButton button : buttons) {
+				button.deactivate();
 			}
-		}
-	}
 
-	private class ConstructionComboBoxListener implements ActionListener {
+			toggleConstructionSelection();
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
 			String roomChoice = constructRoomComboBox.getSelectedItem()
 					.toString();
 
@@ -710,6 +728,15 @@ public class BasicView extends JPanel {
 				roomHeight = room.getHeight() * blockSizeY - 1;
 				roomWidth = room.getWidth() * blockSizeX - 1;
 			}
+
+		}
+	}
+
+	private class ConstructionComboBoxListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			activateConstructionSelection();
 		}
 
 	}

@@ -1,14 +1,11 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
@@ -16,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import controller.Controller;
 import model.save.SaveFile;
@@ -29,6 +25,7 @@ import model.save.SaveFile;
  */
 public class StartingView extends JPanel {
 
+	private static final long serialVersionUID = 4699476954482553320L;
 	private Controller controller;
 	private JButton newGameButton, loadGameButton;
 

@@ -19,24 +19,44 @@ import controller.Designation;
  */
 public class DesignationButton extends JButton {
 
+	private static final long serialVersionUID = 3178671132433440884L;
 	private Controller controller;
+	private BasicView view;
 	public Designation designation;
-	
-	public void toggle() {
-		if (controller.getDesignatingAction() == Designation.NONE) {
-			controller.setDesignatingAction(designation);
-			this.setBackground(new Color(124, 163, 226));
-		} else if (controller.getDesignatingAction() == designation) {
-			controller.setDesignatingAction(Designation.NONE);
-			this.setBackground(null);
-		}
+	private boolean active;
+	private ArrayList<DesignationButton> buttons;
+
+	public void activate() {
+		controller.setDesignatingAction(designation);
+		this.setBackground(new Color(124, 163, 226));
+		active = true;
 		setButtonText();
 	}
 
-	public DesignationButton(Controller controller,
-			Designation designation, ArrayList<DesignationButton> buttons) {
+	public void deactivate() {
+		this.setBackground(null);
+		active = false;
+		setButtonText();
+	}
+
+	public void toggle() {
+		if (active) {
+			deactivate();
+		} else {
+			activate();
+		}
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
+
+	public DesignationButton(Controller controller, BasicView view, Designation designation,
+			ArrayList<DesignationButton> buttons) {
+		this.view = view;
 		this.controller = controller;
 		this.designation = designation;
+		this.buttons = buttons;
 
 		this.addActionListener(new buttonListener());
 		this.setFocusable(false);
@@ -46,7 +66,7 @@ public class DesignationButton extends JButton {
 	}
 
 	private void setButtonText() {
-		if (controller.getDesignatingAction() == designation) {
+		if (active) {
 			this.setText("<html><center>" + designation.active + "<br>("
 					+ designation.keyboardShortcut + ")</center></html>");
 		} else {
@@ -59,7 +79,16 @@ public class DesignationButton extends JButton {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			toggle();
+			view.deactivateConstructionSelection();
+			for (DesignationButton button : buttons) {
+				if (button.designation == designation) {
+					button.toggle();
+				} else {
+					button.deactivate();
+				}
+			}
+			
+
 		}
 
 	}
