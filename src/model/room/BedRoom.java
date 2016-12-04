@@ -39,17 +39,9 @@ public class BedRoom extends Room {
 	public BedRoom(Position p) {
 		super(getHeight(), getWidth(), 6, 3, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0,0), new Ladder());
-		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(1,0), new Ladder());
-		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(2,0), new Ladder());
-		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(3,0), new Ladder());
-		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
 		reqFurniture.put(new Position(2,1), new Bed());
-		reqFurniture.put(new Position(2, 2), new Bed());
-		reqFurniture.put(new Position(2, 4), new Bed());
+		reqFurniture.put(new Position(2, 3), new Bed());
+		reqFurniture.put(new Position(2, 5), new Bed());
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 3; i++)
 		    this.furniture.add(new Bed());

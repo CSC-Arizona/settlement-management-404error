@@ -41,14 +41,6 @@ public class CraftingRoom extends Room {
 	public CraftingRoom(Position p) {
         super(getHeight(), getWidth(), 3, 1, p);
 		this.reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0,0), new Ladder());
-		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(1,0), new Ladder());
-		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(2,0), new Ladder());
-		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(3,0), new Ladder());
-		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
 		reqFurniture.put(new Position(2,1), new Fireplace());
 		reqFurniture.put(new Position(2,2), new CraftingMachine());
 		this.furniture = new LinkedList<>();
