@@ -3,6 +3,7 @@ package view;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -26,7 +27,9 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -99,6 +102,8 @@ public class BasicView extends JPanel {
 
 	private PauseButton pauseButton;
 
+	private JPanel constructRoomPanel;
+	private JComboBox<String> constructRoomComboBox;
 	private JButton constructRoomButton;
 
 	private DesignationButton cutDownTreeButton;
@@ -203,10 +208,23 @@ public class BasicView extends JPanel {
 
 		pauseButton = new PauseButton(controller, this);
 
+		constructRoomPanel = new JPanel();
+		constructRoomComboBox = new JComboBox<String>(
+				RoomEnum.getAllRoomNames());
+		constructRoomComboBox
+				.addActionListener(new ConstructionComboBoxListener());
+		constructRoomComboBox.setFocusable(false);
+		constructRoomComboBox.setPreferredSize(new Dimension(100,30));
+		
+		constructRoomComboBox.setFont(new Font("Arial", Font.PLAIN, 10));
 		constructRoomButton = new JButton(
-				"<html><center>Construct room</center></html>");
+				"<html><center>Construct rooms</center></html>");
 		constructRoomButton.setFocusable(false);
-		constructRoomButton.addActionListener(new ConstructionListener());
+		constructRoomButton.addActionListener(new ConstructionButtonListener());
+		constructRoomButton.setFont(new Font("Arial", Font.PLAIN, 9));
+		constructRoomButton.setPreferredSize(new Dimension(100,30));
+		constructRoomPanel.add(constructRoomButton);
+		constructRoomPanel.add(constructRoomComboBox);
 
 		buttons = new ArrayList<>();
 		cutDownTreeButton = new DesignationButton(controller,
@@ -224,7 +242,7 @@ public class BasicView extends JPanel {
 		removeButton = new DesignationButton(controller,
 				Designation.REMOVING_DESIGNATIONS, buttons);
 
-		buttonPanel.add(constructRoomButton);
+		buttonPanel.add(constructRoomPanel);
 		buttonPanel.add(pauseButton);
 		buttonPanel.add(cutDownTreeButton);
 		buttonPanel.add(removeRoomButton);
@@ -363,7 +381,7 @@ public class BasicView extends JPanel {
 		private void drawDesignation(Graphics2D g2, int row, int col, int i,
 				int j) {
 			if (Game.getMap().getBuildingBlock(row, col).isDesignated()) {
-				g2.setColor(Color.BLACK);
+				g2.setColor(Color.WHITE);
 				g2.drawString(""
 						+ Game.getMap().getBuildingBlock(row, col)
 								.getDesignation().keyboardShortcut, j
@@ -398,10 +416,13 @@ public class BasicView extends JPanel {
 
 			}
 			if (currentlyPlacingRoom) {
-				if (room.toString().equals("Vertical tunnel") || room.toString().equals("Horizontal tunnel")) {
-				    g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, roomHeight);
+				if (room.toString().equals("Vertical tunnel")
+						|| room.toString().equals("Horizontal tunnel")) {
+					g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
+							roomHeight);
 				} else {
-					g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, (roomHeight * 2));
+					g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
+							(roomHeight * 2));
 				}
 			}
 
@@ -548,12 +569,13 @@ public class BasicView extends JPanel {
 					}
 				}
 				if (canBuildHere) {
-					currentlyPlacingRoom = false;
 					controller.setDesignatingAction(Designation.CONSTRUCTING);
-					// adding the rows for room walls with every room type except tunnels
-                    int height = roomHeight;
-					if (!room.toString().equals("Vertical tunnel") && !room.toString().equals("Horizontal tunnel"))
-					    height += 2;
+					// adding the rows for room walls with every room type
+					// except tunnels
+					int height = roomHeight;
+					if (!room.toString().equals("Vertical tunnel")
+							&& !room.toString().equals("Horizontal tunnel"))
+						height += 2;
 					controller.applyDesignation(roomY, roomX, height
 							/ blockSizeY, roomWidth / blockSizeX);
 
@@ -642,36 +664,52 @@ public class BasicView extends JPanel {
 
 	}
 
-	private class ConstructionListener implements ActionListener {
+	private class ConstructionButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!currentlyDrawingDesignation) {
-				currentlyPlacingRoom = true;
-				roomCorner = new Point(0, 0);
-				if (!controller.isPaused()) {
-					pauseButton.toggle();
-				}
-
-				String[] roomNames = RoomEnum.getAllRoomNames();
-
-				String roomChoice = (String) JOptionPane.showInputDialog(
-						controller, "Choose a room to construct", "",
-						JOptionPane.PLAIN_MESSAGE, null, roomNames,
-						roomNames[0]);
-
-				if (roomChoice != null) {
-					room = RoomEnum.getRoomFromString(roomChoice);
-					roomHeight = room.getHeight() * blockSizeY - 1;
-					roomWidth = room.getWidth() * blockSizeX - 1;
-				} else {
+			if (controller.getDesignatingAction() == Designation.CONSTRUCTING
+					|| controller.getDesignatingAction() == Designation.NONE) {
+				if (currentlyPlacingRoom) {
 					currentlyPlacingRoom = false;
-				}
-				if (controller.isPaused()) {
-					pauseButton.toggle();
+					constructRoomButton
+							.setText("<html><center>Construct rooms</center></html>");
+					constructRoomButton.setBackground(null);
+					controller.setDesignatingAction(Designation.NONE);
+					repaint();
+				} else {
+					currentlyPlacingRoom = true;
+					constructRoomButton
+							.setText("<html><center>Stop constructing rooms</center></html>");
+					constructRoomButton.setBackground(new Color(124, 163, 226));
+					controller.setDesignatingAction(Designation.CONSTRUCTING);
+					roomCorner = new Point(0, 0);
+
+					String roomChoice = constructRoomComboBox.getSelectedItem()
+							.toString();
+
+					if (roomChoice != null) {
+						room = RoomEnum.getRoomFromString(roomChoice);
+						roomHeight = room.getHeight() * blockSizeY - 1;
+						roomWidth = room.getWidth() * blockSizeX - 1;
+					}
 				}
 			}
+		}
+	}
 
+	private class ConstructionComboBoxListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String roomChoice = constructRoomComboBox.getSelectedItem()
+					.toString();
+
+			if (roomChoice != null) {
+				room = RoomEnum.getRoomFromString(roomChoice);
+				roomHeight = room.getHeight() * blockSizeY - 1;
+				roomWidth = room.getWidth() * blockSizeX - 1;
+			}
 		}
 
 	}
