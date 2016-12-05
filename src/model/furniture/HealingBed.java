@@ -3,6 +3,7 @@ package model.furniture;
 import java.util.LinkedList;
 import java.util.List;
 
+import images.ImageEnum;
 import model.items.IronItem;
 import model.items.Item;
 import model.items.StoneItem;
@@ -22,7 +23,7 @@ public class HealingBed extends Furniture {
 	private List<Item> healingBedList;
 
 	public HealingBed() {
-		super(capacity, 0, "healing bed", null);
+		super(capacity, 0, "healing bed", ImageEnum.MEDBED);
 		healingBedList = new LinkedList<>();
 		for (int i = 0; i < 2; i++) {
 			healingBedList.add(new WoodItem());

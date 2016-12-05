@@ -11,6 +11,7 @@ import model.game.Game;
 import model.map.MapParameters;
 import model.room.BedRoom;
 import model.room.HorizontalTunnel;
+import model.room.InfirmaryRoom;
 import model.room.StoreRoom;
 import model.room.VerticalTunnel;
 
@@ -30,10 +31,14 @@ public class BuildingScenario {
 		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new VerticalTunnel(new Position(70, 986))));
 		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new VerticalTunnel(new Position(72, 986))));
 		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new VerticalTunnel(new Position(74, 986))));
-		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new HorizontalTunnel(new Position(75, 987))));
-		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new HorizontalTunnel(new Position(75, 984))));
-		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new StoreRoom(new Position(74, 988))));
-		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new BedRoom(new Position(74, 973))));
+		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new VerticalTunnel(new Position(76, 986))));
+		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new VerticalTunnel(new Position(78, 986))));
+		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new VerticalTunnel(new Position(80, 986))));
+		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new StoreRoom(new Position(74, 987))));
+		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new BedRoom(new Position(74, 974))));
+		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new InfirmaryRoom(new Position(78, 999))));
+		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new StoreRoom(new Position(78, 978))));
+		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new BedRoom(new Position(78, 987))));
 	}
 
 }

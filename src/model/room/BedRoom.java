@@ -14,10 +14,10 @@ import model.items.Item;
 import model.items.WoodItem;
 
 /**
- * The BedRoom contains 3 Beds and has an initial max occupancy of six. An upgrade 
- * basically adds an additional Bed and increases the MaxOccupancy by 2. The
- * width of the BedRoom is 12 and the number of upgrades allowed is three, so at full
- * upgraded status there will be one Bed per 2 squares in the room.
+ * The BedRoom contains 3 Beds and has an initial max occupancy of six. An
+ * upgrade basically adds an additional Bed and increases the MaxOccupancy by 2.
+ * The width of the BedRoom is 12 and the number of upgrades allowed is three,
+ * so at full upgraded status there will be one Bed per 2 squares in the room.
  * 
  * @author Katherine Walters
  */
@@ -28,15 +28,15 @@ public class BedRoom extends Room {
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	private static RoomEnum room = RoomEnum.BEDROOM;
-	
+
 	public static int getHeight() {
 		return room.getHeight();
 	}
-	
+
 	public static int getWidth() {
 		return room.getWidth();
 	}
-	
+
 	public BedRoom(Position p) {
 		super(getHeight(), getWidth(), 6, 3, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
@@ -87,7 +87,9 @@ public class BedRoom extends Room {
 		return 2;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.Room.Room#getFurniture()
 	 */
 	@Override
