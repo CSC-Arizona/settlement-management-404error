@@ -52,6 +52,8 @@ public class StoreRoom extends Room{
 		 reqFurniture.put(new Position(3,0), new Ladder());
 		 reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
 		 reqFurniture.put(new Position(2,1), new BasicCrate());
+		 reqFurniture.put(new Position(2,2), new BasicCrate());
+		 reqFurniture.put(new Position(2,4), new BasicCrate());
 		this.furniture = new LinkedList<>();
 
 		for (int i = 0; i < 4; i++)
