@@ -4,7 +4,6 @@
 package model.actors;
 
 import controller.Designation;
-import model.building_blocks.AirBlock;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.CavernBlock;
 import model.game.Game;

@@ -46,7 +46,7 @@ public class CraftingActionTest {
 		int[][] mapGen = new int[][] { { 1, 0, 0, 0, 0 }, { 1, 0, 0, 0, 0 }, { 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1 },
 				{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
+		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 1));
 		BasicSword item = new BasicSword();
 		test.addToActionQueue(new CraftAction(item, item.getRequiredMaterials()));
 		test.getInventory().addItem(new WoodItem());

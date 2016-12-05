@@ -1,5 +1,7 @@
 package model.building_blocks;
 
+import images.ImageEnum;
+
 import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,8 +12,7 @@ import model.items.AntLarvaItem;
 import model.items.Item;
 
 /**
- * AntTunnelBlock make up ant tunnels. When they are destroyed they drop
- * AntLarvaItems.
+ * AntTunnelBlock make up ant tunnels.
  * 
  * @author Katherine Walters
  */
@@ -28,7 +29,8 @@ public class AntTunnelBlock extends BuildingBlock {
 	public final static String id = "Ant tunnel";
 
 	public AntTunnelBlock() {
-		super(durability, true, true, new Color(102, 72, 32), null, id, null);
+		super(durability, true, true, new Color(102, 72, 32), null, id,
+				ImageEnum.ANTTUNNEL);
 
 		itemsInBlock = new LinkedList<>();
 		itemsInBlock.add(new AntLarvaItem());

@@ -41,8 +41,8 @@ public abstract class Actor implements Serializable {
 	 * @param position
 	 *            The current position of the actor
 	 */
-	public Actor(int health, Position position, ImageEnum image) {
-		this.health = health;
+	public Actor(Position position, ImageEnum image) {
+		this.health = 100;
 		this.position = position;
 		this.image = image;
 		this.idle = true;
@@ -79,6 +79,10 @@ public abstract class Actor implements Serializable {
 	// the core logic of the update method
 	// used for recursion
 	private void performAction(int attempts){
+		if(!Game.validActorLocation(position.getRow(), getPosition().getCol()))
+			fall();
+		if(position.getRow() >= Game.getMap().getTotalHeight() || Game.getMap().getBuildingBlock(position).getID().equals("Lava"))
+			this.health = 0;
 		if(attempts > getActionPool().size() + queue.size())
 			return;
 
@@ -130,7 +134,6 @@ public abstract class Actor implements Serializable {
 			return;
 		}
 		performAction(0);
-		fall();
 	}
 
 	public void fall() {
@@ -174,6 +177,15 @@ public abstract class Actor implements Serializable {
 	 */
 	public boolean isAlive() {
 		return alive;
+	}
+	
+	
+
+	/**
+	 * @return the queue
+	 */
+	public LinkedList<Action> getQueue() {
+		return queue;
 	}
 
 	/**

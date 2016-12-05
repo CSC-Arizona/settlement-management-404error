@@ -1,6 +1,5 @@
 package model.furniture;
 
-import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;

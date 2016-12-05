@@ -29,8 +29,8 @@ public class PlayerControlledActor extends Actor {
 	 * @param health What health this player will begin with
 	 * @param location The location this player will begin with
 	 */
-	public PlayerControlledActor(int health, Position location) {
-		super(health, location, ImageEnum.DRAGON);
+	public PlayerControlledActor(Position location) {
+		super(location, ImageEnum.DRAGON);
 		fatigue = 0;
 		hunger = 0;
 		if(playerActionPool == null)
@@ -56,10 +56,12 @@ public class PlayerControlledActor extends Actor {
 		// if one of the needs gets to high, the actor
 		// will ignore his current action and attempt
 		// to fulfill that need
-		if (hunger >= threshold)
+		if (hunger == threshold)
 			this.priorityAddToActionQueue(new HungerAction());
-		if (fatigue >= threshold)
+		if (fatigue == threshold)
 			this.priorityAddToActionQueue(new SleepAction());
+		if (this.getHealth() < 90)
+			this.priorityAddToActionQueue(new HealAction());
 		// if one of the needs get to high, then the actor dies
 		if (hunger >= death_threshold || fatigue >= death_threshold) {
 			System.out.println(allActors);
@@ -93,6 +95,14 @@ public class PlayerControlledActor extends Actor {
 		this.fatigue = fatigue;
 	}
 	
+	
+	/**
+	 * @return the fatigue
+	 */
+	public int getFatigue() {
+		return fatigue;
+	}
+
 	/**
 	 * Adds an action to the player controlled pool
 	 * This does not guarantee that this actor will execute

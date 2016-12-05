@@ -6,7 +6,6 @@ import java.util.List;
 
 import model.actors.Actor;
 import model.furniture.Furniture;
-import model.game.Game;
 import model.items.Item;
 
 public class CraftingRoomBlock extends BuildingBlock {

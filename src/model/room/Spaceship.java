@@ -7,10 +7,8 @@ import java.util.TreeMap;
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.furniture.Furniture;
-import model.items.IronItem;
 import model.items.Item;
 import model.items.RetroencabulatorItem;
-import model.items.StoneItem;
 
 /**
  * Spaceship which can be upgraded to win the game

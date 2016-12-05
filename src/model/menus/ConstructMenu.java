@@ -7,7 +7,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import model.actors.Position;
-import model.items.Item;
 import model.room.BedRoom;
 import model.room.EntertainmentRoom;
 import model.room.FarmRoom;

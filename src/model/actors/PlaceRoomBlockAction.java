@@ -4,6 +4,10 @@ import model.building_blocks.BuildingBlock;
 import model.game.Game;
 
 public class PlaceRoomBlockAction extends Action {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1887113712841771133L;
 	private Position position;
 	private BuildingBlock type;
 	private MoveAction movement;

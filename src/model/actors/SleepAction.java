@@ -25,14 +25,16 @@ public class SleepAction extends Action {
 
 			// if in same position as bed, sleep, otherwise move
 			if (performer.getPosition().equals(nearestBed)) {
-				performer2.setFatigue(0);
-				return Action.COMPLETED;
-			} else {
-				int action = new MoveAction(nearestBed).execute(performer);
-				if (action == Action.COMPLETED) {
+				performer2.setFatigue(performer2.getFatigue() - 50);
+				if(performer2.getFatigue() <= 0){
+					performer2.setFatigue(0);
+					return Action.COMPLETED;
+				} else {
 					return Action.MADE_PROGRESS;
 				}
-				return action;
+			} else {
+				new MoveAction(nearestBed).execute(performer);
+				return Action.MADE_PROGRESS;
 			}
 		}
 		return Action.Pool;
@@ -45,9 +47,9 @@ public class SleepAction extends Action {
 		if (mapFurniture != null) {
 			if (mapFurniture.size() != 0) {
 				for(Furniture f : mapFurniture.keySet()){
-					int x = performer.getPosition().getCol(), x2 = mapFurniture.get(f).getCol(),
-							y = performer.getPosition().getRow(), y2 = mapFurniture.get(f).getRow();
-					double distance = Math.sqrt((x2-x)*(x2-x)+(y2-y)*(y2-y));
+					if(!f.getID().equals("bed"))
+						continue;
+					double distance = performer.getPosition().distance(mapFurniture.get(f));
 					if(distance < closest){
 						closest = distance;
 						nearest = mapFurniture.get(f);

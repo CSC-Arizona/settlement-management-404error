@@ -9,7 +9,6 @@ import model.building_blocks.BuildingBlock;
 import model.building_blocks.StoreRoomBlock;
 import model.furniture.BasicCrate;
 import model.furniture.Furniture;
-import model.furniture.Ladder;
 import model.furniture.MetalCrate;
 import model.furniture.ReinforcedCrate;
 import model.items.IronItem;
@@ -43,15 +42,6 @@ public class StoreRoom extends Room{
 	public StoreRoom(Position p) {
         super(getHeight(), getWidth(), 3, 2, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0,0), new Ladder());
-		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(1,0), new Ladder());
-		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(2,0), new Ladder());
-		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(3,0), new Ladder());
-		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(2,1), new BasicCrate());
 		reqFurniture.put(new Position(2,2), new BasicCrate());
 		reqFurniture.put(new Position(2,4), new BasicCrate());
 		reqFurniture.put(new Position(2,6), new BasicCrate());

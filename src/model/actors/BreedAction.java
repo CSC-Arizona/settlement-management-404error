@@ -27,7 +27,7 @@ public class BreedAction extends Action{
 			Furniture chamber = Game.getMap().getBuildingBlock(toGoTo).getFurniture();
 			if(chamber.getRemainingWeightCapacity() == 3) {
 				chamber.addItem(new DragonEggItem());
-				PlayerControlledActor pca = new PlayerControlledActor(100, toGoTo);
+				PlayerControlledActor pca = new PlayerControlledActor(toGoTo);
 				pca.setAlive(false, false);
 				pca.addToActionQueue(new IncubateAction());
 				return Action.COMPLETED;

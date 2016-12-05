@@ -4,15 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Random;
 
 import controller.Designation;
-import images.ImageEnum;
 import model.actors.Actor;
 import model.actors.EnemyActor;
-import model.actors.IncubateAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.AirBlock;
@@ -23,6 +20,7 @@ import model.building_blocks.CavernBlock;
 import model.building_blocks.EarthBlock;
 import model.building_blocks.GoldOreBlock;
 import model.building_blocks.GrassBlock;
+import model.building_blocks.GrassEarthBlock;
 import model.building_blocks.IronOreBlock;
 import model.building_blocks.LavaBlock;
 import model.building_blocks.StoneBlock;
@@ -73,22 +71,22 @@ public class Map implements Serializable {
 
 	public Map(BuildingBlock[][] mapTypes) {
 		this.mapParameters = new MapParameters(mapTypes[0].length,
-				mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+				mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		this.hardCodedFurniture = new HashMap<>();
 		this.blocksMarkedAsDesignated = new HashMap<>();
 		this.map = mapTypes;
 	}
 
 	public BuildingBlock getBuildingBlock(Position position) {
-		return map[position.getRow()][position.getCol()];
+		return map[position.getRow()][Math.floorMod(position.getCol(),this.getTotalWidth())];
 	}
 
 	public BuildingBlock getBuildingBlock(int row, int col) {
-		return map[row][col];
+		return map[row][Math.floorMod(col,this.getTotalWidth())];
 	}
 
 	public void setBuildingBlock(Position position, BuildingBlock newBlock) {
-		map[position.getRow()][position.getCol()] = newBlock;
+		map[position.getRow()][Math.floorMod(position.getCol(),this.getTotalWidth())] = newBlock;
 	}
 
 	/**
@@ -116,6 +114,7 @@ public class Map implements Serializable {
 		addGold();
 		addMountains();
 		addAntColonies();
+		addGrassBlocks();
 		addTrees();
 		addBushes();
 		addCaves();
@@ -282,6 +281,29 @@ public class Map implements Serializable {
 		}
 	}
 
+	private void addGrassBlocks() {
+		int totalGrass = (int) (mapParameters.grassBlockFrequency * mapParameters.mapWidth);
+		for (int i = 0; i < totalGrass; i++) {
+			int startX = random.nextInt(getTotalWidth());
+			for (int j = startX - random.nextInt(10); j < startX
+					+ random.nextInt(10); j++) {
+				int grassX = Math.floorMod(j, mapParameters.mapWidth);
+				// move up until we are no longer underground
+				int grassY = mapParameters.airHeight;
+				while (!map[grassY][grassX].getID().equals(AirBlock.id)) {
+					grassY -= 1;
+					if (grassY < 0)
+						break;
+				}
+				if (map[grassY + 1][grassX].getID().equals(EarthBlock.id)) {
+					if (map[grassY][grassX].getID().equals(AirBlock.id)) {
+						map[grassY + 1][grassX] = new GrassEarthBlock();
+					}
+				}
+			}
+		}
+	}
+	
 	private void addTrees() {
 		trees = new HashMap<>();
 
@@ -499,7 +521,7 @@ public class Map implements Serializable {
 
 	private void addPlayerActors() {
 		for (int i = 0; i < mapParameters.numberOfStartingActors; i++) {
-			new PlayerControlledActor(100, randomStartingPosition());
+			new PlayerControlledActor(randomStartingPosition());
 		}
 
 		if (PlayerControlledActor.allActors != null) {
@@ -516,7 +538,7 @@ public class Map implements Serializable {
 	private void addEnemyActors() {
 		if (anthillLocations.size() != 0) {
 			for (int i = 0; i < mapParameters.numberOfStartingActors; i++) {
-				new EnemyActor(100, anthillLocations.get(random
+				new EnemyActor(anthillLocations.get(random
 						.nextInt(anthillLocations.size())));
 			}
 		}
@@ -605,7 +627,7 @@ public class Map implements Serializable {
 
 	public void addFurniture(Furniture f, Position p) {
 		hardCodedFurniture.put(f, p);
-		map[p.getRow()][p.getCol()].addFurniture(f);
+		map[p.getRow()][Math.floorMod(p.getCol(),this.getTotalWidth())].addFurniture(f);
 	}
 
 	public ArrayList<Position> getItemsOnGround() {

@@ -7,30 +7,25 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
-/**
- * EarthBlock represents normal earth. It can be dug out to make space, but it doesn't 
- * yeild any resources.
- * 
- * @author Katherine Walters
- */
-public class EarthBlock extends BuildingBlock {
+public class SpaceShipBlock extends BuildingBlock {
+
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6778429167592410879L;
-	private final static int durability = 3;
-	public final static String id = "Earth";
+	private static final long serialVersionUID = 7466847276590138449L;
+	private final static int durability = 7;
+	public final static String id = "Space ship";
 	
-	public EarthBlock() {
-		super(durability, true, false, new Color(193,156,125), null, id, null);
+	public SpaceShipBlock() {
+		super(durability, false, false, Color.GRAY, null, id, null);
 	}
-	
+
 	@Override
 	public List<Item> lootBlock() {
 		return null;
 	}
-
+	
 	@Override
 	public boolean addActor(Actor actor) {
 		return false;
@@ -68,7 +63,7 @@ public class EarthBlock extends BuildingBlock {
 
 	@Override
 	public BuildingBlock getAppropriateReplacement() {
-		return new CavernBlock();
+		return null;
 	}
 
 }

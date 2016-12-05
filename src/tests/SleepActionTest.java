@@ -48,7 +48,7 @@ public class SleepActionTest {
 		Game.getMap().addFurniture(new Bed(), new Position(1,1));
 		PlayerControlledActor.allActors = null;
 		Actor.allActors = null;
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 4));
+		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 4));
 		test.setFatigue(990);
 		
 		for(int i = 0; i < 9; i++){

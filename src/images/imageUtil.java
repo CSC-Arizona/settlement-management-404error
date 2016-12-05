@@ -1,20 +1,11 @@
 package images;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
-import java.io.IOException;
-import java.nio.file.Files;
-
-import javax.imageio.ImageIO;
-
-import com.sun.javafx.util.Utils;
 
 public class imageUtil {
 

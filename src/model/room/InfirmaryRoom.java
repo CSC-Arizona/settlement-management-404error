@@ -7,11 +7,8 @@ import java.util.TreeMap;
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.InfirmaryRoomBlock;
-import model.building_blocks.TunnelBlock;
-import model.furniture.Bed;
 import model.furniture.Furniture;
 import model.furniture.HealingBed;
-import model.furniture.Ladder;
 import model.items.Item;
 
 
@@ -43,14 +40,6 @@ public class InfirmaryRoom extends Room {
 	public InfirmaryRoom(Position p) {
         super(getHeight(), getWidth(), 8, 2, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0,0), new Ladder());
-		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(1,0), new Ladder());
-		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(2,0), new Ladder());
-		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(3,0), new Ladder());
-		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
 		reqFurniture.put(new Position(2,1), new HealingBed());
 		reqFurniture.put(new Position(2,2), new HealingBed());
 		this.furniture = new LinkedList<>();

@@ -1,6 +1,8 @@
 package model.actors;
 
 import images.ImageEnum;
+import model.armor.AntArmor;
+import model.weapons.AntSword;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -17,19 +19,27 @@ public class EnemyActor extends Actor {
 	private static final long serialVersionUID = 2745479477703967043L;
 	public static List<Actor> allActors;
 	public static ActionPool enemyActionPool;
+	public static boolean attack = false;
+	private int timeSinceLastAttack = 0;
+	private int timeTillAttack = 15000;
+	private static int attackTime = 500;
 
 	/**
 	 * @param health
 	 * @param position
 	 */
-	public EnemyActor(int health, Position position) {
-		super(health, position, ImageEnum.ANT);
+	public EnemyActor(Position position) {
+		super(position, ImageEnum.ANT);
 		if(enemyActionPool == null)
 			enemyActionPool = new ActionPool();
 		if(allActors == null)
 			allActors = Collections.synchronizedList(new LinkedList<>());
 		allActors.add(this);
 		enemyActionPool.add(new EnemyHuntAction());
+		
+		//Give all enemy actors an Ant Sword and Ant Armor upon creation
+		this.getInventory().addItem(new AntSword());
+		this.getInventory().addItem(new AntArmor());
 	}
 
 
@@ -41,6 +51,18 @@ public class EnemyActor extends Actor {
 
 	@Override
 	public void update() {
+		timeSinceLastAttack++;
+		if(timeSinceLastAttack >= timeTillAttack){
+			attack = true;
+			if(timeSinceLastAttack == timeTillAttack)
+				this.priorityAddToActionQueue(new EnemyHuntAction());
+			if ((timeSinceLastAttack / allActors.size()) >= timeTillAttack + attackTime){
+				attack = false;
+				timeSinceLastAttack = 0;
+			}
+		}
+		if (getQueue().size() <= 0)
+			this.addToActionQueue(new EnemyIdleAction());
 		super.update();
 	}
 

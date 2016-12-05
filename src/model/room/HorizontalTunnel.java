@@ -7,7 +7,6 @@ import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.TunnelBlock;
 import model.furniture.Furniture;
-import model.furniture.Ladder;
 import model.items.Item;
 
 /**

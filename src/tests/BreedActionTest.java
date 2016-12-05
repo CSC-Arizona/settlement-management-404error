@@ -48,8 +48,8 @@ public class BreedActionTest {
 				{1,1,1,1,1},
 				{1,1,1,1,1}};
 		Game.setMap(generateMap(mapGen));
-		Actor performer = new PlayerControlledActor(100, new Position(1,3));
-		Actor mate = new PlayerControlledActor(100, new Position(1,2));
+		Actor performer = new PlayerControlledActor(new Position(1,3));
+		Actor mate = new PlayerControlledActor(new Position(1,2));
 		
 		assertEquals(mapTypes[2][4].getFurniture().getRemainingWeightCapacity(), 3);
 		performer.addToActionQueue(new BreedAction());

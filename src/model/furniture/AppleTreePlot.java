@@ -6,7 +6,6 @@ import java.util.List;
 import model.items.AntLarvaItem;
 import model.items.AppleSeedItem;
 import model.items.Item;
-import model.menus.PrintableItemsList;
 
 //Author: Maxwell Faridian
 //This class defines the Apple Tree Plot, which can grow apple trees when placed in a Farm room

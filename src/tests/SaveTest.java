@@ -45,9 +45,9 @@ public class SaveTest {
 				{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
 		Actor.allActors = null;
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(4, 2));
-		PlayerControlledActor test2 = new PlayerControlledActor(10, new Position(3, 3));
-		PlayerControlledActor test3 = new PlayerControlledActor(10, new Position(1, 1));
+		PlayerControlledActor test = new PlayerControlledActor(new Position(4, 2));
+		PlayerControlledActor test2 = new PlayerControlledActor(new Position(3, 3));
+		PlayerControlledActor test3 = new PlayerControlledActor(new Position(1, 1));
 		test.getInventory().addItem(new BasicSword());
 		test2.getInventory().addItem(new IronItem());
 		Map oldMap = Game.getMap();
@@ -63,9 +63,9 @@ public class SaveTest {
 										{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen2));
 		Actor.allActors = null;
-		PlayerControlledActor bad = new PlayerControlledActor(10, new Position(3, 1));
-		PlayerControlledActor bad2 = new PlayerControlledActor(10, new Position(3, 2));
-		PlayerControlledActor bad3 = new PlayerControlledActor(10, new Position(3, 3));
+		PlayerControlledActor bad = new PlayerControlledActor(new Position(3, 1));
+		PlayerControlledActor bad2 = new PlayerControlledActor(new Position(3, 2));
+		PlayerControlledActor bad3 = new PlayerControlledActor(new Position(3, 3));
 		
 		//test to make sure the flush worked
 		assertFalse(Actor.allActors.contains(test));

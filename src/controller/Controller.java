@@ -34,6 +34,10 @@ import view.StartingView;
  */
 public class Controller extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6949081386517721969L;
 	int time = 0;
 	private boolean paused = false;
 	private Designation designatingAction = Designation.NONE;
@@ -75,9 +79,10 @@ public class Controller extends JFrame {
 			for (int j = startCol; j <= startCol + width; j++) {
 				int col = Math.floorMod(j, map.getTotalWidth());
 
-				// todo: attack, remove rooms, remove furniture
+				// todo: attack, remove rooms
 
 				if (getDesignatingAction() == Designation.REMOVING_DESIGNATIONS) {
+					
 					map.getBuildingBlock(row, col).removeDesignation();
 
 					if (map.getBuildingBlock(row, col).getID()
@@ -183,7 +188,6 @@ public class Controller extends JFrame {
 		if (skipLoadScreen) {
 			startNewGame();
 		} else {
-
 			startingView = new StartingView(this);
 			this.add(startingView);
 			this.revalidate();
@@ -195,7 +199,6 @@ public class Controller extends JFrame {
 		this.saveFile.load(this.saveFile.getSavename());
 		time = Game.getMap().getTime();
 		setUpMap();
-		
 	}
 
 	/**
