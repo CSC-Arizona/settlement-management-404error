@@ -81,7 +81,7 @@ public abstract class Actor implements Serializable {
 	private void performAction(int attempts){
 		if(!Game.validActorLocation(position.getRow(), getPosition().getCol()))
 			fall();
-		if(Game.getMap().getBuildingBlock(position).getID().equals("Lava"))
+		if(position.getRow() >= Game.getMap().getTotalHeight() || Game.getMap().getBuildingBlock(position).getID().equals("Lava"))
 			this.health = 0;
 		if(attempts > getActionPool().size() + queue.size())
 			return;
@@ -177,6 +177,15 @@ public abstract class Actor implements Serializable {
 	 */
 	public boolean isAlive() {
 		return alive;
+	}
+	
+	
+
+	/**
+	 * @return the queue
+	 */
+	public LinkedList<Action> getQueue() {
+		return queue;
 	}
 
 	/**
