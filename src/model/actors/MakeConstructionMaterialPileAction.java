@@ -55,7 +55,7 @@ public class MakeConstructionMaterialPileAction extends Action {
 	 */
 	@Override
 	public int execute(Actor performer) {
-		if (pile.getRequiredMaterials().isEmpty()) {
+		if (pile.getRequiredMaterials() == null || pile.getRequiredMaterials().isEmpty()) {
 		    PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(room));
 		    System.out.println("MCMPA returning action completed");
 			return Action.COMPLETED;
