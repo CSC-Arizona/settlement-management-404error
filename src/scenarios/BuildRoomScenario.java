@@ -5,6 +5,7 @@ import java.util.Random;
 import model.actors.ConstructAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
+import model.actors.PostMaterialGatheringConstructionAction;
 import model.game.Game;
 import model.map.MapParameters;
 import model.room.VerticalTunnel;
@@ -28,7 +29,7 @@ public class BuildRoomScenario {
 				MapParameters.getParametersWithNoMountains(), new Random(seed),
 				true);
 		Game.setMap(controller.getMap());
-		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new VerticalTunnel(new Position(70, 994))));
+		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new VerticalTunnel(new Position(70, 994))));
 
 	}
 }

@@ -8,6 +8,7 @@ import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.StoreRoomBlock;
 import model.furniture.BasicCrate;
+import model.furniture.Crate;
 import model.furniture.Furniture;
 import model.furniture.MetalCrate;
 import model.furniture.ReinforcedCrate;
@@ -97,12 +98,15 @@ public class StoreRoom extends Room{
 
 	@Override
 	public void performUpgrade(int upgradeNum) {
-		if (upgradeNum == 2) {
-		    for (Position p : reqFurniture.keySet()) 
-		    	reqFurniture.put(p, new ReinforcedCrate());
-		} else if (upgradeNum == 1) {
-			for (Position p : reqFurniture.keySet()) 
-		    	reqFurniture.put(p, new MetalCrate());
+		if (upgradeNum == 2 || upgradeNum == 1) {
+		    for (Position p : reqFurniture.keySet()) {
+		    	Crate crate = (Crate) reqFurniture.remove(p);
+		    	LinkedList<Item> currContents = crate.getItemsContained();
+		    	if (upgradeNum == 2)
+		    	    reqFurniture.put(p, new ReinforcedCrate(currContents));
+		    	else 
+		    		reqFurniture.put(p,  new MetalCrate(currContents));
+		    }
 		}
 	}
 }

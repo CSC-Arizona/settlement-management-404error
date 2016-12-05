@@ -16,19 +16,21 @@ public class MetalCrate extends Crate {
 	 * 
 	 */
 	private static final long serialVersionUID = -3910896217729131037L;
-	private final static double weightCapacity = 70.0;
+	private final static double weightCapacity = 200.0;
 	private List<Item> metalCrateList;
 	
-	public MetalCrate() {
+	public MetalCrate(LinkedList<Item> linkedList) {
 		super(20, weightCapacity);
 		metalCrateList = new LinkedList<>();
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 3; i++) {
 			metalCrateList.add(new WoodItem());
 		}
 		metalCrateList.add(new StoneItem());
 		metalCrateList.add(new StoneItem());
 		metalCrateList.add(new IronItem());
-		metalCrateList.add(new IronItem());
+		for (Item i : linkedList) {
+			this.addItem(i);
+		}
 	}
 
 	@Override

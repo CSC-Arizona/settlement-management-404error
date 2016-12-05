@@ -5,6 +5,8 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.LinkedList;
+
 import org.junit.Test;
 
 import model.actors.GatherAction;
@@ -16,6 +18,7 @@ import model.building_blocks.EarthBlock;
 import model.building_blocks.GrassBlock;
 import model.furniture.ReinforcedCrate;
 import model.game.Game;
+import model.items.Item;
 import model.map.Map;
 
 /**
@@ -48,7 +51,7 @@ public class PickUpAndStoreActionTest {
 										{ 1, 1, 1, 1, 1 },
 										{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
-		Game.getMap().addFurniture(new ReinforcedCrate(), new Position(1, 0));
+		Game.getMap().addFurniture(new ReinforcedCrate(new LinkedList<Item>()), new Position(1, 0));
 		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 1));
 		test.addToActionQueue(new GatherAction(new Position(1, 2)));
 		test.addToActionQueue(new GatherAction(new Position(1, 3)));

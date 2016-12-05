@@ -65,7 +65,6 @@ public class Map implements Serializable {
 		this.random = random;
 		this.mapParameters = mapParameters;
 		this.hardCodedFurniture = new HashMap<>();
-
 		constructMap();
 	}
 
@@ -122,7 +121,6 @@ public class Map implements Serializable {
 		addPlayerActors();
 		addEnemyActors();
 		addFurniture();
-
 	}
 
 	private void addAir() {

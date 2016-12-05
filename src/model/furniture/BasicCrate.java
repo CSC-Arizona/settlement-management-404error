@@ -21,7 +21,7 @@ public class BasicCrate extends Crate {
 	public BasicCrate() {
 		super(5, weightCapacity);
 		basicCrateList = new LinkedList<>();
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 2; i++) {
 			basicCrateList.add(new WoodItem());
 		}
 		

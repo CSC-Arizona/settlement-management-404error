@@ -24,12 +24,9 @@ public class HealingBed extends Furniture {
 	public HealingBed() {
 		super(capacity, 0, "healing bed", null);
 		healingBedList = new LinkedList<>();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 2; i++) {
 			healingBedList.add(new WoodItem());
-		}
-		healingBedList.add(new StoneItem());
-		healingBedList.add(new StoneItem());
-		for (int i = 0; i < 5; i++) {
+			healingBedList.add(new StoneItem());
 			healingBedList.add(new WheatStemItem());
 		}
 		healingBedList.add(new IronItem());

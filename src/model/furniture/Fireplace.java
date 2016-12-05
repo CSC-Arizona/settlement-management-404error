@@ -22,10 +22,9 @@ public class Fireplace extends Furniture {
 	public Fireplace() {
 		super(capacity, 0, "fireplace", null);
 		fireplaceList = new LinkedList<>();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 2; i++) {
 			fireplaceList.add(new StoneItem());
 		}
-		fireplaceList.add(new IronItem());
 		fireplaceList.add(new IronItem());
 		
 	}

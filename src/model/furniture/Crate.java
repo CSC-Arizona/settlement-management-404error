@@ -48,6 +48,10 @@ public abstract class Crate extends Furniture {
 		return weightCapacity;
 	}
 	
+	public LinkedList<Item> getItemsContained() {
+		return containedItems;
+	}
+	
 	/*
 	 * returns the current amount of weight being carried by the inventory.
 	 */

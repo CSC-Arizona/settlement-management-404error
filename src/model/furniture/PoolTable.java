@@ -23,13 +23,10 @@ public class PoolTable extends Furniture {
 	public PoolTable() {
 		super(capacity, 0, "pool table", null);
 		poolTableList = new LinkedList<>();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 2; i++) {
 			poolTableList.add(new WoodItem());
-		}
-		for (int i = 0; i < 3; i++) {
 			poolTableList.add(new StoneItem());
 		}
-		
 		poolTableList.add(new IronItem());
 	}
 

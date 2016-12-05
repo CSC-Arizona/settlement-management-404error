@@ -23,11 +23,9 @@ public class Couch extends Furniture {
 	public Couch() {
 		super(capacity, 0, "couch", null);
 		couchList = new LinkedList<>();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 1; i++) {
 			couchList.add(new WoodItem());
-		}
-		couchList.add(new StoneItem());
-		for (int i = 0; i < 4; i++) {
+			couchList.add(new StoneItem());
 			couchList.add(new WheatStemItem());
 		}
 	}

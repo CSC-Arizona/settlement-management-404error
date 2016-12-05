@@ -6,6 +6,7 @@ import java.util.List;
 import model.items.IronItem;
 import model.items.Item;
 import model.items.StoneItem;
+import model.items.WheatStemItem;
 
 //Author: Maxwell Faridian
 //This class defines an Incubation Chamber, which exists in an Incubation Room,
@@ -27,10 +28,9 @@ public class IncubationChamber extends Furniture {
 	public IncubationChamber() {
 		super(capacity, weightCapacity, id, null);
 		incubationChamberList = new LinkedList<>();
-		incubationChamberList.add(new IronItem());
-		incubationChamberList.add(new IronItem());
 		incubationChamberList.add(new StoneItem());
 		incubationChamberList.add(new StoneItem());
+		incubationChamberList.add(new WheatStemItem());
 	}
 
 	@Override

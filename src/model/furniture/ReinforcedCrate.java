@@ -18,7 +18,7 @@ public class ReinforcedCrate extends Crate {
 	private final static double weightCapacity = 500.0;
 	private List<Item> reinforcedCrateList;
 	
-	public ReinforcedCrate() {
+	public ReinforcedCrate(LinkedList<Item> itemsAlreadyContained) {
 		super(50, weightCapacity);
 		reinforcedCrateList = new LinkedList<>();
 		for (int i = 0; i < 6; i++) {
@@ -26,6 +26,8 @@ public class ReinforcedCrate extends Crate {
 		}
 		reinforcedCrateList.add(new StoneItem());
 		reinforcedCrateList.add(new StoneItem());
+		for (Item i : itemsAlreadyContained)
+			this.addItem(i);
 	}
 
 	@Override
