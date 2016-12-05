@@ -48,7 +48,7 @@ public class GatherActionTest {
 										{ 1, 1, 1, 1, 1 },
 										{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
+		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 1));
 		test.addToActionQueue(new GatherAction(new Position(1, 4)));
 
 		assertEquals(1, test.getPosition().getRow());
@@ -85,7 +85,7 @@ public class GatherActionTest {
 										{ 1, 0, 0, 1, 1 },
 										{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
+		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 1));
 		test.addToActionQueue(new GatherAction(new Position(1, 4)));
 		test.addToActionQueue(new MoveAction(new Position(3, 2)));
 

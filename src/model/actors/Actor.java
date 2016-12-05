@@ -41,8 +41,8 @@ public abstract class Actor implements Serializable {
 	 * @param position
 	 *            The current position of the actor
 	 */
-	public Actor(int health, Position position, ImageEnum image) {
-		this.health = health;
+	public Actor(Position position, ImageEnum image) {
+		this.health = 100;
 		this.position = position;
 		this.image = image;
 		this.idle = true;

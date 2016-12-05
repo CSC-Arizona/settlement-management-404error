@@ -7,9 +7,7 @@ import model.building_blocks.RoomWallBlock;
 import model.building_blocks.TrapDoorBlock;
 import model.furniture.Furniture;
 import model.game.Game;
-import model.room.HorizontalTunnel;
 import model.room.Room;
-import model.room.VerticalTunnel;
 
 /**
  * Prerequisite for ConstructAction: the square that is selected needs to have a

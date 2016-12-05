@@ -22,7 +22,7 @@ public class HealingBed extends Furniture {
 	private List<Item> healingBedList;
 
 	public HealingBed() {
-		super(capacity, 0, "bed", null);
+		super(capacity, 0, "healing bed", null);
 		healingBedList = new LinkedList<>();
 		for (int i = 0; i < 4; i++) {
 			healingBedList.add(new WoodItem());

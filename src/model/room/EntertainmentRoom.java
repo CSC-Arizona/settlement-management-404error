@@ -7,11 +7,8 @@ import java.util.TreeMap;
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.EntertainmentRoomBlock;
-import model.building_blocks.TunnelBlock;
-import model.furniture.Bed;
 import model.furniture.Couch;
 import model.furniture.Furniture;
-import model.furniture.Ladder;
 import model.furniture.PoolTable;
 import model.items.Item;
 

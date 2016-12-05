@@ -7,11 +7,8 @@ import java.util.TreeMap;
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.IncubationRoomBlock;
-import model.building_blocks.TunnelBlock;
-import model.furniture.Bed;
 import model.furniture.Furniture;
 import model.furniture.IncubationChamber;
-import model.furniture.Ladder;
 import model.items.Item;
 
 //Author: Maxwell Faridian

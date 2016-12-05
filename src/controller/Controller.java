@@ -34,6 +34,10 @@ import view.StartingView;
  */
 public class Controller extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6949081386517721969L;
 	int time = 0;
 	private boolean paused = false;
 	private Designation designatingAction = Designation.NONE;

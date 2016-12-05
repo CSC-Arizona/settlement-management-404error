@@ -2,8 +2,6 @@ package model.menus;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.LinkedList;
-
 import model.items.Item;
 
 public class PrintableItemsList implements Serializable {

@@ -28,7 +28,7 @@ public class SleepScenario {
 		Game.getMap().addFurniture(new Bed(), new Position(48, 982));
 		Game.getMap().addFurniture(new Bed(), new Position(53, 990));
 
-		new PlayerControlledActor(100, new Position(50, 985)).setFatigue(990);
+		new PlayerControlledActor(new Position(50, 985)).setFatigue(990);
 
 	}
 }

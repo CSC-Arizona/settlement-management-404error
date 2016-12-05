@@ -49,7 +49,7 @@ public class PickUpAndStoreActionTest {
 										{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
 		Game.getMap().addFurniture(new ReinforcedCrate(), new Position(1, 0));
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
+		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 1));
 		test.addToActionQueue(new GatherAction(new Position(1, 2)));
 		test.addToActionQueue(new GatherAction(new Position(1, 3)));
 		test.addToActionQueue(new GatherAction(new Position(1, 4)));

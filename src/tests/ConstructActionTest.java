@@ -49,7 +49,7 @@ public class ConstructActionTest {
 										{1,1,1,1,1},
 										{1,1,1,1,1}};
 		Game.setMap(generateMap(mapGen));
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1,1));
+		PlayerControlledActor test = new PlayerControlledActor(new Position(1,1));
 		test.addToActionQueue(new ConstructAction(new VerticalTunnel(new Position(2,3))));
 		
 		assertEquals(1,test.getPosition().getRow());

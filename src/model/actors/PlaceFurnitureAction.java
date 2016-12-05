@@ -5,6 +5,10 @@ import model.game.Game;
 
 public class PlaceFurnitureAction extends Action {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4831793653593730582L;
 	private Position position;
 	private Furniture type;
 	private MoveAction movement;

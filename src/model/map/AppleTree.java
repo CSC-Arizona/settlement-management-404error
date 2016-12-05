@@ -15,6 +15,10 @@ import model.building_blocks.LeafBlock;
 
 public class AppleTree implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7139983639712762055L;
 	private ArrayList<Position> trunk;
 	private ArrayList<Integer[]> leaves;
 	private ArrayList<Integer[]> apples;

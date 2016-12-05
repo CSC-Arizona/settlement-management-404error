@@ -9,7 +9,6 @@ import model.building_blocks.BuildingBlock;
 import model.building_blocks.StoreRoomBlock;
 import model.furniture.BasicCrate;
 import model.furniture.Furniture;
-import model.furniture.Ladder;
 import model.furniture.MetalCrate;
 import model.furniture.ReinforcedCrate;
 import model.items.IronItem;

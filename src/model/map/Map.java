@@ -4,15 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Random;
 
 import controller.Designation;
-import images.ImageEnum;
 import model.actors.Actor;
 import model.actors.EnemyActor;
-import model.actors.IncubateAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.AirBlock;
@@ -26,7 +23,6 @@ import model.building_blocks.GrassBlock;
 import model.building_blocks.GrassEarthBlock;
 import model.building_blocks.IronOreBlock;
 import model.building_blocks.LavaBlock;
-import model.building_blocks.SpaceShipBlock;
 import model.building_blocks.StoneBlock;
 import model.furniture.Furniture;
 import model.items.Item;
@@ -525,7 +521,7 @@ public class Map implements Serializable {
 
 	private void addPlayerActors() {
 		for (int i = 0; i < mapParameters.numberOfStartingActors; i++) {
-			new PlayerControlledActor(100, randomStartingPosition());
+			new PlayerControlledActor(randomStartingPosition());
 		}
 
 		if (PlayerControlledActor.allActors != null) {
@@ -542,7 +538,7 @@ public class Map implements Serializable {
 	private void addEnemyActors() {
 		if (anthillLocations.size() != 0) {
 			for (int i = 0; i < mapParameters.numberOfStartingActors; i++) {
-				new EnemyActor(100, anthillLocations.get(random
+				new EnemyActor(anthillLocations.get(random
 						.nextInt(anthillLocations.size())));
 			}
 		}

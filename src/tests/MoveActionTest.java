@@ -41,7 +41,7 @@ public class MoveActionTest {
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1 },
 				{ 0, 0, 0, 0, 0 } };
 		Game.setMap(generateMap(mapGen));
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
+		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 1));
 		test.addToActionQueue(new MoveAction(new Position(2, 4)));
 
 		assertEquals(1, test.getPosition().getRow());
@@ -62,7 +62,7 @@ public class MoveActionTest {
 		int[][] mapGen = new int[][] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0 }, { 0, 0, 0, 0, 0 },
 				{ 0, 0, 0, 0, 0 } };
 		Game.setMap(generateMap(mapGen));
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
+		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 1));
 		test.addToActionQueue(new MoveAction(new Position(2, 4)));
 
 		assertEquals(1, test.getPosition().getRow());

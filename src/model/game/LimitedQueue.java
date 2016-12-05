@@ -3,6 +3,10 @@ package model.game;
 import java.util.LinkedList;
 
 public class LimitedQueue<E> extends LinkedList<E> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7312319540147746403L;
 	private int limit;
 	
 	public LimitedQueue(int limit) {

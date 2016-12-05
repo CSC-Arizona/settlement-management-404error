@@ -3,7 +3,6 @@ package model.building_blocks;
 import java.awt.Color;
 import java.util.List;
 
-import images.ImageEnum;
 import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;

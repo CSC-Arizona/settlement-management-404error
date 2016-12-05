@@ -21,15 +21,15 @@ public class EnemyActor extends Actor {
 	public static ActionPool enemyActionPool;
 	public static boolean attack = false;
 	private int timeSinceLastAttack = 0;
-	private int timeTillAttack = 10000;
+	private int timeTillAttack = 15000;
 	private static int attackTime = 500;
 
 	/**
 	 * @param health
 	 * @param position
 	 */
-	public EnemyActor(int health, Position position) {
-		super(health, position, ImageEnum.ANT);
+	public EnemyActor(Position position) {
+		super(position, ImageEnum.ANT);
 		if(enemyActionPool == null)
 			enemyActionPool = new ActionPool();
 		if(allActors == null)

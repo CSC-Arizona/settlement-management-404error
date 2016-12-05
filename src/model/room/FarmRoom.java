@@ -10,10 +10,8 @@ import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.FarmRoomBlock;
-import model.building_blocks.TunnelBlock;
 import model.building_blocks.WheatBlock;
 import model.furniture.Furniture;
-import model.furniture.Ladder;
 import model.items.Item;
 
 /**

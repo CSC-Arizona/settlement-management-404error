@@ -38,28 +38,13 @@ public class AttackAction extends Action {
         
 		// if adjacent fight, else move towards target
 		if (performer.getPosition().isAdjacent(target.getPosition())) {
-			getBestWeapon(performer);
-			getBestArmor(target);
-			int attackMod = (bestWeapon == null)?0:bestWeapon.getAttackModifier();
-			int defenseMod = (bestArmor == null)?0:bestArmor.getDefenseModifier();
-			//Add attack mod to total damage
-			int performerAttack = 1 + performer.getSkills().getCombatLevel() + attackMod - defenseMod;
-			if(performerAttack < 0) {
-				performerAttack = 0;
-			}
-			target.setHealth(target.getHealth() - performerAttack);
-			performer.getSkills().addCombatXP(performerAttack);
-			if (target.getHealth() <= 0) {
-				target.setHealth(0);
-				//Have target drop all items in inventory upon death
-				for(Item item : target.getInventory()) {
-					Game.getMap().getBuildingBlock(target.getPosition()).addItemToGround(item);
-				}
-				
+			int attack = attack(performer,target);
+			int counter = -1;
+			if(attack != Action.COMPLETED)
+				counter = attack(target,performer);
+			if(attack == Action.COMPLETED || counter == Action.COMPLETED)
 				return Action.COMPLETED;
-			}
-			new AttackAction(performer).execute(target);
-			return Action.MADE_PROGRESS; 
+			return Action.MADE_PROGRESS;
 		} else {
 			if (target.getPosition().equals(previousLocation) && move != null) {
 				move.execute(performer);
@@ -70,6 +55,28 @@ public class AttackAction extends Action {
 			}
 			return Action.MADE_PROGRESS;
 		}
+	}
+	
+	private int attack(Actor attacker, Actor defender){
+		getBestWeapon(attacker);
+		getBestArmor(defender);
+		int attackMod = (bestWeapon == null)?0:bestWeapon.getAttackModifier();
+		int defenseMod = (bestArmor == null)?0:bestArmor.getDefenseModifier();
+		//Add attack mod to total damage
+		int performerAttack = attacker.getSkills().getCombatLevel() + (attackMod/2) - (defenseMod/2);
+		performerAttack = (performerAttack <= 0)?0:performerAttack;
+		defender.setHealth(defender.getHealth() - performerAttack);
+		attacker.getSkills().addCombatXP(performerAttack);
+		if (defender.getHealth() <= 0) {
+			defender.setHealth(0);
+			//Have target drop all items in inventory upon death
+			for(Item item : defender.getInventory()) {
+				Game.getMap().getBuildingBlock(defender.getPosition()).addItemToGround(item);
+			}
+			
+			return Action.COMPLETED;
+		}
+		return Action.MADE_PROGRESS; 
 	}
 
 	private void getBestArmor(Actor performer) {

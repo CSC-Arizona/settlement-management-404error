@@ -1,7 +1,6 @@
 package model.save;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 
 import model.actors.ActionPool;

@@ -9,7 +9,6 @@ import model.building_blocks.BedRoomBlock;
 import model.building_blocks.BuildingBlock;
 import model.furniture.Bed;
 import model.furniture.Furniture;
-import model.furniture.Ladder;
 import model.items.Item;
 
 /**

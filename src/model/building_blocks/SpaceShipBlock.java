@@ -1,17 +1,19 @@
 package model.building_blocks;
 
 import java.awt.Color;
-import java.util.LinkedList;
 import java.util.List;
 
 import model.actors.Actor;
 import model.furniture.Furniture;
-import model.items.AntLarvaItem;
 import model.items.Item;
 
 public class SpaceShipBlock extends BuildingBlock {
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7466847276590138449L;
 	private final static int durability = 7;
 	public final static String id = "Space ship";
 	

@@ -47,8 +47,8 @@ public class ActionPoolTest {
 										{ 1, 1, 1, 1, 1 },
 										{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
-		PlayerControlledActor test = new PlayerControlledActor(10, new Position(1, 1));
-		PlayerControlledActor test2 = new PlayerControlledActor(10, new Position(1, 3));
+		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 1));
+		PlayerControlledActor test2 = new PlayerControlledActor(new Position(1, 3));
 		test.addActionToPool(new GatherAction(new Position(2, 0)));
 		test.addActionToPool(new GatherAction(new Position(2, 4)));
 		test.addActionToPool(new GatherAction(new Position(2, 1)));
