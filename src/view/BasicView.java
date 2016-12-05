@@ -399,9 +399,13 @@ public class BasicView extends JPanel {
 			}
 			if (currentlyPlacingRoom) {
 				if (room.toString().equals("Vertical tunnel") || room.toString().equals("Horizontal tunnel")) {
+					g2.setColor(Color.WHITE);
 				    g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, roomHeight);
+					g2.setColor(Color.BLACK);
 				} else {
+					g2.setColor(Color.WHITE);
 					g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, (roomHeight * 2));
+					g2.setColor(Color.BLACK);
 				}
 			}
 

@@ -80,10 +80,8 @@ public class StartingView extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == newGameButton) {
-				System.out.println("Pressed new game button");
 				newGame();
 			} else {
-				System.out.println("Pressed load game button");
 				loadOldGame();
 			}
 		}
@@ -93,12 +91,10 @@ public class StartingView extends JPanel {
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-            System.out.println("Calling the keyTyped event");
 		}
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			System.out.println("Calling the keyPressed event");
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case KeyEvent.VK_DOWN:
@@ -120,7 +116,6 @@ public class StartingView extends JPanel {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			System.out.println("Calling the keyReleased event");
 		}
 
 	}

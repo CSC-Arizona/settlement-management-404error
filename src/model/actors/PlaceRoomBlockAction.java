@@ -24,17 +24,14 @@ public class PlaceRoomBlockAction extends Action {
 	public int execute(Actor performer) {
 		// if the block can't be gathered cancel the action
 		if (Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).getID().equals(type.getID())) {
-			System.out.println("Building block at " + position.toString() + " is already of type " + type.getID());
 			return Action.COMPLETED;
 		}
 		if (position.isAdjacent(performer.getPosition())) {
 			Game.getMap().setBuildingBlock(position, type);
-			System.out.println("Set the " + type.getID() + " block at " + position.toString());
 			return Action.COMPLETED;
 		}
 		if ((type.getID().equals("Room wall") || type.getID().equals("Trap door")) && position.isTwoAbove(performer.getPosition())) {
 			Game.getMap().setBuildingBlock(position, type);
-			System.out.println("Set the " + type.getID() + " block at " + position.toString());
 			return Action.COMPLETED;
 		}
 		return move(performer);
