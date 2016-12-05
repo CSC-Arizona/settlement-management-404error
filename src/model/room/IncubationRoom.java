@@ -9,6 +9,7 @@ import model.building_blocks.BuildingBlock;
 import model.building_blocks.IncubationRoomBlock;
 import model.furniture.Furniture;
 import model.furniture.IncubationChamber;
+import model.furniture.Ladder;
 import model.items.Item;
 
 //Author: Maxwell Faridian
@@ -38,8 +39,14 @@ public class IncubationRoom extends Room {
 	public IncubationRoom(Position p) {
 		super(getHeight(), getWidth(), roomCapacity, upgradesAllowed, p);
 		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(2, 1), new IncubationChamber());
-		reqFurniture.put(new Position(2, 2), new IncubationChamber());
+		reqFurniture.put(new Position(0,0), new Ladder());
+		 reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
+		 reqFurniture.put(new Position(1,0), new Ladder());
+		 reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
+		 reqFurniture.put(new Position(2,0), new Ladder());
+		 reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
+		 reqFurniture.put(new Position(3,0), new Ladder());
+		 reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
 		this.furniture = new LinkedList<>();
 		for (int i = 0; i < 2; i++) {
 			this.furniture.add(new IncubationChamber());

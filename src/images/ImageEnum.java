@@ -18,7 +18,7 @@ public enum ImageEnum {
 			new String[] { "bed.png" }), CRATE(new String[] { "crate.png" }), ANT(
 			new String[] { "ant.png" }), DRAGON(new String[] { "dragon.png" }), GRASSBLOCK(
 			new String[] { "grassblock.png" }), ANTTUNNEL(
-			new String[] { "tunnel.png" });
+			new String[] { "tunnel.png" }), MEDBED(new String[] {"medbed.png"});
 
 	private String[] filenames;
 	private ArrayList<BufferedImage> images;
