@@ -74,7 +74,9 @@ public class BasicView extends JPanel {
 
 	private Controller controller;
 
-	private PauseButton pauseButton;
+	private JPanel craftPanel;
+	private JComboBox<Item> craftItemComboBox;
+	private JButton craftItemButton;
 
 	private JPanel constructRoomPanel;
 	private JComboBox<String> constructRoomComboBox;
@@ -104,6 +106,8 @@ public class BasicView extends JPanel {
 	private int roomHeight;
 	private int roomX;
 	private int roomY;
+
+	private Item craftSelection;
 
 	public void setTimeLabel(int time, boolean paused) {
 		if (paused) {
@@ -180,7 +184,20 @@ public class BasicView extends JPanel {
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(3, 3));
 
-		pauseButton = new PauseButton(controller, this);
+		craftPanel = new JPanel();
+		craftItemComboBox = new JComboBox<Item>();
+		craftItemComboBox.addActionListener(new CraftComboBoxListener());
+		craftItemComboBox.setFocusable(false);
+		craftItemComboBox.setPreferredSize(new Dimension(100, 30));
+		craftItemComboBox.setFont(new Font("Arial", Font.PLAIN, 10));
+		craftItemButton = new JButton(
+				"<html><center>Craft an item</center></html>");
+		craftItemButton.setFocusable(false);
+		craftItemButton.addActionListener(new CraftButtonListener());
+		craftItemButton.setFont(new Font("Arial", Font.PLAIN, 9));
+		craftItemButton.setPreferredSize(new Dimension(100, 30));
+		craftPanel.add(craftItemButton);
+		craftPanel.add(craftItemComboBox);
 
 		constructRoomPanel = new JPanel();
 		constructRoomComboBox = new JComboBox<String>(
@@ -189,10 +206,9 @@ public class BasicView extends JPanel {
 				.addActionListener(new ConstructionComboBoxListener());
 		constructRoomComboBox.setFocusable(false);
 		constructRoomComboBox.setPreferredSize(new Dimension(100, 30));
-
 		constructRoomComboBox.setFont(new Font("Arial", Font.PLAIN, 10));
 		constructRoomButton = new JButton(
-				"<html><center>Construct rooms</center></html>");
+				"<html><center>Construct rooms (c)</center></html>");
 		constructRoomButton.setFocusable(false);
 		constructRoomButton.addActionListener(new ConstructionButtonListener());
 		constructRoomButton.setFont(new Font("Arial", Font.PLAIN, 9));
@@ -217,7 +233,7 @@ public class BasicView extends JPanel {
 				Designation.REMOVING_DESIGNATIONS, buttons);
 
 		buttonPanel.add(constructRoomPanel);
-		buttonPanel.add(pauseButton);
+		buttonPanel.add(craftPanel);
 		buttonPanel.add(cutDownTreeButton);
 		buttonPanel.add(removeRoomButton);
 		buttonPanel.add(fruitButton);
@@ -369,9 +385,9 @@ public class BasicView extends JPanel {
 
 				drawBuildingBlock(g2, row, col, i, j);
 
-				drawActors(g2, row, col, i, j);
-
 				drawFurniture(g2, row, col, i, j);
+
+				drawActors(g2, row, col, i, j);
 
 				drawItemsOnGround(g2, row, col, i, j);
 
@@ -464,7 +480,8 @@ public class BasicView extends JPanel {
 				break;
 
 			case KeyEvent.VK_SPACE:
-				pauseButton.toggle();
+				controller.togglePaused();
+				setTimeLabel(controller.getTime(), controller.isPaused());
 				break;
 
 			}
@@ -683,22 +700,21 @@ public class BasicView extends JPanel {
 				.setText("<html><center>Stop constructing rooms (c)</center></html>");
 		constructRoomButton.setBackground(new Color(124, 163, 226));
 		controller.setDesignatingAction(Designation.CONSTRUCTING);
-		
-		String roomChoice = constructRoomComboBox.getSelectedItem()
-				.toString();
+
+		String roomChoice = constructRoomComboBox.getSelectedItem().toString();
 
 		if (roomChoice != null) {
 			room = RoomEnum.getRoomFromString(roomChoice);
 			roomHeight = room.getHeight() * blockSizeY - 1;
 			roomWidth = room.getWidth() * blockSizeX - 1;
-			
-			roomCorner = new Point(0,0);
+
+			roomCorner = new Point(0, 0);
 			roomX = 0;
 			roomY = 0;
-			
+
 		}
 		repaint();
-		
+
 	}
 
 	public void deactivateConstructionSelection() {
@@ -737,6 +753,29 @@ public class BasicView extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			activateConstructionSelection();
+		}
+
+	}
+
+	/**
+	 * When the button is pressed, add action to craft a single selected item
+	 *
+	 */
+	private class CraftButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
+	private class CraftComboBoxListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			craftSelection = (Item) craftItemComboBox.getSelectedItem();
 		}
 
 	}
