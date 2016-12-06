@@ -12,6 +12,7 @@ import model.items.IronItem;
 import model.items.Item;
 import model.items.StoneItem;
 import model.items.WoodItem;
+import model.weapons.AntSword;
 import model.weapons.BasicIronAxe;
 import model.weapons.BasicStoneAxe;
 import model.weapons.BasicSword;
@@ -134,5 +135,19 @@ public class WeaponTest {
 		assertEquals(ii.getClass(), li.next().getClass());
 		assertEquals(ii.getClass(), li.next().getClass());
 		assertEquals(ii.getClass(), li.next().getClass());
+	}
+	
+	@Test
+	public void testAntSword() {
+	    AntSword as = new AntSword();
+	    assertFalse(as.getIsEdible());
+	    assertEquals(17, as.getAttackModifier());
+	    assertEquals(0, as.getHealthPoints());
+	    assertEquals(18.0, as.getWeight(), 0.00001);
+	    List<Item> asList = as.getRequiredMaterials();
+	    ListIterator<Item> li = asList.listIterator();
+		assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(ali.getClass(), li.next().getClass());
 	}
 }

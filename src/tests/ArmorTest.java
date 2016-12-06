@@ -8,6 +8,7 @@ import java.util.ListIterator;
 
 import org.junit.Test;
 
+import model.armor.AntArmor;
 import model.armor.GreatChestPlate;
 import model.armor.GreatShield;
 import model.armor.IronChestPlate;
@@ -16,6 +17,7 @@ import model.armor.StoneChestPlate;
 import model.armor.StoneShield;
 import model.armor.WoodChestPlate;
 import model.armor.WoodShield;
+import model.items.AntLarvaItem;
 import model.items.IronItem;
 import model.items.Item;
 import model.items.StoneItem;
@@ -28,6 +30,7 @@ public class ArmorTest {
 	private WoodItem wi = new WoodItem();
 	private StoneItem si = new StoneItem();
 	private IronItem ii = new IronItem();
+	private AntLarvaItem ali = new AntLarvaItem();
 	
 	@Test
 	public void testWoodShield() {
@@ -157,5 +160,21 @@ public class ArmorTest {
 		assertEquals(ii.getClass(), li.next().getClass());
 	}
 	
+
+	@Test
+	public void testAntArmor() {
+	    AntArmor aa = new AntArmor();
+	    assertFalse(aa.getIsEdible());
+	    assertEquals(10, aa.getAttackModifier());
+	    assertEquals(10, aa.getDefenseModifier());
+	    assertEquals(0, aa.getHealthPoints());
+	    assertEquals(20.0, aa.getWeight(), 0.00001);
+	    List<Item> aaList = aa.getRequiredMaterials();
+	    ListIterator<Item> li = aaList.listIterator();
+		assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(ii.getClass(), li.next().getClass());
+		assertEquals(ali.getClass(), li.next().getClass());
+		assertEquals(ali.getClass(), li.next().getClass());
+	}
 
 }
