@@ -4,6 +4,7 @@ import images.ImageEnum;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -210,7 +211,6 @@ public abstract class Actor implements Serializable {
 
 	public void remove() {
 		allActors.remove(this);
-		
 	}
 
 	public int getHealth() {
@@ -232,6 +232,15 @@ public abstract class Actor implements Serializable {
 	public static void reset(){
 		PlayerControlledActor.reset();
 		EnemyActor.reset();
+		if(allActors == null)
+			return;
+		Iterator<Actor> actors = allActors.iterator();
+		while (actors.hasNext()) {
+			Actor a = actors.next();
+			actors.remove();
+			a.remove();
+		}
+		allActors = null;
 	}
 	
 	public abstract ActionPool getActionPool();

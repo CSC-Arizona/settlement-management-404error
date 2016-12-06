@@ -8,6 +8,7 @@ import model.weapons.AntSword;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -21,7 +22,7 @@ import java.util.Random;
 public class EnemyActor extends Actor {
 	
 	private static final long serialVersionUID = 2745479477703967043L;
-	public static List<Actor> allActors;
+	public static List<EnemyActor> allActors;
 	public static ActionPool enemyActionPool;
 	public static boolean attack = false;
 	private int timeSinceLastAttack = 0;
@@ -48,6 +49,14 @@ public class EnemyActor extends Actor {
 
 	
 	public static void reset(){
+		if(allActors == null)
+			return;
+		Iterator<EnemyActor> actors = allActors.iterator();
+		while (actors.hasNext()) {
+			Actor a = actors.next();
+			actors.remove();
+			a.remove();
+		}
 		allActors = null;
 		enemyActionPool = null;
 	}

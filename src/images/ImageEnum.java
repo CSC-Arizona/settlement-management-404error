@@ -9,20 +9,18 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 public enum ImageEnum {
-	APPLE(new String[] { "apple.png" }), GRASS(new String[] { "grass.png" }), LEAF(
-			new String[] { "foliage.png" }), WOOD(new String[] { "wood.png" }), DIRT(
-			new String[] { "dirt1.png" }), LAVA(new String[] { "lava1.png",
-			"lava2.png", "lava3.png", "lava4.png", "lava5.png" }), IRON(
-			new String[] { "iron.png" }), GOLD(new String[] { "gold.png" }), STONE(
-			new String[] { "stone.png" }), LADDER(new String[] { "ladder.png" }), BED(
-			new String[] { "bed.png" }), CRATE(new String[] { "crate.png" }), ANT_LEFT(
-			new String[] { "ant_left.png" }), ANT_RIGHT(
-			new String[] { "ant_right.png" }), DRAGON_LEFT(
-			new String[] { "dragon_left.png" }), DRAGON_RIGHT(
-			new String[] { "dragon_right.png" }), GRASSBLOCK(
-			new String[] { "grassblock.png" }), ANTTUNNEL(
-			new String[] { "tunnel.png" }), MEDBED(
-			new String[] { "medbed.png" });
+	APPLE(new String[] { "apple.png" }), GRASS(new String[] { "grass.png" }), LEAF(new String[] {
+			"foliage.png" }), WOOD(new String[] { "wood.png" }), DIRT(new String[] { "dirt1.png" }), LAVA(new String[] {
+					"lava1.png", "lava2.png", "lava3.png", "lava4.png",
+					"lava5.png" }), IRON(new String[] { "iron.png" }), GOLD(new String[] { "gold.png" }), STONE(
+							new String[] { "stone.png" }), LADDER(new String[] { "ladder.png" }), BED(new String[] {
+									"bed.png" }), CRATE(new String[] { "crate.png" }), ANT_LEFT(new String[] {
+											"ant_left.png" }), ANT_RIGHT(new String[] { "ant_right.png" }), DRAGON_LEFT(
+													new String[] { "dragon_left.png" }), DRAGON_RIGHT(
+															new String[] { "dragon_right.png" }), GRASSBLOCK(
+																	new String[] { "grassblock.png" }), ANTTUNNEL(
+																			new String[] { "tunnel.png" }), MEDBED(
+																					new String[] { "medbed.png" });
 
 	private String[] filenames;
 	private ArrayList<BufferedImage> images;
@@ -40,10 +38,8 @@ public enum ImageEnum {
 			for (String filename : filenames) {
 				File file = new File("src/images/resources/" + filename);
 				img = ImageIO.read(file);
-				BufferedImage resizedImg = imageUtil.resizeImage(img, width,
-						height);
-				BufferedImage transparentImg = imageUtil.makeTransparent(
-						resizedImg, width, height);
+				BufferedImage resizedImg = imageUtil.resizeImage(img, width, height);
+				BufferedImage transparentImg = imageUtil.makeTransparent(resizedImg, width, height);
 
 				images.add(transparentImg);
 
@@ -53,7 +49,6 @@ public enum ImageEnum {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public BufferedImage getRandomBufferedImage() {

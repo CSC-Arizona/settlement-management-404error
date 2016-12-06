@@ -6,6 +6,7 @@ package model.actors;
 import images.ImageEnum;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -23,7 +24,7 @@ public class PlayerControlledActor extends Actor {
 	private int fatigue, hunger;
 	private static final int threshold = 1000;
 	private static final int death_threshold = 10000;
-	public static List<Actor> allActors;
+	public static List<PlayerControlledActor> allActors;
 	public static ActionPool playerActionPool;
 	private Random random = new Random();
 
@@ -74,7 +75,7 @@ public class PlayerControlledActor extends Actor {
 			System.out.println(allActors);
 			allActors.remove(this);
 			this.setAlive(false, true);
-			
+
 		}
 		if (playerActionPool.size() <= 0 && random.nextDouble() < 0.01)
 			this.addActionToPool(new PlayerIdleAction());
@@ -129,7 +130,7 @@ public class PlayerControlledActor extends Actor {
 	public static void addActionToPlayerPool(Action action) {
 		playerActionPool.add(action);
 	}
-	
+
 	@Override
 	public void remove() {
 		Log.add(this.getName() + " has died");
@@ -143,13 +144,20 @@ public class PlayerControlledActor extends Actor {
 
 	@Override
 	public String toString() {
-		String result = "Dragon " + this.getName() + ": "
-				+ Integer.toString(this.getHealth()) + " health; "
+		String result = "Dragon " + this.getName() + ": " + Integer.toString(this.getHealth()) + " health; "
 				+ Integer.toString(fatigue) + " fatigue; " + hunger + " hunger";
 		return result;
 	}
 
 	public static void reset() {
+		if(allActors == null)
+			return;
+		Iterator<PlayerControlledActor> actors = allActors.iterator();
+		while (actors.hasNext()) {
+			PlayerControlledActor a = actors.next();
+			actors.remove();
+			a.remove();
+		}
 		allActors = null;
 		playerActionPool = null;
 	}
