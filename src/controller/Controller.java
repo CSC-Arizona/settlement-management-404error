@@ -238,8 +238,11 @@ public class Controller extends JFrame {
 		@Override
 		public void run() {
 			time += 1;
-
+			
 			Game.getMap().updateActors(timeDelta);
+			if (time % 100 == 0) {
+				Game.getMap().regrowTrees();
+			}
 			Game.getMap().setTime(time);
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();

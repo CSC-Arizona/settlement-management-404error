@@ -55,6 +55,7 @@ public abstract class Item implements Serializable {
     private int healthPoints;
     private double weight;
     
+    
     public Item(boolean edible, int attackModifier, int healthPts, double weight) {
     	this.edible = edible;
     	this.attackModifier = attackModifier;

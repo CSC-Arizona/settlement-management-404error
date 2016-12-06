@@ -43,6 +43,7 @@ public class Map implements Serializable {
 	private Random random;
 
 	private HashMap<Position, AppleTree> trees;
+	private int treeCount;
 	private ArrayList<Integer[]> cavernFloorBlocks;
 
 	private BuildingBlock[][] map;
@@ -302,18 +303,40 @@ public class Map implements Serializable {
 		}
 	}
 	
+	private void addSingleTree()  {
+		AppleTree tree = new AppleTree(getTotalWidth(),
+				mapParameters.airHeight, map, random);
+		tree.addToMap();
+
+		for (Position pos : tree.getTrunk()) {
+			trees.put(pos, tree);
+		}
+		treeCount += 1;
+	}
+	
+	public void decrementTreeCount() {
+		treeCount -= 1;
+	}
+	
 	private void addTrees() {
 		trees = new HashMap<>();
 
 		int totalTrees = (int) (mapParameters.treeFrequency * getTotalWidth());
 
 		for (int i = 0; i < totalTrees; i++) {
-			AppleTree tree = new AppleTree(getTotalWidth(),
-					mapParameters.airHeight, map, random);
-			tree.addToMap();
-
-			for (Position pos : tree.getTrunk()) {
-				trees.put(pos, tree);
+			addSingleTree();
+		}
+	}
+	
+	public void regrowTrees() {
+		int totalTrees = (int) (mapParameters.treeFrequency * getTotalWidth());
+		System.out.println(treeCount + " " + totalTrees);
+		if (totalTrees > treeCount) {
+			int newTrees = totalTrees - treeCount;
+			if (newTrees > 0) {
+				for (int i = 0; i < newTrees; i++) {
+					addSingleTree();
+				}
 			}
 		}
 	}
