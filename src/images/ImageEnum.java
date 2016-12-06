@@ -25,7 +25,8 @@ public enum ImageEnum {
 			new String[] { "medbed.png" }), SPACESHIPCENTER(
 			new String[] { "spaceship_center.png" }), SPACESHIPLIGHT(
 			new String[] { "spaceship_light.png" }), SPACESHIPBODY(
-			new String[] { "spaceship_body.png" });
+			new String[] { "spaceship_body.png" }), SPACESHIPPARTBLOCK(
+			new String[] { "space_ship_block.png" });
 
 	private String[] filenames;
 	private ArrayList<BufferedImage> images;

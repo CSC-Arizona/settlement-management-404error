@@ -13,16 +13,17 @@ public class RetroEncabulatorBlock extends BuildingBlock {
 
 	private final static int durability = 7;
 	public final static String id = "Space ship part";
-	
+
 	public RetroEncabulatorBlock() {
-		super(durability, false, true, Color.GREEN, null, id, null);
+		super(durability, true, true, Color.GREEN, null, id,
+				ImageEnum.SPACESHIPPARTBLOCK);
 	}
 
 	@Override
 	public List<Item> lootBlock() {
 		return null;
 	}
-	
+
 	@Override
 	public boolean addActor(Actor actor) {
 		return false;
@@ -32,12 +33,12 @@ public class RetroEncabulatorBlock extends BuildingBlock {
 	public boolean removeActor(Actor actor) {
 		return false;
 	}
-	
+
 	@Override
 	public List<Actor> getActors() {
 		return null;
 	}
-	
+
 	@Override
 	public boolean addFurniture(Furniture furniture) {
 		return false;

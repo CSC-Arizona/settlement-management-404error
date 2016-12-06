@@ -15,7 +15,7 @@ public class AntimatterDefenestratorBlock extends BuildingBlock {
 	public final static String id = "Space ship part";
 	
 	public AntimatterDefenestratorBlock() {
-		super(durability, false, true, Color.GREEN, null, id, null);
+		super(durability, true, true, Color.GREEN, null, id, ImageEnum.SPACESHIPPARTBLOCK);
 	}
 
 	@Override
