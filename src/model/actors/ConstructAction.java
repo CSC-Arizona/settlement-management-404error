@@ -37,6 +37,7 @@ public class ConstructAction extends Action {
 	 *               which is to be constructed.
 	 */
 	public ConstructAction(Room room, Position pileLoc) {
+		System.out.println("Construction room: pileLoce passed into constructor is " + pileLoc.toString());
 		this.room = room;
 		this.pileLoc = pileLoc;
 		System.out.println("About to create the gather action");

@@ -51,9 +51,6 @@ public class BedRoom extends Room {
 		reqFurniture.put(new Position(2, 1), new Bed());
 		reqFurniture.put(new Position(2, 3), new Bed());
 		reqFurniture.put(new Position(2, 5), new Bed());
-//		this.furniture = new LinkedList<>();
-//		for (int i = 0; i < 3; i++)
-//		    this.furniture.add(new Bed());
 		this.requiredBuildingMaterials = new LinkedList<>();
 //		for (Furniture f : furniture) {
 //			for (Item i : f.getRequiredMaterials())
