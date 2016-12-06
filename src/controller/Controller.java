@@ -23,6 +23,7 @@ import model.building_blocks.EarthBlock;
 import model.building_blocks.GrassBlock;
 import model.game.Game;
 import model.game.Log;
+import model.game.Settings;
 import model.map.AppleTree;
 import model.map.Map;
 import model.map.MapParameters;
@@ -204,7 +205,7 @@ public class Controller extends JFrame {
 		this.setVisible(true);
 
 		if (skipLoadScreen) {
-			startNewGame();
+			startNewGame(new Settings(Settings.MEDIUM,Settings.NORMAL));
 		} else {
 			startingView = new StartingView(this);
 			this.add(startingView);
@@ -222,10 +223,10 @@ public class Controller extends JFrame {
 	/**
 	 * Start a new game from scratch
 	 */
-	public void startNewGame() {
+	public void startNewGame(Settings settings) {
 		this.saveFile = new SaveFile();
 		Game.reset();
-		map = new Map(mapParameters, random);
+		map = new Map(MapParameters.getCustumMapParameters(settings), random);
 		Game.setMap(map);
 		Log.add("Welcome");
 		setUpMap();
