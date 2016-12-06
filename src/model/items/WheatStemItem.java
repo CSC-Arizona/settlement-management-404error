@@ -11,7 +11,7 @@ public class WheatStemItem extends Item {
 	private final static int attackMod = 1;
 
 	public WheatStemItem() {
-		super(false, attackMod, 0, 0.5);
+		super(false, attackMod, 0, 0.5, null);
 	}
 
 	@Override

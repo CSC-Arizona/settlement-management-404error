@@ -11,7 +11,7 @@ public class WheatItem extends Item {
 	private final static int healthPts = 1;
 	
 	public WheatItem() {
-		super(true, attackMod, healthPts, 1.0);
+		super(true, attackMod, healthPts, 1.0, null);
 	}
 
 	@Override
