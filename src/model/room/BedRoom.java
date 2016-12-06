@@ -24,7 +24,6 @@ import model.items.WoodItem;
 public class BedRoom extends Room {
 
 	private TreeMap<Position, Furniture> reqFurniture;
-	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	private static RoomEnum room = RoomEnum.BEDROOM;
@@ -39,6 +38,14 @@ public class BedRoom extends Room {
 
 	public BedRoom(Position p) {
 		super(getHeight(), getWidth(), 6, 3, p);
+		addInitialFurniture();
+		requiredBuildingMaterials = makeBuildMaterialsList();
+		this.requiredUpgradeMaterials = new LinkedList<>();
+		for (Item b : new Bed().getRequiredMaterials())
+		    requiredUpgradeMaterials.add(b);
+	}
+	
+	private void addInitialFurniture() {
 		reqFurniture = new TreeMap<Position, Furniture>();
 		reqFurniture.put(new Position(0,0), new Ladder());
 		reqFurniture.put(new Position(1,0), new Ladder());
@@ -50,31 +57,12 @@ public class BedRoom extends Room {
 		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
 		reqFurniture.put(new Position(2, 1), new Bed());
 		reqFurniture.put(new Position(2, 3), new Bed());
-		reqFurniture.put(new Position(2, 5), new Bed());
-//		this.furniture = new LinkedList<>();
-//		for (int i = 0; i < 3; i++)
-//		    this.furniture.add(new Bed());
-		this.requiredBuildingMaterials = new LinkedList<>();
-//		for (Furniture f : furniture) {
-//			for (Item i : f.getRequiredMaterials())
-//				this.requiredBuildingMaterials.add(i);
-//		}
-		for (Furniture f : reqFurniture.values()) {
-			for (Item i : f.getRequiredMaterials())
-				this.requiredBuildingMaterials.add(i);
-		}
-		this.requiredUpgradeMaterials = new LinkedList<>();
-		for (Item b : new Bed().getRequiredMaterials())
-		    requiredUpgradeMaterials.add(b);
+		reqFurniture.put(new Position(2, 5), new Bed());		
 	}
 
 	@Override
 	public List<Item> getRequiredBuildMaterials() {
-		//return requiredBuildingMaterials;
-		List<Item> l = new LinkedList<>();
-		l.add(new WoodItem());
-		l.add(new WoodItem());
-		return l;
+		return requiredBuildingMaterials;
 	}
 
 	@Override

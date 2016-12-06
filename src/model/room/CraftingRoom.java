@@ -24,7 +24,6 @@ import model.items.Item;
 public class CraftingRoom extends Room {
 
 	private TreeMap<Position, Furniture> reqFurniture;
-	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
@@ -38,27 +37,25 @@ public class CraftingRoom extends Room {
 	
 	public CraftingRoom(Position p) {
         super(getHeight(), getWidth(), 3, 1, p);
-		this.reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0,0), new Ladder());
-		 reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(1,0), new Ladder());
-		 reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(2,0), new Ladder());
-		 reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(3,0), new Ladder());
-		 reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
-		this.furniture = new LinkedList<>();
-
-	    this.furniture.add(new Fireplace());
-	    this.furniture.add(new CraftingMachine());
-		this.requiredBuildingMaterials = new LinkedList<>();
-		for (Furniture f : furniture) {
-			for (Item i : f.getRequiredMaterials())
-				this.requiredBuildingMaterials.add(i);
-		}
+        addInitialFurniture();
+        requiredBuildingMaterials = makeBuildMaterialsList();
         this.requiredUpgradeMaterials = new LinkedList<>();
 		for (Item b : new Fireplace().getRequiredMaterials())
 		    requiredUpgradeMaterials.add(b);
+	}
+	
+	private void addInitialFurniture() {
+		reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0,0), new Ladder());
+		reqFurniture.put(new Position(1,0), new Ladder());
+		reqFurniture.put(new Position(2,0), new Ladder());
+		reqFurniture.put(new Position(3,0), new Ladder());
+		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,1), new Fireplace());
+		reqFurniture.put(new Position(2,3), new CraftingMachine());
 	}
 
 	@Override
@@ -92,6 +89,6 @@ public class CraftingRoom extends Room {
 	@Override
 	public void performUpgrade(int upgradeNum) {
 		int pos = this.getRequiredWidth() - (2 * upgradeNum);
-		reqFurniture.put(new Position(0, pos), new Fireplace());
+		reqFurniture.put(new Position(2, pos), new Fireplace());
 	}
 }

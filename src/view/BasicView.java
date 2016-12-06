@@ -16,6 +16,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -283,8 +284,7 @@ public class BasicView extends JPanel {
 						if (newRow >= 0
 								&& newRow < Game.getMap().getTotalHeight()) {
 
-							Game.getMap().getBuildingBlock(newRow, newCol)
-									.setVisibility(true);
+							Game.getMap().getBuildingBlock(newRow, newCol).setVisibility(true);
 						}
 					}
 				}
@@ -320,17 +320,19 @@ public class BasicView extends JPanel {
 		private void drawActors(Graphics2D g2, int row, int col, int i, int j) {
 			List<Actor> actors = Game.getMap().getBuildingBlock(row, col)
 					.getActors();
-			if (actors != null) {
+			List<Actor> actorsClone = actors;
+			if (actorsClone != null) {
 				int count = 0;
-
-				for (Actor actor : actors) {
-					if (actor.getImage() != null) {
-						g2.drawImage(actor.getImage().getRandomBufferedImage(),
+                Iterator<Actor> iter = actorsClone.iterator();
+                while (iter.hasNext()) {
+                	Actor p = iter.next();
+                	if (p.getImage() != null) {
+                		g2.drawImage(p.getImage().getRandomBufferedImage(),
 								j * blockSizeX, i * blockSizeY, null);
 					} else {
 						count += 1;
-					}
-				}
+                	}
+                }
 				if (count != 0) {
 					g2.setColor(Color.RED);
 					g2.drawString(Integer.toString(count), j * blockSizeX
@@ -570,18 +572,22 @@ public class BasicView extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 
+			// roomX = pixel location along x axis
+			// roomY = pixel location along y axis
 			if (currentlyPlacingRoom) {
 				boolean canBuildHere = true;
 				BuildingBlock obstacle = new AirBlock();
 				Position appropriatePileLoc = null;
-				int height = roomHeight;
+				int blockHeight = room.getHeight();
+				int pixHeight = roomHeight;
 				if (!room.toString().equals("Vertical tunnel")
-						&& !room.toString().equals("Horizontal tunnel"))
-					height += 2;
+						&& !room.toString().equals("Horizontal tunnel")) {
+					blockHeight *= 2;
+					pixHeight *= 2;
+				}
 				for (int r = roomX; r < roomX + room.getWidth(); r++) {
-					//for (int c = roomY; c < roomY + room.getHeight(); c++) {
-					for (int c = roomY; c < roomY + height; c++) {
-						int x = Math.floorMod(c, mapHeight); // c = row
+					for (int c = roomY; c < roomY + blockHeight; c++) {
+						int x = c; // x = row
 						int y = Math.floorMod(r, mapWidth); // y = col
 						BuildingBlock inQuestion = Game.getMap()
 								.getBuildingBlock(x, y);
@@ -597,7 +603,7 @@ public class BasicView extends JPanel {
 						}
 						if ((appropriatePileLoc == null) &&
 					       ((r == roomX || r == roomX + room.getWidth() -1) && 
-					        (c == roomY || c == roomY + height - 1))) {
+					        (c == roomY || c == roomY + blockHeight - 1))) {
 							if (MoveAction.getMoveLocationNear(new Position(x,y)) != null) {
 								appropriatePileLoc = new Position(x,y);
 								System.out.println("Setting the appropriatePileLoc to be equal to " + appropriatePileLoc.toString());
@@ -610,16 +616,11 @@ public class BasicView extends JPanel {
 				else 
 					System.out.println("Pile location: " + appropriatePileLoc.toString() + ", on a block of type " + 
 				               Game.getMap().getBuildingBlock(appropriatePileLoc));
-				// check to make sure one of the corners is accessible
 				if (canBuildHere) {
 					controller.setDesignatingAction(Designation.CONSTRUCTING);
 					// adding the rows for room walls with every room type
 					// except tunnels
-					//int height = roomHeight;
-//					if (!room.toString().equals("Vertical tunnel")
-//							&& !room.toString().equals("Horizontal tunnel"))
-//						height += 2;
-					controller.applyDesignation(roomY, roomX, height
+					controller.applyDesignation(roomY, roomX, pixHeight
 							/ blockSizeY, roomWidth / blockSizeX);
 					PlayerControlledActor.playerActionPool
 							.add(new ConstructAction(

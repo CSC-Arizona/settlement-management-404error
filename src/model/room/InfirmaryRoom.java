@@ -40,28 +40,25 @@ public class InfirmaryRoom extends Room {
 
 	public InfirmaryRoom(Position p) {
 		super(getHeight(), getWidth(), 8, 2, p);
-		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(2, 1), new HealingBed());
-		reqFurniture.put(new Position(2, 2), new HealingBed());
-		reqFurniture.put(new Position(0, 0), new Ladder());
-		reqFurniture.put(new Position(0, getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(1, 0), new Ladder());
-		reqFurniture.put(new Position(1, getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(2, 0), new Ladder());
-		reqFurniture.put(new Position(2, getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(3, 0), new Ladder());
-		reqFurniture.put(new Position(3, getWidth() - 1), new Ladder());
-		this.furniture = new LinkedList<>();
-		for (int i = 0; i < 2; i++)
-			this.furniture.add(new HealingBed());
-		this.requiredBuildingMaterials = new LinkedList<>();
-		for (Furniture f : furniture) {
-			for (Item i : f.getRequiredMaterials())
-				this.requiredBuildingMaterials.add(i);
-		}
+		addInitialFurniture();
+		requiredBuildingMaterials = makeBuildMaterialsList();
 		this.requiredUpgradeMaterials = new LinkedList<>();
 		for (Item b : new HealingBed().getRequiredMaterials())
 			requiredUpgradeMaterials.add(b);
+	}
+	
+	private void addInitialFurniture() {
+		reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0,0), new Ladder());
+		reqFurniture.put(new Position(1,0), new Ladder());
+		reqFurniture.put(new Position(2,0), new Ladder());
+		reqFurniture.put(new Position(3,0), new Ladder());
+		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,1), new HealingBed());
+		reqFurniture.put(new Position(2,3), new HealingBed());
 	}
 
 	@Override
@@ -97,7 +94,7 @@ public class InfirmaryRoom extends Room {
 	@Override
 	public void performUpgrade(int upgradeNum) {
 		int pos = this.getRequiredWidth() - (2 * upgradeNum);
-		reqFurniture.put(new Position(0, pos), new HealingBed());
+		reqFurniture.put(new Position(2, pos), new HealingBed());
 	}
 
 }

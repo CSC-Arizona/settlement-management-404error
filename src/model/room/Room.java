@@ -1,12 +1,15 @@
 package model.room;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.furniture.Furniture;
 import model.items.Item;
+import model.items.WoodItem;
 import model.menus.PrintableItemsList;
 
 /**
@@ -139,6 +142,25 @@ public abstract class Room {
 		} else {
 			return false;
 		}
+	}
+	
+	public LinkedList<Item> makeBuildMaterialsList() {
+		LinkedList<Item> buildMaterialsList = new LinkedList<>();
+		TreeMap<Position, Furniture> furnishing = this.getFurniture();
+		boolean ladder = false;
+		for (Position p : furnishing.keySet()) {
+			Furniture f = furnishing.get(p);
+			if (f.getID().equals("ladder"))
+				ladder = true;
+			else {
+				for (Item i : f.getRequiredMaterials()) {
+					buildMaterialsList.add(i);
+				}
+			}
+		}
+		if (ladder)
+			buildMaterialsList.add(new WoodItem());
+		return buildMaterialsList;
 	}
 	
 	public String reqMaterialsToString() {

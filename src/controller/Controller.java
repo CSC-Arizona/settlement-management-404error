@@ -13,6 +13,9 @@ import javax.swing.JOptionPane;
 import model.actors.GatherAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
+import model.building_blocks.AirBlock;
+import model.building_blocks.AntTunnelBlock;
+import model.building_blocks.AnthillBlock;
 import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
 import model.building_blocks.EarthBlock;
@@ -103,8 +106,9 @@ public class Controller extends JFrame {
 				}
 
 				if (getDesignatingAction() == Designation.DIGGING) {
-					if (map.getBuildingBlock(row, col).getID()
-							.equals(EarthBlock.id)) {
+					String bbID = map.getBuildingBlock(row, col).getID();
+					if ((bbID.equals(AntTunnelBlock.id) || bbID.equals(AnthillBlock.id) || bbID.equals(EarthBlock.id)) &&
+							map.getBuildingBlock(row - 1, col).getID().equals(AirBlock.id)) {
 						map.getBuildingBlock(row, col).addDesignation(
 								Designation.DIGGING);
 						PlayerControlledActor.playerActionPool

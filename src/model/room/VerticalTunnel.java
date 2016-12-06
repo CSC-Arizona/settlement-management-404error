@@ -20,7 +20,7 @@ import model.items.Item;
 public class VerticalTunnel extends Room {
 	
 	private TreeMap<Position, Furniture> reqFurniture;
-	private List<Item> reqItems;
+	private LinkedList<Item> requiredBuildingMaterials;
 
 	public static int getHeight() {
 		return 2;
@@ -32,24 +32,24 @@ public class VerticalTunnel extends Room {
 	
 	public VerticalTunnel(Position p) {
 		super(getHeight(), getWidth(), 20, 0, p);
-        reqFurniture = new TreeMap<Position, Furniture>();
-        reqFurniture.put(new Position(0,0), new Ladder());
-        reqFurniture.put(new Position(1,0), new Ladder());
-        reqItems = new LinkedList<>();
-        for (Furniture f : reqFurniture.values()) {
-			for (Item i : f.getRequiredMaterials())
-				this.reqItems.add(i);
-		}
+		addInitialFurniture();
+		requiredBuildingMaterials = makeBuildMaterialsList();
+	}
+	
+	private void addInitialFurniture() {
+		reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0,0), new Ladder());
+		reqFurniture.put(new Position(1,0), new Ladder());
 	}
 
 	@Override
 	public List<Item> getRequiredBuildMaterials() {
-		return reqItems;
+		return requiredBuildingMaterials;
 	}
 
 	@Override
 	public List<Item> getRequiredUpgradeMaterials() {
-		return null;
+		return new LinkedList<>();
 	}
 
 	@Override

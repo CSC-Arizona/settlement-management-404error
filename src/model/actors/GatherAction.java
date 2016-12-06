@@ -109,8 +109,8 @@ public class GatherAction extends Action {
 		} else {
 			lootList = block.lootBlock();
 		}
-		if (block.lootBlock() != null)
-			for (Item i : block.lootBlock())
+		if (lootList != null)
+			for (Item i : lootList)
 				// place the loot in the inventory if possible otherwise the
 				// ground
 				if (!performer.getInventory().addItem(i)) {
