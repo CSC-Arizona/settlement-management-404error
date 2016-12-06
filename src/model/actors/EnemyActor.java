@@ -26,7 +26,7 @@ public class EnemyActor extends Actor {
 	public static ActionPool enemyActionPool;
 	public static boolean attack = false;
 	private int timeSinceLastAttack = 0;
-	private int timeTillAttack = 100;
+	private int timeTillAttack = 15000;
 	public static ArrayList<Position> antTunnels;
 	private static int attackTime = 500;
 

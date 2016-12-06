@@ -12,7 +12,7 @@ public abstract class Craftable extends Item {
 	private PrintableItemsList ril;
 
 	public Craftable(boolean edible, int attackModifier, int healthPts, double weight) {
-		super(edible, attackModifier, healthPts, weight);
+		super(edible, attackModifier, healthPts, weight, null);
 		// TODO Auto-generated constructor stub
 	}
 	

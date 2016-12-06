@@ -13,7 +13,7 @@ public abstract class CookableItem extends Item {
 	private PrintableItemsList ril;
 
 	public CookableItem(int healthPts) {
-		super(true, 2, healthPts, 2);
+		super(true, 2, healthPts, 2, null);
 	}
 	
 	public String reqMaterialsToString() {

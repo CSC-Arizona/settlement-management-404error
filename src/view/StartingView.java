@@ -27,6 +27,7 @@ import model.actors.Actor;
 import model.actors.EnemyActor;
 import model.actors.PlayerControlledActor;
 import model.game.Game;
+import model.game.Log;
 import model.map.Map;
 import model.map.MapParameters;
 import model.save.SaveFile;
@@ -95,6 +96,7 @@ public class StartingView extends JPanel {
 	private void newGame() {
 		update.stop();
 		Game.reset();
+		Log.clear();
 		controller.startNewGame();
 	}
 
@@ -107,6 +109,7 @@ public class StartingView extends JPanel {
 		if (savename != null) {
 			update.stop();
 			Game.reset();
+			Log.clear();
 			controller.loadGame(new SaveFile(savename));
 		}
 	}

@@ -16,7 +16,7 @@ public class AppleSeedItem extends Item {
 	private final static int healthPts = 0;
 	
 	public AppleSeedItem() {
-		super(false, attackMod, healthPts, 0.2);
+		super(false, attackMod, healthPts, 0.2, null);
 	}
 
 	@Override

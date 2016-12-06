@@ -9,25 +9,21 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
-public class SpaceShipBlock extends BuildingBlock {
+public class RetroEncabulatorBlock extends BuildingBlock {
 
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7466847276590138449L;
 	private final static int durability = 7;
-	public final static String id = "Space ship";
-	
-	public SpaceShipBlock() {
-		super(durability, false, true, new Color(142,139,112), null, id, ImageEnum.SPACESHIPBODY);
+	public final static String id = "Space ship part";
+
+	public RetroEncabulatorBlock() {
+		super(durability, true, true, Color.GREEN, null, id,
+				ImageEnum.SPACESHIPPARTBLOCK);
 	}
 
 	@Override
 	public List<Item> lootBlock() {
 		return null;
 	}
-	
+
 	@Override
 	public boolean addActor(Actor actor) {
 		return false;
@@ -37,12 +33,12 @@ public class SpaceShipBlock extends BuildingBlock {
 	public boolean removeActor(Actor actor) {
 		return false;
 	}
-	
+
 	@Override
 	public List<Actor> getActors() {
 		return null;
 	}
-	
+
 	@Override
 	public boolean addFurniture(Furniture furniture) {
 		return false;

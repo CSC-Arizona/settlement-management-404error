@@ -15,6 +15,8 @@ import model.actors.Position;
 import model.building_blocks.AirBlock;
 import model.building_blocks.AntTunnelBlock;
 import model.building_blocks.AnthillBlock;
+import model.building_blocks.AntimatterDefenestratorBlock;
+import model.building_blocks.BlackHoleGeneratorBlock;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.CavernBlock;
 import model.building_blocks.EarthBlock;
@@ -23,6 +25,10 @@ import model.building_blocks.GrassBlock;
 import model.building_blocks.GrassEarthBlock;
 import model.building_blocks.IronOreBlock;
 import model.building_blocks.LavaBlock;
+import model.building_blocks.RetroEncabulatorBlock;
+import model.building_blocks.SpaceShipBlock;
+import model.building_blocks.SpaceShipCenterBlock;
+import model.building_blocks.SpaceShipLightBlock;
 import model.building_blocks.StoneBlock;
 import model.furniture.Furniture;
 import model.items.Item;
@@ -55,6 +61,7 @@ public class Map implements Serializable {
 	private ArrayList<Position> itemsOnGround = new ArrayList<>();
 	// using anthillLocations to determine "random" spawn points for ants
 	private ArrayList<Position> anthillLocations = new ArrayList<>();
+	private ArrayList<Position> antTunnelLocations = new ArrayList<>();
 
 	private int time;
 
@@ -116,14 +123,110 @@ public class Map implements Serializable {
 		addGold();
 		addMountains();
 		addAntColonies();
+		addSpaceShipPartBlocks();
 		addGrassBlocks();
+		addSpaceShip();
 		addTrees();
 		addBushes();
 		addCaves();
 		addMushrooms();
+		clearBlocksAboveSpaceShip();
 		addPlayerActors();
 		addEnemyActors();
 		addFurniture();
+	}
+
+	private void addSpaceShip() {
+		int[][] body = new int[][] { { -3, -1 }, { -3, 0 }, { -3, 1 },
+				{ -2, -2 }, { -2, -1 }, { -2, 0 }, { -2, 1 }, { -2, 2 },
+				{ -1, -3 }, { -1, -2 }, { -1, -1 }, { -1, 0 }, { -1, 1 },
+				{ -1, 2 }, { -1, 3 }, { 0, -5 }, { 0, -4 }, { 0, -3 },
+				{ 0, -2 }, { 0, -1 }, { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 },
+				{ 0, 4 }, { 0, 5 }, { 1, -3 }, { 1, -2 }, { 1, -1 }, { 1, 0 },
+				{ 1, 1 }, { 1, 2 }, { 1, 3 }, { 2, -2 }, { 2, -1 }, { 2, 0 },
+				{ 2, 1 }, { 2, 2 }, { 3, -1 }, { 3, 0 }, { 3, 1 } };
+		int[][] center = new int[][] { { 0, -5 }, { 0, -4 }, { 0, -3 },
+				{ 0, -2 }, { 0, -1 }, { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 },
+				{ 0, 4 }, { 0, 5 } };
+
+		int[][] lights = new int[][] { { 0, -5 }, { 0, -3 }, { 0, -1 },
+				{ 0, 1 }, { 0, 3 }, { 0, 5 } };
+
+		int col = 0;
+		int row = mapParameters.airHeight;
+
+		while (!map[row][col].getID().equals(AirBlock.id)) {
+			row -= 1;
+			if (row < 0)
+				break;
+		}
+
+		for (int[] offset : body) {
+			map[row + offset[0]][Math.floorMod(col + offset[1],
+					mapParameters.mapWidth)] = new SpaceShipBlock();
+		}
+
+		for (int[] offset : center) {
+			map[row + offset[0]][Math.floorMod(col + offset[1],
+					mapParameters.mapWidth)] = new SpaceShipCenterBlock();
+		}
+
+		for (int[] offset : lights) {
+			map[row + offset[0]][Math.floorMod(col + offset[1],
+					mapParameters.mapWidth)] = new SpaceShipLightBlock();
+		}
+
+	}
+
+	private void clearBlocksAboveSpaceShip() {
+		int[][] definition = new int[][] { { -3, -1 }, { -3, 0 }, { -3, 1 },
+				{ -2, -2 }, { -2, -1 }, { -2, 0 }, { -2, 1 }, { -2, 2 },
+				{ -1, -3 }, { -1, -2 }, { -1, -1 }, { -1, 0 }, { -1, 1 },
+				{ -1, 2 }, { -1, 3 }, { 0, -5 }, { 0, -4 }, { 0, -3 },
+				{ 0, -2 }, { 0, -1 }, { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 },
+				{ 0, 4 }, { 0, 5 } };
+		int col = 0;
+		int row = mapParameters.airHeight;
+		while (!map[row][col].getID().equals(SpaceShipCenterBlock.id)) {
+			row -= 1;
+			if (row < 0)
+				break;
+		}
+		for (int[] offset : definition) {
+			for (int i = row + offset[0]; i > 0; i--) {
+				int j = Math.floorMod(col + offset[1], mapParameters.mapWidth);
+				if (!map[i][j].getID().equals(SpaceShipBlock.id)
+						&& !map[i][j].getID().equals(SpaceShipCenterBlock.id)) {
+					map[i][j] = new AirBlock();
+				}
+			}
+
+		}
+	}
+
+	private void addSpaceShipPartBlocks() {
+		Position p1 = antTunnelLocations.get(random.nextInt(antTunnelLocations
+				.size()));
+		map[p1.getRow()][p1.getCol()] = new RetroEncabulatorBlock();
+
+		while (true) {
+			Position p2 = antTunnelLocations.get(random
+					.nextInt(antTunnelLocations.size()));
+			if (!map[p2.getRow()][p2.getCol()].getID().equals(
+					RetroEncabulatorBlock.id)) {
+				map[p2.getRow()][p2.getCol()] = new BlackHoleGeneratorBlock();
+				break;
+			}
+		}
+		while (true) {
+			Position p3 = antTunnelLocations.get(random
+					.nextInt(antTunnelLocations.size()));
+			if (!map[p3.getRow()][p3.getCol()].getID().equals(
+					RetroEncabulatorBlock.id)) {
+				map[p3.getRow()][p3.getCol()] = new AntimatterDefenestratorBlock();
+				break;
+			}
+		}
 	}
 
 	private void addAir() {
@@ -436,6 +539,8 @@ public class Map implements Serializable {
 								.equals(EarthBlock.id))) {
 
 					map[newTunnelY][newTunnelX] = new AntTunnelBlock();
+					antTunnelLocations
+							.add(new Position(newTunnelY, newTunnelX));
 					tunnelX = newTunnelX;
 					tunnelY = newTunnelY;
 				}
@@ -457,6 +562,8 @@ public class Map implements Serializable {
 								.equals(EarthBlock.id))) {
 
 					map[newTunnelY][newTunnelX] = new AntTunnelBlock();
+					antTunnelLocations
+							.add(new Position(newTunnelY, newTunnelX));
 					tunnelX = newTunnelX;
 					tunnelY = newTunnelY;
 				}

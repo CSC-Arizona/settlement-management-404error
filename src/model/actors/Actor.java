@@ -33,7 +33,7 @@ public abstract class Actor implements Serializable {
 	private String name;
 	public static List<Actor> allActors;
 	private ImageEnum image;
-	
+
 	/**
 	 * Creates a new actor
 	 * 
@@ -76,15 +76,17 @@ public abstract class Actor implements Serializable {
 	public void priorityAddToActionQueue(Action action) {
 		queue.addFirst(action);
 	}
-	
+
 	// the core logic of the update method
 	// used for recursion
-	private void performAction(int attempts){
-		if(!Game.validActorLocation(position.getRow(), getPosition().getCol()))
+	private void performAction(int attempts) {
+		if (!Game.validActorLocation(position.getRow(), getPosition().getCol()))
 			fall();
-		if(position.getRow() >= Game.getMap().getTotalHeight() || Game.getMap().getBuildingBlock(position).getID().equals("Lava"))
+		if (position.getRow() >= Game.getMap().getTotalHeight()
+				|| Game.getMap().getBuildingBlock(position).getID()
+						.equals("Lava"))
 			this.health = 0;
-		if(attempts > getActionPool().size() + queue.size())
+		if (attempts > getActionPool().size() + queue.size())
 			return;
 
 		// if idle get a new action
@@ -112,7 +114,7 @@ public abstract class Actor implements Serializable {
 			getActionPool().add(currentAction);
 			currentAction = null;
 			queue.poll();
-			performAction(attempts+1);
+			performAction(attempts + 1);
 		} else if (result == Action.DELAY) {
 			// if the Action needs to be delayed, execute the next action
 			idle = true;
@@ -179,8 +181,6 @@ public abstract class Actor implements Serializable {
 	public boolean isAlive() {
 		return alive;
 	}
-	
-	
 
 	/**
 	 * @return the queue
@@ -194,7 +194,7 @@ public abstract class Actor implements Serializable {
 	 *            the alive to set
 	 */
 	public void setAlive(boolean alive, boolean remove) {
-		if (alive){
+		if (alive) {
 			this.alive = alive;
 			return;
 		}
@@ -202,9 +202,8 @@ public abstract class Actor implements Serializable {
 			this.remove();
 			return;
 		}
-		if(!alive) {
+		if (!alive) {
 			this.alive = alive;
-			Log.add(this.getName() + " has died");
 			return;
 		}
 	}
@@ -229,7 +228,7 @@ public abstract class Actor implements Serializable {
 		return name;
 	}
 
-	public static void reset(){
+	public static void reset() {
 		PlayerControlledActor.reset();
 		EnemyActor.reset();
 		if(allActors == null)
@@ -242,21 +241,21 @@ public abstract class Actor implements Serializable {
 		}
 		allActors = null;
 	}
-	
+
 	public abstract ActionPool getActionPool();
-	
+
 	private void setImage(ImageEnum image) {
 		this.image = image;
 	}
-	
+
 	public abstract ImageEnum getLeftImage();
-	
+
 	public abstract ImageEnum getRightImage();
-	
+
 	public void setLeft() {
 		setImage(getLeftImage());
 	}
-	
+
 	public void setRight() {
 		setImage(getRightImage());
 	}
@@ -267,7 +266,7 @@ public abstract class Actor implements Serializable {
 	public boolean isIdle() {
 		return idle;
 	}
-	
+
 	public ImageEnum getImage() {
 		return image;
 	}

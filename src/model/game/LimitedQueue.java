@@ -30,4 +30,10 @@ public class LimitedQueue<E> extends LinkedList<E> {
 		}
 		return result.trim();
 	}
+	
+	public void clear() {
+		while (size() > 0) {
+			super.remove();
+		}
+	}
 }

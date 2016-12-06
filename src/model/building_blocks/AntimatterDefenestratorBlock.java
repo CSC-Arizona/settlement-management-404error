@@ -9,18 +9,13 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
-public class SpaceShipBlock extends BuildingBlock {
+public class AntimatterDefenestratorBlock extends BuildingBlock {
 
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7466847276590138449L;
 	private final static int durability = 7;
-	public final static String id = "Space ship";
+	public final static String id = "Space ship part";
 	
-	public SpaceShipBlock() {
-		super(durability, false, true, new Color(142,139,112), null, id, ImageEnum.SPACESHIPBODY);
+	public AntimatterDefenestratorBlock() {
+		super(durability, true, true, Color.GREEN, null, id, ImageEnum.SPACESHIPPARTBLOCK);
 	}
 
 	@Override
