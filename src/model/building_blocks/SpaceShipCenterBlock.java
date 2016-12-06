@@ -9,7 +9,7 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
-public class SpaceShipBlock extends BuildingBlock {
+public class SpaceShipCenterBlock extends BuildingBlock {
 
 
 	/**
@@ -19,8 +19,8 @@ public class SpaceShipBlock extends BuildingBlock {
 	private final static int durability = 7;
 	public final static String id = "Space ship";
 	
-	public SpaceShipBlock() {
-		super(durability, false, true, new Color(142,139,112), null, id, ImageEnum.SPACESHIPBODY);
+	public SpaceShipCenterBlock() {
+		super(durability, false, true, Color.BLACK, null, id, ImageEnum.SPACESHIPCENTER);
 	}
 
 	@Override

@@ -22,7 +22,10 @@ public enum ImageEnum {
 			new String[] { "dragon_right.png" }), GRASSBLOCK(
 			new String[] { "grassblock.png" }), ANTTUNNEL(
 			new String[] { "tunnel.png" }), MEDBED(
-			new String[] { "medbed.png" });
+			new String[] { "medbed.png" }), SPACESHIPCENTER(
+			new String[] { "spaceship_center.png" }), SPACESHIPLIGHT(
+			new String[] { "spaceship_light.png" }), SPACESHIPBODY(
+			new String[] { "spaceship_body.png" });
 
 	private String[] filenames;
 	private ArrayList<BufferedImage> images;

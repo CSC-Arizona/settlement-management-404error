@@ -23,6 +23,9 @@ import model.building_blocks.GrassBlock;
 import model.building_blocks.GrassEarthBlock;
 import model.building_blocks.IronOreBlock;
 import model.building_blocks.LavaBlock;
+import model.building_blocks.SpaceShipBlock;
+import model.building_blocks.SpaceShipCenterBlock;
+import model.building_blocks.SpaceShipLightBlock;
 import model.building_blocks.StoneBlock;
 import model.furniture.Furniture;
 import model.items.Item;
@@ -117,6 +120,7 @@ public class Map implements Serializable {
 		addMountains();
 		addAntColonies();
 		addGrassBlocks();
+		addSpaceShip();
 		addTrees();
 		addBushes();
 		addCaves();
@@ -124,6 +128,57 @@ public class Map implements Serializable {
 		addPlayerActors();
 		addEnemyActors();
 		addFurniture();
+	}
+
+	private void addSpaceShip() {
+		int[][] body = new int[][] { { -3, -1 }, { -3, 0 }, { -3, 1 },
+				{ -2, -2 }, { -2, -1 }, { -2, 0 }, { -2, 1 }, { -2, 2 },
+				{ -1, -3 }, { -1, -2 }, { -1, -1 }, { -1, 0 }, { -1, 1 },
+				{ -1, 2 }, { -1, 3 }, { 0, -5 }, { 0, -4 }, { 0, -3 },
+				{ 0, -2 }, { 0, -1 }, { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 },
+				{ 0, 4 }, { 0, 5 }, { 1, -3 }, { 1, -2 }, { 1, -1 }, { 1, 0 },
+				{ 1, 1 }, { 1, 2 }, { 1, 3 }, { 2, -2 }, { 2, -1 }, { 2, 0 },
+				{ 2, 1 }, { 2, 2 }, { 3, -1 }, { 3, 0 }, { 3, 1 } };
+		int[][] center = new int[][] { { 0, -5 }, { 0, -4 }, { 0, -3 },
+				{ 0, -2 }, { 0, -1 }, { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 },
+				{ 0, 4 }, { 0, 5 } };
+
+		int[][] lights = new int[][] { { 0, -5 }, { 0, -3 }, { 0, -1 },
+				{ 0, 1 }, { 0, 3 }, { 0, 5 } };
+
+		int col = 0;
+		int row = mapParameters.airHeight;
+
+		while (!map[row][col].getID().equals(AirBlock.id)) {
+			row -= 1;
+			if (row < 0)
+				break;
+		}
+
+		for (int[] offset : body) {
+			map[row + offset[0]][Math.floorMod(col + offset[1],
+					mapParameters.mapWidth)] = new SpaceShipBlock();
+			if (offset[0] <= 0) {
+				for (int i = row + offset[0]; i > 0; i--) {
+					int j = Math.floorMod(col + offset[1],
+							mapParameters.mapWidth);
+					if (!map[i][j].getID().equals(SpaceShipBlock.id)) {
+						map[i][j] = new AirBlock();
+					}
+				}
+			}
+		}
+
+		for (int[] offset : center) {
+			map[row + offset[0]][Math.floorMod(col + offset[1],
+					mapParameters.mapWidth)] = new SpaceShipCenterBlock();
+		}
+		
+		for (int[] offset : lights) {
+			map[row + offset[0]][Math.floorMod(col + offset[1],
+					mapParameters.mapWidth)] = new SpaceShipLightBlock();
+		}
+
 	}
 
 	private void addAir() {
