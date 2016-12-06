@@ -20,7 +20,7 @@ public class TrapDoorBlock extends BuildingBlock {
 	public final static String id = "Trap door";
 	
 	public TrapDoorBlock() {
-		super(durability, false, false, new Color(27,47,54), null, id, null);
+		super(durability, false, true, new Color(27,47,54), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

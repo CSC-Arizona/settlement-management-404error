@@ -31,7 +31,8 @@ public class AppleTreeTrunkBlock extends BuildingBlock {
 	public AppleTreeTrunkBlock() {
 		super(durability, true, true, new Color(174, 144, 55), null, id, ImageEnum.WOOD);
 		itemsInBlock = new LinkedList<>();
-		itemsInBlock.add(new WoodItem());
+		for (int i = 0; i < 5; i++) 
+		    itemsInBlock.add(new WoodItem());
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

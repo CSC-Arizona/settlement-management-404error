@@ -135,8 +135,8 @@ public abstract class BuildingBlock implements Serializable {
 			Iterator<Actor> iter = newGetActors.iterator();
 			while(iter.hasNext()) {
 				Actor actor = iter.next();
-				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;Actor: "
-						+ actor.toString() + "; " + actor.getInventory().toString();
+				result += /*"<br>&nbsp;&nbsp;&nbsp;&nbsp;Actor: "
+						+ actor.toString() + "; " +*/ actor.getInventory().toString();
 			}
 		}
 
@@ -196,13 +196,6 @@ public abstract class BuildingBlock implements Serializable {
 	}
 
 	public boolean removeItemFromGround(Item item) {
-//		if (isOccupiable()) {
-//			if (itemsOnGround() != null) {
-//				itemsOnGround().remove(0);
-//				return true;
-//			}
-//		}
-//		return false;
 		if (isOccupiable()) {
 			if (itemsOnGround() != null) {
 				for (Item it : itemsOnGround()) {

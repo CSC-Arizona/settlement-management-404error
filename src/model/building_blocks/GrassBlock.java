@@ -9,6 +9,7 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 import model.items.WheatKernelItem;
+import model.items.WheatStemItem;
 
 /**
  * Grass blocks drop wheat kernels (and other things? material to make clothes?)
@@ -30,7 +31,10 @@ public class GrassBlock extends BuildingBlock {
 		super(durability, true, true, new Color(0, 87, 3), new Color(206, 237,
 				240), id, ImageEnum.GRASS);
 		itemsInBlock = new LinkedList<>();
-		itemsInBlock.add(new WheatKernelItem());
+		for (int i = 0; i < 3; i++) {
+		    itemsInBlock.add(new WheatKernelItem());
+		    itemsInBlock.add(new WheatStemItem());
+		}
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}

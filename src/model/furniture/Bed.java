@@ -24,14 +24,11 @@ public class Bed extends Furniture {
 	public Bed() {
 		super(capacity, 0, "bed", ImageEnum.BED);
 		bedList = new LinkedList<>();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 1; i++) {
 			bedList.add(new WoodItem());
-		}
-		bedList.add(new StoneItem());
-		bedList.add(new StoneItem());
-		for (int i = 0; i < 4; i++) {
 			bedList.add(new WheatStemItem());
 		}
+		bedList.add(new StoneItem());
 
 	}
 

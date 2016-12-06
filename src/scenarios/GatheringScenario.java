@@ -1,5 +1,6 @@
 package scenarios;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 import controller.Controller;
@@ -8,6 +9,7 @@ import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.furniture.ReinforcedCrate;
 import model.game.Game;
+import model.items.Item;
 import model.map.MapParameters;
 
 public class GatheringScenario {
@@ -22,7 +24,7 @@ public class GatheringScenario {
 				MapParameters.getDefaultParameters(), new Random(seed), true);
 		Game.setMap(controller.getMap());
 		Game.getMap()
-				.addFurniture(new ReinforcedCrate(), new Position(44, 985));
+				.addFurniture(new ReinforcedCrate(new LinkedList<Item>()), new Position(44, 985));
 
 		PlayerControlledActor.addActionToPlayerPool(new GatherAction(
 				new Position(44, 987)));

@@ -56,6 +56,8 @@ public class Inventory implements Iterable<Item>, Serializable {
 	public Item removeItem(int index) {
 		if (index < items.size()) {
 			weight -= items.get(index).getWeight();
+			Item removed = items.get(index);
+			piList.removeItem(removed);
 			return items.remove(index);
 		} else
 			return null;
@@ -126,6 +128,7 @@ public class Inventory implements Iterable<Item>, Serializable {
 		while(it.hasNext()){
 			Item item = it.next();
 			if(item.getClass().equals(required.getClass())){
+				piList.removeItem(item);
 				this.weight -= item.getWeight();
 				it.remove();
 				return true;

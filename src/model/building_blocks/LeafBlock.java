@@ -20,7 +20,7 @@ public class LeafBlock extends BuildingBlock {
 	public final static String id = "Leaf";
 	
 	public LeafBlock() {
-		super(durability, true, false, new Color(84, 232, 67), null, id, ImageEnum.LEAF);
+		super(durability, true, true, new Color(84, 232, 67), null, id, ImageEnum.LEAF);
 		itemsInBlock = new LinkedList<>();
 
 	}

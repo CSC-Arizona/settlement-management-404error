@@ -23,8 +23,6 @@ public class CraftingMachine extends Furniture{
 		super(capacity, 0, "milling machine", null);
 		millingMachineList = new LinkedList<>();
 		millingMachineList.add(new StoneItem());
-		millingMachineList.add(new StoneItem());
-		millingMachineList.add(new IronItem());
 		millingMachineList.add(new IronItem());
 	}
 
@@ -35,6 +33,6 @@ public class CraftingMachine extends Furniture{
 
 	@Override
 	public String toString() {
-		return "Milling Machine";
+		return "Crafting machine";
 	}
 }

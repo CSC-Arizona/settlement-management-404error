@@ -3,6 +3,8 @@
  */
 package model.actors;
 
+import java.util.List;
+
 import controller.Designation;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.CavernBlock;
@@ -101,6 +103,12 @@ public class GatherAction extends Action {
 	 * pick it up
 	 */
 	private void lootBlock(Actor performer, BuildingBlock block) {
+		List<Item> lootList = null;
+		if (designation == Designation.CUTTING_DOWN_TREES) {
+			lootList = Game.getMap().getTree(position).getAllLoot();
+		} else {
+			lootList = block.lootBlock();
+		}
 		if (block.lootBlock() != null)
 			for (Item i : block.lootBlock())
 				// place the loot in the inventory if possible otherwise the

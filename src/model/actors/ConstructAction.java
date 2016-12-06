@@ -5,155 +5,76 @@ import java.util.List;
 
 import model.building_blocks.RoomWallBlock;
 import model.building_blocks.TrapDoorBlock;
+import model.furniture.ConstructionMaterialPile;
 import model.furniture.Furniture;
 import model.game.Game;
 import model.room.Room;
 
 /**
- * Prerequisite for ConstructAction: the square that is selected needs to have a
- * path leading to it (occupiable spaces adjacent to whatever square is chosen).
- * I think this would be easier to implement on the map side once we actually
- * put in a menu that shows when a square is selected.
+ * Prerequisite for ConstructAction: the pileLoc Position which is passed to the constructor
+ * needs to be accessible to the Actors. If it's not the action won't be completed. In the GUI,
+ * this is checked before creating the ConstructAction.
  * 
  * @author Katherine Walters
- * @author Jonathon Davis
  */
 public class ConstructAction extends Action {
 
 	private static final long serialVersionUID = 3917613009303294799L;
-	private List<Position> blocksToChange;
 	private Room room;
-	boolean cleared, blocksAsigned, blocksPlaced, furnitureAsigned, furniturePlaced;
-
-	public ConstructAction(Room room) {
-		this.room = room;
-		this.blocksToChange = new LinkedList<>();
-		int startRow = room.getPosition().getRow();
-		if (room.needsWalls()) {
-			startRow++;
-		}
-
-		for (int r = startRow; r < startRow + room.getRequiredHeight(); r++) {
-			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
-				Position p = new Position(r, Math.floorMod(c, Game.getMap().getTotalWidth()));
-				blocksToChange.add(p);
-				PlayerControlledActor.addActionToPlayerPool(new GatherAction(p));
-			}
-		}
-		if (room.needsWalls()) {
-			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
-				Position roof = new Position(room.getPosition().getRow(),
-						Math.floorMod(c, Game.getMap().getTotalWidth()));
-				Position floor = new Position(room.getPosition().getRow() + 3,
-						Math.floorMod(c, Game.getMap().getTotalWidth()));
-				//if (c == room.getPosition().getCol() || c == room.getPosition().getCol() + room.getRequiredWidth() - 1) {
-				if (c == room.getPosition().getCol() || c == Math.floorMod(room.getPosition().getCol() + room.getRequiredWidth() - 1, 
-						Game.getMap().getTotalWidth())) {
-					PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(roof, new TrapDoorBlock()));
-					PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(floor, new TrapDoorBlock()));
-				} else {
-					PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(roof, new RoomWallBlock()));
-					PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(floor, new RoomWallBlock()));
-				}
-			}
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
+	private Position pileLoc;
+	
+	/**
+	 * This constructor requires both a Room and a Position, which represents where the 
+	 * construction material pile will be built (basically the angle from which the actors can
+	 * access and begin building the room). The logic to automatically create a ConstructAction
+	 * is contained in the BasicView class, but can be done by hand as well for scenarios and 
+	 * tests. Clears the block at the given location so that the Construction material pile can
+	 * be 'built' there.
 	 * 
-	 * @see model.actors.Action#execute(model.actors.Actor)
+	 * @param room: Room object which is to be constructed. "room" contains it's own position
+	 *              (top left corner location)
+	 * @param pileLoc: Position of one (of the maybe foor) accessible corners of the room 
+	 *               which is to be constructed.
 	 */
-	@Override
+	public ConstructAction(Room room, Position pileLoc) {
+		this.room = room;
+		this.pileLoc = pileLoc;
+		System.out.println("About to create the gather action");
+	    PlayerControlledActor.addActionToPlayerPool(new GatherAction(pileLoc));
+	}
+	
+	/**
+	 * keeps returning the action to the Action pool until the pileLoc block is cleared, 
+	 * then places the pile at that location and creates a new MakeConstructionMaterialPileAction,
+	 * which takes care of having the actors gather the appropriate resources for the Room.
+	 */
 	public int execute(Actor performer) {
-		// check to see if the action is complete
-		if (!clearedArea())
+		if (!Game.getMap().getBuildingBlock(pileLoc).isOccupiable())
 			return Action.Pool;
-
-		// asign blocks for placement
-		asignBlockPlacement(performer);
-
-		// check if the walls were built
-		if (!wallsBuilt())
-			return Action.Pool;
-		
-		placeFurniture(performer);
-
-		if(furnitureIsPlaced())
-			return Action.COMPLETED;
-		else
-			return Action.Pool;
-
+		placePile();
+//		if (Game.getMap().getBuildingBlock(pileLoc).getFurniture() != null && 
+//				!Game.getMap().getBuildingBlock(pileLoc).getFurniture().getID().equals("Construction material pile")) {
+//			System.out.println("The pile still isn't here");
+//			return Action.Pool;
+//		} else {
+		    PlayerControlledActor.addActionToPlayerPool(new MakeConstructionMaterialPileAction(room, pileLoc));
+		    return Action.COMPLETED;
+//		}
 	}
-
-	private boolean furnitureIsPlaced() {
-		if (!furniturePlaced) {
-			for (Position p : room.getFurniture().keySet()){
-				Position fp = new Position(room.getPosition().getRow() + p.getRow(), room.getPosition().getCol() + p.getCol());
-				Furniture f = room.getFurniture().get(p);
-				if(Game.getMap().getBuildingBlock(p).getFurniture() != null &&
-						Game.getMap().getBuildingBlock(p).getFurniture().getID().equals(f.getID()));
-					return false;
-			}
-			furniturePlaced = true;
-		}
-		return furniturePlaced;
-	}
-
+	
 	/*
-	 * Once the area has been cleared the room will need to be built
+	 * Puts the Construction material pile at the appropriate location if it isn't already
+	 * there.
 	 */
-	private void asignBlockPlacement(Actor performer) {
-		// asign the actors to build the walls
-		if (!blocksAsigned) {
-			for (Position p : blocksToChange)
-				performer.getActionPool().add(new PlaceRoomBlockAction(p, room.getAppropriateBlock()));
-			blocksAsigned = true;
-		}
-
-	}
-
-	/*
-	 * Clear the area so that the room can be built
-	 */
-	private boolean clearedArea() {
-		// check to see if the action is complete
-		if (!cleared) {
-			cleared = true;
-			for (Position p : blocksToChange) {
-				if (Game.getMap().getBuildingBlock(p).isDestroyable())
-					cleared = false;
-			}
-		}
-		return cleared;
-	}
-
-	/*
-	 * Checks to see if the walls have been built
-	 */
-	private boolean wallsBuilt() {
-		if (!blocksPlaced) {
-			blocksPlaced = true;
-			for (Position p : blocksToChange) {
-				if (!Game.getMap().getBuildingBlock(p).getID().equals(room.getAppropriateBlock().getID()))
-					blocksPlaced = false;
-			}
-		}
-		return blocksPlaced;
-	}
-
-	/*
-	 * Places the furniture in the correct locations
-	 */
-	private void placeFurniture(Actor performer) {
-		if (!furnitureAsigned) {
-			for (Position p : room.getFurniture().keySet()){
-				Position fp = new Position(room.getPosition().getRow() + p.getRow(), room.getPosition().getCol() + p.getCol());
-				Furniture f = room.getFurniture().get(p);
-				performer.getActionPool().add(new PlaceFurnitureAction(fp, f));
-			}
-			furnitureAsigned = true;
-		}
+	private void placePile() {
+		System.out.println("calling placePile");
+		Furniture inQuestion = Game.getMap().getBuildingBlock(pileLoc).getFurniture();
+		if (inQuestion == null)
+			Game.getMap().getBuildingBlock(pileLoc).addFurniture(new ConstructionMaterialPile(room.getRequiredBuildMaterials()));
+		else if (!inQuestion.toString().equals("Construction material pile"))
+			Game.getMap().getBuildingBlock(pileLoc).addFurniture(new ConstructionMaterialPile(room.getRequiredBuildMaterials()));
+		else 
+			return;
 	}
 
 }

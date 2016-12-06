@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -151,7 +152,7 @@ public class FurnitureTest {
 	
 	@Test
 	public void testMetalCrate() {
-		MetalCrate mc = new MetalCrate();
+		MetalCrate mc = new MetalCrate(new LinkedList<Item>());
 		assertEquals(20, mc.getCapacity());
 		mc.increaseCapacityBy(1);
 		assertEquals(21, mc.getCapacity());
@@ -204,7 +205,7 @@ public class FurnitureTest {
 	
 	@Test
 	public void testReinforcedCrate() {
-		ReinforcedCrate rc = new ReinforcedCrate();
+		ReinforcedCrate rc = new ReinforcedCrate(new LinkedList<Item>());
 		assertEquals(50, rc.getCapacity());
 		rc.increaseCapacityBy(1);
 		assertEquals(51, rc.getCapacity());

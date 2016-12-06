@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedList;
+
 import org.junit.Test;
 
 import model.actors.Position;
@@ -29,6 +31,7 @@ import model.furniture.WheatPlantPlot;
 import model.items.AntLarvaPieCookable;
 import model.items.ApplePieCookable;
 import model.items.BreadCookable;
+import model.items.Item;
 import model.room.BedRoom;
 import model.room.EntertainmentRoom;
 import model.room.HorizontalTunnel;
@@ -114,13 +117,13 @@ public class TestPrintedRequiredItemLists {
 		assertEquals("2 Irons, 2 Stones", ic.reqMaterialsToString());
 		Ladder l = new Ladder();
 		assertEquals("2 Woods", l.reqMaterialsToString());
-		MetalCrate mc = new MetalCrate();
+		MetalCrate mc = new MetalCrate(new LinkedList<Item>());
 		assertEquals("6 Woods, 2 Irons, 2 Stones", mc.reqMaterialsToString());
 		PoolTable pt = new PoolTable();
 		assertEquals("4 Woods, 1 Iron, 3 Stones", pt.reqMaterialsToString());
 		CraftingMachine mm = new CraftingMachine();
 		assertEquals("2 Irons, 2 Stones", mm.reqMaterialsToString());
-		ReinforcedCrate rc = new ReinforcedCrate();
+		ReinforcedCrate rc = new ReinforcedCrate(new LinkedList<Item>());
 		assertEquals("6 Woods, 2 Stones", rc.reqMaterialsToString());
 		WheatPlantPlot wpp = new WheatPlantPlot();
 		assertEquals("2 Ant larvas, 2 Wheat kernels", wpp.reqMaterialsToString());

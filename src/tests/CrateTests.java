@@ -2,12 +2,15 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedList;
+
 import org.junit.Test;
 
 import model.furniture.BasicCrate;
 import model.furniture.MetalCrate;
 import model.furniture.ReinforcedCrate;
 import model.items.StoneItem;
+import model.items.*;
 
 public class CrateTests {
 
@@ -29,7 +32,7 @@ public class CrateTests {
 		assertEquals(0.0, bc.getWeightCarried(), 0.0001);
 		assertEquals("Basic crate 0.0/30.0 weight carried", bc.toString());
 		
-		MetalCrate mc = new MetalCrate();
+		MetalCrate mc = new MetalCrate(new LinkedList<Item>());
 		assertEquals(70.0, mc.getCrateCapacity(), 0.00001);
 		assertEquals(0.0, mc.getWeightCarried(), 0.00001);
 		assertEquals("Metal crate 0.0/70.0 weight carried", mc.toString());
@@ -48,7 +51,7 @@ public class CrateTests {
     
 	@Test
 	public void testRCrate() {
-		ReinforcedCrate mc = new ReinforcedCrate();
+		ReinforcedCrate mc = new ReinforcedCrate(new LinkedList<Item>());
 		assertEquals(500.0, mc.getCrateCapacity(), 0.00001);
 		assertEquals(0.0, mc.getWeightCarried(), 0.00001);
 		assertEquals("Reinforced crate 0.0/500.0 weight carried", mc.toString());

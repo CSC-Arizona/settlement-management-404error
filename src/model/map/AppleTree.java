@@ -2,6 +2,8 @@ package model.map;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import controller.Designation;
@@ -12,6 +14,7 @@ import model.building_blocks.AppleTreeTrunkBlock;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.EarthBlock;
 import model.building_blocks.LeafBlock;
+import model.items.Item;
 
 public class AppleTree implements Serializable {
 
@@ -22,6 +25,7 @@ public class AppleTree implements Serializable {
 	private ArrayList<Position> trunk;
 	private ArrayList<Integer[]> leaves;
 	private ArrayList<Integer[]> apples;
+	private LinkedList<Item> allLoot;
 
 	private Random random;
 	private int totalWidth;
@@ -65,6 +69,7 @@ public class AppleTree implements Serializable {
 		this.airHeight = airHeight;
 		this.map = map;
 		this.random = random;
+		this.allLoot = new LinkedList<>();
 
 		treeHeight = random.nextInt(heightParameters[0]) + heightParameters[1];
 
@@ -141,19 +146,28 @@ public class AppleTree implements Serializable {
 	public void addToMap() {
 		for (Position pos : trunk) {
 			if (map[pos.getRow()][pos.getCol()].getID().equals(AirBlock.id)) {
-				map[pos.getRow()][pos.getCol()] = new AppleTreeTrunkBlock();
+				AppleTreeTrunkBlock attb = new AppleTreeTrunkBlock();
+				map[pos.getRow()][pos.getCol()] = attb;
+				for (Item i : attb.lootBlock())
+					allLoot.add(i);
 			}
 		}
 
 		for (Integer[] pos : leaves) {
 			if (map[pos[0]][pos[1]].getID().equals(AirBlock.id)) {
-				map[pos[0]][pos[1]] = new LeafBlock();
+				LeafBlock lb = new LeafBlock();
+				map[pos[0]][pos[1]] = lb;
+				for (Item i : lb.lootBlock())
+					allLoot.add(i);
 			}
 		}
 
 		for (Integer[] pos : apples) {
 			if (map[pos[0]][pos[1]].getID().equals(LeafBlock.id)) {
-				map[pos[0]][pos[1]] = new AppleTreeLeafBlock();
+				AppleTreeLeafBlock atlb = new AppleTreeLeafBlock();
+				map[pos[0]][pos[1]] = atlb;
+				for (Item i : atlb.lootBlock())
+					allLoot.add(i);
 			}
 		}
 
@@ -189,6 +203,10 @@ public class AppleTree implements Serializable {
 		for (Position pos : trunk) {
 			map[pos.getRow()][pos.getCol()].addDesignation(Designation.NONE);
 		}
+	}
+
+	public List<Item> getAllLoot() {
+		return allLoot;
 	}
 
 }

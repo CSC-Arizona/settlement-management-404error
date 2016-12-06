@@ -18,8 +18,6 @@ public class Ladder extends Furniture {
 	public Ladder() {
 		super(10, 0, "ladder", ImageEnum.LADDER);
         ladderMaterials = new LinkedList<>();
-        ladderMaterials.add(new WoodItem());
-        ladderMaterials.add(new WoodItem());
 	}
 
 	@Override

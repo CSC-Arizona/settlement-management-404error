@@ -3,11 +3,13 @@ package model.building_blocks;
 import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.AntLarvaItem;
 import model.items.Item;
+import model.items.StoneItem;
 
 /**
  * AntTunnelBlock make up ant tunnels. When they are destroyed they drop 
@@ -27,10 +29,16 @@ public class AnthillBlock extends BuildingBlock {
 	private List<Item> itemsInBlock;
 	public final static String id = "Anthill";
 	public AnthillBlock() {
-		super(durability, false, false, Color.GRAY, null, id, null);
+		super(durability, true, false, Color.GRAY, null, id, null);
 
 		itemsInBlock = new LinkedList<>();
-		itemsInBlock.add(new AntLarvaItem());
+		for (int i = 0; i < 3; i++)
+		    itemsInBlock.add(new AntLarvaItem());
+		Random rand = new Random();
+		int num = rand.nextInt(100);
+		if (num < 30) {
+			itemsInBlock.add(new StoneItem());
+		}
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}
