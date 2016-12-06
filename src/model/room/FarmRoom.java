@@ -24,6 +24,8 @@ import model.items.Item;
 public class FarmRoom extends Room {
 
 	private TreeMap<Position, Furniture> reqFurniture;
+	private List<Item> requiredBuildingMaterials;
+	private List<Item> requiredUpgradeMaterials;
 	// state of 0 = empty plots, state of 1 = growing plots, state of 2 = ready to harvest
 	private int state;
 	private List<BuildingBlock> plantedBlocks;
@@ -39,28 +41,34 @@ public class FarmRoom extends Room {
 	
 	public FarmRoom(Position p) {
 		super(getHeight(), getWidth(), 4, 0, p);
-		reqFurniture = new TreeMap<>();
-		reqFurniture.put(new Position(0,0), new Ladder());
-		 reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(1,0), new Ladder());
-		 reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(2,0), new Ladder());
-		 reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(3,0), new Ladder());
-		 reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+        addInitialFurniture();
+        this.requiredBuildingMaterials = makeBuildMaterialsList();
+        this.requiredUpgradeMaterials = new LinkedList<>();
 		state = 0;
 		plantedBlocks = new LinkedList<>();
 		rand = new Random();
 	}
+	
+	private void addInitialFurniture() {
+		reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0,0), new Ladder());
+		reqFurniture.put(new Position(1,0), new Ladder());
+		reqFurniture.put(new Position(2,0), new Ladder());
+		reqFurniture.put(new Position(3,0), new Ladder());
+		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+	}
 
 	@Override
 	public List<Item> getRequiredBuildMaterials() {
-		return new LinkedList<>();
+		return requiredBuildingMaterials;
 	}
 
 	@Override
 	public List<Item> getRequiredUpgradeMaterials() {
-		return new LinkedList<>();
+		return requiredUpgradeMaterials;
 	}
 
 	@Override

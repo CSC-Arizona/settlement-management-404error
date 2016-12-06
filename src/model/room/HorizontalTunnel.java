@@ -1,5 +1,6 @@
 package model.room;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -34,12 +35,12 @@ public class HorizontalTunnel extends Room {
 
 	@Override
 	public List<Item> getRequiredBuildMaterials() {
-		return null;
+		return new LinkedList<>();
 	}
 
 	@Override
 	public List<Item> getRequiredUpgradeMaterials() {
-		return null;
+		return new LinkedList<>();
 	}
 
 	@Override

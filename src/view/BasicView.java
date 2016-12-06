@@ -320,9 +320,10 @@ public class BasicView extends JPanel {
 		private void drawActors(Graphics2D g2, int row, int col, int i, int j) {
 			List<Actor> actors = Game.getMap().getBuildingBlock(row, col)
 					.getActors();
-			if (actors != null) {
+			List<Actor> actorsClone = actors;
+			if (actorsClone != null) {
 				int count = 0;
-                Iterator<Actor> iter = actors.iterator();
+                Iterator<Actor> iter = actorsClone.iterator();
                 while (iter.hasNext()) {
                 	Actor p = iter.next();
                 	if (p.getImage() != null) {

@@ -24,7 +24,6 @@ import model.items.Item;
 public class EntertainmentRoom extends Room{
 
 	private TreeMap<Position, Furniture> reqFurniture;
-	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 
@@ -38,29 +37,28 @@ public class EntertainmentRoom extends Room{
 	
 	public EntertainmentRoom(Position p) {
         super(getHeight(), getWidth(), 8, 2, p);
-		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0,0), new Ladder());
-		 reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(1,0), new Ladder());
-		 reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(2,0), new Ladder());
-		 reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(3,0), new Ladder());
-		 reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
-		this.furniture = new LinkedList<>();
-		furniture.add(new PoolTable());
-		furniture.add(new Couch());
-		furniture.add(new Couch());
-		this.requiredBuildingMaterials = new LinkedList<>();
-		for (Furniture f : furniture) {
-			for (Item i : f.getRequiredMaterials())
-				this.requiredBuildingMaterials.add(i);
-		}
+		addInitialFurniture();
+		this.requiredBuildingMaterials = makeBuildMaterialsList();
 		this.requiredUpgradeMaterials = new LinkedList<>();
 		for (Item b : new PoolTable().getRequiredMaterials())
 		    requiredUpgradeMaterials.add(b);
 	}
 
+	private void addInitialFurniture() {
+		reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0,0), new Ladder());
+		reqFurniture.put(new Position(1,0), new Ladder());
+		reqFurniture.put(new Position(2,0), new Ladder());
+		reqFurniture.put(new Position(3,0), new Ladder());
+		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,1), new PoolTable());
+		reqFurniture.put(new Position(2,3), new Couch());
+		reqFurniture.put(new Position(2,5), new Couch());
+	}
+	
 	@Override
 	public List<Item> getRequiredBuildMaterials() {
 		return requiredBuildingMaterials;
@@ -92,7 +90,7 @@ public class EntertainmentRoom extends Room{
 	@Override
 	public void performUpgrade(int upgradeNum) {
 		int pos = this.getRequiredWidth() - (2 * upgradeNum);
-		reqFurniture.put(new Position(0, pos), new PoolTable());
+		reqFurniture.put(new Position(2, pos), new PoolTable());
 	}
 	
 	

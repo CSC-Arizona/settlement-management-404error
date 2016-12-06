@@ -20,11 +20,7 @@ import model.items.Item;
 * upgraded status there will be one IncubationChamber per 2 squares in the room.*/
 public class IncubationRoom extends Room {
 	
-	private static int roomCapacity = 4;
-	private final static int upgradesAllowed = 3;
-	
 	private TreeMap<Position, Furniture> reqFurniture;
-	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 
@@ -37,30 +33,28 @@ public class IncubationRoom extends Room {
 	}
 	
 	public IncubationRoom(Position p) {
-		super(getHeight(), getWidth(), roomCapacity, upgradesAllowed, p);
-		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0,0), new Ladder());
-		 reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(1,0), new Ladder());
-		 reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(2,0), new Ladder());
-		 reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(3,0), new Ladder());
-		 reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
-		this.furniture = new LinkedList<>();
-		for (int i = 0; i < 2; i++) {
-			this.furniture.add(new IncubationChamber());
-		}
-		this.requiredBuildingMaterials = new LinkedList<>();
-		for(Furniture f : furniture) {
-			for(Item i : f.getRequiredMaterials()) {
-				this.requiredBuildingMaterials.add(i);
-			}
-		}
+		super(getHeight(), getWidth(), 4, 3, p);
+		addInitialFurniture();
+		requiredBuildingMaterials = makeBuildMaterialsList();
 		this.requiredUpgradeMaterials = new LinkedList<>();
 		for(Item b : new IncubationChamber().getRequiredMaterials()) {
 			this.requiredUpgradeMaterials.add(b);
 		}
+	}
+	
+	private void addInitialFurniture() {
+		reqFurniture = new TreeMap<Position, Furniture>();
+		reqFurniture.put(new Position(0,0), new Ladder());
+		reqFurniture.put(new Position(1,0), new Ladder());
+		reqFurniture.put(new Position(2,0), new Ladder());
+		reqFurniture.put(new Position(3,0), new Ladder());
+		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,1), new IncubationChamber());
+		reqFurniture.put(new Position(2,3), new IncubationChamber());
+		reqFurniture.put(new Position(2,5), new IncubationChamber());
 	}
 
 	@Override
@@ -94,7 +88,7 @@ public class IncubationRoom extends Room {
 	@Override
 	public void performUpgrade(int upgradeNum) {
 		int pos = this.getRequiredWidth() - (2 * upgradeNum);
-		reqFurniture.put(new Position(0, pos), new IncubationChamber());
+		reqFurniture.put(new Position(2, pos), new IncubationChamber());
 	}
 
 }

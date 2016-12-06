@@ -57,15 +57,12 @@ public class MakeConstructionMaterialPileAction extends Action {
 	public int execute(Actor performer) {
 		if (pile.getRequiredMaterials() == null || pile.getRequiredMaterials().isEmpty()) {
 		    PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(room));
-		    System.out.println("MCMPA returning action completed");
 			return Action.COMPLETED;
 		}
 		if (performer.getPosition().equals(pilePos)) {
-			//for (Item i : pile.getRequiredMaterials()) {
 			if (!pile.getRequiredMaterials().isEmpty()) {
 				Item i = pile.getRequiredMaterials().get(0);
 				if (performer.getInventory().contains(i)) {
-					System.out.println(performer.getName() + " " + performer.getInventory().toString() + " is adding " + i.toString());
 					pile.addItem(i);
 					performer.getInventory().removeItem(i);
 				} else {
@@ -81,24 +78,19 @@ public class MakeConstructionMaterialPileAction extends Action {
 							return comeBackResult;
 						}
 					} else {
-						//return act;
-						System.out.println("MCMPA returning action pool after there wasn't a crate");
 						return Action.Pool;
 					}
 				}
 			}
 		} else {
-			//if (move == null)
+			if (move == null)
 				move = new MoveAction(pilePos);
 			int action = move.execute(performer);
 			if (action == Action.COMPLETED) {
-				System.out.println("MCMPA returning action made_progress after move action to pile is completed");
 				return Action.MADE_PROGRESS;
 			}
-			System.out.println("MCMPA returnning action pool after performer couldn't get to pile");
 			return Action.Pool;
 		}
-		System.out.println("MCMPA returning action pool after performer added all the items to the pile");
 		return Action.Pool;
 	}
 }

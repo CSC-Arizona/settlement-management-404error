@@ -29,7 +29,6 @@ import model.items.StoneItem;
 public class StoreRoom extends Room{
 
 	private TreeMap<Position, Furniture> reqFurniture;
-	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 	
@@ -43,28 +42,23 @@ public class StoreRoom extends Room{
 	
 	public StoreRoom(Position p) {
         super(getHeight(), getWidth(), 3, 2, p);
+		addInitialFurniture();
+		this.requiredBuildingMaterials = makeBuildMaterialsList();
+	}
+	
+	private void addInitialFurniture() {
 		reqFurniture = new TreeMap<Position, Furniture>();
 		reqFurniture.put(new Position(0,0), new Ladder());
-		 reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(1,0), new Ladder());
-		 reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(2,0), new Ladder());
-		 reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(3,0), new Ladder());
-		 reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
-		 reqFurniture.put(new Position(2,1), new BasicCrate());
-		 reqFurniture.put(new Position(2,2), new BasicCrate());
-		 reqFurniture.put(new Position(2,4), new BasicCrate());
-		this.furniture = new LinkedList<>();
-
-		for (int i = 0; i < 4; i++)
-		    this.furniture.add(new BasicCrate());
-		this.requiredBuildingMaterials = new LinkedList<>();
-		for (Furniture f : furniture) {
-			for (Item i : f.getRequiredMaterials())
-				this.requiredBuildingMaterials.add(i);
-		}
-		
+		reqFurniture.put(new Position(1,0), new Ladder());
+		reqFurniture.put(new Position(2,0), new Ladder());
+		reqFurniture.put(new Position(3,0), new Ladder());
+		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+		reqFurniture.put(new Position(2,1), new BasicCrate());
+		reqFurniture.put(new Position(2,3), new BasicCrate());
+		reqFurniture.put(new Position(2,5), new BasicCrate());
 	}
 
 	@Override
@@ -75,14 +69,16 @@ public class StoreRoom extends Room{
 	@Override
 	public List<Item> getRequiredUpgradeMaterials() {
 		requiredUpgradeMaterials = new LinkedList<>();
-		if (this.getUpgradesAllowed() == 2) {
-			for (int i = 0; i < 8; i++)
-				requiredUpgradeMaterials.add(new StoneItem());
-		} else if (this.getUpgradesAllowed() == 1) {
-			for (int i = 0; i < 8; i++)
-				requiredUpgradeMaterials.add(new IronItem());
-		} else {
-			
+		Furniture upgradeFurniture;
+		if (this.getUpgradesAllowed() == 2)
+			upgradeFurniture = new ReinforcedCrate(new LinkedList<>());
+		else if (this.getUpgradesAllowed() == 1)
+			upgradeFurniture = new MetalCrate(new LinkedList<>());
+		else
+			upgradeFurniture = new BasicCrate();
+		for (int i = 0; i < 3; i++) {
+				for (Item it : upgradeFurniture.getRequiredMaterials())
+					requiredUpgradeMaterials.add(it);
 		}
 		return requiredUpgradeMaterials;
 	}
@@ -109,12 +105,14 @@ public class StoreRoom extends Room{
 	public void performUpgrade(int upgradeNum) {
 		if (upgradeNum == 2 || upgradeNum == 1) {
 		    for (Position p : reqFurniture.keySet()) {
-		    	Crate crate = (Crate) reqFurniture.remove(p);
-		    	LinkedList<Item> currContents = crate.getItemsContained();
-		    	if (upgradeNum == 2)
-		    	    reqFurniture.put(p, new ReinforcedCrate(currContents));
-		    	else 
-		    		reqFurniture.put(p,  new MetalCrate(currContents));
+		    	if (!reqFurniture.get(p).getID().equals("ladder")) {
+			    	Crate crate = (Crate) reqFurniture.remove(p);
+			    	LinkedList<Item> currContents = crate.getItemsContained();
+			    	if (upgradeNum == 2)
+			    	    reqFurniture.put(p, new ReinforcedCrate(currContents));
+			    	else 
+			    		reqFurniture.put(p,  new MetalCrate(currContents));
+		    	}
 		    }
 		}
 	}

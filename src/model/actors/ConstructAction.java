@@ -8,6 +8,7 @@ import model.building_blocks.TrapDoorBlock;
 import model.furniture.ConstructionMaterialPile;
 import model.furniture.Furniture;
 import model.game.Game;
+import model.game.Log;
 import model.room.Room;
 
 /**
@@ -37,10 +38,8 @@ public class ConstructAction extends Action {
 	 *               which is to be constructed.
 	 */
 	public ConstructAction(Room room, Position pileLoc) {
-		System.out.println("Construction room: pileLoce passed into constructor is " + pileLoc.toString());
 		this.room = room;
 		this.pileLoc = pileLoc;
-		System.out.println("About to create the gather action");
 	    PlayerControlledActor.addActionToPlayerPool(new GatherAction(pileLoc));
 	}
 	
@@ -53,14 +52,8 @@ public class ConstructAction extends Action {
 		if (!Game.getMap().getBuildingBlock(pileLoc).isOccupiable())
 			return Action.Pool;
 		placePile();
-//		if (Game.getMap().getBuildingBlock(pileLoc).getFurniture() != null && 
-//				!Game.getMap().getBuildingBlock(pileLoc).getFurniture().getID().equals("Construction material pile")) {
-//			System.out.println("The pile still isn't here");
-//			return Action.Pool;
-//		} else {
-		    PlayerControlledActor.addActionToPlayerPool(new MakeConstructionMaterialPileAction(room, pileLoc));
-		    return Action.COMPLETED;
-//		}
+		PlayerControlledActor.addActionToPlayerPool(new MakeConstructionMaterialPileAction(room, pileLoc));
+		return Action.COMPLETED;
 	}
 	
 	/*
@@ -68,11 +61,14 @@ public class ConstructAction extends Action {
 	 * there.
 	 */
 	private void placePile() {
-		System.out.println("calling placePile");
 		Furniture inQuestion = Game.getMap().getBuildingBlock(pileLoc).getFurniture();
-		if (inQuestion == null)
-			Game.getMap().getBuildingBlock(pileLoc).addFurniture(new ConstructionMaterialPile(room.getRequiredBuildMaterials()));
-		else if (!inQuestion.toString().equals("Construction material pile"))
+		if (inQuestion == null) {
+			ConstructionMaterialPile pile = new ConstructionMaterialPile(room.getRequiredBuildMaterials());
+			Game.getMap().getBuildingBlock(pileLoc).addFurniture(pile);
+			String instruction = "To finish building this room, the Dragons must gather " + pile.toString();
+			System.out.println(instruction);
+			Log.add(instruction);
+		} else if (!inQuestion.toString().equals("Construction material pile"))
 			Game.getMap().getBuildingBlock(pileLoc).addFurniture(new ConstructionMaterialPile(room.getRequiredBuildMaterials()));
 		else 
 			return;
