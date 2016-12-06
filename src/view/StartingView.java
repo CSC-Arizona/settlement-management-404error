@@ -77,9 +77,6 @@ public class StartingView extends JPanel {
 		visibleCornerX = (Game.getMap().getTotalWidth() - visibleWidth / 2);
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.add(Box.createVerticalGlue());
-		JLabel titleLabel = new JLabel("This is the name of the game");
-		titleLabel.setFont(new Font("Courier", Font.PLAIN, 30));
-		titleLabel.setForeground(Color.red);
 		newGameButton = new JButton("New game");
 		newGameButton.setForeground(Color.green);
 		newGameButton.addKeyListener(new MyKeyListener());
@@ -88,7 +85,6 @@ public class StartingView extends JPanel {
 		loadGameButton.setForeground(Color.green);
 		loadGameButton.addKeyListener(new MyKeyListener());
 		loadGameButton.addActionListener(new MyButtonListener());
-		verticalBox.add(titleLabel);
 		verticalBox.add(newGameButton);
 		verticalBox.add(loadGameButton);
 		this.add(verticalBox);
@@ -224,7 +220,7 @@ public class StartingView extends JPanel {
 				drawTile(g2, row, col, i, j);
 			}
 		}
-		g2.drawImage(menu, windowWidth/5, windowHeight/15, windowWidth-windowWidth/3, windowHeight-windowHeight/6, null);
+		g2.drawImage(menu, windowWidth/5 , windowHeight/15, windowWidth-windowWidth/3, windowHeight-windowHeight/6, null);
 	}
 
 	private class MyKeyListener implements KeyListener {
