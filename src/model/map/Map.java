@@ -125,6 +125,7 @@ public class Map implements Serializable {
 		addBushes();
 		addCaves();
 		addMushrooms();
+		clearBlocksAboveSpaceShip();
 		addPlayerActors();
 		addEnemyActors();
 		addFurniture();
@@ -158,27 +159,44 @@ public class Map implements Serializable {
 		for (int[] offset : body) {
 			map[row + offset[0]][Math.floorMod(col + offset[1],
 					mapParameters.mapWidth)] = new SpaceShipBlock();
-			if (offset[0] <= 0) {
-				for (int i = row + offset[0]; i > 0; i--) {
-					int j = Math.floorMod(col + offset[1],
-							mapParameters.mapWidth);
-					if (!map[i][j].getID().equals(SpaceShipBlock.id)) {
-						map[i][j] = new AirBlock();
-					}
-				}
-			}
 		}
 
 		for (int[] offset : center) {
 			map[row + offset[0]][Math.floorMod(col + offset[1],
 					mapParameters.mapWidth)] = new SpaceShipCenterBlock();
 		}
-		
+
 		for (int[] offset : lights) {
 			map[row + offset[0]][Math.floorMod(col + offset[1],
 					mapParameters.mapWidth)] = new SpaceShipLightBlock();
 		}
 
+	}
+
+	private void clearBlocksAboveSpaceShip() {
+		int[][] definition = new int[][] { { -3, -1 }, { -3, 0 }, { -3, 1 },
+				{ -2, -2 }, { -2, -1 }, { -2, 0 }, { -2, 1 }, { -2, 2 },
+				{ -1, -3 }, { -1, -2 }, { -1, -1 }, { -1, 0 }, { -1, 1 },
+				{ -1, 2 }, { -1, 3 }, { 0, -5 }, { 0, -4 }, { 0, -3 },
+				{ 0, -2 }, { 0, -1 }, { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 },
+				{ 0, 4 }, { 0, 5 } };
+		int col = 0;
+		int row = mapParameters.airHeight;
+		while (!map[row][col].getID().equals(SpaceShipCenterBlock.id)) {
+			row -= 1;
+			if (row < 0)
+				break;
+		}
+		for (int[] offset : definition) {
+			for (int i = row + offset[0]; i > 0; i--) {
+				int j = Math.floorMod(col + offset[1], mapParameters.mapWidth);
+				if (!map[i][j].getID().equals(SpaceShipBlock.id)
+						&& !map[i][j].getID().equals(SpaceShipCenterBlock.id)) {
+					map[i][j] = new AirBlock();
+				}
+			}
+
+		}
 	}
 
 	private void addAir() {

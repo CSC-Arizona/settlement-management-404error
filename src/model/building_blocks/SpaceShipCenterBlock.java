@@ -17,7 +17,7 @@ public class SpaceShipCenterBlock extends BuildingBlock {
 	 */
 	private static final long serialVersionUID = 7466847276590138449L;
 	private final static int durability = 7;
-	public final static String id = "Space ship";
+	public final static String id = "Space ship center";
 	
 	public SpaceShipCenterBlock() {
 		super(durability, false, true, Color.BLACK, null, id, ImageEnum.SPACESHIPCENTER);
