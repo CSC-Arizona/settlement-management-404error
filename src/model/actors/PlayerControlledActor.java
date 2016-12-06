@@ -73,6 +73,9 @@ public class PlayerControlledActor extends Actor {
 			allActors.remove(this);
 			this.setAlive(false, true);
 		}
+		if (playerActionPool.size() <= 0 && random.nextDouble() < 0.01)
+			System.out.println("here");
+			this.addToActionQueue(new PlayerIdleAction());
 		// call super.update()
 		super.update();
 	}
