@@ -58,6 +58,8 @@ public class StartingView extends JPanel {
 	private int time;
 
 	public StartingView(Controller controller) {
+		
+
 		this.controller = controller;
 		time = 0;
 		for (ImageEnum e : ImageEnum.values()) {

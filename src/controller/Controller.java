@@ -16,6 +16,7 @@ import model.actors.Position;
 import model.building_blocks.AirBlock;
 import model.building_blocks.AntTunnelBlock;
 import model.building_blocks.AnthillBlock;
+import model.building_blocks.AntimatterDefenestratorBlock;
 import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
 import model.building_blocks.EarthBlock;
@@ -59,7 +60,7 @@ public class Controller extends JFrame {
 	private int windowHeight = 700;
 
 	private SaveFile saveFile;
-	
+
 	public void togglePaused() {
 		if (isPaused()) {
 			startTimer();
@@ -85,7 +86,7 @@ public class Controller extends JFrame {
 				// todo: attack, remove rooms
 
 				if (getDesignatingAction() == Designation.REMOVING_DESIGNATIONS) {
-					
+
 					map.getBuildingBlock(row, col).removeDesignation();
 
 					if (map.getBuildingBlock(row, col).getID()
@@ -99,12 +100,12 @@ public class Controller extends JFrame {
 						}
 					}
 				}
-				
+
 				if (getDesignatingAction() == Designation.CONSTRUCTING) {
 					map.getBuildingBlock(row, col).addDesignation(
 							Designation.CONSTRUCTING);
 				}
-				
+
 				if (getDesignatingAction() == Designation.UPGRADING) {
 					map.getBuildingBlock(row, col).addDesignation(
 							Designation.UPGRADING);
@@ -112,14 +113,19 @@ public class Controller extends JFrame {
 
 				if (getDesignatingAction() == Designation.DIGGING) {
 					String bbID = map.getBuildingBlock(row, col).getID();
-					if ((bbID.equals(AntTunnelBlock.id) || bbID.equals(AnthillBlock.id) || bbID.equals(EarthBlock.id))) {
-						if (!map.getBuildingBlock(row, row).getDesignation().equals(Designation.CONSTRUCTING)) {
+					if ((bbID.equals(AntTunnelBlock.id)
+							|| bbID.equals(AnthillBlock.id)
+							|| bbID.equals(EarthBlock.id) || bbID
+								.equals(AntimatterDefenestratorBlock.id))) {
+						if (!(map.getBuildingBlock(row, col).getDesignation() == Designation.CONSTRUCTING)) {
 							map.getBuildingBlock(row, col).addDesignation(
 									Designation.DIGGING);
 							PlayerControlledActor.playerActionPool
-									.add(new GatherAction(new Position(row, col)));
+									.add(new GatherAction(
+											new Position(row, col)));
 						} else {
-							System.out.println("Can designate this for digging.");
+							System.out
+									.println("Can designate this for digging.");
 						}
 					}
 				}
@@ -234,11 +240,11 @@ public class Controller extends JFrame {
 
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowCloser());
-		
+
 		basicView.setFocusable(true);
 		basicView.setRequestFocusEnabled(true);
 		basicView.grabFocus();
-        
+
 	}
 
 	private class GameTimerTask extends TimerTask {
@@ -255,7 +261,7 @@ public class Controller extends JFrame {
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();
 			basicView.repaint();
-			
+
 		}
 	}
 
