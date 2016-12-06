@@ -3,6 +3,7 @@ package model.building_blocks;
 import images.ImageEnum;
 
 import java.awt.Color;
+import java.util.LinkedList;
 import java.util.List;
 
 import model.actors.Actor;
@@ -22,6 +23,9 @@ public class RetroEncabulatorBlock extends BuildingBlock {
 	public RetroEncabulatorBlock() {
 		super(durability, true, true, Color.GREEN, null, id,
 				ImageEnum.SPACESHIPPARTBLOCK);
+		itemsInBlock = new LinkedList<>();
+		actorsInBlock = new LinkedList<>();
+		itemsOnGround = new LinkedList<>();
 		itemsInBlock.add(new RetroencabulatorItem());
 	}
 

@@ -29,7 +29,7 @@ public class AntTunnelBlock extends BuildingBlock {
 	public final static String id = "Ant tunnel";
 
 	public AntTunnelBlock() {
-		super(durability, true, false, new Color(102, 72, 32), null, id,
+		super(durability, false, true, new Color(102, 72, 32), null, id,
 				ImageEnum.ANTTUNNEL);
 
 		itemsInBlock = new LinkedList<>();
