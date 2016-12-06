@@ -231,6 +231,22 @@ public abstract class Actor implements Serializable {
 	}
 	
 	public abstract ActionPool getActionPool();
+	
+	private void setImage(ImageEnum image) {
+		this.image = image;
+	}
+	
+	public abstract ImageEnum getLeftImage();
+	
+	public abstract ImageEnum getRightImage();
+	
+	public void setLeft() {
+		setImage(getLeftImage());
+	}
+	
+	public void setRight() {
+		setImage(getRightImage());
+	}
 
 	/**
 	 * @return the idle
