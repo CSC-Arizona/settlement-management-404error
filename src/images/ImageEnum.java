@@ -27,7 +27,10 @@ public enum ImageEnum {
 			new String[] { "spaceship_light.png" }), SPACESHIPBODY(
 			new String[] { "spaceship_body.png" }), SPACESHIPPARTBLOCK(
 			new String[] { "space_ship_block.png" }), SEED(
-			new String[] { "seed.png" });
+			new String[] { "seed.png" }), ANTIMATTERDEFENESTRATOR(
+			new String[] { "antimatter_defenestrator.png" }), BLACKHOLEGENERATOR(
+			new String[] { "black_hole_generator.png" }), RETROENCABULATOR(
+			new String[] { "retroencabulator.png" });
 
 	private String[] filenames;
 	private ArrayList<BufferedImage> images;

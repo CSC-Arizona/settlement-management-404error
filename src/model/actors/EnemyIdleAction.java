@@ -45,7 +45,7 @@ public class EnemyIdleAction extends Action {
 	private Actor findNearestPlayerActor(Actor performer) {
 		Actor nearestActor = null;
 		double closest = Integer.MAX_VALUE;
-		Iterator<Actor> iter = PlayerControlledActor.allActors.iterator();
+		Iterator<PlayerControlledActor> iter = PlayerControlledActor.allActors.iterator();
 
 		while (iter.hasNext()) {
 			Actor p = iter.next();

@@ -2,20 +2,34 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import controller.Controller;
+import images.ImageEnum;
+import model.actors.Actor;
+import model.actors.EnemyActor;
+import model.actors.PlayerControlledActor;
+import model.game.Game;
+import model.game.Log;
+import model.map.Map;
+import model.map.MapParameters;
 import model.save.SaveFile;
 
 /**
@@ -29,13 +43,33 @@ public class StartingView extends JPanel {
 	private static final long serialVersionUID = 4699476954482553320L;
 	private Controller controller;
 	private JButton newGameButton, loadGameButton;
+	private int windowWidth = 1000;
+	private int windowHeight = 700;
+	private Timer update;
+
+	private int visibleWidth = 50;
+	private int visibleHeight = 50;
+
+	private int visibleCornerY = 35;
+	private int visibleCornerX;
+	private int blockSizeY = (windowHeight) / visibleHeight;
+	private int blockSizeX = windowWidth / visibleWidth;
+	private int timeDelta;
+	private int time;
 
 	public StartingView(Controller controller) {
 		this.controller = controller;
+		time = 0;
+		for (ImageEnum e : ImageEnum.values()) {
+			e.createBufferedImages(blockSizeY, blockSizeX);
+		}
+		update = new Timer(35, e->{
+			this.repaint();
+		});
 		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.black);
+		Game.setMap(new Map(MapParameters.getDefaultParameters(), new Random()));
+		visibleCornerX = (Game.getMap().getTotalWidth() - visibleWidth / 2);
 		Box verticalBox = Box.createVerticalBox();
-		verticalBox.setBackground(Color.black);
 		verticalBox.add(Box.createVerticalGlue());
 		JLabel titleLabel = new JLabel("This is the name of the game");
 		titleLabel.setFont(new Font("Courier", Font.PLAIN, 30));
@@ -56,9 +90,13 @@ public class StartingView extends JPanel {
 		controller.pack();
 		newGameButton.requestFocusInWindow();
 		controller.setVisible(true);
+		update.start();
 	}
 
 	private void newGame() {
+		update.stop();
+		Game.reset();
+		Log.clear();
 		controller.startNewGame();
 	}
 
@@ -66,10 +104,12 @@ public class StartingView extends JPanel {
 		List<String> possibilities = SaveFile.getSavedFiles();
 		String[] array = possibilities.toArray(new String[0]);
 
-		String savename = (String) JOptionPane.showInputDialog(controller,
-				"Choose a file to load", "", JOptionPane.PLAIN_MESSAGE, null,
-				array, "ham");
+		String savename = (String) JOptionPane.showInputDialog(controller, "Choose a file to load", "",
+				JOptionPane.PLAIN_MESSAGE, null, array, "ham");
 		if (savename != null) {
+			update.stop();
+			Game.reset();
+			Log.clear();
 			controller.loadGame(new SaveFile(savename));
 		}
 	}
@@ -84,6 +124,101 @@ public class StartingView extends JPanel {
 				loadOldGame();
 			}
 		}
+	}
+
+	private void setVisibleTiles(int row, int col) {
+		if (Game.getMap().getBuildingBlock(row, col).isOccupiable()
+				|| Game.getMap().getBuildingBlock(row, col).getID().equals("Room wall")) {
+			for (int k = -1; k < 2; k++) {
+				for (int l = -1; l < 2; l++) {
+					int newRow = row + k;
+					int newCol = col + l;
+					newCol = Math.floorMod(newCol, Game.getMap().getTotalWidth());
+					if (newRow >= 0 && newRow < Game.getMap().getTotalHeight()) {
+
+						Game.getMap().getBuildingBlock(newRow, newCol).setVisibility(true);
+					}
+				}
+			}
+		}
+	}
+
+	private void drawBuildingBlock(Graphics2D g2, int row, int col, int i, int j) {
+		if (Game.getMap().getBuildingBlock(row, col).getImage() == null) {
+			Color color = Game.getMap().getBuildingBlock(row, col).getColor();
+			g2.setColor(color);
+			g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
+
+		} else {
+			Color bgcolor = Game.getMap().getBuildingBlock(row, col).getBackgroundColor();
+			if (bgcolor != null) {
+				g2.setColor(bgcolor);
+				g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
+
+			}
+			BufferedImage img = Game.getMap().getBuildingBlock(row, col).getImage().getRandomBufferedImage();
+			g2.drawImage(img, j * blockSizeX, i * blockSizeY, null);
+
+		}
+	}
+
+	private void drawActors(Graphics2D g2, int row, int col, int i, int j) {
+		List<Actor> actors = Game.getMap().getBuildingBlock(row, col).getActors();
+		if (actors != null) {
+			int count = 0;
+			Iterator<Actor> iter = actors.iterator();
+			while (iter.hasNext()) {
+				Actor p = iter.next();
+				if (p.getImage() != null) {
+					g2.drawImage(p.getImage().getRandomBufferedImage(), j * blockSizeX, i * blockSizeY, null);
+				} else {
+					count += 1;
+				}
+			}
+			if (count != 0) {
+				g2.setColor(Color.RED);
+				g2.drawString(Integer.toString(count), j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+				g2.setColor(Color.BLACK);
+			}
+		}
+	}
+
+	private void drawTile(Graphics2D g2, int row, int col, int i, int j) {
+
+		if (Game.getMap().getBuildingBlock(row, col).getVisibility()) {
+
+			drawBuildingBlock(g2, row, col, i, j);
+
+			drawActors(g2, row, col, i, j);
+
+		} else {
+			g2.setColor(Color.black);
+			g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
+		}
+
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+
+		super.paintComponent(g);
+		visibleCornerX++;
+		g.setColor(Color.white);
+		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+
+		Graphics2D g2 = (Graphics2D) g;
+
+		for (int i = 0; i < visibleHeight; i++) {
+			int row = visibleCornerY + i;
+			for (int j = 0; j < visibleWidth; j++) {
+				int col = visibleCornerX + j;
+				col = Math.floorMod(col, Game.getMap().getTotalWidth());
+
+				setVisibleTiles(row, col);
+				drawTile(g2, row, col, i, j);
+			}
+		}
+
 	}
 
 	private class MyKeyListener implements KeyListener {
@@ -116,6 +251,5 @@ public class StartingView extends JPanel {
 		@Override
 		public void keyReleased(KeyEvent e) {
 		}
-
 	}
 }

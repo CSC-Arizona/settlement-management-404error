@@ -654,7 +654,7 @@ public class Map implements Serializable {
 		}
 
 		if (PlayerControlledActor.allActors != null) {
-			Iterator<Actor> iter = PlayerControlledActor.allActors.iterator();
+			Iterator<PlayerControlledActor> iter = PlayerControlledActor.allActors.iterator();
 			while (iter.hasNext()) {
 				Actor actor = iter.next();
 
