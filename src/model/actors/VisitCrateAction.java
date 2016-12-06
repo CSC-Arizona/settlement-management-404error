@@ -41,8 +41,10 @@ public class VisitCrateAction extends Action {
                         int action = store.execute(performer);
                         if (action == Action.COMPLETED)
                         	this.execute(performer);
-                        return action;
+                        return Action.Pool;
 					}
+				} else {
+					return Action.COMPLETED;
 				}
 			} else {
 				if (move == null)
@@ -51,10 +53,11 @@ public class VisitCrateAction extends Action {
 				if (action == Action.COMPLETED) {
 					return Action.MADE_PROGRESS;
 				}
-				return action;
+				return Action.Pool;
 			}
+		} else {
+		    return Action.COMPLETED;
 		}
-		return Action.DELAY;
 	}
 
 	public Position getCrateWhichContainsItem(Item it) {

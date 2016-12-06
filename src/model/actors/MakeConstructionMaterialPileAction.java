@@ -32,6 +32,7 @@ public class MakeConstructionMaterialPileAction extends Action {
 	private MoveAction comeBack;
 	private VisitCrateAction goToCrate;
 	private Room room;
+	private boolean upgrading;
 
 	/**
 	 * 
@@ -39,9 +40,10 @@ public class MakeConstructionMaterialPileAction extends Action {
 	 * @param pileLoc: the corner of the room which is the location of the construction 
 	 *              material pile
 	 */
-	public MakeConstructionMaterialPileAction(Room room, Position pileLoc) {
+	public MakeConstructionMaterialPileAction(Room room, Position pileLoc, boolean upgrading) {
 		this.pilePos = pileLoc;
 		this.room = room;
+		this.upgrading = upgrading;
 		pile = (ConstructionMaterialPile) Game.getMap().getBuildingBlock(pilePos).getFurniture();
 	}
 
@@ -55,8 +57,11 @@ public class MakeConstructionMaterialPileAction extends Action {
 	 */
 	@Override
 	public int execute(Actor performer) {
-		if (pile.getRequiredMaterials() == null || pile.getRequiredMaterials().isEmpty()) {
-		    PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(room));
+		if (pile == null || pile.getRequiredMaterials().isEmpty()) {
+			if (upgrading)
+				PlayerControlledActor.addActionToPlayerPool(new UpgradeRoomAction(room));
+			else
+		        PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(room));
 			return Action.COMPLETED;
 		}
 		if (performer.getPosition().equals(pilePos)) {
@@ -75,7 +80,8 @@ public class MakeConstructionMaterialPileAction extends Action {
 							pile.addItem(i);
 							performer.getInventory().removeItem(i);
 						} else {
-							return comeBackResult;
+							//return comeBackResult;
+							return Action.Pool;
 						}
 					} else {
 						return Action.Pool;
@@ -87,7 +93,7 @@ public class MakeConstructionMaterialPileAction extends Action {
 				move = new MoveAction(pilePos);
 			int action = move.execute(performer);
 			if (action == Action.COMPLETED) {
-				return Action.MADE_PROGRESS;
+				return Action.DELAY;
 			}
 			return Action.Pool;
 		}
