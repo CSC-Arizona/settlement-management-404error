@@ -15,10 +15,14 @@ public enum ImageEnum {
 			"lava2.png", "lava3.png", "lava4.png", "lava5.png" }), IRON(
 			new String[] { "iron.png" }), GOLD(new String[] { "gold.png" }), STONE(
 			new String[] { "stone.png" }), LADDER(new String[] { "ladder.png" }), BED(
-			new String[] { "bed.png" }), CRATE(new String[] { "crate.png" }), ANT(
-			new String[] { "ant.png" }), DRAGON(new String[] { "dragon.png" }), GRASSBLOCK(
+			new String[] { "bed.png" }), CRATE(new String[] { "crate.png" }), ANT_LEFT(
+			new String[] { "ant_left.png" }), ANT_RIGHT(
+			new String[] { "ant_right.png" }), DRAGON_LEFT(
+			new String[] { "dragon_left.png" }), DRAGON_RIGHT(
+			new String[] { "dragon_right.png" }), GRASSBLOCK(
 			new String[] { "grassblock.png" }), ANTTUNNEL(
-			new String[] { "tunnel.png" }), MEDBED(new String[] {"medbed.png"});
+			new String[] { "tunnel.png" }), MEDBED(
+			new String[] { "medbed.png" });
 
 	private String[] filenames;
 	private ArrayList<BufferedImage> images;

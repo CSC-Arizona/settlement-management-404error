@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,13 +31,14 @@ public class StartingView extends JPanel {
 	private JButton newGameButton, loadGameButton;
 
 	public StartingView(Controller controller) {
-	    this.controller = controller;
-	    this.setLayout(new GridBagLayout());
-	    this.setBackground(Color.black);
-	    Box verticalBox = Box.createVerticalBox();
+		this.controller = controller;
+		this.setLayout(new GridBagLayout());
+		this.setBackground(Color.black);
+		Box verticalBox = Box.createVerticalBox();
 		verticalBox.setBackground(Color.black);
 		verticalBox.add(Box.createVerticalGlue());
 		JLabel titleLabel = new JLabel("This is the name of the game");
+		titleLabel.setFont(new Font("Courier", Font.PLAIN, 30));
 		titleLabel.setForeground(Color.red);
 		newGameButton = new JButton("New game");
 		newGameButton.setForeground(Color.green);
@@ -55,23 +57,23 @@ public class StartingView extends JPanel {
 		newGameButton.requestFocusInWindow();
 		controller.setVisible(true);
 	}
-	
+
 	private void newGame() {
 		controller.startNewGame();
 	}
-	
+
 	private void loadOldGame() {
 		List<String> possibilities = SaveFile.getSavedFiles();
 		String[] array = possibilities.toArray(new String[0]);
 
-		String savename = (String) JOptionPane.showInputDialog(
-				controller, "Choose a file to load", "",
-				JOptionPane.PLAIN_MESSAGE, null, array, "ham");
+		String savename = (String) JOptionPane.showInputDialog(controller,
+				"Choose a file to load", "", JOptionPane.PLAIN_MESSAGE, null,
+				array, "ham");
 		if (savename != null) {
 			controller.loadGame(new SaveFile(savename));
 		}
 	}
-	
+
 	private class MyButtonListener implements ActionListener {
 
 		@Override

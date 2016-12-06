@@ -102,6 +102,12 @@ public class MoveAction extends Action {
 	}
 
 
+	private int getLeftOrRight(Position oldPosition, Position newPosition) {
+		if (oldPosition.getCol() < newPosition.getCol()) {
+			return 1;
+		}
+		return -1;
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -117,6 +123,12 @@ public class MoveAction extends Action {
 		if (performer.getPosition().equals(desiredDestination))
 			return Action.COMPLETED;
 		if (visited.containsKey(performer.getPosition())) {
+			int leftOrRight = getLeftOrRight(performer.getPosition(), visited.get(performer.getPosition()).prev.position);
+			if (leftOrRight == -1) {
+				performer.setLeft();
+			} else {
+				performer.setRight();
+			}
 			performer.setPosition(visited.get(performer.getPosition()).prev.position);
 		} else {
 			return Action.Pool;

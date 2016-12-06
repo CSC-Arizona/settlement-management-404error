@@ -8,6 +8,8 @@ import model.game.Game;
 public class PlayerIdleAction extends Action {
 	private static Random rand = new Random();
 	private MoveAction move;
+	private static int count = 0;
+	private boolean complete = false;
 
 	@Override
 	public int execute(Actor performer) {
@@ -29,9 +31,15 @@ public class PlayerIdleAction extends Action {
 		}
 		if (valid.size() > 0)
 			move = new MoveAction(valid.get(rand.nextInt(valid.size())));
-		if (move != null)
-			return move.execute(performer);
-		else
+		if (move != null) {
+			if (count == 10) {
+				count = 0;
+				return move.execute(performer);
+			} else {
+				count += 1;
+				return Action.MADE_PROGRESS;
+			}
+		} else
 			return Action.MADE_PROGRESS;
 	}
 

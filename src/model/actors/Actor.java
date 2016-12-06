@@ -195,12 +195,12 @@ public abstract class Actor implements Serializable {
 	public void setAlive(boolean alive, boolean remove) {
 		if (alive){
 			this.alive = alive;
-			Log.add(this.getName() + " has died");
 			return;
 		}
 		if (remove) {
 			this.alive = alive;
 			this.remove();
+			Log.add(this.getName() + " has died");
 			return;
 		}
 		if(!alive) {
@@ -236,6 +236,22 @@ public abstract class Actor implements Serializable {
 	}
 	
 	public abstract ActionPool getActionPool();
+	
+	private void setImage(ImageEnum image) {
+		this.image = image;
+	}
+	
+	public abstract ImageEnum getLeftImage();
+	
+	public abstract ImageEnum getRightImage();
+	
+	public void setLeft() {
+		setImage(getLeftImage());
+	}
+	
+	public void setRight() {
+		setImage(getRightImage());
+	}
 
 	/**
 	 * @return the idle

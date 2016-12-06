@@ -35,7 +35,7 @@ public class PlayerControlledActor extends Actor {
 	 *            The location this player will begin with
 	 */
 	public PlayerControlledActor(Position location) {
-		super(location, ImageEnum.DRAGON);
+		super(location, ImageEnum.DRAGON_LEFT);
 		fatigue = 0;
 		hunger = 0;
 		if (playerActionPool == null)
@@ -73,6 +73,8 @@ public class PlayerControlledActor extends Actor {
 			allActors.remove(this);
 			this.setAlive(false, true);
 		}
+		if (playerActionPool.size() <= 0 && random.nextDouble() < 0.01)
+			this.addActionToPool(new PlayerIdleAction());
 		// call super.update()
 		super.update();
 	}
@@ -160,6 +162,16 @@ public class PlayerControlledActor extends Actor {
 			playerActionPool = new ActionPool();
 		}
 		return this.playerActionPool;
+	}
+
+	@Override
+	public ImageEnum getLeftImage() {
+		return ImageEnum.DRAGON_LEFT;
+	}
+
+	@Override
+	public ImageEnum getRightImage() {
+		return ImageEnum.DRAGON_RIGHT;
 	}
 
 }

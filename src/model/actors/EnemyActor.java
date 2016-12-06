@@ -34,7 +34,7 @@ public class EnemyActor extends Actor {
 	 * @param position
 	 */
 	public EnemyActor(Position position) {
-		super(position, ImageEnum.ANT);
+		super(position, ImageEnum.ANT_LEFT);
 		if(enemyActionPool == null)
 			enemyActionPool = new ActionPool();
 		if(allActors == null)
@@ -112,5 +112,17 @@ public class EnemyActor extends Actor {
 				new EnemyActor(antTunnels.get(rand.nextInt(antTunnels.size())));
 			}
 		}
+	}
+
+
+	@Override
+	public ImageEnum getLeftImage() {
+		return ImageEnum.ANT_LEFT;
+	}
+
+
+	@Override
+	public ImageEnum getRightImage() {
+		return ImageEnum.ANT_RIGHT;
 	}
 }

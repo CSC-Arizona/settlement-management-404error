@@ -812,5 +812,9 @@ public class BasicView extends JPanel {
 		}
 
 	}
+	
+	public void updateLog() {
+		logText.setText(Log.getLog());
+	}
 
 }
