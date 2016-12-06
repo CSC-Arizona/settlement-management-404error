@@ -13,4 +13,8 @@ public class Log {
 		return log.add(s);
 	}
 	
+	public static void clear() {
+		log.clear();
+	}
+	
 }

@@ -1,5 +1,7 @@
 package model.items;
 
+import images.ImageEnum;
+
 import java.io.Serializable;
 
 /**
@@ -54,12 +56,14 @@ public abstract class Item implements Serializable {
     private int attackModifier;
     private int healthPoints;
     private double weight;
+    private ImageEnum image;
     
-    public Item(boolean edible, int attackModifier, int healthPts, double weight) {
+    public Item(boolean edible, int attackModifier, int healthPts, double weight, ImageEnum image) {
     	this.edible = edible;
     	this.attackModifier = attackModifier;
     	this.healthPoints = healthPts;
     	this.weight = weight;
+    	this.image = image;
     }
     
     /*
@@ -90,6 +94,10 @@ public abstract class Item implements Serializable {
     public double getWeight() {
 		return weight;
 	}
+    
+    public ImageEnum getImage() {
+    	return image;
+    }
     
     abstract public String toString();
 }

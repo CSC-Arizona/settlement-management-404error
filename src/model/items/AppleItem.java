@@ -12,7 +12,7 @@ public class AppleItem extends Item {
 	private final static int healthPts = 5;
 	
 	public AppleItem() {
-		super(true, attackMod, healthPts, 0.7);
+		super(true, attackMod, healthPts, 0.7, null);
 	}
 
 	@Override

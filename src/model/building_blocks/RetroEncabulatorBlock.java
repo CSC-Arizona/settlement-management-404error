@@ -8,44 +8,35 @@ import java.util.List;
 
 import model.actors.Actor;
 import model.furniture.Furniture;
-import model.items.AntLarvaItem;
+import model.items.BlackHoleGeneratorItem;
 import model.items.Item;
+import model.items.RetroencabulatorItem;
 
-/**
- * AntTunnelBlock make up ant tunnels.
- * 
- * @author Katherine Walters
- */
-public class AntTunnelBlock extends BuildingBlock {
+public class RetroEncabulatorBlock extends BuildingBlock {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1383914857842009037L;
-	private List<Actor> actorsInBlock;
-	private List<Item> itemsOnGround;
 	private final static int durability = 7;
 	private List<Item> itemsInBlock;
-	public final static String id = "Ant tunnel";
+	private List<Actor> actorsInBlock;
+	private List<Item> itemsOnGround;
+	public final static String id = "Space ship part";
 
-	public AntTunnelBlock() {
-		super(durability, false, true, new Color(102, 72, 32), null, id,
-				ImageEnum.ANTTUNNEL);
-
+	public RetroEncabulatorBlock() {
+		super(durability, true, true, Color.GREEN, null, id,
+				ImageEnum.SPACESHIPPARTBLOCK);
 		itemsInBlock = new LinkedList<>();
-		itemsInBlock.add(new AntLarvaItem());
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
+		itemsInBlock.add(new RetroencabulatorItem());
 	}
 
 	@Override
 	public List<Item> lootBlock() {
 		return itemsInBlock;
 	}
-
+	
 	@Override
 	public boolean addActor(Actor actor) {
-		if (actor.isAlive())
+		if(actor.isAlive())
 			actorsInBlock.add(actor);
 		return true;
 	}
@@ -58,12 +49,12 @@ public class AntTunnelBlock extends BuildingBlock {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public List<Actor> getActors() {
 		return actorsInBlock;
 	}
-
+	
 	@Override
 	public boolean addFurniture(Furniture furniture) {
 		return false;
@@ -86,7 +77,6 @@ public class AntTunnelBlock extends BuildingBlock {
 
 	@Override
 	public BuildingBlock getAppropriateReplacement() {
-		return null;
+		return new AntTunnelBlock();
 	}
-
 }
