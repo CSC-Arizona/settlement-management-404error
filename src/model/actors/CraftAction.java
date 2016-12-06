@@ -3,6 +3,7 @@ package model.actors;
 import java.util.Iterator;
 import java.util.List;
 
+import model.items.Craftable;
 import model.items.Item;
 
 /**
@@ -20,7 +21,7 @@ public class CraftAction extends Action {
 	//TODO: Could we have list of required items passed to Craft Action constructor?
 	//If not, I think we want to make craftableItem its own class, so that we can call the getRequiredMaterials method
 	//Or, we could use the Craft Menu to find the required materials for an item based off of the String "name" of the item
-	public CraftAction(Item craftableItem, List<Item> requiredMaterials) {
+	public CraftAction(Craftable craftableItem, List<Item> requiredMaterials) {
 		toBeCrafted = craftableItem;
 		this.requiredMaterials = requiredMaterials;
 	}

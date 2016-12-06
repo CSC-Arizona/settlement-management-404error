@@ -73,7 +73,11 @@ public abstract class Furniture implements Serializable {
     }
 
 	public boolean removeItem(Item item) {
+		if(contentsWeight >= item.getWeight()) {
+			contentsWeight-=item.getWeight();
+		}
 		return contentsList.remove(item);
+		
 	}
 	
 	public ImageEnum getImage(){

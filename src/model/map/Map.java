@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.TreeMap;
 
 import controller.Designation;
 import model.actors.Actor;
@@ -26,6 +27,7 @@ import model.building_blocks.LavaBlock;
 import model.building_blocks.StoneBlock;
 import model.furniture.Furniture;
 import model.items.Item;
+import model.room.FarmRoom;
 
 /**
  * Constructs a random map with various geographical features
@@ -54,6 +56,11 @@ public class Map implements Serializable {
 	private ArrayList<Position> itemsOnGround = new ArrayList<>();
 	// using anthillLocations to determine "random" spawn points for ants
 	private ArrayList<Position> anthillLocations = new ArrayList<>();
+	
+	//TODO: This will not work. Either write hash function for position, or create tree
+	//TreeMap
+	private TreeMap<Position, FarmRoom> mapOfFarmRooms = new TreeMap<>();
+	private HashMap<Position, FarmRoom> listOfFarmRooms = new HashMap<>();
 
 	private int time;
 
@@ -650,6 +657,14 @@ public class Map implements Serializable {
 
 	public int getTime() {
 		return time;
+	}
+	
+	public TreeMap<Position, FarmRoom> getFarmRooms() {
+		return mapOfFarmRooms;
+	}
+	
+	public void addFarmRoom(Position p, FarmRoom fr) {
+		mapOfFarmRooms.put(p, fr);
 	}
 
 }
