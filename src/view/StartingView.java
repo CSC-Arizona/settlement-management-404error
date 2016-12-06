@@ -24,10 +24,9 @@ import javax.swing.Timer;
 import controller.Controller;
 import images.ImageEnum;
 import model.actors.Actor;
-import model.actors.EnemyActor;
-import model.actors.PlayerControlledActor;
 import model.game.Game;
 import model.game.Log;
+import model.game.Settings;
 import model.map.Map;
 import model.map.MapParameters;
 import model.save.SaveFile;
@@ -54,20 +53,17 @@ public class StartingView extends JPanel {
 	private int visibleCornerX;
 	private int blockSizeY = (windowHeight) / visibleHeight;
 	private int blockSizeX = windowWidth / visibleWidth;
-	private int timeDelta;
-	private int time;
 
 	public StartingView(Controller controller) {
 		this.controller = controller;
-		time = 0;
 		for (ImageEnum e : ImageEnum.values()) {
 			e.createBufferedImages(blockSizeY, blockSizeX);
 		}
-		update = new Timer(35, e->{
+		update = new Timer(30, e->{
 			this.repaint();
 		});
 		this.setLayout(new GridBagLayout());
-		Game.setMap(new Map(MapParameters.getDefaultParameters(), new Random()));
+		Game.setMap(new Map(MapParameters.getCustumMapParameters(new Settings(Settings.SMALL,Settings.NORMAL)), new Random()));
 		visibleCornerX = (Game.getMap().getTotalWidth() - visibleWidth / 2);
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.add(Box.createVerticalGlue());
@@ -97,7 +93,7 @@ public class StartingView extends JPanel {
 		update.stop();
 		Game.reset();
 		Log.clear();
-		controller.startNewGame();
+		controller.startNewGame(new Settings(Settings.MEDIUM,Settings.NORMAL));
 	}
 
 	private void loadOldGame() {
