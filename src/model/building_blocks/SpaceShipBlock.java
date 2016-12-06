@@ -18,7 +18,7 @@ public class SpaceShipBlock extends BuildingBlock {
 	public final static String id = "Space ship";
 	
 	public SpaceShipBlock() {
-		super(durability, false, false, Color.GRAY, null, id, null);
+		super(durability, false, true, Color.GRAY, null, id, null);
 	}
 
 	@Override

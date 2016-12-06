@@ -78,15 +78,17 @@ public class Map implements Serializable {
 	}
 
 	public BuildingBlock getBuildingBlock(Position position) {
-		return map[position.getRow()][Math.floorMod(position.getCol(),this.getTotalWidth())];
+		return map[position.getRow()][Math.floorMod(position.getCol(),
+				this.getTotalWidth())];
 	}
 
 	public BuildingBlock getBuildingBlock(int row, int col) {
-		return map[row][Math.floorMod(col,this.getTotalWidth())];
+		return map[row][Math.floorMod(col, this.getTotalWidth())];
 	}
 
 	public void setBuildingBlock(Position position, BuildingBlock newBlock) {
-		map[position.getRow()][Math.floorMod(position.getCol(),this.getTotalWidth())] = newBlock;
+		map[position.getRow()][Math.floorMod(position.getCol(),
+				this.getTotalWidth())] = newBlock;
 	}
 
 	/**
@@ -302,8 +304,8 @@ public class Map implements Serializable {
 			}
 		}
 	}
-	
-	private void addSingleTree()  {
+
+	private void addSingleTree() {
 		AppleTree tree = new AppleTree(getTotalWidth(),
 				mapParameters.airHeight, map, random);
 		tree.addToMap();
@@ -313,11 +315,11 @@ public class Map implements Serializable {
 		}
 		treeCount += 1;
 	}
-	
+
 	public void decrementTreeCount() {
 		treeCount -= 1;
 	}
-	
+
 	private void addTrees() {
 		trees = new HashMap<>();
 
@@ -327,7 +329,7 @@ public class Map implements Serializable {
 			addSingleTree();
 		}
 	}
-	
+
 	public void regrowTrees() {
 		int totalTrees = (int) (mapParameters.treeFrequency * getTotalWidth());
 		System.out.println(treeCount + " " + totalTrees);
@@ -363,7 +365,6 @@ public class Map implements Serializable {
 					map[bushY][bushX] = new GrassBlock();
 				}
 			}
-
 		}
 	}
 
@@ -648,7 +649,8 @@ public class Map implements Serializable {
 
 	public void addFurniture(Furniture f, Position p) {
 		hardCodedFurniture.put(f, p);
-		map[p.getRow()][Math.floorMod(p.getCol(),this.getTotalWidth())].addFurniture(f);
+		map[p.getRow()][Math.floorMod(p.getCol(), this.getTotalWidth())]
+				.addFurniture(f);
 	}
 
 	public ArrayList<Position> getItemsOnGround() {
