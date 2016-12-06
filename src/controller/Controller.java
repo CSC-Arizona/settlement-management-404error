@@ -105,15 +105,23 @@ public class Controller extends JFrame {
 					map.getBuildingBlock(row, col).addDesignation(
 							Designation.CONSTRUCTING);
 				}
+				
+				if (getDesignatingAction() == Designation.UPGRADING) {
+					map.getBuildingBlock(row, col).addDesignation(
+							Designation.UPGRADING);
+				}
 
 				if (getDesignatingAction() == Designation.DIGGING) {
 					String bbID = map.getBuildingBlock(row, col).getID();
-					if ((bbID.equals(AntTunnelBlock.id) || bbID.equals(AnthillBlock.id) || bbID.equals(EarthBlock.id)) &&
-							map.getBuildingBlock(row - 1, col).getID().equals(AirBlock.id)) {
-						map.getBuildingBlock(row, col).addDesignation(
-								Designation.DIGGING);
-						PlayerControlledActor.playerActionPool
-								.add(new GatherAction(new Position(row, col)));
+					if ((bbID.equals(AntTunnelBlock.id) || bbID.equals(AnthillBlock.id) || bbID.equals(EarthBlock.id))) {
+						if (!map.getBuildingBlock(row, row).getDesignation().equals(Designation.CONSTRUCTING)) {
+							map.getBuildingBlock(row, col).addDesignation(
+									Designation.DIGGING);
+							PlayerControlledActor.playerActionPool
+									.add(new GatherAction(new Position(row, col)));
+						} else {
+							System.out.println("Can designate this for digging.");
+						}
 					}
 				}
 

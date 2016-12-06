@@ -25,7 +25,7 @@ public class AnthillBlock extends BuildingBlock {
 	private static final long serialVersionUID = 1383914857842009037L;
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsOnGround;
-	private final static int durability = 7;
+	private final static int durability = 1;
 	private List<Item> itemsInBlock;
 	public final static String id = "Anthill";
 	public AnthillBlock() {
