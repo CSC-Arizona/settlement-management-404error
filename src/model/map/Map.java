@@ -677,4 +677,8 @@ public class Map implements Serializable {
 		return time;
 	}
 
+	public MapParameters getMapParameters() {
+		return mapParameters;
+	}
+
 }
