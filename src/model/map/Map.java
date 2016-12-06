@@ -15,6 +15,8 @@ import model.actors.Position;
 import model.building_blocks.AirBlock;
 import model.building_blocks.AntTunnelBlock;
 import model.building_blocks.AnthillBlock;
+import model.building_blocks.AntimatterDefenestratorBlock;
+import model.building_blocks.BlackHoleGeneratorBlock;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.CavernBlock;
 import model.building_blocks.EarthBlock;
@@ -23,6 +25,7 @@ import model.building_blocks.GrassBlock;
 import model.building_blocks.GrassEarthBlock;
 import model.building_blocks.IronOreBlock;
 import model.building_blocks.LavaBlock;
+import model.building_blocks.RetroEncabulatorBlock;
 import model.building_blocks.SpaceShipBlock;
 import model.building_blocks.SpaceShipCenterBlock;
 import model.building_blocks.SpaceShipLightBlock;
@@ -58,6 +61,7 @@ public class Map implements Serializable {
 	private ArrayList<Position> itemsOnGround = new ArrayList<>();
 	// using anthillLocations to determine "random" spawn points for ants
 	private ArrayList<Position> anthillLocations = new ArrayList<>();
+	private ArrayList<Position> antTunnelLocations = new ArrayList<>();
 
 	private int time;
 
@@ -119,6 +123,7 @@ public class Map implements Serializable {
 		addGold();
 		addMountains();
 		addAntColonies();
+		addSpaceShipPartBlocks();
 		addGrassBlocks();
 		addSpaceShip();
 		addTrees();
@@ -196,6 +201,31 @@ public class Map implements Serializable {
 				}
 			}
 
+		}
+	}
+
+	private void addSpaceShipPartBlocks() {
+		Position p1 = antTunnelLocations.get(random.nextInt(antTunnelLocations
+				.size()));
+		map[p1.getRow()][p1.getCol()] = new RetroEncabulatorBlock();
+
+		while (true) {
+			Position p2 = antTunnelLocations.get(random
+					.nextInt(antTunnelLocations.size()));
+			if (!map[p2.getRow()][p2.getCol()].getID().equals(
+					RetroEncabulatorBlock.id)) {
+				map[p2.getRow()][p2.getCol()] = new BlackHoleGeneratorBlock();
+				break;
+			}
+		}
+		while (true) {
+			Position p3 = antTunnelLocations.get(random
+					.nextInt(antTunnelLocations.size()));
+			if (!map[p3.getRow()][p3.getCol()].getID().equals(
+					RetroEncabulatorBlock.id)) {
+				map[p3.getRow()][p3.getCol()] = new AntimatterDefenestratorBlock();
+				break;
+			}
 		}
 	}
 
@@ -509,6 +539,8 @@ public class Map implements Serializable {
 								.equals(EarthBlock.id))) {
 
 					map[newTunnelY][newTunnelX] = new AntTunnelBlock();
+					antTunnelLocations
+							.add(new Position(newTunnelY, newTunnelX));
 					tunnelX = newTunnelX;
 					tunnelY = newTunnelY;
 				}
@@ -530,6 +562,8 @@ public class Map implements Serializable {
 								.equals(EarthBlock.id))) {
 
 					map[newTunnelY][newTunnelX] = new AntTunnelBlock();
+					antTunnelLocations
+							.add(new Position(newTunnelY, newTunnelX));
 					tunnelX = newTunnelX;
 					tunnelY = newTunnelY;
 				}
