@@ -21,7 +21,7 @@ public class WheatPlantPlot extends Furniture {
 
 	public WheatPlantPlot() {
 		//Changed weight capacity from 0 so that we can check if plot is full
-		super(capacity, 1, "wheat plot", null);
+		super(capacity, 0.5, "wheat plot", null);
 		wheatPlantPlotList = new LinkedList<>();
 		wheatPlantPlotList.add(new WheatKernelItem());
 		wheatPlantPlotList.add(new WheatKernelItem());

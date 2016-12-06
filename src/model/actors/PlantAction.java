@@ -51,7 +51,7 @@ public class PlantAction extends Action {
 		}
 		if(performer.getPosition().equals(toGoTo)) {
 			Furniture plot = Game.getMap().getBuildingBlock(toGoTo).getFurniture();
-			if(plot.getRemainingWeightCapacity() == 1) {
+			if(plot.getRemainingWeightCapacity() == 0.5) {
 				//Remove item from inventory
 				performerInventory = performer.getInventory();
 				performerInventory.removeItem(new WheatKernelItem());
@@ -86,7 +86,7 @@ public class PlantAction extends Action {
 		if (mapFurniture != null) {
 			for (Furniture f : mapFurniture.keySet()) {
 				if (f.getID().equals("wheat plot")) {
-					if (f.getRemainingWeightCapacity() == 1) {
+					if (f.getRemainingWeightCapacity() == .5) {
 						toGoTo = mapFurniture.get(f);
 						return;
 					}

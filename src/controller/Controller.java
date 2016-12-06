@@ -25,6 +25,7 @@ import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.EarthBlock;
+import model.building_blocks.FarmRoomBlock;
 import model.building_blocks.GrassBlock;
 import model.furniture.Furniture;
 import model.game.Game;
@@ -115,15 +116,23 @@ public class Controller extends JFrame {
 					map.getBuildingBlock(row, col).addDesignation(
 							Designation.CONSTRUCTING);
 				}
+				
+				if (getDesignatingAction() == Designation.UPGRADING) {
+					map.getBuildingBlock(row, col).addDesignation(
+							Designation.UPGRADING);
+				}
 
 				if (getDesignatingAction() == Designation.DIGGING) {
 					String bbID = map.getBuildingBlock(row, col).getID();
-					if ((bbID.equals(AntTunnelBlock.id) || bbID.equals(AnthillBlock.id) || bbID.equals(EarthBlock.id)) &&
-							map.getBuildingBlock(row - 1, col).getID().equals(AirBlock.id)) {
-						map.getBuildingBlock(row, col).addDesignation(
-								Designation.DIGGING);
-						PlayerControlledActor.playerActionPool
-								.add(new GatherAction(new Position(row, col)));
+					if ((bbID.equals(AntTunnelBlock.id) || bbID.equals(AnthillBlock.id) || bbID.equals(EarthBlock.id))) {
+						if (!map.getBuildingBlock(row, row).getDesignation().equals(Designation.CONSTRUCTING)) {
+							map.getBuildingBlock(row, col).addDesignation(
+									Designation.DIGGING);
+							PlayerControlledActor.playerActionPool
+									.add(new GatherAction(new Position(row, col)));
+						} else {
+							System.out.println("Can designate this for digging.");
+						}
 					}
 				}
 
@@ -249,8 +258,11 @@ public class Controller extends JFrame {
 		@Override
 		public void run() {
 			time += 1;
-
+			basicView.updateLog();
 			Game.getMap().updateActors(timeDelta);
+			if (time % 100 == 0) {
+				Game.getMap().regrowTrees();
+			}
 			Game.getMap().setTime(time);
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();
@@ -280,10 +292,10 @@ public class Controller extends JFrame {
 						//Issue pick up item command for each item dropped
 						for(Item curr : yield) {
 							wherePlotIs.addItemToGround(curr);
+							//TODO: Make sure item is actually being added to itemsOnGround arrayList
+							//TODO: Need to remove item from ground when picked up
+							Game.getMap().addItemToGround(plotPosition, curr);
 							PlayerControlledActor.addActionToPlayerPool(new PickUpItemAction(plotPosition, curr));
-						}
-						for(Item curr : wherePlotIs.itemsOnGround()) {
-							System.out.println(curr.toString());
 						}
 						//Remove seed from furniture
 						Furniture plot = wherePlotIs.getFurniture();
@@ -293,7 +305,7 @@ public class Controller extends JFrame {
 				}
 				//it.remove(); //This is so that we don't get a ConcurrentModificationException
 				//Commented out previous line because it was removing room from Map's list of farm rooms
-		}
+			}
 		}
 	}
 

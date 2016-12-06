@@ -1,5 +1,7 @@
 package model.items;
 
+import images.ImageEnum;
+
 //Author: Maxwell Faridian
 //This class defines the Wheat Kernel Item, which can be planted to create Wheat Blocks
 public class WheatKernelItem extends Item {
@@ -11,7 +13,7 @@ public class WheatKernelItem extends Item {
 	private final static int healthPts = 1;
 	
 	public WheatKernelItem() {
-		super(true, attackMod, healthPts, 1);
+		super(true, attackMod, healthPts, 0.5, ImageEnum.SEED);
 	}
 	
 	@Override

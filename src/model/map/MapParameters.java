@@ -75,5 +75,11 @@ public class MapParameters implements Serializable {
 	public static MapParameters getCutsceneParameters() {
 		return new MapParameters(50, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 	}
+	
+	//Same as default parameters, but only contains three actors
+	public static MapParameters getThreeActorParameters() {
+		return new MapParameters(1000, 70, 20, 30, 10, 0.01, 0.001, 0.1, 0.1,
+				0.1, 0.005, 2, 3, 0.05);
+	}
 
 }

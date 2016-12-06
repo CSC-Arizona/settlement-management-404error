@@ -14,6 +14,7 @@ import model.building_blocks.AppleTreeTrunkBlock;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.EarthBlock;
 import model.building_blocks.LeafBlock;
+import model.game.Game;
 import model.items.Item;
 
 public class AppleTree implements Serializable {
@@ -188,6 +189,7 @@ public class AppleTree implements Serializable {
 		for (Integer[] pos : apples) {
 			map[pos[0]][pos[1]] = new AirBlock();
 		}
+		Game.getMap().decrementTreeCount();
 	}
 
 	public void designate() {

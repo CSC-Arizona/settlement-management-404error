@@ -16,7 +16,7 @@ public class DragonEggItem extends Item {
 	private final static double weight = 3.0;
 
 	public DragonEggItem() {
-		super(edible, attackMod, healthPts, weight);
+		super(edible, attackMod, healthPts, weight, null);
 	}
 
 	@Override

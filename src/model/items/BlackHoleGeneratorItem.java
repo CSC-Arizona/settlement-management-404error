@@ -2,15 +2,15 @@ package model.items;
 
 import images.ImageEnum;
 
-public class RetroencabulatorItem extends Item {
+public class BlackHoleGeneratorItem extends Item {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -270883102150737620L;
 
-	public RetroencabulatorItem() {
-		super(false, 50, 0, 500, ImageEnum.RETROENCABULATOR);
+	public BlackHoleGeneratorItem() {
+		super(false, 50, 0, 500, ImageEnum.BLACKHOLEGENERATOR);
 	}
 
 	@Override

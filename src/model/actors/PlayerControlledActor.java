@@ -6,8 +6,12 @@ package model.actors;
 import images.ImageEnum;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
+
+import model.game.Log;
 
 /**
  * @author Jonathon Davis The Player Controlled Actor will execute commands
@@ -20,22 +24,26 @@ public class PlayerControlledActor extends Actor {
 	private int fatigue, hunger;
 	private static final int threshold = 1000;
 	private static final int death_threshold = 10000;
-	public static List<Actor> allActors;
+	public static List<PlayerControlledActor> allActors;
 	public static ActionPool playerActionPool;
+	private Random random = new Random();
 
 	/**
-	 * Creates a player controlled actor which will execute commands
-	 * given to them by the Player
-	 * @param health What health this player will begin with
-	 * @param location The location this player will begin with
+	 * Creates a player controlled actor which will execute commands given to
+	 * them by the Player
+	 * 
+	 * @param health
+	 *            What health this player will begin with
+	 * @param location
+	 *            The location this player will begin with
 	 */
 	public PlayerControlledActor(Position location) {
-		super(location, ImageEnum.DRAGON);
+		super(location, ImageEnum.DRAGON_LEFT);
 		fatigue = 0;
 		hunger = 0;
-		if(playerActionPool == null)
+		if (playerActionPool == null)
 			playerActionPool = new ActionPool();
-		if(allActors == null)
+		if (allActors == null)
 			allActors = Collections.synchronizedList(new LinkedList<>());
 		allActors.add(this);
 
@@ -48,7 +56,7 @@ public class PlayerControlledActor extends Actor {
 	 */
 	@Override
 	public void update() {
-		if(allActors == null)
+		if (allActors == null)
 			allActors = Collections.synchronizedList(new LinkedList<>());
 		// update the needs
 		fatigue += 1;
@@ -67,7 +75,10 @@ public class PlayerControlledActor extends Actor {
 			System.out.println(allActors);
 			allActors.remove(this);
 			this.setAlive(false, true);
+
 		}
+		if (playerActionPool.size() <= 0 && random.nextDouble() < 0.01)
+			this.addActionToPool(new PlayerIdleAction());
 		// call super.update()
 		super.update();
 	}
@@ -89,13 +100,14 @@ public class PlayerControlledActor extends Actor {
 
 	/**
 	 * Sets the fatigue level of this actor
-	 * @param fatigue The level the fatigue will be set
+	 * 
+	 * @param fatigue
+	 *            The level the fatigue will be set
 	 */
 	public void setFatigue(int fatigue) {
 		this.fatigue = fatigue;
 	}
-	
-	
+
 	/**
 	 * @return the fatigue
 	 */
@@ -104,46 +116,74 @@ public class PlayerControlledActor extends Actor {
 	}
 
 	/**
-	 * Adds an action to the player controlled pool
-	 * This does not guarantee that this actor will execute
-	 * this command, however a actor will eventually
+	 * Adds an action to the player controlled pool This does not guarantee that
+	 * this actor will execute this command, however a actor will eventually
 	 * execute this command
-	 * @param action The action that will be added
+	 * 
+	 * @param action
+	 *            The action that will be added
 	 */
-	public void addActionToPool(Action action){
+	public void addActionToPool(Action action) {
 		playerActionPool.add(action);
 	}
-	
-	public static void addActionToPlayerPool(Action action){
+
+	public static void addActionToPlayerPool(Action action) {
 		playerActionPool.add(action);
 	}
-	
+
+	@Override
+	public void remove() {
+		Log.add(this.getName() + " has died");
+		allActors.remove(this);
+		super.remove();
+	}
+
 	public Action getActionFromPlayerPool() {
 		return playerActionPool.get();
 	}
-	
+
 	@Override
 	public String toString() {
-		String result = "Dragon " + this.getName() + ": " + Integer.toString(this.getHealth()) + " health; " + Integer.toString(fatigue) + " fatigue; " + hunger + " hunger";
+		String result = "Dragon " + this.getName() + ": " + Integer.toString(this.getHealth()) + " health; "
+				+ Integer.toString(fatigue) + " fatigue; " + hunger + " hunger";
 		return result;
 	}
 
-
 	public static void reset() {
+		if(allActors == null)
+			return;
+		Iterator<PlayerControlledActor> actors = allActors.iterator();
+		while (actors.hasNext()) {
+			PlayerControlledActor a = actors.next();
+			actors.remove();
+			a.remove();
+		}
 		allActors = null;
 		playerActionPool = null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.actors.Actor#getActionPool()
 	 */
 	@SuppressWarnings("static-access")
 	@Override
 	public ActionPool getActionPool() {
-		if (playerActionPool== null) {
+		if (playerActionPool == null) {
 			playerActionPool = new ActionPool();
 		}
 		return this.playerActionPool;
+	}
+
+	@Override
+	public ImageEnum getLeftImage() {
+		return ImageEnum.DRAGON_LEFT;
+	}
+
+	@Override
+	public ImageEnum getRightImage() {
+		return ImageEnum.DRAGON_RIGHT;
 	}
 
 }

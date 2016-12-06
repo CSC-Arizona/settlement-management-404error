@@ -85,7 +85,7 @@ public class BasicView extends JPanel {
 	private JButton constructRoomButton;
 
 	private DesignationButton cutDownTreeButton;
-	private DesignationButton removeRoomButton;
+	private DesignationButton upgradeRoomButton;
 	private DesignationButton fruitButton;
 	private DesignationButton digButton;
 	private DesignationButton plantsButton;
@@ -221,8 +221,8 @@ public class BasicView extends JPanel {
 		buttons = new ArrayList<>();
 		cutDownTreeButton = new DesignationButton(controller, this,
 				Designation.CUTTING_DOWN_TREES, buttons);
-		removeRoomButton = new DesignationButton(controller, this,
-				Designation.REMOVING_ROOMS, buttons);
+		upgradeRoomButton = new DesignationButton(controller, this,
+				Designation.UPGRADING, buttons);
 		fruitButton = new DesignationButton(controller, this,
 				Designation.GATHERING_FRUIT, buttons);
 		digButton = new DesignationButton(controller, this,
@@ -237,7 +237,7 @@ public class BasicView extends JPanel {
 		buttonPanel.add(constructRoomPanel);
 		buttonPanel.add(craftPanel);
 		buttonPanel.add(cutDownTreeButton);
-		buttonPanel.add(removeRoomButton);
+		buttonPanel.add(upgradeRoomButton);
 		buttonPanel.add(fruitButton);
 		buttonPanel.add(digButton);
 		buttonPanel.add(plantsButton);
@@ -273,8 +273,9 @@ public class BasicView extends JPanel {
 		private static final long serialVersionUID = 8717360204333004762L;
 
 		private void setVisibleTiles(int row, int col) {
-			if (Game.getMap().getBuildingBlock(row, col).isOccupiable() ||
-					Game.getMap().getBuildingBlock(row, col).getID().equals("Room wall")) {
+			if (Game.getMap().getBuildingBlock(row, col).isOccupiable()
+					|| Game.getMap().getBuildingBlock(row, col).getID()
+							.equals("Room wall")) {
 				for (int k = -1; k < 2; k++) {
 					for (int l = -1; l < 2; l++) {
 						int newRow = row + k;
@@ -284,7 +285,8 @@ public class BasicView extends JPanel {
 						if (newRow >= 0
 								&& newRow < Game.getMap().getTotalHeight()) {
 
-							Game.getMap().getBuildingBlock(newRow, newCol).setVisibility(true);
+							Game.getMap().getBuildingBlock(newRow, newCol)
+									.setVisibility(true);
 						}
 					}
 				}
@@ -320,19 +322,19 @@ public class BasicView extends JPanel {
 		private void drawActors(Graphics2D g2, int row, int col, int i, int j) {
 			List<Actor> actors = Game.getMap().getBuildingBlock(row, col)
 					.getActors();
-			List<Actor> actorsClone = actors;
-			if (actorsClone != null) {
+			if (actors != null) {
+				List<Actor> actorsClone = new ArrayList(actors);
 				int count = 0;
-                Iterator<Actor> iter = actorsClone.iterator();
-                while (iter.hasNext()) {
-                	Actor p = iter.next();
-                	if (p.getImage() != null) {
-                		g2.drawImage(p.getImage().getRandomBufferedImage(),
-								j * blockSizeX, i * blockSizeY, null);
+				Iterator<Actor> iter = actorsClone.iterator();
+				while (iter.hasNext()) {
+					Actor p = iter.next();
+					if (p.getImage() != null) {
+						g2.drawImage(p.getImage().getRandomBufferedImage(), j
+								* blockSizeX, i * blockSizeY, null);
 					} else {
 						count += 1;
-                	}
-                }
+					}
+				}
 				if (count != 0) {
 					g2.setColor(Color.RED);
 					g2.drawString(Integer.toString(count), j * blockSizeX
@@ -366,8 +368,17 @@ public class BasicView extends JPanel {
 					.itemsOnGround();
 			if (itemsOnGround != null) {
 				if (itemsOnGround.size() != 0) {
-					g2.drawString("#", j * blockSizeX + blockSizeX / 2, (i + 1)
-							* blockSizeY);
+					for (Item item : itemsOnGround) {
+						if (item.getImage() != null) {
+							g2.drawImage(item.getImage()
+									.getRandomBufferedImage(), j * blockSizeX,
+									i * blockSizeY, null);
+						} else {
+							g2.drawString("#", j * blockSizeX + blockSizeX / 2,
+									(i + 1) * blockSizeY);
+						}
+					}
+
 				}
 			}
 		}
@@ -577,7 +588,7 @@ public class BasicView extends JPanel {
 			if (currentlyPlacingRoom) {
 				boolean canBuildHere = true;
 				BuildingBlock obstacle = new AirBlock();
-				Position appropriatePileLoc = null;
+				//Position appropriatePileLoc = null;
 				int blockHeight = room.getHeight();
 				int pixHeight = roomHeight;
 				if (!room.toString().equals("Vertical tunnel")
@@ -596,26 +607,15 @@ public class BasicView extends JPanel {
 							obstacle = inQuestion;
 							break;
 						}
-						if (!inQuestion.getDesignation().equals(Designation.NONE)) {
+						if (!inQuestion.getDesignation().equals(
+								Designation.NONE)) {
 							canBuildHere = false;
-							obstacle = null; // not a room yet, the message needs to be different
+							obstacle = null; // not a room yet, the message
+												// needs to be different
 							break;
-						}
-						if ((appropriatePileLoc == null) &&
-					       ((r == roomX || r == roomX + room.getWidth() -1) && 
-					        (c == roomY || c == roomY + blockHeight - 1))) {
-							if (MoveAction.getMoveLocationNear(new Position(x,y)) != null) {
-								appropriatePileLoc = new Position(x,y);
-								System.out.println("Setting the appropriatePileLoc to be equal to " + appropriatePileLoc.toString());
-							}
 						}
 					}
 				}
-				if (appropriatePileLoc == null)
-					canBuildHere = false;
-				else 
-					System.out.println("Pile location: " + appropriatePileLoc.toString() + ", on a block of type " + 
-				               Game.getMap().getBuildingBlock(appropriatePileLoc));
 				if (canBuildHere) {
 					controller.setDesignatingAction(Designation.CONSTRUCTING);
 					// adding the rows for room walls with every room type
@@ -625,19 +625,17 @@ public class BasicView extends JPanel {
 					PlayerControlledActor.playerActionPool
 							.add(new ConstructAction(
 									room.constructObject(new Position(roomY,
-											roomX)), appropriatePileLoc));
+											roomX))));
 
 					controller.setDesignatingAction(Designation.NONE);
 
 					repaint();
 				} else {
 					String err = "";
-					if (appropriatePileLoc == null)
-						err = "At least one corner must be accessible to the Dragons in order to build at "
-								+ "that location.";
-					else if (obstacle == null)
+					if (obstacle == null)
 						err = "There is already a room under construction here.";
-					else if (obstacle.getClass().equals(new AirBlock().getClass()))
+					else if (obstacle.getClass().equals(
+							new AirBlock().getClass()))
 						err = "You can't build a room above ground.";
 					else
 						err = "You can't build a room over a "
@@ -811,6 +809,10 @@ public class BasicView extends JPanel {
 			craftSelection = (Item) craftItemComboBox.getSelectedItem();
 		}
 
+	}
+
+	public void updateLog() {
+		logText.setText(Log.getLog());
 	}
 
 }
