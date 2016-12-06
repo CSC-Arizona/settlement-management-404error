@@ -200,11 +200,11 @@ public abstract class Actor implements Serializable {
 		if (remove) {
 			this.alive = alive;
 			allActors.remove(this);
-			Log.add(this.getName() + " has died");
 			return;
 		}
 		if(!alive) {
 			this.alive = alive;
+			Log.add(this.getName() + " has died");
 			return;
 		}
 	}

@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import model.game.Log;
+
 /**
  * @author Jonathon Davis The Player Controlled Actor will execute commands
  *         given by the player, the ACtor is not directly controlled by the
@@ -72,6 +74,7 @@ public class PlayerControlledActor extends Actor {
 			System.out.println(allActors);
 			allActors.remove(this);
 			this.setAlive(false, true);
+			
 		}
 		if (playerActionPool.size() <= 0 && random.nextDouble() < 0.01)
 			this.addActionToPool(new PlayerIdleAction());
