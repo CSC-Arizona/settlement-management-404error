@@ -124,6 +124,12 @@ public class PlayerControlledActor extends Actor {
 	public static void addActionToPlayerPool(Action action) {
 		playerActionPool.add(action);
 	}
+	
+	@Override
+	public void remove() {
+		allActors.remove(this);
+		super.remove();
+	}
 
 	public Action getActionFromPlayerPool() {
 		return playerActionPool.get();

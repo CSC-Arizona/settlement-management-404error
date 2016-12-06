@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model.actors;
 
 import java.util.LinkedList;
@@ -150,5 +147,4 @@ public class MoveAction extends Action {
 		}
 		return nearest;
 	}
-
 }
