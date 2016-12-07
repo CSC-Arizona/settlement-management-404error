@@ -33,6 +33,7 @@ public abstract class Actor implements Serializable {
 	private String name;
 	public static List<Actor> allActors;
 	private ImageEnum image;
+	private boolean markedForAttack = false;
 
 	/**
 	 * Creates a new actor
@@ -261,6 +262,14 @@ public abstract class Actor implements Serializable {
 
 	public ImageEnum getImage() {
 		return image;
+	}
+	
+	public boolean isMarkedForAttack() {
+		return markedForAttack;
+	}
+	
+	public void setAttack(boolean attack) {
+		this.markedForAttack = attack;
 	}
 
 }

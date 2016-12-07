@@ -261,6 +261,11 @@ public class AlternativeView extends JPanel {
 				Actor p = iter.next();
 				if (p.getImage() != null && p.isAlive()) {
 					g2.drawImage(p.getImage().getRandomBufferedImage(), j * blockSizeX, i * blockSizeY, null);
+					if (p.isMarkedForAttack()) {
+						g2.setColor(Color.RED);
+						g2.drawString("A", j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+						g2.setColor(Color.BLACK);
+					}
 				} else {
 					count += 1;
 				}
