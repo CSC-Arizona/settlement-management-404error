@@ -19,6 +19,7 @@ public class AttackAction extends Action {
 	private Armor bestArmor;
 
 	public AttackAction(Actor target) {
+		target.setAttack(true);
 		this.target = target;
 		previousLocation = target.getPosition();
 	}
@@ -68,6 +69,8 @@ public class AttackAction extends Action {
 		defender.setHealth(defender.getHealth() - performerAttack);
 		attacker.getSkills().addCombatXP(performerAttack);
 		if (defender.getHealth() <= 0) {
+			defender.setAttack(false);
+			attacker.setAttack(false);
 			defender.setHealth(0);
 			//Have target drop all items in inventory upon death
 			for(Item item : defender.getInventory()) {
