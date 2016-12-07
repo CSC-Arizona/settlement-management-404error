@@ -60,7 +60,6 @@ public class ConstructionMaterialPile extends Furniture {
 			if (i.getClass().equals(toAdd.getClass())) {
 				reqMaterials.remove(i);
 				pil.removeItem(i);
-				System.out.println("Adding " + toAdd.toString() + " to the pile.");
 				return true;
 			}	
 		}

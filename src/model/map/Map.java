@@ -458,7 +458,7 @@ public class Map implements Serializable {
 
 	public void regrowTrees() {
 		int totalTrees = (int) (mapParameters.treeFrequency * getTotalWidth());
-		System.out.println(treeCount + " " + totalTrees);
+		System.out.println("Map line 461: " + treeCount + " " + totalTrees);
 		if (totalTrees > treeCount) {
 			int newTrees = totalTrees - treeCount;
 			if (newTrees > 0) {

@@ -75,7 +75,6 @@ public class ConstructAction extends Action {
 	public int execute(Actor performer) {
 		
 		// check to see if the action is complete
-		//System.out.println("Executing still.");
 		if (!clearArea) {
 			clearArea = clearedArea();
 			return Action.Pool;
@@ -109,14 +108,10 @@ public class ConstructAction extends Action {
         	return Action.Pool;
         }
         
-        System.out.println("The materials are all gathered");
-        
         if (!wallpapered) {
         	wallpapered = wallpaper(performer);
         	return Action.Pool;
         }
-		
-        System.out.println("Finished wallpapering");
         
         if (!furniturePlaced) {
         	furniturePlaced = placeFurniture(performer);
@@ -223,7 +218,6 @@ public class ConstructAction extends Action {
 		for (Item i : reqMat) {
 			Position itPos = VisitCrateAction.getCrateWhichContainsItem(i);
 			if (itPos != null) {
-				System.out.println("Going to a crate");
 				VisitCrateAction vca = new VisitCrateAction(i);
 				vca.execute(performer);
 			}
