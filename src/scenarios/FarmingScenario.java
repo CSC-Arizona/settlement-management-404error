@@ -28,7 +28,7 @@ public class FarmingScenario {
 		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed), true);
 		Game.setMap(controller.getMap());
 		
-		//TODO: Hardcode seeds into all dragons' inventories for testing
+		//Hardcode seeds into all dragons' inventories for testing
 		for(Actor a : Actor.allActors) {
 			a.getInventory().addItem(new WheatKernelItem());
 		}
