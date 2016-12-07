@@ -179,15 +179,22 @@ public class AppleTree implements Serializable {
 	 */
 	public void removeFromMap() {
 		for (Position pos : trunk) {
-			map[pos.getRow()][pos.getCol()] = new AirBlock();
+			if (map[pos.getRow()][pos.getCol()].getID().equals(
+					AppleTreeTrunkBlock.id)) {
+				map[pos.getRow()][pos.getCol()] = new AirBlock();
+			}
 		}
 
 		for (Integer[] pos : leaves) {
-			map[pos[0]][pos[1]] = new AirBlock();
+			if (map[pos[0]][pos[1]].getID().equals(LeafBlock.id)) {
+				map[pos[0]][pos[1]] = new AirBlock();
+			}
 		}
 
 		for (Integer[] pos : apples) {
-			map[pos[0]][pos[1]] = new AirBlock();
+			if (map[pos[0]][pos[1]].getID().equals(AppleTreeLeafBlock.id)) {
+				map[pos[0]][pos[1]] = new AirBlock();
+			}
 		}
 		Game.getMap().decrementTreeCount();
 	}
