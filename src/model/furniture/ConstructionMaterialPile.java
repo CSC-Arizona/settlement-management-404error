@@ -22,7 +22,7 @@ public class ConstructionMaterialPile extends Furniture {
 	 */
 	private static final long serialVersionUID = 1307346131434546224L;
 	// list of items that are still required to complete the Construction material pile
-	List<Item> reqMaterials;
+	private volatile List<Item> reqMaterials;
 	PrintableItemsList pil;
 	
 	public ConstructionMaterialPile(List<Item> list) {
@@ -33,6 +33,10 @@ public class ConstructionMaterialPile extends Furniture {
 		    for (Item i : list)
 		    	pil.addItem(i);
 		}
+	}
+	
+	public boolean isCompleted() {
+		return reqMaterials.isEmpty();
 	}
 
 	@Override

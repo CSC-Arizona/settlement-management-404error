@@ -4,10 +4,10 @@ import java.util.Random;
 
 import controller.Controller;
 import model.actors.Actor;
+import model.actors.ConstructAction;
 import model.actors.PlantAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
-import model.actors.PostMaterialGatheringConstructionAction;
 import model.game.Game;
 import model.items.WheatKernelItem;
 import model.map.MapParameters;
@@ -33,7 +33,7 @@ public class FarmingScenario {
 			a.getInventory().addItem(new WheatKernelItem());
 		}
 		//For this to work, need to add new room, not just new furniture
-		PlayerControlledActor.addActionToPlayerPool(new PostMaterialGatheringConstructionAction(new FarmRoom(new Position(48, 22))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new FarmRoom(new Position(48, 22))));
 		//Once that is done, have actor plant something
 		PlayerControlledActor.addActionToPlayerPool(new PlantAction());
 	}

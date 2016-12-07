@@ -44,7 +44,7 @@ public class VerticalTunnel extends Room {
 
 	@Override
 	public List<Item> getRequiredBuildMaterials() {
-		return requiredBuildingMaterials;
+		return new LinkedList<>();
 	}
 
 	@Override

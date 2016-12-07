@@ -147,7 +147,7 @@ public class MoveAction extends Action {
 		double distance = Double.MAX_VALUE;
 		for (int r = position.getRow() - 1; r <= position.getRow() + 1; r++) {
 			for (int c = position.getCol() - 1; c <= position.getCol() + 1; c++) {
-				if (Game.validActorLocation(r, Math.floorMod(c, Game.getMap().getTotalWidth()))){
+				if (Game.validActorLocation(r, Math.floorMod(c, Game.getMap().getTotalWidth()))) {
 					Position p = new Position(r, Math.floorMod(c, Game.getMap().getTotalWidth()));
 					double calc = p.distance(position);
 					if(calc < distance){

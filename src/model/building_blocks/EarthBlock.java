@@ -35,6 +35,9 @@ public class EarthBlock extends BuildingBlock {
 		if (num < 10) {
 			for (int i = 0; i < num; i++)
 				itemsInBlock.add(new StoneItem());
+		} else if (num > 85) {
+			for (int j = 0; j < ((100 - num) / 3); j++)
+				itemsInBlock.add(new StoneItem());
 		}
 	}
 	

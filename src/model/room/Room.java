@@ -9,6 +9,7 @@ import model.actors.MoveAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
+import model.furniture.ConstructionMaterialPile;
 import model.furniture.Furniture;
 import model.game.Game;
 import model.items.Item;
@@ -51,6 +52,7 @@ public abstract class Room {
 	private Position pos;
 	private PrintableItemsList ril;
 	private boolean underConstruction;
+	private ConstructionMaterialPile pile;
 	
 	public Room(int requiredHeight, int requiredWidth, int roomCapacity, int upgradesAllowed, Position pos) {
 		this.requiredHeight = requiredHeight;
@@ -63,6 +65,18 @@ public abstract class Room {
 	}
 	
 	public abstract TreeMap<Position, Furniture> getFurniture();
+	
+	public ConstructionMaterialPile getPile() {
+		return this.pile;
+	}
+	
+	public boolean setPile(ConstructionMaterialPile pile) {
+		if (this.pile == null) {
+			this.pile = pile; 
+			return true;
+		}
+		return false;
+	}
 	
 	/*
 	 * returns the Position of the Room

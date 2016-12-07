@@ -251,7 +251,10 @@ public class Controller extends JFrame {
 				Game.getMap().regrowTrees();
 			}
 			Game.getMap().setTime(time);
-			Game.getMap().checkOnDesignatedRooms();
+			if (time % 35 == 0) {
+			    Game.getMap().checkOnDesignatedRooms();
+			    
+			}
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();
 			basicView.repaint();

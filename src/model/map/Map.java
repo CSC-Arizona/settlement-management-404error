@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 
 import controller.Designation;
 import model.actors.Actor;
-import model.actors.DigOutRoomAction;
+import model.actors.ConstructAction;
 import model.actors.EnemyActor;
+import model.actors.Inventory;
+import model.actors.PlaceFurnitureAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.AirBlock;
@@ -32,6 +35,7 @@ import model.building_blocks.SpaceShipBlock;
 import model.building_blocks.SpaceShipCenterBlock;
 import model.building_blocks.SpaceShipLightBlock;
 import model.building_blocks.StoneBlock;
+import model.furniture.ConstructionMaterialPile;
 import model.furniture.Furniture;
 import model.game.Game;
 import model.items.Item;
@@ -818,18 +822,25 @@ public class Map implements Serializable {
 		this.designatedRooms.add(room);
 	}
 	
+	/**
+	 * 
+	 * @param room to be added to this list after it is totally completed
+	 */
 	public void addNewCompletedRoom(Room room) {
-		this.designatedRooms.remove(room);
 		this.completedRooms.add(room);
 	}
 	
+	/**
+	 * see if any of the designated rooms have become accessible
+	 */
 	public void checkOnDesignatedRooms() {
 		for (Room room : designatedRooms) {
 			if (room.isAccessible() && room.isUnderConstruction() == false) {
 				room.setUnderConstruction(true);
-				PlayerControlledActor.addActionToPlayerPool(new DigOutRoomAction(room));
+//				designatedRooms.remove(room);
+				PlayerControlledActor.addActionToPlayerPool(new ConstructAction(room));
 			}
 		}
 	}
-	
+
 }

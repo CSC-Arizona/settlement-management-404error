@@ -60,7 +60,7 @@ public class VisitCrateAction extends Action {
 		}
 	}
 
-	public Position getCrateWhichContainsItem(Item it) {
+	public static Position getCrateWhichContainsItem(Item it) {
 		HashMap<Furniture, Position> mapFurniture = Game.getMap()
 				.getFurniture();
 		HashMap<Crate, Position> crates = new HashMap<>();
