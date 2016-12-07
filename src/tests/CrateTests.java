@@ -33,20 +33,20 @@ public class CrateTests {
 		assertEquals("Basic crate 0.0/30.0 weight carried", bc.toString());
 		
 		MetalCrate mc = new MetalCrate(new LinkedList<Item>());
-		assertEquals(70.0, mc.getCrateCapacity(), 0.00001);
+		assertEquals(200.0, mc.getCrateCapacity(), 0.00001);
 		assertEquals(0.0, mc.getWeightCarried(), 0.00001);
-		assertEquals("Metal crate 0.0/70.0 weight carried", mc.toString());
+		assertEquals("Metal crate 0.0/200.0 weight carried", mc.toString());
 		assertTrue(mc.addItem(new StoneItem()));
-		assertEquals("Metal crate 5.0/70.0 weight carried (1 Stone)", mc.toString());
+		assertEquals("Metal crate 5.0/200.0 weight carried (1 Stone)", mc.toString());
 		assertTrue(mc.addItem(new StoneItem()));
-		assertEquals("Metal crate 10.0/70.0 weight carried (2 Stones)", mc.toString());
+		assertEquals("Metal crate 10.0/200.0 weight carried (2 Stones)", mc.toString());
 		assertTrue(mc.contains(new StoneItem()));
 		assertTrue(mc.removeItem(new StoneItem()));
 		assertEquals(5.0, mc.getWeightCarried(), 0.0001);
-		assertEquals("Metal crate 5.0/70.0 weight carried (1 Stone)", mc.toString());
+		assertEquals("Metal crate 5.0/200.0 weight carried (1 Stone)", mc.toString());
 		assertTrue(mc.removeItem(new StoneItem()));
 		assertEquals(0.0, mc.getWeightCarried(), 0.0001);
-		assertEquals("Metal crate 0.0/70.0 weight carried", mc.toString());
+		assertEquals("Metal crate 0.0/200.0 weight carried", mc.toString());
 	}	
     
 	@Test

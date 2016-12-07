@@ -35,8 +35,9 @@ public class EnemyIdleAction extends Action {
 		}
 		List<Position> antTunnels = Game.getMap().antTunnelLocations;
 		if (move == null)
-			move = new MoveAction(antTunnels.get(rand.nextInt(antTunnels.size())));
-
+			if (antTunnels.size() != 0) {
+				move = new MoveAction(antTunnels.get(rand.nextInt(antTunnels.size())));
+			}
 		if (move != null)
 			return move.execute(performer);
 		else

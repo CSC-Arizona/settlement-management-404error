@@ -56,7 +56,7 @@ public class ItemTest {
 		assertFalse(wi.getIsEdible());
 		assertEquals(2, wi.getAttackModifier());
 		assertEquals(0, wi.getHealthPoints());
-		assertEquals(3.0, wi.getWeight(), 0.00001);
+		assertEquals(1.0, wi.getWeight(), 0.00001);
 	}
 	
 	@Test
@@ -65,7 +65,7 @@ public class ItemTest {
 	    assertTrue(ai.getIsEdible());
 	    assertEquals(2, ai.getAttackModifier());
 	    assertEquals(5, ai.getHealthPoints());
-	    assertEquals(1.0, ai.getWeight(), 0.00001);
+	    assertEquals(0.7, ai.getWeight(), 0.00001);
 	}
 	
 	@Test
@@ -92,7 +92,7 @@ public class ItemTest {
 	    assertTrue(wki.getIsEdible());
 	    assertEquals(1, wki.getAttackModifier());
 	    assertEquals(1, wki.getHealthPoints());
-	    assertEquals(70, wki.getWeight(), 0.00001);
+	    assertEquals(0.5, wki.getWeight(), 0.00001);
 	}
 	
 	@Test
@@ -101,7 +101,7 @@ public class ItemTest {
 	    assertFalse(wsi.getIsEdible());
 	    assertEquals(1, wsi.getAttackModifier());
 	    assertEquals(0, wsi.getHealthPoints());
-	    assertEquals(1, wsi.getWeight(), 0.00001);
+	    assertEquals(0.5, wsi.getWeight(), 0.00001);
 	}
 	
 	@Test

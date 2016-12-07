@@ -52,33 +52,35 @@ public class EnemyActorTest {
 		PlayerControlledActor.allActors = null;
 
 		Actor enemy = new EnemyActor(new Position(1,1));
+		
 		Actor player = new PlayerControlledActor(new Position(1,2));
-
-		assertEquals(5,player.getHealth());
+		enemy.addToActionQueue(new AttackAction(player));
+		
+		assertEquals(100,player.getHealth());
 		assertEquals(0,enemy.getSkills().getCombatLevel());
 		enemy.update();
-		assertEquals(0,enemy.getSkills().getCombatLevel());
-		assertEquals(4,player.getHealth());
+		assertEquals(2,enemy.getSkills().getCombatLevel());
+		assertEquals(92,player.getHealth());
 		enemy.update();
-		assertEquals(0,enemy.getSkills().getCombatLevel());
-		assertEquals(3,player.getHealth());
+		assertEquals(2,enemy.getSkills().getCombatLevel());
+		assertEquals(82,player.getHealth());
 		enemy.update();
-		assertEquals(1,enemy.getSkills().getCombatLevel());
-		assertEquals(2,player.getHealth());
+		assertEquals(3,enemy.getSkills().getCombatLevel());
+		assertEquals(72,player.getHealth());
 		enemy.update();
-		assertEquals(1,enemy.getSkills().getCombatLevel());
-		assertEquals(0,player.getHealth());
+		assertEquals(3,enemy.getSkills().getCombatLevel());
+		assertEquals(61,player.getHealth());
 		enemy.update();
-		assertEquals(0,player.getHealth());
+		assertEquals(50,player.getHealth());
 		enemy.update();
-		assertEquals(0,player.getHealth());
+		assertEquals(39,player.getHealth());
 		enemy.update();
-		assertEquals(0,player.getHealth());
+		assertEquals(27,player.getHealth());
 		enemy.update();
-		assertEquals(0,player.getHealth());
+		assertEquals(15,player.getHealth());
 		enemy.addToActionQueue(new AttackAction(player));
 		enemy.update();
-		assertEquals(0,player.getHealth());
+		assertEquals(3,player.getHealth());
 		
 		PlayerControlledActor.allActors = null;
 		Actor.allActors = null;

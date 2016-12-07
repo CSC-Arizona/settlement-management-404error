@@ -104,25 +104,25 @@ public class TestPrintedRequiredItemLists {
 		AppleTreePlot atp = new AppleTreePlot();
 		assertEquals("2 Ant larvas, 2 Apple seeds", atp.reqMaterialsToString());
 		BasicCrate bc = new BasicCrate();
-		assertEquals("6 Woods", bc.reqMaterialsToString());
+		assertEquals("2 Woods", bc.reqMaterialsToString());
 		Bed b = new Bed();
-		assertEquals("4 Wheat stems, 4 Woods, 2 Stones", b.reqMaterialsToString());
+		assertEquals("1 Wheat stem, 1 Wood, 1 Stone", b.reqMaterialsToString());
 		Couch c = new Couch();
-		assertEquals("4 Wheat stems, 4 Woods, 1 Stone", c.reqMaterialsToString());
+		assertEquals("1 Wheat stem, 1 Wood, 1 Stone", c.reqMaterialsToString());
 		Fireplace f = new Fireplace();
-		assertEquals("2 Irons, 4 Stones", f.reqMaterialsToString());
+		assertEquals("1 Iron, 2 Stones", f.reqMaterialsToString());
 		HealingBed hb = new HealingBed();
-		assertEquals("5 Wheat stems, 4 Woods, 1 Iron, 2 Stones", hb.reqMaterialsToString());
+		assertEquals("2 Wheat stems, 2 Woods, 1 Iron, 2 Stones", hb.reqMaterialsToString());
 		IncubationChamber ic = new IncubationChamber();
-		assertEquals("2 Irons, 2 Stones", ic.reqMaterialsToString());
+		assertEquals("1 Wheat stem, 2 Stones", ic.reqMaterialsToString());
 		Ladder l = new Ladder();
-		assertEquals("2 Woods", l.reqMaterialsToString());
+		assertEquals("", l.reqMaterialsToString());
 		MetalCrate mc = new MetalCrate(new LinkedList<Item>());
-		assertEquals("6 Woods, 2 Irons, 2 Stones", mc.reqMaterialsToString());
+		assertEquals("3 Woods, 1 Iron, 2 Stones", mc.reqMaterialsToString());
 		PoolTable pt = new PoolTable();
-		assertEquals("4 Woods, 1 Iron, 3 Stones", pt.reqMaterialsToString());
+		assertEquals("2 Woods, 1 Iron, 2 Stones", pt.reqMaterialsToString());
 		CraftingMachine mm = new CraftingMachine();
-		assertEquals("2 Irons, 2 Stones", mm.reqMaterialsToString());
+		assertEquals("1 Iron, 1 Stone", mm.reqMaterialsToString());
 		ReinforcedCrate rc = new ReinforcedCrate(new LinkedList<Item>());
 		assertEquals("6 Woods, 2 Stones", rc.reqMaterialsToString());
 		WheatPlantPlot wpp = new WheatPlantPlot();
@@ -133,15 +133,15 @@ public class TestPrintedRequiredItemLists {
 	public void testRooms() {
 		Position p = new Position(0, 0);
 		BedRoom br = new BedRoom(p); // 3 beds
-		assertEquals("12 Wheat stems, 12 Woods, 6 Stones", br.reqMaterialsToString());
+		assertEquals("3 Wheat stems, 4 Woods, 3 Stones", br.reqMaterialsToString());
 		EntertainmentRoom er = new EntertainmentRoom(p); // pool table, 2 couch
-		assertEquals("8 Wheat stems, 12 Woods, 1 Iron, 5 Stones", er.reqMaterialsToString());
+		assertEquals("2 Wheat stems, 5 Woods, 1 Iron, 4 Stones", er.reqMaterialsToString());
 		HorizontalTunnel ht = new HorizontalTunnel(p);
 		assertEquals("", ht.reqMaterialsToString());
 		IncubationRoom ir = new IncubationRoom(p);
-		assertEquals("4 Irons, 4 Stones", ir.reqMaterialsToString());
+		assertEquals("3 Wheat stems, 1 Wood, 6 Stones", ir.reqMaterialsToString());
 		InfirmaryRoom inr = new InfirmaryRoom(p);
-		assertEquals("10 Wheat stems, 8 Woods, 2 Irons, 4 Stones", inr.reqMaterialsToString());
+		assertEquals("4 Wheat stems, 5 Woods, 2 Irons, 4 Stones", inr.reqMaterialsToString());
 	}
 
 }
