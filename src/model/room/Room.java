@@ -207,7 +207,11 @@ public abstract class Room {
 		if (this.needsWalls())
 			h += 2;
 		int row = this.getPosition().getRow();
-		for (int r = row; r < row + h; r++) {
+		for (int c = this.getPosition().getCol(); c < this.getPosition().getCol() + w; c++) {
+			if (MoveAction.getMoveLocationNear(new Position(row, Math.floorMod(c, Game.getMap().getTotalWidth()))) != null)
+				return true;
+		}
+		for (int r = row + 1; r < row + h; r++) {
 			Position pos1 = new Position(r, this.getPosition().getCol());
 			Position pos2 = new Position(r, Math.floorMod(this.getPosition().getCol() + w - 1, Game.getMap().getTotalWidth()));
 			if (MoveAction.getMoveLocationNear(pos1) != null || MoveAction.getMoveLocationNear(pos2) != null)
@@ -242,4 +246,6 @@ public abstract class Room {
 	abstract public BuildingBlock getAppropriateBlock();
 	
 	abstract public void performUpgrade(int upgradeNum);
+	
+	abstract public String getID();
 }

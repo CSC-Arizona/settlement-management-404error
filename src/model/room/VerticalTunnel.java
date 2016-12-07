@@ -75,4 +75,9 @@ public class VerticalTunnel extends Room {
 		// do nothing
 	}
 
+	@Override
+	public String getID() {
+		return "vertical tunnel";
+	}
+
 }

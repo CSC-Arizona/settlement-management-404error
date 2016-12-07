@@ -6,7 +6,7 @@ import java.util.List;
 import images.ImageEnum;
 import model.items.Item;
 
-public class Scaffolding extends Furniture {
+public class Trapdoor extends Furniture {
 
 	/**
 	 * 
@@ -14,8 +14,8 @@ public class Scaffolding extends Furniture {
 	private static final long serialVersionUID = 2659920162119419368L;
 	private List<Item> ladderMaterials;
 	
-	public Scaffolding() {
-		super(10, 0, "scaffolding", ImageEnum.LADDER);
+	public Trapdoor() {
+		super(10, 0, "trap door", ImageEnum.TRAPDOOR);
         ladderMaterials = new LinkedList<>();
 	}
 
@@ -26,6 +26,6 @@ public class Scaffolding extends Furniture {
 
 	@Override
 	public String toString() {
-		return "Scaffolding";
+		return "Trap door";
 	}
 }

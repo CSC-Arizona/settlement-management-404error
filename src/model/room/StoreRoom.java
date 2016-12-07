@@ -116,4 +116,9 @@ public class StoreRoom extends Room{
 		    }
 		}
 	}
+
+	@Override
+	public String getID() {
+		return "store room";
+	}
 }

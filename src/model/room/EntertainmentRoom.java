@@ -92,6 +92,11 @@ public class EntertainmentRoom extends Room{
 		int pos = this.getRequiredWidth() - (2 * upgradeNum);
 		reqFurniture.put(new Position(2, pos), new PoolTable());
 	}
+
+	@Override
+	public String getID() {
+		return "entertainment room";
+	}
 	
 	
 

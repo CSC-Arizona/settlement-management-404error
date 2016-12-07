@@ -6,11 +6,13 @@ import java.util.List;
 
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.RoomWallBlock;
-import model.building_blocks.TrapDoorBlock;
+import model.building_blocks.CeilingTile;
 import model.furniture.ConstructionMaterialPile;
 import model.furniture.Furniture;
-import model.furniture.Scaffolding;
+import model.furniture.Ladder;
+import model.furniture.Trapdoor;
 import model.game.Game;
+import model.game.Log;
 import model.items.Item;
 import model.room.Room;
 
@@ -64,8 +66,8 @@ public class ConstructAction extends Action {
 						Math.floorMod(c, Game.getMap().getTotalWidth()));
 				trapDoorBlocks.add(roof);
 				roomWallBlocks.add(floor);
-				PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(roof, new TrapDoorBlock()));
-				PlayerControlledActor.addActionToPlayerPool(new PlaceFurnitureAction(roof, new Scaffolding()));
+				PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(roof, new CeilingTile()));
+				PlayerControlledActor.addActionToPlayerPool(new PlaceFurnitureAction(roof, new Trapdoor()));
 				PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(floor, new RoomWallBlock()));
 			}
 		}
@@ -87,7 +89,7 @@ public class ConstructAction extends Action {
 			wallsBuilt = wallsBuilt();
 			return Action.Pool;
 		}
-
+		
 		if (!scaffoldingPlaced) {
 			scaffoldingPlaced = scaffoldingPlaced(performer);
 			return Action.Pool;
@@ -138,8 +140,8 @@ public class ConstructAction extends Action {
 		if (!room.needsWalls())
 			return true;
 		for (Position p : trapDoorBlocks) {
-			if (!Game.getMap().getBuildingBlock(p).getID().equals("Trap door")) {
-				PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(p, new TrapDoorBlock()));
+			if (!Game.getMap().getBuildingBlock(p).getID().equals("Ceiling tile")) {
+				PlayerControlledActor.addActionToPlayerPool(new PlaceRoomBlockAction(p, new CeilingTile()));
 				return false;
 			}
 		}
@@ -156,24 +158,24 @@ public class ConstructAction extends Action {
 		if (!room.needsWalls())
 			return true;
 		scaffoldingPlaced = true;
-		for (int r = room.getPosition().getRow(); r < room.getPosition().getRow() + height - 1; r++) {
+		for (int r = room.getPosition().getRow() + 1; r < room.getPosition().getRow() + height - 1; r++) {
 			Position sPos1 = new Position(r, room.getPosition().getCol());
 			Position sPos2 = new Position(r, Math.floorMod(room.getPosition().getCol() + room.getRequiredWidth() - 1,
 					Game.getMap().getTotalWidth()));
-			performer.getActionPool().add(new PlaceFurnitureAction(sPos1, new Scaffolding()));
-			performer.getActionPool().add(new PlaceFurnitureAction(sPos2, new Scaffolding()));
+			performer.getActionPool().add(new PlaceFurnitureAction(sPos1, new Ladder()));
+			performer.getActionPool().add(new PlaceFurnitureAction(sPos2, new Ladder()));
 			sideBlocks.add(sPos1);
 			sideBlocks.add(sPos2);
 		}
 		for (Position p : trapDoorBlocks) {
 			if (Game.getMap().getBuildingBlock(p).getFurniture() == null) {
-				Game.getMap().getBuildingBlock(p).addFurniture(new Scaffolding());
+				Game.getMap().getBuildingBlock(p).addFurniture(new Trapdoor());
 				scaffoldingPlaced = false;
 			}
 		}
 		for (Position q : sideBlocks) {
 			if (Game.getMap().getBuildingBlock(q).getFurniture() == null) {
-				Game.getMap().getBuildingBlock(q).addFurniture(new Scaffolding());
+				Game.getMap().getBuildingBlock(q).addFurniture(new Ladder());
 				scaffoldingPlaced = false;
 			}
 		}
@@ -188,10 +190,13 @@ public class ConstructAction extends Action {
 				Math.floorMod(room.getPosition().getCol() + 1, Game.getMap().getTotalWidth()));
 		BuildingBlock pileBlock = Game.getMap().getBuildingBlock(pileLoc);
 		pileBlock.addFurniture(cmp);
-		if (pileBlock.getFurniture() != null && pileBlock.getFurniture().getID().equals("Construction material pile"))
+		if (pileBlock.getFurniture() != null && pileBlock.getFurniture().getID().equals("Construction material pile")) {
+			String update = "To finish building this " + room.getID() + ", the dragons need to gather " + cmp.toString();
+			Log.add(update);
 			return true;
-		else
+		} else {
 			return false;
+		}
 	}
 	
 	private void checkForActorContributions() {

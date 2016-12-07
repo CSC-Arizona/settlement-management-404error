@@ -63,4 +63,9 @@ public class Spaceship extends Room {
 		
 	}
 
+	@Override
+	public String getID() {
+		return "the ticket back home";
+	}
+
 }

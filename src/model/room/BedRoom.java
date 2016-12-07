@@ -95,4 +95,9 @@ public class BedRoom extends Room {
 		int pos = this.getRequiredWidth() - (2 * upgradeNum);
 		reqFurniture.put(new Position(2, pos), new Bed());
 	}
+
+	@Override
+	public String getID() {
+		return "bedroom";
+	}
 }

@@ -91,4 +91,9 @@ public class CraftingRoom extends Room {
 		int pos = this.getRequiredWidth() - (2 * upgradeNum);
 		reqFurniture.put(new Position(2, pos), new Fireplace());
 	}
+
+	@Override
+	public String getID() {
+		return "crafting room";
+	}
 }

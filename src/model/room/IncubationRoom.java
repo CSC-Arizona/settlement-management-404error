@@ -91,4 +91,9 @@ public class IncubationRoom extends Room {
 		reqFurniture.put(new Position(2, pos), new IncubationChamber());
 	}
 
+	@Override
+	public String getID() {
+		return "incubation room";
+	}
+
 }

@@ -97,4 +97,9 @@ public class InfirmaryRoom extends Room {
 		reqFurniture.put(new Position(2, pos), new HealingBed());
 	}
 
+	@Override
+	public String getID() {
+		return "infirmary";
+	}
+
 }

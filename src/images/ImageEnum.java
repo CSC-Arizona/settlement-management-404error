@@ -35,7 +35,9 @@ public enum ImageEnum {
 			new String[] { "apple_seed.png" }), MUSHROOMBLOCK(
 			new String[] { "mushroomblock.png" }), MUSHROOMFRUITBLOCK(
 			new String[] { "mushroomfruitblock.png" }), EGG(
-			new String[] { "egg.png" });
+			new String[] { "egg.png" }), MATERIALPILE(
+		    new String[] { "materialPile.png" }), TRAPDOOR(
+		    new String[] { "trapdoor.png" });
 
 	private String[] filenames;
 	private ArrayList<BufferedImage> images;

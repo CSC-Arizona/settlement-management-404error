@@ -26,7 +26,7 @@ public class ConstructionMaterialPile extends Furniture {
 	PrintableItemsList pil;
 	
 	public ConstructionMaterialPile(List<Item> list) {
-		super(100, 100, "Construction material pile", null);
+		super(100, 100, "Construction material pile", ImageEnum.MATERIALPILE);
 		pil = new PrintableItemsList();
 		reqMaterials = list;
 		if (list != null) {

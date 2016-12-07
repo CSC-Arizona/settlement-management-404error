@@ -155,4 +155,9 @@ public class FarmRoom extends Room {
 	public void performUpgrade(int upgradeNum) {
 		// do nothing
 	}
+
+	@Override
+	public String getID() {
+		return "farm room";
+	}
 }

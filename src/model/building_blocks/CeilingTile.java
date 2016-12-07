@@ -8,7 +8,7 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
-public class TrapDoorBlock extends BuildingBlock {
+public class CeilingTile extends BuildingBlock {
 	/**
 	 * 
 	 */
@@ -17,9 +17,9 @@ public class TrapDoorBlock extends BuildingBlock {
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsOnGround;
 	private final static int durability = 0;
-	public final static String id = "Trap door";
+	public final static String id = "Ceiling tile";
 	
-	public TrapDoorBlock() {
+	public CeilingTile() {
 		super(durability, false, true, new Color(27,47,54), null, id, null);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
