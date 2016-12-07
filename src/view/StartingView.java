@@ -55,8 +55,7 @@ public class StartingView extends JPanel {
 	private int blockSizeX = windowWidth / visibleWidth;
 
 	public StartingView(Controller controller) {
-		
-
+				
 		this.controller = controller;
 		for (ImageEnum e : ImageEnum.values()) {
 			e.createBufferedImages(blockSizeY, blockSizeX);
@@ -88,6 +87,7 @@ public class StartingView extends JPanel {
 		controller.pack();
 		newGameButton.requestFocusInWindow();
 		controller.setVisible(true);
+		
 		update.start();
 	}
 

@@ -30,7 +30,12 @@ public enum ImageEnum {
 			new String[] { "seed.png" }), ANTIMATTERDEFENESTRATOR(
 			new String[] { "antimatter_defenestrator.png" }), BLACKHOLEGENERATOR(
 			new String[] { "black_hole_generator.png" }), RETROENCABULATOR(
-			new String[] { "retroencabulator.png" });
+			new String[] { "retroencabulator.png" }), APPLEPIE(
+			new String[] { "apple_pie.png" }), APPLESEED(
+			new String[] { "apple_seed.png" }), MUSHROOMBLOCK(
+			new String[] { "mushroomblock.png" }), MUSHROOMFRUITBLOCK(
+			new String[] { "mushroomfruitblock.png" }), EGG(
+			new String[] { "egg.png" });
 
 	private String[] filenames;
 	private ArrayList<BufferedImage> images;
