@@ -22,12 +22,18 @@ public class Save implements Serializable {
 	private static final long serialVersionUID = 8859099312060885013L;
 	private Map map;
 	private List<Actor> allActors;
-	private ActionPool playerActionPool = new ActionPool();
-	private ActionPool enemyActionPool = new ActionPool();
+	private List<PlayerControlledActor> playerActors;
+	private List<EnemyActor> enemyActors;
+	private ActionPool playerActionPool;
+	private ActionPool enemyActionPool;
 	
 	public Save(){
 		map = Game.getMap();
 		allActors = Actor.allActors;
+		playerActors = PlayerControlledActor.allActors;
+		enemyActors = EnemyActor.allActors;
+		playerActionPool = PlayerControlledActor.playerActionPool;
+		enemyActionPool = EnemyActor.enemyActionPool;
 	}
 	
 	public void setState(){
@@ -35,6 +41,8 @@ public class Save implements Serializable {
 		Actor.allActors = allActors;
 		PlayerControlledActor.playerActionPool = playerActionPool;
 		EnemyActor.enemyActionPool = enemyActionPool;
+		PlayerControlledActor.allActors = playerActors;
+		EnemyActor.allActors = enemyActors;
 	}
 
 }
