@@ -131,6 +131,9 @@ public class StartingView extends JPanel {
 		mapLabelTable.put(new Integer(66), new JLabel("LG"));
 		mapLabelTable.put(new Integer(100), new JLabel("XL"));
 		mapSize.setLabelTable(mapLabelTable);
+		mapSize.addChangeListener(e->{
+			mapSize.revalidate();;
+		});
 		mapSize.setPaintLabels(true);
 
 		mapSize.setBackground(new Color(0, 0, 0, 0));
@@ -152,6 +155,9 @@ public class StartingView extends JPanel {
 		difficulty.setPaintLabels(true);
 		difficulty.setBackground(new Color(0, 0, 0, 0));
 		difficultyPanel.add(difficulty);
+		difficulty.addChangeListener(e->{
+			
+		});
 		difficultyPanel.setBorder(BorderFactory.createTitledBorder("Select the difficulty"));
 
 		JPanel buttons = new JPanel();
