@@ -13,7 +13,6 @@ public class PlayerIdleAction extends Action {
 
 	@Override
 	public int execute(Actor performer) {
-		//return Action.COMPLETED;
 		ArrayList<Position> valid = new ArrayList<>();
 		int x = rand.nextInt(40) - 20;
 
