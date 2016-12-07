@@ -368,9 +368,7 @@ public class Controller extends JFrame {
 						// Issue pick up item command for each item dropped
 						for (Item curr : yield) {
 							wherePlotIs.addItemToGround(curr);
-							// TODO: Make sure item is actually being added to
-							// itemsOnGround arrayList
-							// TODO: Need to remove item from ground when picked
+							// Need to remove item from ground when picked
 							// up
 							Game.getMap().addItemToGround(plotPosition, curr);
 							PlayerControlledActor

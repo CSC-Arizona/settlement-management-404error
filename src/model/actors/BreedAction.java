@@ -6,6 +6,8 @@ import model.furniture.Furniture;
 import model.game.Game;
 import model.items.DragonEggItem;
 
+//Author: Maxwell Faridian
+//This class has an actor drop off an egg at an incubation chamber and then creates an Incubation action
 public class BreedAction extends Action{
 	
 	/**
