@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -98,7 +100,6 @@ public class AlternativeView extends JPanel {
 
 	private JComboBox<String> constructRoomComboBox;
 	private JButton constructRoomButton;
-	
 	private JComboBox<String> craftComboBox;
 	private JButton craftButton;
 
@@ -852,7 +853,7 @@ public class AlternativeView extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			activateConstructionSelection();
+			//activateConstructionSelection();
 		}
 
 	}
