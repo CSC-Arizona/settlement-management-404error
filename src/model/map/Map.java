@@ -851,6 +851,7 @@ public class Map implements Serializable {
 	public void checkOnDesignatedRooms() {
 		for (Room room : designatedRooms) {
 			if (room.isAccessible() && room.isUnderConstruction() == false) {
+				System.out.println("Room at " + room.getPosition() + " is accessible and wasn't yet under construction.");
 				room.setUnderConstruction(true);
 //				designatedRooms.remove(room);
 				PlayerControlledActor.addActionToPlayerPool(new ConstructAction(room));
