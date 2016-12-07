@@ -1,5 +1,7 @@
 package model.map;
 
+import images.ImageEnum;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,6 +78,8 @@ public class Map implements Serializable {
 	public Position ship;
 
 	private int time;
+
+	private int spaceShipRepairLevel = 0;
 
 	public Map(MapParameters mapParameters, Random random) {
 		this.blocksMarkedAsDesignated = new HashMap<>();
@@ -181,11 +185,49 @@ public class Map implements Serializable {
 					mapParameters.mapWidth)] = new SpaceShipCenterBlock();
 		}
 
-		for (int[] offset : lights) {
-			map[row + offset[0]][Math.floorMod(col + offset[1],
-					mapParameters.mapWidth)] = new SpaceShipLightBlock();
+		setSpaceShipLights();
+
+	}
+
+	private void setSpaceShipLights() {
+		int col = ship.getCol();
+		int row = ship.getRow()-3;
+
+		int[][] lightsLevel1 = new int[][] { { 0, -5 }, { 0, -3 }, { 0, -1 },
+				{ 0, 1 }, { 0, 3 }, { 0, 5 } };
+		int[][] lightsLevel2 = new int[][] { { 0, -5 }, { 0, -4 }, { 0, -3 },
+				{ 0, -2 }, { 0, -1 }, { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 },
+				{ 0, 4 }, { 0, 5 } };
+
+		if (spaceShipRepairLevel == 0) {
+			return;
 		}
 
+		if (spaceShipRepairLevel == 1) {
+			for (int[] offset : lightsLevel1) {
+				map[row + offset[0]][Math.floorMod(col + offset[1],
+						mapParameters.mapWidth)] = new SpaceShipLightBlock();
+			}
+			return;
+		}
+
+		if (spaceShipRepairLevel == 2) {
+			for (int[] offset : lightsLevel2) {
+				map[row + offset[0]][Math.floorMod(col + offset[1],
+						mapParameters.mapWidth)] = new SpaceShipLightBlock();
+			}
+			return;
+		}
+
+		if (spaceShipRepairLevel == 3) {
+			for (int[] offset : lightsLevel2) {
+				map[row + offset[0]][Math.floorMod(col + offset[1],
+						mapParameters.mapWidth)] = new SpaceShipLightBlock();
+				map[row + offset[0]][Math.floorMod(col + offset[1],
+						mapParameters.mapWidth)]
+						.setImage(ImageEnum.SPACESHIPLIGHT_FINAL);
+			}
+		}
 	}
 
 	private void clearBlocksAboveSpaceShip() {
@@ -195,13 +237,9 @@ public class Map implements Serializable {
 				{ -1, 2 }, { -1, 3 }, { 0, -5 }, { 0, -4 }, { 0, -3 },
 				{ 0, -2 }, { 0, -1 }, { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 },
 				{ 0, 4 }, { 0, 5 } };
-		int col = 0;
-		int row = mapParameters.airHeight;
-		while (!map[row][col].getID().equals(SpaceShipCenterBlock.id)) {
-			row -= 1;
-			if (row < 0)
-				break;
-		}
+		int col = ship.getCol();
+		int row = ship.getRow()-3;
+
 		ArrayList<AppleTree> treesToRemove = new ArrayList<>();
 		for (int[] offset : definition) {
 			for (int i = row + offset[0]; i > 0; i--) {
@@ -651,7 +689,7 @@ public class Map implements Serializable {
 			}
 		}
 	}
-	
+
 	public ArrayList<Integer[]> getCavernFloorBlocks() {
 		return cavernFloorBlocks;
 	}
