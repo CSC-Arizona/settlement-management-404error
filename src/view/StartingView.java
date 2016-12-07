@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.Timer;
 
 import controller.Controller;
@@ -60,6 +61,7 @@ public class StartingView extends JPanel {
 	private int blockSizeX = windowWidth / visibleWidth;
 	private Image menu;
 	private Box mainMenu;
+	private Box options;
 
 	public StartingView(Controller controller) {
 				
@@ -79,6 +81,7 @@ public class StartingView extends JPanel {
 		visibleCornerX = (Game.getMap().getTotalWidth() - visibleWidth / 2);
 		controller.setVisible(true);
 		createMainMenu();
+		createOptionMenu();
 		setContent(mainMenu);
 		update.start();
 	}
@@ -107,15 +110,59 @@ public class StartingView extends JPanel {
 		controller.pack();
 	}
 	
+	private void createOptionMenu(){
+		options = Box.createVerticalBox();
+		options.add(Box.createVerticalGlue());
+		
+		JPanel size = new JPanel();
+		size.setBackground(new Color(0,0,0,0));
+		JSlider mapSize = new JSlider();
+		mapSize.setBackground(new Color(0,0,0,0));
+		size.add(mapSize);
+		size.setBorder(BorderFactory.createTitledBorder("Select the size of the map"));
+		
+		JPanel difficultyPanel = new JPanel();
+		difficultyPanel.setBackground(new Color(0,0,0,0));
+		JSlider difficulty = new JSlider();
+		difficulty.setBackground(new Color(0,0,0,0));
+		difficultyPanel.add(difficulty);
+		difficultyPanel.setBorder(BorderFactory.createTitledBorder("Select the size of the map"));
+		
+		JPanel buttons = new JPanel();
+		buttons.setBackground(new Color(0,0,0,0));
+		JButton goBack = new JButton("Back");
+		goBack.addActionListener(e->{
+			setContent(mainMenu);
+		});
+		JButton create = new JButton("Start!");
+		create.addActionListener(e->{
+			createGame();
+		});
+		buttons.add(goBack);
+		buttons.add(create);
+		
+		options.add(size);
+		options.add(difficultyPanel);
+		options.add(buttons);
+		controller.getContentPane().add(this);
+		controller.pack();
+	}
+	
 	private void setContent(JComponent content){
+		this.removeAll();
 		this.add(content);
+		this.revalidate();
 	}
 
-	private void newGame() {
+	private void createGame(){
 		update.stop();
 		Game.reset();
 		Log.clear();
 		controller.startNewGame(new Settings(Settings.SMALL,Settings.IMPOSSIBLE));
+	}
+	
+	private void newGame() {
+		this.setContent(options);
 	}
 
 	private void loadOldGame() {
