@@ -356,7 +356,7 @@ public class Map implements Serializable {
 				} else if (testValue < 0.95) {
 					X += 1;
 				} else {
-					Y -= 1;
+					//Y -= 1;
 				}
 				if (Y < 0)
 					Y++;
