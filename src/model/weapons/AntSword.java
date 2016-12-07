@@ -22,7 +22,7 @@ public class AntSword extends Weapon{
 	//TODO: Test cases
 
 	public AntSword() {
-		super(attackMod, 0, 18.0, "Ant sword");
+		super(attackMod, 0, 18.0, "Ant sword", null);
 		basicAntSwordList = new LinkedList<>();
 		basicAntSwordList.add(new StoneItem());
 		basicAntSwordList.add(new StoneItem());
@@ -30,7 +30,6 @@ public class AntSword extends Weapon{
 		basicAntSwordList.add(new AntLarvaItem());
 	}
 
-	@Override
 	public List<Item> getRequiredMaterials() {
 		return basicAntSwordList;
 	}

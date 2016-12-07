@@ -18,18 +18,17 @@ public class IronShield extends Armor {
 	private static final long serialVersionUID = -8280816099515266107L;
 	private final static int attackMod = 18;
 	private final static int defenseMod = 14;
-	private List<Item> isList;
+	private static List<Item> isList;
 	
 	public IronShield() {
-		super(false, attackMod, 0, 21.0, defenseMod, "Iron shield");
+		super(false, attackMod, 0, 21.0, defenseMod, "Iron shield", null);
 		isList = new LinkedList<>();
 		isList.add(new IronItem());
 		isList.add(new IronItem());
 		isList.add(new IronItem());
 	}
 
-	@Override
-	public List<Item> getRequiredMaterials() {
+	public static List<Item> getRequiredMaterials() {
 		return isList;
 	}
 }

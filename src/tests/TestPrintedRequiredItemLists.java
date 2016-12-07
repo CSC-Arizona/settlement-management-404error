@@ -53,52 +53,52 @@ import model.weapons.UltraSword;
  */
 public class TestPrintedRequiredItemLists {
 
-	@Test
-	public void testCookable() {
-		BreadCookable bc = new BreadCookable();
-		assertEquals("2 Wheats", bc.reqMaterialsToString());
-		AntLarvaPieCookable alpc = new AntLarvaPieCookable();
-		assertEquals("3 Ant larvas, 1 Wheat", alpc.reqMaterialsToString());
-		ApplePieCookable apc = new ApplePieCookable();
-		assertEquals("3 Apples, 1 Wheat", apc.reqMaterialsToString());
-	}
-	
-	@Test
-	public void testCraftable() {
-		// armor
-		GreatChestPlate gpc = new GreatChestPlate();
-		assertEquals("2 Woods, 3 Irons, 2 Stones", gpc.reqMaterialsToString());
-		GreatShield gs = new GreatShield();
-		assertEquals("1 Wood, 2 Irons, 1 Stone", gs.reqMaterialsToString());
-		IronChestPlate icp = new IronChestPlate();
-		assertEquals("4 Irons", icp.reqMaterialsToString());
-		IronShield is = new IronShield();
-		assertEquals("3 Irons", is.reqMaterialsToString());
-		StoneChestPlate scp = new StoneChestPlate();
-		assertEquals("4 Stones", scp.reqMaterialsToString());
-		StoneShield ss = new StoneShield();
-		assertEquals("3 Stones", ss.reqMaterialsToString());
-		WoodChestPlate wcp = new WoodChestPlate();
-		assertEquals("4 Woods", wcp.reqMaterialsToString());
-		WoodShield ws = new WoodShield();
-		assertEquals("3 Woods", ws.reqMaterialsToString());
-		// weapons
-		BasicIronAxe bia = new BasicIronAxe();
-		assertEquals("2 Woods, 1 Iron, 1 Stone", bia.reqMaterialsToString());
-		BasicStoneAxe bsa = new BasicStoneAxe();
-		assertEquals("2 Woods, 1 Stone", bsa.reqMaterialsToString());
-		BasicSword bs = new BasicSword();
-		assertEquals("1 Wood, 2 Irons, 2 Stones", bs.reqMaterialsToString());
-		FortifiedIronAxe fia = new FortifiedIronAxe();
-		assertEquals("2 Woods, 2 Irons, 1 Stone", fia.reqMaterialsToString());
-		FortifiedStoneAxe fsa = new FortifiedStoneAxe();
-		assertEquals("2 Woods, 2 Stones", fsa.reqMaterialsToString());
-		LureAxe la = new LureAxe();
-		assertEquals("1 Ant larva, 2 Woods, 1 Stone", la.reqMaterialsToString());
-		UltraSword us = new UltraSword();
-		assertEquals("1 Wood, 3 Irons, 3 Stones", us.reqMaterialsToString());
-	}
-	
+//	@Test
+//	public void testCookable() {
+//		BreadCookable bc = new BreadCookable();
+//		assertEquals("2 Wheats", bc.reqMaterialsToString());
+//		AntLarvaPieCookable alpc = new AntLarvaPieCookable();
+//		assertEquals("3 Ant larvas, 1 Wheat", alpc.reqMaterialsToString());
+//		ApplePieCookable apc = new ApplePieCookable();
+//		assertEquals("3 Apples, 1 Wheat", apc.reqMaterialsToString());
+//	}
+//	
+//	@Test
+//	public void testCraftable() {
+//		// armor
+//		GreatChestPlate gpc = new GreatChestPlate();
+//		assertEquals("2 Woods, 3 Irons, 2 Stones", gpc.reqMaterialsToString());
+//		GreatShield gs = new GreatShield();
+//		assertEquals("1 Wood, 2 Irons, 1 Stone", gs.reqMaterialsToString());
+//		IronChestPlate icp = new IronChestPlate();
+//		assertEquals("4 Irons", icp.reqMaterialsToString());
+//		IronShield is = new IronShield();
+//		assertEquals("3 Irons", is.reqMaterialsToString());
+//		StoneChestPlate scp = new StoneChestPlate();
+//		assertEquals("4 Stones", scp.reqMaterialsToString());
+//		StoneShield ss = new StoneShield();
+//		assertEquals("3 Stones", ss.reqMaterialsToString());
+//		WoodChestPlate wcp = new WoodChestPlate();
+//		assertEquals("4 Woods", wcp.reqMaterialsToString());
+//		WoodShield ws = new WoodShield();
+//		assertEquals("3 Woods", ws.reqMaterialsToString());
+//		// weapons
+//		BasicIronAxe bia = new BasicIronAxe();
+//		assertEquals("2 Woods, 1 Iron, 1 Stone", bia.reqMaterialsToString());
+//		BasicStoneAxe bsa = new BasicStoneAxe();
+//		assertEquals("2 Woods, 1 Stone", bsa.reqMaterialsToString());
+//		BasicSword bs = new BasicSword();
+//		assertEquals("1 Wood, 2 Irons, 2 Stones", bs.reqMaterialsToString());
+//		FortifiedIronAxe fia = new FortifiedIronAxe();
+//		assertEquals("2 Woods, 2 Irons, 1 Stone", fia.reqMaterialsToString());
+//		FortifiedStoneAxe fsa = new FortifiedStoneAxe();
+//		assertEquals("2 Woods, 2 Stones", fsa.reqMaterialsToString());
+//		LureAxe la = new LureAxe();
+//		assertEquals("1 Ant larva, 2 Woods, 1 Stone", la.reqMaterialsToString());
+//		UltraSword us = new UltraSword();
+//		assertEquals("1 Wood, 3 Irons, 3 Stones", us.reqMaterialsToString());
+//	}
+//	
 	@Test
 	public void testFurniture() {
 		AppleTreePlot atp = new AppleTreePlot();

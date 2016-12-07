@@ -45,7 +45,7 @@ public class ConstructionMaterialPile extends Furniture {
 
 	@Override
 	public String toString() {
-		return "Construction materials still required: " + pil.toString();
+		return pil.toString();
 	}
 	
 	/*

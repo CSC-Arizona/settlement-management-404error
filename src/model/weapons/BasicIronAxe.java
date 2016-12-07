@@ -18,10 +18,10 @@ public class BasicIronAxe extends Weapon {
 	 */
 	private static final long serialVersionUID = -3576539972302576150L;
 	private final static int attackMod = 19;
-	private List<Item> basicIronAxeList;
+	private static List<Item> basicIronAxeList;
 	
 	public BasicIronAxe() {
-		super(attackMod, 0, 18.0, "Basic iron axe");
+		super(attackMod, 0, 18.0, "Basic iron axe", null);
 		basicIronAxeList = new LinkedList<>();
 		basicIronAxeList.add(new WoodItem());
 		basicIronAxeList.add(new WoodItem());
@@ -29,8 +29,7 @@ public class BasicIronAxe extends Weapon {
 		basicIronAxeList.add(new IronItem());
 	}
 
-	@Override
-	public List<Item> getRequiredMaterials() {
+	public static List<Item> getRequiredMaterials() {
 		return basicIronAxeList;
 	}
 

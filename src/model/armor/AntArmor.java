@@ -23,7 +23,7 @@ public class AntArmor extends Armor{
 	private List<Item> antArmorList;
 
 	public AntArmor() {
-		super(false, attackMod, 0, 20.0, defenseMod, "Ant armor");
+		super(false, attackMod, 0, 20.0, defenseMod, "Ant armor", null);
 		antArmorList = new LinkedList<>();
 		antArmorList.add(new IronItem());
 		antArmorList.add(new IronItem());
@@ -31,7 +31,6 @@ public class AntArmor extends Armor{
 		antArmorList.add(new AntLarvaItem());
 	}
 
-	@Override
 	public List<Item> getRequiredMaterials() {
 		return antArmorList;
 	}

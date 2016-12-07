@@ -19,10 +19,10 @@ public class LureAxe extends Weapon {
 	private static final long serialVersionUID = -7178058005109807707L;
 	//This item has a weaker attackMod since it attracts ants
 	private final static int attackMod = 12;
-	private List<Item> laList;
+	private static List<Item> laList;
 	
 	public LureAxe() {
-		super(attackMod, 1, 11.5, "Lure axe");
+		super(attackMod, 1, 11.5, "Lure axe", null);
 		laList = new LinkedList<>();
 		laList.add(new WoodItem());
 		laList.add(new WoodItem());
@@ -30,8 +30,7 @@ public class LureAxe extends Weapon {
 		laList.add(new AntLarvaItem());
 	}
 
-	@Override
-	public List<Item> getRequiredMaterials() {
+	public static List<Item> getRequiredMaterials() {
 		return laList;
 	}
 

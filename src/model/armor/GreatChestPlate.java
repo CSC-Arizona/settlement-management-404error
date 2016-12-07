@@ -20,10 +20,10 @@ public class GreatChestPlate extends Armor {
 	private static final long serialVersionUID = 4247302451269482141L;
 	private final static int attackMod = 22;
 	private final static int defenseMod = 18;
-	private List<Item> gcpList;
+	private static List<Item> gcpList;
 	
 	public GreatChestPlate() {
-		super(false, attackMod, 0, 30.0, defenseMod, "Great chestplate");
+		super(false, attackMod, 0, 30.0, defenseMod, "Great chestplate", null);
 		gcpList = new LinkedList<>();;
 		gcpList.add(new WoodItem());
 		gcpList.add(new WoodItem());
@@ -35,8 +35,7 @@ public class GreatChestPlate extends Armor {
 		
 	}
 
-	@Override
-	public List<Item> getRequiredMaterials() {
+	public static List<Item> getRequiredMaterials() {
 		return gcpList;
 	}
 }

@@ -18,10 +18,10 @@ public class FortifiedStoneAxe extends Weapon {
 	 */
 	private static final long serialVersionUID = -7624686854967576466L;
 	private final static int attackMod = 17;
-	private List<Item> fsaList;
+	private static List<Item> fsaList;
 	
 	public FortifiedStoneAxe() {
-		super(attackMod, 0, 16.0, "Fortified stone axe");
+		super(attackMod, 0, 16.0, "Fortified stone axe", null);
 		fsaList = new LinkedList<>();
 		fsaList.add(new WoodItem());
 		fsaList.add(new WoodItem());
@@ -29,8 +29,7 @@ public class FortifiedStoneAxe extends Weapon {
 		fsaList.add(new StoneItem());	
 	}
 
-	@Override
-	public List<Item> getRequiredMaterials() {
+	public static List<Item> getRequiredMaterials() {
 		return fsaList;
 	}
 	
