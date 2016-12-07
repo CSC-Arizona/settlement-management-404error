@@ -3,6 +3,8 @@ package controller;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +13,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -207,7 +214,7 @@ public class Controller extends JFrame {
 		this.setLocation(20, 20);
 		this.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		this.setSize(new Dimension(windowWidth, windowHeight));
-
+		new SongPlayer().run();
 		this.setVisible(true);
 
 		if (skipLoadScreen) {
@@ -312,6 +319,26 @@ public class Controller extends JFrame {
 
 	public Map getMap() {
 		return map;
+	}
+	
+	private class SongPlayer implements Runnable{
+
+		/* (non-Javadoc)
+		 * @see java.lang.Runnable#run()
+		 */
+		@Override
+		public void run() {
+			try {
+				AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/resources/sounds/song.wav").getAbsoluteFile());
+				Clip clip = AudioSystem.getClip();
+				clip.open(audioInputStream);
+				clip.start();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 	private class WindowCloser implements WindowListener {
