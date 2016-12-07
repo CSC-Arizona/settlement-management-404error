@@ -24,33 +24,33 @@ public class AppleTree implements Serializable {
 	 */
 	private static final long serialVersionUID = 7139983639712762055L;
 	private ArrayList<Position> trunk;
-	private ArrayList<Integer[]> leaves;
-	private ArrayList<Integer[]> apples;
+	private ArrayList<Position> leaves;
+	private ArrayList<Position> apples;
 	private LinkedList<Item> allLoot;
+	private Map map;
 
 	private Random random;
 	private int totalWidth;
 	private int airHeight;
-	private BuildingBlock[][] map;
 
 	private int treeHeight;
-	private int treeX;
-	private int treeY;
+	private Position startingPos;
 	private int[] heightParameters = new int[] { 7, 2 };
 	private int[] leafParameters = new int[] { 50, 50 };
 	private int[] appleParameters = new int[] { 3, 0 };
 
-	private int[] getStartingPos() {
+	private Position getStartingPos() {
 		int treeX = random.nextInt(totalWidth);
 
 		// move up until we are no longer underground
 		int treeY = airHeight;
-		while (!map[treeY][treeX].getID().equals(AirBlock.id)) {
+		while (!map.getBuildingBlock(treeY, treeX).getID()
+				.equals(AirBlock.id)) {
 			treeY -= 1;
 			if (treeY < 0)
 				break;
 		}
-		return new int[] { treeX, treeY };
+		return new Position(treeY, treeX);
 	}
 
 	/**
@@ -61,25 +61,23 @@ public class AppleTree implements Serializable {
 	 * @param map
 	 * @param random
 	 */
-	public AppleTree(int totalWidth, int airHeight, BuildingBlock[][] map,
-			Random random) {
+	public AppleTree(int totalWidth, int airHeight, Map map, Random random) {
 		trunk = new ArrayList<Position>();
-		leaves = new ArrayList<Integer[]>();
-		apples = new ArrayList<Integer[]>();
+		leaves = new ArrayList<Position>();
+		apples = new ArrayList<Position>();
 		this.totalWidth = totalWidth;
 		this.airHeight = airHeight;
-		this.map = map;
 		this.random = random;
 		this.allLoot = new LinkedList<>();
+		this.map = map;
 
 		treeHeight = random.nextInt(heightParameters[0]) + heightParameters[1];
 
-		int[] startingPos = getStartingPos();
+		startingPos = getStartingPos();
 
-		treeX = startingPos[0];
-		treeY = startingPos[1];
-
-		if (map[treeY + 1][treeX].getID().equals(EarthBlock.id)) {
+		if (map
+				.getBuildingBlock(startingPos.getRow() + 1,
+						startingPos.getCol()).getID().equals(EarthBlock.id)) {
 			addTrunk();
 			addLeaves();
 			addApples();
@@ -89,8 +87,9 @@ public class AppleTree implements Serializable {
 
 	private void addTrunk() {
 		for (int j = 0; j < treeHeight; j++) {
-			if (treeY - j >= 0) {
-				trunk.add(new Position(treeY - j, treeX));
+			if (startingPos.getRow() - j >= 0) {
+				trunk.add(new Position(startingPos.getRow() - j, startingPos
+						.getCol()));
 			}
 		}
 	}
@@ -102,7 +101,8 @@ public class AppleTree implements Serializable {
 	private void addLeaves() {
 		int leafCount = random.nextInt(leafParameters[0]) + leafParameters[1];
 		ArrayList<Integer[]> availableSpaces = new ArrayList<Integer[]>();
-		availableSpaces.add(new Integer[] { treeY - treeHeight, treeX });
+		availableSpaces.add(new Integer[] { startingPos.getRow() - treeHeight,
+				startingPos.getCol() });
 		int[] offsets = new int[] { -1, 0, 1 };
 		for (int j = 0; j < leafCount; j++) {
 			Integer[] basePos = availableSpaces.get(random
@@ -115,11 +115,12 @@ public class AppleTree implements Serializable {
 				int newLeafY = basePos[0] + o1;
 				int newLeafX = basePos[1] + o2;
 
-				if ((newLeafY <= (treeY - treeHeight + 1))) {
+				if ((newLeafY <= (startingPos.getRow() - treeHeight + 1))) {
 					newLeafX = Math.floorMod(newLeafX, totalWidth);
 					if (newLeafY >= 0) {
-						if (map[newLeafY][newLeafX].getID().equals(AirBlock.id)) {
-							leaves.add(new Integer[] { newLeafY, newLeafX });
+						if (map.getBuildingBlock(newLeafY, newLeafX)
+								.getID().equals(AirBlock.id)) {
+							leaves.add(new Position(newLeafY, newLeafX));
 							availableSpaces.add(new Integer[] { newLeafY,
 									newLeafX });
 						}
@@ -135,7 +136,7 @@ public class AppleTree implements Serializable {
 					+ appleParameters[1];
 
 			for (int i = 0; i < totalApples; i++) {
-				Integer[] applePos = leaves.get(random.nextInt(leaves.size()));
+				Position applePos = leaves.get(random.nextInt(leaves.size()));
 				apples.add(applePos);
 			}
 		}
@@ -146,27 +147,28 @@ public class AppleTree implements Serializable {
 	 */
 	public void addToMap() {
 		for (Position pos : trunk) {
-			if (map[pos.getRow()][pos.getCol()].getID().equals(AirBlock.id)) {
+			if (map.getBuildingBlock(pos).getID().equals(AirBlock.id)) {
 				AppleTreeTrunkBlock attb = new AppleTreeTrunkBlock();
-				map[pos.getRow()][pos.getCol()] = attb;
+				map.setBuildingBlock(pos, attb);
 				for (Item i : attb.lootBlock())
 					allLoot.add(i);
 			}
 		}
 
-		for (Integer[] pos : leaves) {
-			if (map[pos[0]][pos[1]].getID().equals(AirBlock.id)) {
+		for (Position pos : leaves) {
+			if (map.getBuildingBlock(pos).getID().equals(AirBlock.id)) {
 				LeafBlock lb = new LeafBlock();
-				map[pos[0]][pos[1]] = lb;
+				map.setBuildingBlock(pos, lb);
 				for (Item i : lb.lootBlock())
 					allLoot.add(i);
 			}
 		}
 
-		for (Integer[] pos : apples) {
-			if (map[pos[0]][pos[1]].getID().equals(LeafBlock.id)) {
+		for (Position pos : apples) {
+			if (map.getBuildingBlock(pos).getID()
+					.equals(LeafBlock.id)) {
 				AppleTreeLeafBlock atlb = new AppleTreeLeafBlock();
-				map[pos[0]][pos[1]] = atlb;
+				map.setBuildingBlock(pos, atlb);
 				for (Item i : atlb.lootBlock())
 					allLoot.add(i);
 			}
@@ -179,38 +181,41 @@ public class AppleTree implements Serializable {
 	 */
 	public void removeFromMap() {
 		for (Position pos : trunk) {
-			if (map[pos.getRow()][pos.getCol()].getID().equals(
-					AppleTreeTrunkBlock.id)) {
-				map[pos.getRow()][pos.getCol()] = new AirBlock();
+			if (map.getBuildingBlock(pos).getID()
+					.equals(AppleTreeTrunkBlock.id)) {
+				map.setBuildingBlock(pos, new AirBlock());
 			}
 		}
 
-		for (Integer[] pos : leaves) {
-			if (map[pos[0]][pos[1]].getID().equals(LeafBlock.id)) {
-				map[pos[0]][pos[1]] = new AirBlock();
+		for (Position pos : leaves) {
+			if (map.getBuildingBlock(pos).getID()
+					.equals(LeafBlock.id)) {
+				map.setBuildingBlock(pos, new AirBlock());
 			}
 		}
 
-		for (Integer[] pos : apples) {
-			if (map[pos[0]][pos[1]].getID().equals(AppleTreeLeafBlock.id)) {
-				map[pos[0]][pos[1]] = new AirBlock();
+		for (Position pos : apples) {
+			if (map.getBuildingBlock(pos).getID()
+					.equals(AppleTreeLeafBlock.id)) {
+				map.setBuildingBlock(pos, new AirBlock());
 			}
 		}
-		Game.getMap().decrementTreeCount();
+		map.decrementTreeCount();
 	}
 
 	public void designate() {
 		for (Position pos : trunk) {
-			if (map[pos.getRow()][pos.getCol()].getID().equals(
-					AppleTreeTrunkBlock.id))
-				map[pos.getRow()][pos.getCol()]
-						.addDesignation(Designation.CUTTING_DOWN_TREES);
+			if (map.getBuildingBlock(pos).getID()
+					.equals(AppleTreeTrunkBlock.id))
+				map.addDesignation(pos,
+						Designation.CUTTING_DOWN_TREES);
+
 		}
 	}
 
 	public void removeDesignation() {
 		for (Position pos : trunk) {
-			map[pos.getRow()][pos.getCol()].addDesignation(Designation.NONE);
+			map.addDesignation(pos, Designation.NONE);
 		}
 	}
 
