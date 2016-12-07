@@ -33,6 +33,7 @@ public abstract class Actor implements Serializable {
 	private String name;
 	public static List<Actor> allActors;
 	private ImageEnum image;
+	private boolean markedForAttack = false;
 
 	/**
 	 * Creates a new actor
@@ -97,8 +98,11 @@ public abstract class Actor implements Serializable {
 				queue.addFirst((getActionPool().get()));
 				currentAction = queue.peek();
 			}
-			if (currentAction == null)
+			if (currentAction == null){
+				queue.poll();
+				performAction(attempts+1);
 				return;
+			}
 		}
 
 		// Store the result of the execution
@@ -261,6 +265,14 @@ public abstract class Actor implements Serializable {
 
 	public ImageEnum getImage() {
 		return image;
+	}
+	
+	public boolean isMarkedForAttack() {
+		return markedForAttack;
+	}
+	
+	public void setAttack(boolean attack) {
+		this.markedForAttack = attack;
 	}
 
 }

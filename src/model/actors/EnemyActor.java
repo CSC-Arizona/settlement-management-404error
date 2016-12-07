@@ -118,7 +118,6 @@ public class EnemyActor extends Actor {
 		}
 	}
 
-
 	@Override
 	public ImageEnum getLeftImage() {
 		return ImageEnum.ANT_LEFT;

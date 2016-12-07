@@ -90,12 +90,12 @@ public class MapParameters implements Serializable {
 		} else if(settings.getDifficulty() == Settings.HARD){
 			numberOfAntColonies = 2;
 			numberOfEnemyActors = 10;
-			numberOfPlayerActors = 7;
+			numberOfPlayerActors = 6;
 			EnemyActor.timeTillAttack = 7000;
 		} else if(settings.getDifficulty() == Settings.IMPOSSIBLE){
 			numberOfAntColonies = 2;
 			numberOfEnemyActors = 15;
-			numberOfPlayerActors = 7;
+			numberOfPlayerActors = 6;
 			EnemyActor.timeTillAttack = 100;
 		}
 		return new MapParameters(size, 70, 20, 30, 10, 0.01, 0.001, 0.1, 0.1,

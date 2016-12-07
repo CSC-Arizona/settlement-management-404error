@@ -58,7 +58,7 @@ public class Map implements Serializable {
 	private Random random;
 
 	private HashMap<Position, AppleTree> trees;
-	private int treeCount;
+	private int treeCount = 0;
 	private ArrayList<Integer[]> cavernFloorBlocks;
 
 	private BuildingBlock[][] map;
@@ -75,6 +75,7 @@ public class Map implements Serializable {
 	private volatile LinkedList<Room> completedRooms = new LinkedList<>();
 	private volatile LinkedList<Room> designatedRooms = new LinkedList<>();
 	public ArrayList<Position> antTunnelLocations = new ArrayList<>();
+	public Position ship;
 
 	private int time;
 
@@ -173,6 +174,7 @@ public class Map implements Serializable {
 			if (row < 0)
 				break;
 		}
+		ship = new Position(row+3,0);
 
 		for (int[] offset : body) {
 			map[row + offset[0]][Math.floorMod(col + offset[1],
@@ -205,15 +207,23 @@ public class Map implements Serializable {
 			if (row < 0)
 				break;
 		}
+		ArrayList<AppleTree> treesToRemove = new ArrayList<>();
 		for (int[] offset : definition) {
 			for (int i = row + offset[0]; i > 0; i--) {
 				int j = Math.floorMod(col + offset[1], mapParameters.mapWidth);
 				if (!map[i][j].getID().equals(SpaceShipBlock.id)
 						&& !map[i][j].getID().equals(SpaceShipCenterBlock.id)) {
-					map[i][j] = new AirBlock();
+					AppleTree tree = getTree(new Position(i, j));
+					if (tree != null) {
+						treesToRemove.add(tree);
+					} else {
+						map[i][j] = new AirBlock();
+					}
 				}
 			}
-
+		}
+		for (AppleTree tree : treesToRemove) {
+			tree.removeFromMap();
 		}
 	}
 
@@ -365,7 +375,7 @@ public class Map implements Serializable {
 				} else if (testValue < 0.95) {
 					X += 1;
 				} else {
-					//Y -= 1;
+					// Y -= 1;
 				}
 				if (Y < 0)
 					Y++;
@@ -387,7 +397,7 @@ public class Map implements Serializable {
 				} else if (testValue < 0.95) {
 					X += 1;
 				} else {
-					//Y += 1;
+					// Y += 1;
 				}
 				if (Y < 0)
 					Y++;
@@ -423,7 +433,7 @@ public class Map implements Serializable {
 
 	private void addSingleTree() {
 		AppleTree tree = new AppleTree(getTotalWidth(),
-				mapParameters.airHeight, map, random);
+				mapParameters.airHeight, this, random);
 		tree.addToMap();
 
 		for (Position pos : tree.getTrunk()) {
@@ -486,7 +496,10 @@ public class Map implements Serializable {
 
 	private void addAntColonies() {
 		for (int i = 0; i < mapParameters.numberOfAntColonies; i++) {
-			int startX = random.nextInt(getTotalWidth());
+			int startX = mapParameters.mapWidth * (i + 1)
+					/ (mapParameters.numberOfAntColonies + 1);
+			startX += random.nextInt(20) - 40;
+			startX = Math.floorMod(startX, mapParameters.mapWidth);
 			int height = random.nextInt(2) + 5;
 
 			int startY = mapParameters.airHeight;
@@ -666,7 +679,8 @@ public class Map implements Serializable {
 		}
 
 		if (PlayerControlledActor.allActors != null) {
-			Iterator<PlayerControlledActor> iter = PlayerControlledActor.allActors.iterator();
+			Iterator<PlayerControlledActor> iter = PlayerControlledActor.allActors
+					.iterator();
 			while (iter.hasNext()) {
 				Actor actor = iter.next();
 
@@ -759,7 +773,8 @@ public class Map implements Serializable {
 	}
 
 	public boolean removeItemFromGround(Position position, Item item) {
-		int newCol = Math.floorMod(position.getCol(), Game.getMap().getTotalWidth());
+		int newCol = Math.floorMod(position.getCol(), Game.getMap()
+				.getTotalWidth());
 		Position newPos = new Position(position.getRow(), newCol);
 		if (getBuildingBlock(newPos).removeItemFromGround(item)) {
 			itemsOnGround.remove(0);
@@ -797,11 +812,11 @@ public class Map implements Serializable {
 	public int getTime() {
 		return time;
 	}
-	
+
 	public TreeMap<Position, FarmRoom> getFarmRooms() {
 		return mapOfFarmRooms;
 	}
-	
+
 	public void addFarmRoom(Position p, FarmRoom fr) {
 		mapOfFarmRooms.put(p, fr);
 	}

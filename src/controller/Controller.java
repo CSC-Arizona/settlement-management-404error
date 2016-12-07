@@ -15,6 +15,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import model.actors.Actor;
+import model.actors.AttackAction;
+import model.actors.BreedAction;
+import model.actors.EnemyActor;
 import model.actors.GatherAction;
 import model.actors.PickUpItemAction;
 import model.actors.PlayerControlledActor;
@@ -38,6 +42,7 @@ import model.map.Map;
 import model.map.MapParameters;
 import model.room.FarmRoom;
 import model.save.SaveFile;
+import view.AlternativeView;
 import view.BasicView;
 import view.StartingView;
 
@@ -62,7 +67,7 @@ public class Controller extends JFrame {
 	private Random random;
 
 	private StartingView startingView;
-	private BasicView basicView;
+	private AlternativeView basicView;
 
 	private Timer gameTimer;
 	private int timeDelta = 100;
@@ -89,7 +94,8 @@ public class Controller extends JFrame {
 		return designatingAction;
 	}
 
-	public void applyDesignation(int startRow, int startCol, int height, int width) {
+	public void applyDesignation(int startRow, int startCol, int height,
+			int width) {
 		for (int row = startRow; row <= startRow + height; row++) {
 			for (int j = startCol; j <= startCol + width; j++) {
 				int col = Math.floorMod(j, map.getTotalWidth());
@@ -100,7 +106,8 @@ public class Controller extends JFrame {
 
 					map.getBuildingBlock(row, col).removeDesignation();
 
-					if (map.getBuildingBlock(row, col).getID().equals(AppleTreeTrunkBlock.id)) {
+					if (map.getBuildingBlock(row, col).getID()
+							.equals(AppleTreeTrunkBlock.id)) {
 						for (Position pos : map.getTrees().keySet()) {
 							if (pos.getRow() == row && pos.getCol() == col) {
 								AppleTree tree = map.getTrees().get(pos);
@@ -109,51 +116,80 @@ public class Controller extends JFrame {
 							}
 						}
 					}
+
+				}
+
+				if (getDesignatingAction() == Designation.ATTACKING) {
+					if (map.getBuildingBlock(row, col).getActors() != null) {
+						for (Actor actor : map.getBuildingBlock(row, col)
+								.getActors()) {
+							if (EnemyActor.allActors.contains(actor)) {
+								PlayerControlledActor.playerActionPool
+										.add(new AttackAction(actor));
+							}
+						}
+					}
 				}
 
 				if (getDesignatingAction() == Designation.CONSTRUCTING) {
-					map.getBuildingBlock(row, col).addDesignation(Designation.CONSTRUCTING);
+					map.getBuildingBlock(row, col).addDesignation(
+							Designation.CONSTRUCTING);
 				}
 
 				if (getDesignatingAction() == Designation.UPGRADING) {
-					map.getBuildingBlock(row, col).addDesignation(Designation.UPGRADING);
+					map.getBuildingBlock(row, col).addDesignation(
+							Designation.UPGRADING);
 				}
 
 				if (getDesignatingAction() == Designation.DIGGING) {
 					String bbID = map.getBuildingBlock(row, col).getID();
-					if ((bbID.equals(AntTunnelBlock.id) || bbID.equals(AnthillBlock.id) || bbID.equals(EarthBlock.id)
-							|| bbID.equals(AntimatterDefenestratorBlock.id))) {
+					if ((bbID.equals(AntTunnelBlock.id)
+							|| bbID.equals(AnthillBlock.id)
+							|| bbID.equals(EarthBlock.id) || bbID
+								.equals(AntimatterDefenestratorBlock.id))) {
 						if (!(map.getBuildingBlock(row, col).getDesignation() == Designation.CONSTRUCTING)) {
-							map.getBuildingBlock(row, col).addDesignation(Designation.DIGGING);
-							PlayerControlledActor.playerActionPool.add(new GatherAction(new Position(row, col)));
+							map.getBuildingBlock(row, col).addDesignation(
+									Designation.DIGGING);
+							PlayerControlledActor.playerActionPool
+									.add(new GatherAction(
+											new Position(row, col)));
 						} else {
-							System.out.println("Can designate this for digging.");
+							System.out
+									.println("Can designate this for digging.");
 						}
 					}
 				}
 
 				if (getDesignatingAction() == Designation.GATHERING_PLANTS) {
-					if (map.getBuildingBlock(row, col).getID().equals(GrassBlock.id)) {
-						map.getBuildingBlock(row, col).addDesignation(Designation.GATHERING_PLANTS);
-						PlayerControlledActor.playerActionPool.add(new GatherAction(new Position(row, col)));
+					if (map.getBuildingBlock(row, col).getID()
+							.equals(GrassBlock.id)) {
+						map.getBuildingBlock(row, col).addDesignation(
+								Designation.GATHERING_PLANTS);
+						PlayerControlledActor.playerActionPool
+								.add(new GatherAction(new Position(row, col)));
 
 					}
 
 				}
 
 				if (getDesignatingAction() == Designation.GATHERING_FRUIT) {
-					if (map.getBuildingBlock(row, col).getID().equals(AppleTreeLeafBlock.id)) {
-						map.getBuildingBlock(row, col).addDesignation(Designation.GATHERING_FRUIT);
+					if (map.getBuildingBlock(row, col).getID()
+							.equals(AppleTreeLeafBlock.id)) {
+						map.getBuildingBlock(row, col).addDesignation(
+								Designation.GATHERING_FRUIT);
 					}
 				}
 
 				if (getDesignatingAction() == Designation.CUTTING_DOWN_TREES) {
-					if (map.getBuildingBlock(row, col).getID().equals(AppleTreeTrunkBlock.id)) {
+					if (map.getBuildingBlock(row, col).getID()
+							.equals(AppleTreeTrunkBlock.id)) {
 						for (Position pos : map.getTrees().keySet()) {
 							if (pos.getRow() == row && pos.getCol() == col) {
 								AppleTree tree = map.getTrees().get(pos);
 								tree.designate();
-								PlayerControlledActor.playerActionPool.add(new GatherAction(new Position(row, col)));
+								PlayerControlledActor.playerActionPool
+										.add(new GatherAction(new Position(row,
+												col)));
 								break;
 							}
 						}
@@ -185,7 +221,8 @@ public class Controller extends JFrame {
 		return time;
 	}
 
-	public Controller(MapParameters mapParameters, Random random, boolean skipLoadScreen) {
+	public Controller(MapParameters mapParameters, Random random,
+			boolean skipLoadScreen) {
 		this.mapParameters = mapParameters;
 		this.random = random;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -217,8 +254,9 @@ public class Controller extends JFrame {
 	 */
 	public void startNewGame(Settings settings) {
 		this.saveFile = new SaveFile();
+		this.mapParameters = MapParameters.getCustumMapParameters(settings);
 		Game.reset();
-		map = new Map(MapParameters.getCustumMapParameters(settings), random);
+		map = new Map(mapParameters, random);
 		Game.setMap(map);
 		Log.add("Welcome");
 		setUpMap();
@@ -226,7 +264,7 @@ public class Controller extends JFrame {
 
 	private void setUpMap() {
 		getContentPane().removeAll();
-		basicView = new BasicView(this, mapParameters);
+		basicView = new AlternativeView(this, mapParameters);
 		this.add(basicView);
 
 		startTimer();
@@ -245,7 +283,6 @@ public class Controller extends JFrame {
 		@Override
 		public void run() {
 			time += 1;
-			basicView.updateLog();
 			Game.getMap().updateActors(timeDelta);
 			if (time % 100 == 0) {
 				Game.getMap().regrowTrees();
@@ -253,15 +290,16 @@ public class Controller extends JFrame {
 			Game.getMap().setTime(time);
 			if (time % 35 == 0) {
 			    Game.getMap().checkOnDesignatedRooms();
-			    
 			}
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();
 			basicView.repaint();
-			if (PlayerControlledActor.allActors != null && PlayerControlledActor.allActors.size() <= 0) {
+			if (PlayerControlledActor.allActors != null
+					&& PlayerControlledActor.allActors.size() <= 0) {
 				if (!isPaused())
 					togglePaused();
-				final JOptionPane pane = new JOptionPane("All of your settlers are dead!");
+				final JOptionPane pane = new JOptionPane(
+						"All of your settlers are dead!");
 				final JDialog d = pane.createDialog((JFrame) null, "You Lose!");
 				d.setLocation(400, 300);
 				d.setVisible(true);
@@ -272,13 +310,42 @@ public class Controller extends JFrame {
 				revalidate();
 				repaint();
 			}
+			
+			if (PlayerControlledActor.allActors != null
+					&& PlayerControlledActor.remaingParts <= 0) {
+				if (!isPaused())
+					togglePaused();
+				final JOptionPane pane = new JOptionPane(
+						"You are going home!");
+				final JDialog d = pane.createDialog((JFrame) null, "You Win!");
+				d.setLocation(400, 300);
+				d.setVisible(true);
+				getContentPane().removeAll();
+				startingView = new StartingView(thisController);
+				SongPlayer.setNewSong(SongPlayer.MAIN);
+				add(startingView);
+				revalidate();
+				repaint();
+			}
+			
+			//Check if less than half of initial pop is alive
+			//If so, add new BreedAction to pool
+			int initialActors = Game.getMap().getMapParameters().numberOfStartingActors;
+			if(PlayerControlledActor.allActors.size() <= (initialActors/2)) { 
+				PlayerControlledActor.addActionToPlayerPool(new BreedAction());
+			}
 
 			updateFarmRooms();
+			basicView.updateLog();
+			basicView.setTimeLabel(time, paused);
+			basicView.setMouseDescriptionLabel();
+			basicView.repaint();
 
 		}
 
 		private void updateFarmRooms() {
-			TreeMap<Position, FarmRoom> allFarmRooms = Game.getMap().getFarmRooms();
+			TreeMap<Position, FarmRoom> allFarmRooms = Game.getMap()
+					.getFarmRooms();
 			Iterator<FarmRoom> it = allFarmRooms.values().iterator();
 			// Only increment state if greater than 0
 			while (it.hasNext()) {
@@ -293,9 +360,11 @@ public class Controller extends JFrame {
 						// of room
 						Position positionOfRoom = fr.getPosition();
 						int newRow = positionOfRoom.getRow() + 2;
-						int newCol = positionOfRoom.getCol() + (FarmRoom.getWidth() - 2);
+						int newCol = positionOfRoom.getCol()
+								+ (FarmRoom.getWidth() - 2);
 						Position plotPosition = new Position(newRow, newCol);
-						BuildingBlock wherePlotIs = Game.getMap().getBuildingBlock(plotPosition);
+						BuildingBlock wherePlotIs = Game.getMap()
+								.getBuildingBlock(plotPosition);
 						// Issue pick up item command for each item dropped
 						for (Item curr : yield) {
 							wherePlotIs.addItemToGround(curr);
@@ -304,7 +373,9 @@ public class Controller extends JFrame {
 							// TODO: Need to remove item from ground when picked
 							// up
 							Game.getMap().addItemToGround(plotPosition, curr);
-							PlayerControlledActor.addActionToPlayerPool(new PickUpItemAction(plotPosition, curr));
+							PlayerControlledActor
+									.addActionToPlayerPool(new PickUpItemAction(
+											plotPosition, curr));
 						}
 						// Remove seed from furniture
 						Furniture plot = wherePlotIs.getFurniture();
@@ -340,8 +411,8 @@ public class Controller extends JFrame {
 
 			int dialogButton = JOptionPane.YES_NO_CANCEL_OPTION;
 
-			int response = JOptionPane.showConfirmDialog(null, "Do you want to save the game?", "Warning",
-					dialogButton);
+			int response = JOptionPane.showConfirmDialog(null,
+					"Do you want to save the game?", "Warning", dialogButton);
 
 			if (response == 0) {
 				// yes
