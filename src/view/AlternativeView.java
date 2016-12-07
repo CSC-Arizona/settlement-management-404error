@@ -850,7 +850,7 @@ public class AlternativeView extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//activateConstructionSelection();
+			constructRoomButton.doClick();
 		}
 
 	}
