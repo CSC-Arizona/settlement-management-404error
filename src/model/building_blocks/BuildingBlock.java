@@ -208,6 +208,8 @@ public abstract class BuildingBlock implements Serializable {
 		return false;
 	}
 	
-	
+	public void setImage(ImageEnum img) {
+		this.img = img;
+	}
 
 }

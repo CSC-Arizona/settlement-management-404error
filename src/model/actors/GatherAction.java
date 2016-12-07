@@ -10,7 +10,7 @@ import model.building_blocks.BuildingBlock;
 import model.building_blocks.CavernBlock;
 import model.game.Game;
 import model.items.Item;
-import model.map.AppleTree;
+import model.trees.AppleTree;
 
 /**
  * Creates a Action for an Actor to gather a resource

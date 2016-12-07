@@ -75,5 +75,9 @@ public class SpaceShipLightBlock extends BuildingBlock {
 	public BuildingBlock getAppropriateReplacement() {
 		return null;
 	}
+	
+	public void setImage(ImageEnum img) {
+		super.setImage(img);
+	}
 
 }

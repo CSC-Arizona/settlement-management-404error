@@ -40,6 +40,7 @@ import model.game.Log;
 import model.items.Item;
 import model.map.MapParameters;
 import model.room.RoomEnum;
+
 public class AlternativeView extends JPanel {
 
 	private static final long serialVersionUID = -8807654664923090784L;
@@ -97,6 +98,9 @@ public class AlternativeView extends JPanel {
 
 	private JComboBox<String> constructRoomComboBox;
 	private JButton constructRoomButton;
+	
+	private JComboBox<String> craftComboBox;
+	private JButton craftButton;
 
 	public void setTimeLabel(int time, boolean paused) {
 		if (paused) {
@@ -107,15 +111,18 @@ public class AlternativeView extends JPanel {
 	}
 
 	private void setWindowCoordinateLabel() {
-		windowCoordinatesLabel.setText("Window coordinates: (" + visibleCornerY + ", " + visibleCornerX + ")");
+		windowCoordinatesLabel.setText("Window coordinates: (" + visibleCornerY
+				+ ", " + visibleCornerX + ")");
 	}
 
 	private void setMouseCoordinatesLabel() {
-		mouseCoordinatesLabel.setText("Mouse coordinates: (" + mouseY + ", " + mouseX + ")");
+		mouseCoordinatesLabel.setText("Mouse coordinates: (" + mouseY + ", "
+				+ mouseX + ")");
 	}
 
 	public void setMouseDescriptionLabel() {
-		String mouseDescription = Game.getMap().getBuildingBlock(mouseY, mouseX).toString();
+		String mouseDescription = Game.getMap()
+				.getBuildingBlock(mouseY, mouseX).toString();
 
 		mouseDescription += "</html>";
 
@@ -168,9 +175,8 @@ public class AlternativeView extends JPanel {
 		buttonPanel = new JPanel();
 		buttonPanel.setSize(500, 70);
 		buttonPanel.setBackground(new Color(0, 0, 0, 0));
-		buttonPanel.setBounds(250, 600, 500, 70);
-		
-		
+		buttonPanel.setBounds(250, 600, 400, 70);
+
 		constructRoomComboBox = new JComboBox<String>(
 				RoomEnum.getAllRoomNames());
 		constructRoomComboBox
@@ -183,20 +189,31 @@ public class AlternativeView extends JPanel {
 		buttonPanel.add(constructRoomComboBox);
 
 		buttons = new ArrayList<>();
-		constructRoomButton = new customDesignationButton(controller, this, Designation.CONSTRUCTING, buttons);		
+		constructRoomButton = new customDesignationButton(controller, this,
+				Designation.CONSTRUCTING, buttons);
 		constructRoomButton.addActionListener(new ConstructionButtonListener());
-		//craftButton = new customDesignationButton(controller, this, Designation.NONE, buttons);
-		upgradeRoomButton = new customDesignationButton(controller, this, Designation.UPGRADING, buttons);
-		cutDownTreeButton = new customDesignationButton(controller, this, Designation.CUTTING_DOWN_TREES, buttons);
-		upgradeRoomButton = new customDesignationButton(controller, this, Designation.UPGRADING, buttons);
-		fruitButton = new customDesignationButton(controller, this, Designation.GATHERING_FRUIT, buttons);
-		digButton = new customDesignationButton(controller, this, Designation.DIGGING, buttons);
-		plantsButton = new customDesignationButton(controller, this, Designation.GATHERING_PLANTS, buttons);
-		attackButton = new customDesignationButton(controller, this, Designation.ATTACKING, buttons);
-		removeButton = new customDesignationButton(controller, this, Designation.REMOVING_DESIGNATIONS, buttons);
+		// craftButton = new customDesignationButton(controller, this,
+		// Designation.NONE, buttons);
+		upgradeRoomButton = new customDesignationButton(controller, this,
+				Designation.UPGRADING, buttons);
+		cutDownTreeButton = new customDesignationButton(controller, this,
+				Designation.CUTTING_DOWN_TREES, buttons);
+		upgradeRoomButton = new customDesignationButton(controller, this,
+				Designation.UPGRADING, buttons);
+		fruitButton = new customDesignationButton(controller, this,
+				Designation.GATHERING_FRUIT, buttons);
+		digButton = new customDesignationButton(controller, this,
+				Designation.DIGGING, buttons);
+		plantsButton = new customDesignationButton(controller, this,
+				Designation.GATHERING_PLANTS, buttons);
+		attackButton = new customDesignationButton(controller, this,
+				Designation.ATTACKING, buttons);
+		removeButton = new customDesignationButton(controller, this,
+				Designation.REMOVING_DESIGNATIONS, buttons);
+
+		craftComboBox = new JComboBox<String>(new String[] {"item 1", "item 2", "item 3"});
+		craftButton = new JButton("Craft item: ");
 		
-		
-		buttonPanel.add(constructRoomButton);
 		buttonPanel.add(cutDownTreeButton);
 		buttonPanel.add(upgradeRoomButton);
 		buttonPanel.add(fruitButton);
@@ -204,7 +221,10 @@ public class AlternativeView extends JPanel {
 		buttonPanel.add(plantsButton);
 		buttonPanel.add(attackButton);
 		buttonPanel.add(removeButton);
+		buttonPanel.add(constructRoomButton);
 		buttonPanel.add(constructRoomComboBox);
+		buttonPanel.add(craftButton);
+		buttonPanel.add(craftComboBox);
 
 		this.add(buttonPanel);
 	}
@@ -218,7 +238,7 @@ public class AlternativeView extends JPanel {
 		logText.setBackground(new Color(0, 0, 0, 0));
 		logText.setOpaque(true);
 		logText.setLineWrap(true);
-		logText.setSize(350,200);
+		logText.setSize(350, 200);
 		logPanel.setBounds(650, 0, 350, 200);
 		logText.setEditable(false);
 		logPanel.add(logText);
@@ -231,15 +251,18 @@ public class AlternativeView extends JPanel {
 
 	private void setVisibleTiles(int row, int col) {
 		if (Game.getMap().getBuildingBlock(row, col).isOccupiable()
-				|| Game.getMap().getBuildingBlock(row, col).getID().equals("Room wall")) {
+				|| Game.getMap().getBuildingBlock(row, col).getID()
+						.equals("Room wall")) {
 			for (int k = -1; k < 2; k++) {
 				for (int l = -1; l < 2; l++) {
 					int newRow = row + k;
 					int newCol = col + l;
-					newCol = Math.floorMod(newCol, Game.getMap().getTotalWidth());
+					newCol = Math.floorMod(newCol, Game.getMap()
+							.getTotalWidth());
 					if (newRow >= 0 && newRow < Game.getMap().getTotalHeight()) {
 
-						Game.getMap().getBuildingBlock(newRow, newCol).setVisibility(true);
+						Game.getMap().getBuildingBlock(newRow, newCol)
+								.setVisibility(true);
 					}
 				}
 			}
@@ -253,31 +276,37 @@ public class AlternativeView extends JPanel {
 			g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
 
 		} else {
-			Color bgcolor = Game.getMap().getBuildingBlock(row, col).getBackgroundColor();
+			Color bgcolor = Game.getMap().getBuildingBlock(row, col)
+					.getBackgroundColor();
 			if (bgcolor != null) {
 				g2.setColor(bgcolor);
-				g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
+				g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
+						blockSizeY);
 
 			}
 
-			BufferedImage img = Game.getMap().getBuildingBlock(row, col).getImage().getRandomBufferedImage();
+			BufferedImage img = Game.getMap().getBuildingBlock(row, col)
+					.getImage().getRandomBufferedImage();
 			g2.drawImage(img, j * blockSizeX, i * blockSizeY, null);
 
 		}
 	}
 
 	private void drawActors(Graphics2D g2, int row, int col, int i, int j) {
-		List<Actor> actors = Game.getMap().getBuildingBlock(row, col).getActors();
+		List<Actor> actors = Game.getMap().getBuildingBlock(row, col)
+				.getActors();
 		if (actors != null) {
 			int count = 0;
 			Iterator<Actor> iter = actors.iterator();
 			while (iter.hasNext()) {
 				Actor p = iter.next();
 				if (p.getImage() != null && p.isAlive()) {
-					g2.drawImage(p.getImage().getRandomBufferedImage(), j * blockSizeX, i * blockSizeY, null);
+					g2.drawImage(p.getImage().getRandomBufferedImage(), j
+							* blockSizeX, i * blockSizeY, null);
 					if (p.isMarkedForAttack()) {
 						g2.setColor(Color.RED);
-						g2.drawString("A", j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+						g2.drawString("A", j * blockSizeX + blockSizeX / 2,
+								(i + 1) * blockSizeY);
 						g2.setColor(Color.BLACK);
 					}
 				} else {
@@ -286,35 +315,42 @@ public class AlternativeView extends JPanel {
 			}
 			if (count != 0) {
 				g2.setColor(Color.RED);
-				g2.drawString(Integer.toString(count), j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+				g2.drawString(Integer.toString(count), j * blockSizeX
+						+ blockSizeX / 2, (i + 1) * blockSizeY);
 				g2.setColor(Color.BLACK);
 			}
 		}
 	}
 
 	private void drawFurniture(Graphics2D g2, int row, int col, int i, int j) {
-		Furniture furniture = Game.getMap().getBuildingBlock(row, col).getFurniture();
+		Furniture furniture = Game.getMap().getBuildingBlock(row, col)
+				.getFurniture();
 		if (furniture != null) {
 			ImageEnum furnitureType = furniture.getImage();
 			BufferedImage furnitureIcon = null;
 			if (furnitureType != null)
 				furnitureIcon = furniture.getImage().getRandomBufferedImage();
 			if (furnitureIcon != null)
-				g2.drawImage(furnitureIcon, j * blockSizeX, i * blockSizeY, null);
+				g2.drawImage(furnitureIcon, j * blockSizeX, i * blockSizeY,
+						null);
 			else
-				g2.drawString("f", j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+				g2.drawString("f", j * blockSizeX + blockSizeX / 2, (i + 1)
+						* blockSizeY);
 		}
 	}
 
 	private void drawItemsOnGround(Graphics2D g2, int row, int col, int i, int j) {
-		List<Item> itemsOnGround = Game.getMap().getBuildingBlock(row, col).itemsOnGround();
+		List<Item> itemsOnGround = Game.getMap().getBuildingBlock(row, col)
+				.itemsOnGround();
 		if (itemsOnGround != null) {
 			if (itemsOnGround.size() != 0) {
 				for (Item item : itemsOnGround) {
 					if (item.getImage() != null) {
-						g2.drawImage(item.getImage().getRandomBufferedImage(), j * blockSizeX, i * blockSizeY, null);
+						g2.drawImage(item.getImage().getRandomBufferedImage(),
+								j * blockSizeX, i * blockSizeY, null);
 					} else {
-						g2.drawString("#", j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+						g2.drawString("#", j * blockSizeX + blockSizeX / 2,
+								(i + 1) * blockSizeY);
 					}
 				}
 
@@ -325,8 +361,11 @@ public class AlternativeView extends JPanel {
 	private void drawDesignation(Graphics2D g2, int row, int col, int i, int j) {
 		if (Game.getMap().getBuildingBlock(row, col).isDesignated()) {
 			g2.setColor(Color.WHITE);
-			g2.drawString("" + Game.getMap().getBuildingBlock(row, col).getDesignation().keyboardShortcut,
-					j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+			g2.drawString(
+					""
+							+ Game.getMap().getBuildingBlock(row, col)
+									.getDesignation().keyboardShortcut, j
+							* blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
 		}
 	}
 
@@ -349,16 +388,20 @@ public class AlternativeView extends JPanel {
 
 		if (currentlyDrawingDesignation) {
 			g2.setColor(Color.WHITE);
-			g2.drawRect(Math.min(designationStart.x, designationEnd.x), Math.min(designationStart.y, designationEnd.y),
-					Math.abs(designationStart.x - designationEnd.x), Math.abs(designationStart.y - designationEnd.y));
+			g2.drawRect(Math.min(designationStart.x, designationEnd.x),
+					Math.min(designationStart.y, designationEnd.y),
+					Math.abs(designationStart.x - designationEnd.x),
+					Math.abs(designationStart.y - designationEnd.y));
 
 		}
 		if (currentlyPlacingRoom) {
 			g2.setColor(Color.WHITE);
-			if (room.toString().equals("Vertical tunnel") || room.toString().equals("Horizontal tunnel")) {
+			if (room.toString().equals("Vertical tunnel")
+					|| room.toString().equals("Horizontal tunnel")) {
 				g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, roomHeight);
 			} else {
-				g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, (roomHeight * 2));
+				g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
+						(roomHeight * 2));
 			}
 		}
 
@@ -439,7 +482,8 @@ public class AlternativeView extends JPanel {
 				char keyboardSelection = '\u0000';
 				boolean madeSelection = false;
 				for (customDesignationButton button : buttons) {
-					if (button.designation.keyboardShortcut == (char) e.getKeyChar()) {
+					if (button.designation.keyboardShortcut == (char) e
+							.getKeyChar()) {
 						keyboardSelection = (char) e.getKeyChar();
 						madeSelection = true;
 						break;
@@ -515,7 +559,8 @@ public class AlternativeView extends JPanel {
 				// Position appropriatePileLoc = null;
 				int blockHeight = room.getHeight();
 				int pixHeight = roomHeight;
-				if (!room.toString().equals("Vertical tunnel") && !room.toString().equals("Horizontal tunnel")) {
+				if (!room.toString().equals("Vertical tunnel")
+						&& !room.toString().equals("Horizontal tunnel")) {
 					blockHeight *= 2;
 					pixHeight *= 2;
 				}
@@ -523,13 +568,15 @@ public class AlternativeView extends JPanel {
 					for (int c = roomY; c < roomY + blockHeight; c++) {
 						int x = c; // x = row
 						int y = Math.floorMod(r, mapWidth); // y = col
-						BuildingBlock inQuestion = Game.getMap().getBuildingBlock(x, y);
+						BuildingBlock inQuestion = Game.getMap()
+								.getBuildingBlock(x, y);
 						if (!inQuestion.isDestroyable()) {
 							canBuildHere = false;
 							obstacle = inQuestion;
 							break;
 						}
-						if (!inQuestion.getDesignation().equals(Designation.NONE)) {
+						if (!inQuestion.getDesignation().equals(
+								Designation.NONE)) {
 							canBuildHere = false;
 							obstacle = null; // not a room yet, the message
 												// needs to be different
@@ -541,10 +588,13 @@ public class AlternativeView extends JPanel {
 					controller.setDesignatingAction(Designation.CONSTRUCTING);
 					// adding the rows for room walls with every room type
 					// except tunnels
-					controller.applyDesignation(roomY, roomX, pixHeight / blockSizeY, roomWidth / blockSizeX);
-//					PlayerControlledActor.playerActionPool
-//							.add(new ConstructAction(room.constructObject(new Position(roomY, roomX))));
-                    Game.getMap().addNewDesignatedRoom(room.constructObject(new Position(roomY,	roomX)));
+					controller.applyDesignation(roomY, roomX, pixHeight
+							/ blockSizeY, roomWidth / blockSizeX);
+					// PlayerControlledActor.playerActionPool
+					// .add(new ConstructAction(room.constructObject(new
+					// Position(roomY, roomX))));
+					Game.getMap().addNewDesignatedRoom(
+							room.constructObject(new Position(roomY, roomX)));
 
 					controller.setDesignatingAction(Designation.NONE);
 
@@ -553,10 +603,12 @@ public class AlternativeView extends JPanel {
 					String err = "";
 					if (obstacle == null)
 						err = "There is already a room under construction here.";
-					else if (obstacle.getClass().equals(new AirBlock().getClass()))
+					else if (obstacle.getClass().equals(
+							new AirBlock().getClass()))
 						err = "You can't build a room above ground.";
 					else
-						err = "You can't build a room over a " + obstacle.getID() + " block.";
+						err = "You can't build a room over a "
+								+ obstacle.getID() + " block.";
 					System.out.println(err);
 					Log.add(err);
 				}
@@ -566,22 +618,31 @@ public class AlternativeView extends JPanel {
 					if (currentlyDrawingDesignation) {
 						designationEnd = e.getPoint();
 
-						designationEndCol = designationEnd.x / blockSizeX + visibleCornerX;
-						designationEndRow = designationEnd.y / blockSizeY + visibleCornerY;
+						designationEndCol = designationEnd.x / blockSizeX
+								+ visibleCornerX;
+						designationEndRow = designationEnd.y / blockSizeY
+								+ visibleCornerY;
 
-						int startRow = Math.min(designationStartRow, designationEndRow);
-						int startCol = Math.min(designationStartCol, designationEndCol);
-						int height = Math.abs(designationStartRow - designationEndRow);
-						int width = Math.abs(designationStartCol - designationEndCol);
+						int startRow = Math.min(designationStartRow,
+								designationEndRow);
+						int startCol = Math.min(designationStartCol,
+								designationEndCol);
+						int height = Math.abs(designationStartRow
+								- designationEndRow);
+						int width = Math.abs(designationStartCol
+								- designationEndCol);
 
-						controller.applyDesignation(startRow, startCol, height, width);
+						controller.applyDesignation(startRow, startCol, height,
+								width);
 
 						repaint();
 					} else {
 						designationStart = e.getPoint();
 
-						designationStartCol = designationStart.x / blockSizeX + visibleCornerX;
-						designationStartRow = designationStart.y / blockSizeY + visibleCornerY;
+						designationStartCol = designationStart.x / blockSizeX
+								+ visibleCornerX;
+						designationStartRow = designationStart.y / blockSizeY
+								+ visibleCornerY;
 
 						designationEnd = e.getPoint();
 					}
@@ -635,7 +696,7 @@ public class AlternativeView extends JPanel {
 		public boolean isActive() {
 			return active;
 		}
-		
+
 		public boolean constructionSelected() {
 			return currentlyPlacingRoom;
 		}
@@ -656,7 +717,8 @@ public class AlternativeView extends JPanel {
 			constructRoomButton.setBackground(new Color(124, 163, 226));
 			controller.setDesignatingAction(Designation.CONSTRUCTING);
 
-			String roomChoice = constructRoomComboBox.getSelectedItem().toString();
+			String roomChoice = constructRoomComboBox.getSelectedItem()
+					.toString();
 
 			if (roomChoice != null) {
 				room = RoomEnum.getRoomFromString(roomChoice);
@@ -671,14 +733,15 @@ public class AlternativeView extends JPanel {
 			repaint();
 
 		}
-		
+
 		public void deactivateConstructionSelection() {
 			currentlyPlacingRoom = false;
 			controller.setDesignatingAction(Designation.NONE);
 			repaint();
 		}
 
-		public customDesignationButton(Controller controller, AlternativeView view, Designation designation,
+		public customDesignationButton(Controller controller,
+				AlternativeView view, Designation designation,
 				ArrayList<customDesignationButton> buttons) {
 			this.controller = controller;
 			this.designation = designation;
@@ -710,6 +773,7 @@ public class AlternativeView extends JPanel {
 			}
 		}
 	}
+
 	public boolean constructionSelected() {
 		return currentlyPlacingRoom;
 	}
@@ -723,7 +787,7 @@ public class AlternativeView extends JPanel {
 	}
 
 	public void activateConstructionSelection() {
-		
+
 		currentlyPlacingRoom = true;
 		controller.setDesignatingAction(Designation.CONSTRUCTING);
 
@@ -777,11 +841,9 @@ public class AlternativeView extends JPanel {
 	}
 
 	public void updateLog() {
-		if(!logText.getText().equals(Log.getLog()))
+		if (!logText.getText().equals(Log.getLog()))
 			logText.setText(Log.getLog());
 		repaint();
 	}
-	
-	
 
 }
