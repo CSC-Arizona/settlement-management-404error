@@ -158,6 +158,7 @@ public class AlternativeView extends JPanel {
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
 		timeLabel = new JLabel();
 		labelPanel.add(timeLabel);
+		//timeLabel.
 		windowCoordinatesLabel = new JLabel();
 		setWindowCoordinateLabel();
 		labelPanel.add(windowCoordinatesLabel);
@@ -167,6 +168,8 @@ public class AlternativeView extends JPanel {
 		mouseDescriptionLabel = new JLabel();
 		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
+		//labelPanel.setOpaque(true);
+		//labelPanel.setBackground(new Color(0, 0, 0, 50));
 		this.add(labelPanel);
 
 	}

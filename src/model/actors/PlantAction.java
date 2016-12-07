@@ -40,8 +40,6 @@ public class PlantAction extends Action {
 				comeBack = new MoveAction(toGoTo);
 				int comeBackResult = comeBack.execute(performer);
 				if (comeBackResult == Action.COMPLETED) {
-					//TODO: Rest of plant action
-					//What if I wrote Action.MADE_PROGRESS?
 					return Action.MADE_PROGRESS;
 				} else {
 					return comeBackResult;
@@ -63,7 +61,7 @@ public class PlantAction extends Action {
 				int newCol = toGoTo.getCol() - 6;
 				Position roomPosition = new Position(newRow, newCol);
 				FarmRoom current = farmRooms.get(roomPosition);
-				current.plant(1, 0);
+				current.plant(2);
 				//From here, controller will check state of FarmRoom every tick until ready to be harvested
 				return Action.COMPLETED;
 
