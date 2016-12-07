@@ -101,7 +101,7 @@ public class StartingView extends JPanel {
 		update.stop();
 		Game.reset();
 		Log.clear();
-		controller.startNewGame(new Settings(Settings.MEDIUM,Settings.NORMAL));
+		controller.startNewGame(new Settings(Settings.SMALL,Settings.IMPOSSIBLE));
 	}
 
 	private void loadOldGame() {

@@ -13,6 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import controller.SongPlayer;
+
 /**
  * The enemy actors used to provide a challenge to 
  * the player
@@ -59,6 +61,7 @@ public class EnemyActor extends Actor {
 		}
 		allActors = null;
 		enemyActionPool = null;
+		antTunnels = null;
 	}
 
 	@Override
@@ -67,11 +70,13 @@ public class EnemyActor extends Actor {
 		timeSinceLastAttack++;
 		if(timeSinceLastAttack >= timeTillAttack){
 			attack = true;
+			SongPlayer.setNewSong(SongPlayer.ATTACK);
 			if(timeSinceLastAttack == timeTillAttack)
 				this.getActionPool().add(new EnemyHuntAction());
-			if ((timeSinceLastAttack / allActors.size()) >= timeTillAttack + attackTime){
+			if ((timeSinceLastAttack) >= timeTillAttack + attackTime){
 				attack = false;
 				timeSinceLastAttack = 0;
+				SongPlayer.setNewSong(SongPlayer.MAIN);
 			}
 		}
 		if (getActionPool().size() <= 0 && this.getQueue().size() <= 0)
