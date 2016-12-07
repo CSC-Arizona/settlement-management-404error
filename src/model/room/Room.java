@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import model.actors.MoveAction;
+import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.furniture.Furniture;
+import model.game.Game;
 import model.items.Item;
 import model.items.WoodItem;
 import model.menus.PrintableItemsList;
@@ -47,6 +50,7 @@ public abstract class Room {
 	private int numAgentsInRoom;
 	private Position pos;
 	private PrintableItemsList ril;
+	private boolean underConstruction;
 	
 	public Room(int requiredHeight, int requiredWidth, int roomCapacity, int upgradesAllowed, Position pos) {
 		this.requiredHeight = requiredHeight;
@@ -55,6 +59,7 @@ public abstract class Room {
 		this.upgradesAllowed = upgradesAllowed;
 		this.pos = pos;
 		this.numAgentsInRoom = 0;
+		this.underConstruction = false;
 	}
 	
 	public abstract TreeMap<Position, Furniture> getFurniture();
@@ -180,6 +185,29 @@ public abstract class Room {
 			return false;
 		}
 		return true;
+	}
+	
+	public boolean isAccessible() {
+		int w = this.getRequiredWidth();
+		int h = this.getRequiredHeight();
+		if (this.needsWalls())
+			h += 2;
+		int row = this.getPosition().getRow();
+		for (int r = row; r < row + h; r++) {
+			Position pos1 = new Position(r, this.getPosition().getCol());
+			Position pos2 = new Position(r, Math.floorMod(this.getPosition().getCol() + w - 1, Game.getMap().getTotalWidth()));
+			if (MoveAction.getMoveLocationNear(pos1) != null || MoveAction.getMoveLocationNear(pos2) != null)
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean isUnderConstruction() {
+		return this.underConstruction;
+	}
+	
+	public void setUnderConstruction(boolean b) {
+		this.underConstruction = b;
 	}
 	
 	/*

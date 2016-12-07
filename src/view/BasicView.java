@@ -41,6 +41,7 @@ import model.game.Game;
 import model.game.Log;
 import model.items.Item;
 import model.map.MapParameters;
+import model.room.Room;
 import model.room.RoomEnum;
 
 public class BasicView extends JPanel {
@@ -539,8 +540,6 @@ public class BasicView extends JPanel {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 	}
@@ -549,8 +548,6 @@ public class BasicView extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
@@ -588,7 +585,6 @@ public class BasicView extends JPanel {
 			if (currentlyPlacingRoom) {
 				boolean canBuildHere = true;
 				BuildingBlock obstacle = new AirBlock();
-				//Position appropriatePileLoc = null;
 				int blockHeight = room.getHeight();
 				int pixHeight = roomHeight;
 				if (!room.toString().equals("Vertical tunnel")
@@ -622,11 +618,11 @@ public class BasicView extends JPanel {
 					// except tunnels
 					controller.applyDesignation(roomY, roomX, pixHeight
 							/ blockSizeY, roomWidth / blockSizeX);
-					PlayerControlledActor.playerActionPool
-							.add(new ConstructAction(
-									room.constructObject(new Position(roomY,
-											roomX))));
-
+//					PlayerControlledActor.playerActionPool
+//							.add(new ConstructAction(
+//									room.constructObject(new Position(roomY,
+//											roomX))));
+                    Game.getMap().addNewDesignatedRoom(room.constructObject(new Position(roomY,	roomX)));
 					controller.setDesignatingAction(Designation.NONE);
 
 					repaint();
@@ -686,26 +682,18 @@ public class BasicView extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 	}
@@ -796,8 +784,6 @@ public class BasicView extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 	}

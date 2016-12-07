@@ -10,6 +10,7 @@ import java.util.TreeMap;
 
 import controller.Designation;
 import model.actors.Actor;
+import model.actors.DigOutRoomAction;
 import model.actors.EnemyActor;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
@@ -35,6 +36,7 @@ import model.furniture.Furniture;
 import model.game.Game;
 import model.items.Item;
 import model.room.FarmRoom;
+import model.room.Room;
 
 /**
  * Constructs a random map with various geographical features
@@ -66,6 +68,9 @@ public class Map implements Serializable {
 	private ArrayList<Position> anthillLocations = new ArrayList<>();
 	private TreeMap<Position, FarmRoom> mapOfFarmRooms = new TreeMap<>();
 	private ArrayList<Position> antTunnelLocations = new ArrayList<>();
+	
+	private volatile LinkedList<Room> completedRooms = new LinkedList<>();
+	private volatile LinkedList<Room> designatedRooms = new LinkedList<>();
 
 	private int time;
 
@@ -502,7 +507,6 @@ public class Map implements Serializable {
 
 						if (map[row][col].getID().equals(AirBlock.id)) {
 							map[row][col] = new AnthillBlock();
-							// TODO does this work?
 							anthillLocations.add(new Position(row, col));
 						}
 					} else {
@@ -754,7 +758,7 @@ public class Map implements Serializable {
 		int newCol = Math.floorMod(position.getCol(), Game.getMap().getTotalWidth());
 		Position newPos = new Position(position.getRow(), newCol);
 		if (getBuildingBlock(newPos).removeItemFromGround(item)) {
-			itemsOnGround.remove(0); //TODO: How does this work?
+			itemsOnGround.remove(0);
 			return true;
 		}
 		return false;
@@ -801,5 +805,31 @@ public class Map implements Serializable {
 	public MapParameters getMapParameters() {
 		return mapParameters;
 	}
+	
+	public LinkedList<Room> getDesignatedRooms() {
+		return this.designatedRooms;
+	}
+	
+	public LinkedList<Room> getCompletedRooms() {
+		return this.completedRooms;
+	}
 
+	public void addNewDesignatedRoom(Room room) {
+		this.designatedRooms.add(room);
+	}
+	
+	public void addNewCompletedRoom(Room room) {
+		this.designatedRooms.remove(room);
+		this.completedRooms.add(room);
+	}
+	
+	public void checkOnDesignatedRooms() {
+		for (Room room : designatedRooms) {
+			if (room.isAccessible() && room.isUnderConstruction() == false) {
+				room.setUnderConstruction(true);
+				PlayerControlledActor.addActionToPlayerPool(new DigOutRoomAction(room));
+			}
+		}
+	}
+	
 }

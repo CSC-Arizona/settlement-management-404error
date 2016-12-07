@@ -223,7 +223,7 @@ public class Controller extends JFrame {
 		this.setVisible(true);
 		new SongPlayer().start();
 		if (skipLoadScreen) {
-			startNewGame(new Settings(Settings.MEDIUM,Settings.NORMAL));
+			startNewGame(new Settings(Settings.MEDIUM,Settings.EASY));
 		} else {
 			startingView = new StartingView(this);
 			this.add(startingView);
@@ -277,6 +277,7 @@ public class Controller extends JFrame {
 				Game.getMap().regrowTrees();
 			}
 			Game.getMap().setTime(time);
+			Game.getMap().checkOnDesignatedRooms();
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();
 			basicView.repaint();
