@@ -41,6 +41,8 @@ import model.game.Game;
 import model.items.Item;
 import model.room.FarmRoom;
 import model.room.Room;
+import model.trees.AppleTree;
+import model.trees.Mushroom;
 
 /**
  * Constructs a random map with various geographical features
@@ -71,7 +73,7 @@ public class Map implements Serializable {
 	// using anthillLocations to determine "random" spawn points for ants
 	private ArrayList<Position> anthillLocations = new ArrayList<>();
 	private TreeMap<Position, FarmRoom> mapOfFarmRooms = new TreeMap<>();
-	
+
 	private volatile LinkedList<Room> completedRooms = new LinkedList<>();
 	private volatile LinkedList<Room> designatedRooms = new LinkedList<>();
 	public ArrayList<Position> antTunnelLocations = new ArrayList<>();
@@ -174,7 +176,7 @@ public class Map implements Serializable {
 			if (row < 0)
 				break;
 		}
-		ship = new Position(row+3,0);
+		ship = new Position(row + 3, 0);
 
 		for (int[] offset : body) {
 			map[row + offset[0]][Math.floorMod(col + offset[1],
@@ -432,8 +434,7 @@ public class Map implements Serializable {
 	}
 
 	private void addSingleTree() {
-		AppleTree tree = new AppleTree(getTotalWidth(),
-				mapParameters.airHeight, this, random);
+		AppleTree tree = new AppleTree(this, random);
 		tree.addToMap();
 
 		for (Position pos : tree.getTrunk()) {
@@ -652,13 +653,14 @@ public class Map implements Serializable {
 	private void addMushrooms() {
 		for (int i = 0; i < 10; i++) {
 			if (cavernFloorBlocks.size() != 0) {
-				Integer[] cavernFloorBlock = cavernFloorBlocks.get(random
-						.nextInt(cavernFloorBlocks.size()));
-				Mushroom mushroom = new Mushroom(getTotalWidth(), map, random,
-						cavernFloorBlock);
+				Mushroom mushroom = new Mushroom(this, random);
 				mushroom.addToMap();
 			}
 		}
+	}
+	
+	public ArrayList<Integer[]> getCavernFloorBlocks() {
+		return cavernFloorBlocks;
 	}
 
 	private Position randomStartingPosition() {
@@ -824,11 +826,11 @@ public class Map implements Serializable {
 	public MapParameters getMapParameters() {
 		return mapParameters;
 	}
-	
+
 	public LinkedList<Room> getDesignatedRooms() {
 		return this.designatedRooms;
 	}
-	
+
 	public LinkedList<Room> getCompletedRooms() {
 		return this.completedRooms;
 	}
@@ -836,25 +838,28 @@ public class Map implements Serializable {
 	public void addNewDesignatedRoom(Room room) {
 		this.designatedRooms.add(room);
 	}
-	
+
 	/**
 	 * 
-	 * @param room to be added to this list after it is totally completed
+	 * @param room
+	 *            to be added to this list after it is totally completed
 	 */
 	public void addNewCompletedRoom(Room room) {
 		this.completedRooms.add(room);
 	}
-	
+
 	/**
 	 * see if any of the designated rooms have become accessible
 	 */
 	public void checkOnDesignatedRooms() {
 		for (Room room : designatedRooms) {
 			if (room.isAccessible() && room.isUnderConstruction() == false) {
-				System.out.println("Room at " + room.getPosition() + " is accessible and wasn't yet under construction.");
+				System.out.println("Room at " + room.getPosition()
+						+ " is accessible and wasn't yet under construction.");
 				room.setUnderConstruction(true);
-//				designatedRooms.remove(room);
-				PlayerControlledActor.addActionToPlayerPool(new ConstructAction(room));
+				// designatedRooms.remove(room);
+				PlayerControlledActor
+						.addActionToPlayerPool(new ConstructAction(room));
 			}
 		}
 	}
