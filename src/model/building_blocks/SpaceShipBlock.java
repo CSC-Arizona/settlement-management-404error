@@ -12,6 +12,10 @@ import model.items.Item;
 
 public class SpaceShipBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5430876114974514794L;
 	private final static int durability = 7;
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsOnGround;

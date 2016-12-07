@@ -13,7 +13,6 @@ import java.util.TreeMap;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import model.actors.Actor;
 import model.actors.AttackAction;
@@ -43,7 +42,6 @@ import model.map.MapParameters;
 import model.room.FarmRoom;
 import model.save.SaveFile;
 import view.AlternativeView;
-import view.BasicView;
 import view.StartingView;
 
 /**
@@ -233,7 +231,7 @@ public class Controller extends JFrame {
 		this.setVisible(true);
 		new SongPlayer().start();
 		if (skipLoadScreen) {
-			startNewGame(new Settings(Settings.MEDIUM, Settings.NORMAL));
+			startNewGame(new Settings(Settings.MEDIUM, Settings.NORMAL),random);
 		} else {
 			startingView = new StartingView(this);
 			this.add(startingView);
@@ -252,7 +250,7 @@ public class Controller extends JFrame {
 	/**
 	 * Start a new game from scratch
 	 */
-	public void startNewGame(Settings settings) {
+	public void startNewGame(Settings settings, Random random) {
 		this.saveFile = new SaveFile();
 		this.mapParameters = MapParameters.getCustumMapParameters(settings);
 		Game.reset();

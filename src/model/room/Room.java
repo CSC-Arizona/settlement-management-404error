@@ -3,10 +3,7 @@ package model.room;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
-import java.util.TreeSet;
-
 import model.actors.MoveAction;
-import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
 import model.furniture.ConstructionMaterialPile;

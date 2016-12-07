@@ -6,11 +6,13 @@ import java.util.Random;
 import model.game.Game;
 
 public class PlayerIdleAction extends Action {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -438415060255114844L;
 	private static Random rand = new Random();
 	private MoveAction move;
 	private static int count = 0;
-	private boolean complete = false;
-
 	@Override
 	public int execute(Actor performer) {
 		ArrayList<Position> valid = new ArrayList<>();

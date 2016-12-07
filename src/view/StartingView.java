@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import controller.Controller;
@@ -66,6 +67,7 @@ public class StartingView extends JPanel {
 	private Box options;
 	private JSlider mapSize;
 	private JSlider difficulty;
+	private JTextField seed;
 
 	public StartingView(Controller controller) {
 
@@ -155,11 +157,15 @@ public class StartingView extends JPanel {
 		difficulty.setPaintLabels(true);
 		difficulty.setBackground(new Color(0, 0, 0, 0));
 		difficultyPanel.add(difficulty);
-		difficulty.addChangeListener(e->{
-			
-		});
 		difficultyPanel.setBorder(BorderFactory.createTitledBorder("Select the difficulty"));
 
+		JPanel seedPanel = new JPanel();
+		seedPanel.setBackground(new Color(0,0,0,0));
+		seed = new JTextField();
+		seed.setColumns(20);
+		seedPanel.setBorder(BorderFactory.createTitledBorder("Seed"));
+		seedPanel.add(seed);
+		
 		JPanel buttons = new JPanel();
 		buttons.setBackground(new Color(0, 0, 0, 0));
 		JButton goBack = new JButton("Back");
@@ -173,8 +179,10 @@ public class StartingView extends JPanel {
 		buttons.add(goBack);
 		buttons.add(create);
 
+		options.add(Box.createVerticalStrut(50));
 		options.add(size);
 		options.add(difficultyPanel);
+		options.add(seedPanel);
 		options.add(buttons);
 		controller.getContentPane().add(this);
 		controller.pack();
@@ -212,7 +220,14 @@ public class StartingView extends JPanel {
 		} else if (difficulty.getValue() == 99) {
 			diff = Settings.IMPOSSIBLE;
 		}
-		controller.startNewGame(new Settings(size, diff));
+		
+		String s = seed.getText();
+		Random rand;
+		if(s.length() <= 0)
+			rand = new Random();
+		else
+			rand = new Random(s.hashCode());
+		controller.startNewGame(new Settings(size, diff), rand);
 	}
 
 	private void newGame() {

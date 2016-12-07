@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.game.Game;
-import model.game.Log;
 
 /**
  * 

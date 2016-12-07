@@ -25,6 +25,10 @@ public class MoveAction extends Action {
 	 *
 	 */
 	private class Node implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5017091709197828319L;
 		int distance;
 		Position position;
 		Node prev;

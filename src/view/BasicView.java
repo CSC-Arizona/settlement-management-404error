@@ -30,9 +30,6 @@ import controller.Controller;
 import controller.Designation;
 import images.ImageEnum;
 import model.actors.Actor;
-import model.actors.ConstructAction;
-import model.actors.MoveAction;
-import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.AirBlock;
 import model.building_blocks.BuildingBlock;
@@ -41,7 +38,6 @@ import model.game.Game;
 import model.game.Log;
 import model.items.Item;
 import model.map.MapParameters;
-import model.room.Room;
 import model.room.RoomEnum;
 
 public class BasicView extends JPanel {
@@ -324,7 +320,7 @@ public class BasicView extends JPanel {
 			List<Actor> actors = Game.getMap().getBuildingBlock(row, col)
 					.getActors();
 			if (actors != null) {
-				List<Actor> actorsClone = new ArrayList(actors);
+				List<Actor> actorsClone = new ArrayList<Actor>(actors);
 				int count = 0;
 				Iterator<Actor> iter = actorsClone.iterator();
 				while (iter.hasNext()) {

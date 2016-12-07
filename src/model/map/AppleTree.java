@@ -11,10 +11,8 @@ import model.actors.Position;
 import model.building_blocks.AirBlock;
 import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
-import model.building_blocks.BuildingBlock;
 import model.building_blocks.EarthBlock;
 import model.building_blocks.LeafBlock;
-import model.game.Game;
 import model.items.Item;
 
 public class AppleTree implements Serializable {

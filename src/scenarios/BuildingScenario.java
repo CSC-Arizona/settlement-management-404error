@@ -9,7 +9,6 @@ import model.actors.Position;
 import model.game.Game;
 import model.map.MapParameters;
 import model.room.BedRoom;
-import model.room.HorizontalTunnel;
 import model.room.InfirmaryRoom;
 import model.room.StoreRoom;
 import model.room.VerticalTunnel;

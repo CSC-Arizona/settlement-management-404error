@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 
@@ -13,8 +12,6 @@ import controller.Designation;
 import model.actors.Actor;
 import model.actors.ConstructAction;
 import model.actors.EnemyActor;
-import model.actors.Inventory;
-import model.actors.PlaceFurnitureAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.AirBlock;
@@ -35,7 +32,6 @@ import model.building_blocks.SpaceShipBlock;
 import model.building_blocks.SpaceShipCenterBlock;
 import model.building_blocks.SpaceShipLightBlock;
 import model.building_blocks.StoneBlock;
-import model.furniture.ConstructionMaterialPile;
 import model.furniture.Furniture;
 import model.game.Game;
 import model.items.Item;
@@ -78,9 +74,6 @@ public class Map implements Serializable {
 	public Position ship;
 
 	private int time;
-
-	private boolean addActor;
-	private Position positionToAdd;
 
 	public Map(MapParameters mapParameters, Random random) {
 		this.blocksMarkedAsDesignated = new HashMap<>();
