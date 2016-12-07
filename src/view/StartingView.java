@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -78,17 +79,24 @@ public class StartingView extends JPanel {
 		visibleCornerX = (Game.getMap().getTotalWidth() - visibleWidth / 2);
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.add(Box.createVerticalGlue());
+		JPanel newGame = new JPanel();
 		newGameButton = new JButton("New game");
-		newGameButton.setForeground(Color.green);
+		newGameButton.setForeground(Color.black);
 		newGameButton.addKeyListener(new MyKeyListener());
 		newGameButton.addActionListener(new MyButtonListener());
+		newGame.add(newGameButton);
+		newGame.setBackground(new Color(255,255,255,0));
+		JPanel loadGame = new JPanel();
 		loadGameButton = new JButton("Load game");
-		loadGameButton.setForeground(Color.green);
+		loadGameButton.setForeground(Color.black);
 		loadGameButton.addKeyListener(new MyKeyListener());
 		loadGameButton.addActionListener(new MyButtonListener());
-		verticalBox.add(newGameButton);
-		verticalBox.add(loadGameButton);
+		loadGame.add(loadGameButton);
+		verticalBox.add(newGame);
+		verticalBox.add(loadGame);
+		loadGame.setBackground(new Color(255,255,255,0));
 		this.add(verticalBox);
+		verticalBox.setBorder(BorderFactory.createTitledBorder("Start A Game"));
 		controller.getContentPane().add(this);
 		controller.pack();
 		newGameButton.requestFocusInWindow();
@@ -222,7 +230,7 @@ public class StartingView extends JPanel {
 				drawTile(g2, row, col, i, j);
 			}
 		}
-		g2.drawImage(menu, windowWidth/5 , windowHeight/15, windowWidth-windowWidth/3, windowHeight-windowHeight/6, null);
+		g2.drawImage(menu, windowWidth/6 , windowHeight/15, windowWidth-windowWidth/3, windowHeight-windowHeight/6, null);
 	}
 
 	private class MyKeyListener implements KeyListener {
