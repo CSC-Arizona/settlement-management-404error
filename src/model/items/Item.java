@@ -3,7 +3,6 @@ package model.items;
 import images.ImageEnum;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Item is an abstract class that can be extended by any items that can be held
