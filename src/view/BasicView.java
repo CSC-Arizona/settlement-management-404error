@@ -328,7 +328,7 @@ public class BasicView extends JPanel {
 				Iterator<Actor> iter = actorsClone.iterator();
 				while (iter.hasNext()) {
 					Actor p = iter.next();
-					if (p.getImage() != null) {
+					if (p.getImage() != null && p.isAlive()) {
 						g2.drawImage(p.getImage().getRandomBufferedImage(), j
 								* blockSizeX, i * blockSizeY, null);
 					} else {
