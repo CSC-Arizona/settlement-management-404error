@@ -48,13 +48,13 @@ public class InventoryTest {
 		inv.addItem(new StoneItem());
 		assertEquals(6.0, inv.getWeightCarried(), 0.0001);
 		inv.addItem(new WoodItem());
-		assertEquals(9.0, inv.getWeightCarried(), 0.0001);
+		assertEquals(7.0, inv.getWeightCarried(), 0.0001);
 		assertEquals(new AntLarvaItem().getClass(), inv.removeItem(0)
 				.getClass());
-		assertEquals(8.5, inv.getWeightCarried(), 0.0001);
+		assertEquals(6.5, inv.getWeightCarried(), 0.0001);
 		assertEquals(new AntLarvaItem().getClass(), inv.removeItem(0)
 				.getClass());
-		assertEquals(8.0, inv.getWeightCarried(), 0.0001);
+		assertEquals(6.0, inv.getWeightCarried(), 0.0001);
 		assertEquals(new WoodItem().getClass(), inv.removeItem(1).getClass());
 		assertEquals(5.0, inv.getWeightCarried(), 0.0001);
 		assertEquals(null, inv.removeItem(10));
@@ -79,7 +79,7 @@ public class InventoryTest {
 	public void testingSimpleContainsAndRemove() {
 		Inventory inv = new Inventory();
 		assertTrue(inv.addItem(new StoneItem()));
-		assertEquals("5.0/100.0 weight carried (1 Stone)", inv.toString());
+		assertEquals("Inventory: 5% full (1 Stone)", inv.toString());
 		assertTrue(inv.contains(new StoneItem()));
 		assertTrue(inv.removeItem(new StoneItem()));
 		assertFalse(inv.contains(new StoneItem()));

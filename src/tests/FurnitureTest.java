@@ -62,15 +62,12 @@ public class FurnitureTest {
 		assertEquals(5, bc.getCapacity());
 		bc.increaseCapacityBy(1);
 		assertEquals(6, bc.getCapacity());
-		assertEquals(30, bc.getWeightCapacity());
+		assertEquals(30, bc.getWeightCapacity(), 1e-10);
 		List<Item> basicCrateList = bc.getRequiredMaterials();
 		ListIterator<Item> li = basicCrateList.listIterator();
 		assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
+
 	}
 	
 	@Test
@@ -82,15 +79,7 @@ public class FurnitureTest {
 		List<Item> bedList = b.getRequiredMaterials();
 		ListIterator<Item> li = bedList.listIterator();
 		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(si.getClass(), li.next().getClass());
-		assertEquals(si.getClass(), li.next().getClass());
-		assertEquals(wsi.getClass(), li.next().getClass());
-		assertEquals(wsi.getClass(), li.next().getClass());
-		assertEquals(wsi.getClass(), li.next().getClass());
-		assertEquals(wsi.getClass(), li.next().getClass());
+
 	}
 	
 	@Test
@@ -102,13 +91,7 @@ public class FurnitureTest {
 		List<Item> couchList = c.getRequiredMaterials();
 		ListIterator<Item> li = couchList.listIterator();
 		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
-		assertEquals(wsi.getClass(), li.next().getClass());
-		assertEquals(wsi.getClass(), li.next().getClass());
-		assertEquals(wsi.getClass(), li.next().getClass());
 		assertEquals(wsi.getClass(), li.next().getClass());
 	}
 	
@@ -122,9 +105,6 @@ public class FurnitureTest {
 		ListIterator<Item> li = fireplaceList.listIterator();
 		assertEquals(si.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
-		assertEquals(si.getClass(), li.next().getClass());
-		assertEquals(si.getClass(), li.next().getClass());
-		assertEquals(ii.getClass(), li.next().getClass());
 		assertEquals(ii.getClass(), li.next().getClass());
 	}
 	
@@ -137,17 +117,13 @@ public class FurnitureTest {
 		List<Item> healingBedList = hb.getRequiredMaterials();
 		ListIterator<Item> li = healingBedList.listIterator();
 		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(si.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
 		assertEquals(wsi.getClass(), li.next().getClass());
-		assertEquals(wsi.getClass(), li.next().getClass());
-		assertEquals(wsi.getClass(), li.next().getClass());
-		assertEquals(wsi.getClass(), li.next().getClass());
+		assertEquals(wi.getClass(), li.next().getClass());
+		assertEquals(si.getClass(), li.next().getClass());
 		assertEquals(wsi.getClass(), li.next().getClass());
 		assertEquals(ii.getClass(), li.next().getClass());
+
 	}
 	
 	@Test
@@ -156,18 +132,14 @@ public class FurnitureTest {
 		assertEquals(20, mc.getCapacity());
 		mc.increaseCapacityBy(1);
 		assertEquals(21, mc.getCapacity());
-		assertEquals(70, mc.getWeightCapacity());
+		assertEquals(200, mc.getWeightCapacity(), 1e-10);
 		List<Item> metalCrateList = mc.getRequiredMaterials();
 		ListIterator<Item> li = metalCrateList.listIterator();
 		assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
-		assertEquals(ii.getClass(), li.next().getClass());
 		assertEquals(ii.getClass(), li.next().getClass());
 	}
 	
@@ -180,8 +152,6 @@ public class FurnitureTest {
 		List<Item> millingMachineList = mm.getRequiredMaterials();
 		ListIterator<Item> li = millingMachineList.listIterator();
 		assertEquals(si.getClass(), li.next().getClass());
-		assertEquals(si.getClass(), li.next().getClass());
-		assertEquals(ii.getClass(), li.next().getClass());
 		assertEquals(ii.getClass(), li.next().getClass());
 	}
 	
@@ -194,13 +164,11 @@ public class FurnitureTest {
 		List<Item> poolTableList = pt.getRequiredMaterials();
 		ListIterator<Item> li = poolTableList.listIterator();
 		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
-		assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
 		assertEquals(ii.getClass(), li.next().getClass());
+
 	}
 	
 	@Test
@@ -209,7 +177,7 @@ public class FurnitureTest {
 		assertEquals(50, rc.getCapacity());
 		rc.increaseCapacityBy(1);
 		assertEquals(51, rc.getCapacity());
-		assertEquals(500, rc.getWeightCapacity());
+		assertEquals(500, rc.getWeightCapacity(), 1e-10);
 		List<Item> reinforcedCrateList = rc.getRequiredMaterials();
 		ListIterator<Item> li = reinforcedCrateList.listIterator();
 		assertEquals(wi.getClass(), li.next().getClass());
@@ -244,8 +212,7 @@ public class FurnitureTest {
 		assertEquals(11, l.getCapacity());
 		List<Item> ladderList = l.getRequiredMaterials();
 		ListIterator<Item> li = ladderList.listIterator();
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
+
 	}
 	
 	@Test
@@ -256,10 +223,9 @@ public class FurnitureTest {
 		assertEquals(2, ic.getCapacity());
 		List<Item> incubationChamberList = ic.getRequiredMaterials();
 		ListIterator<Item> li = incubationChamberList.listIterator();
-		assertEquals(ii.getClass(), li.next().getClass());
-		assertEquals(ii.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
+		assertEquals(wsi.getClass(), li.next().getClass());
 	}
 	
 }

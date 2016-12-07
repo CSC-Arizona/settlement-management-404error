@@ -35,7 +35,7 @@ public class BuildingBlockTest {
 	@Test
 	public void testLeafBLock() {
 		AppleTreeLeafBlock lb = new AppleTreeLeafBlock();
-		assertFalse(lb.isOccupiable());
+		assertTrue(lb.isOccupiable());
 		assertTrue(lb.isDestroyable());
 		assertEquals(new LinkedList<Object>().getClass(), lb.lootBlock().getClass());
 		assertEquals(8, lb.lootBlock().size());
@@ -48,7 +48,7 @@ public class BuildingBlockTest {
 		GrassBlock bb = new GrassBlock();
 		assertTrue(bb.isOccupiable());
 		assertTrue(bb.isDestroyable());
-		assertEquals(1, bb.lootBlock().size());
+		assertEquals(6, bb.lootBlock().size());
 		bb.lootBlock().get(0);
 		assertEquals(1, bb.getDurability());
 		assertEquals(new Color(0, 87, 3), bb.getColor());
@@ -86,10 +86,10 @@ public class BuildingBlockTest {
 	@Test
 	public void testAntTunnelBlock() {
 		AnthillBlock atb = new AnthillBlock();
-		assertTrue(atb.isOccupiable());
+		assertFalse(atb.isOccupiable());
 		assertTrue(atb.isDestroyable());
 		assertEquals(new AntLarvaItem().getClass(), atb.lootBlock().get(0).getClass());
-		assertEquals(7, atb.getDurability());
+		assertEquals(1, atb.getDurability());
 	}
 	
 	@Test

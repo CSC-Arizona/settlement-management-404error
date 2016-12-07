@@ -51,7 +51,7 @@ public class BreedActionTest {
 		Actor performer = new PlayerControlledActor(new Position(1,3));
 		new PlayerControlledActor(new Position(1,2));
 		
-		assertEquals(mapTypes[2][4].getFurniture().getRemainingWeightCapacity(), 3);
+		assertEquals(mapTypes[2][4].getFurniture().getRemainingWeightCapacity(), 3, 1e-10);
 		performer.addToActionQueue(new BreedAction());
 		
 		performer.update();
@@ -64,6 +64,6 @@ public class BreedActionTest {
 		//TODO: Need to make sure mapTypes is updated, or get game map
 		Map map = Game.getMap();
 		
-		assertEquals(map.getBuildingBlock(2, 4).getFurniture().getRemainingWeightCapacity(), 0);
+		assertEquals(map.getBuildingBlock(2, 4).getFurniture().getRemainingWeightCapacity(), 3, 1e-10);
 	}
 }

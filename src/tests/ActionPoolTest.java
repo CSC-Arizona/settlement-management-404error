@@ -12,6 +12,7 @@ import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.AirBlock;
 import model.building_blocks.BuildingBlock;
+import model.building_blocks.CavernBlock;
 import model.building_blocks.EarthBlock;
 import model.building_blocks.IronOreBlock;
 import model.game.Game;
@@ -59,42 +60,45 @@ public class ActionPoolTest {
 		for (int i = 0; i < durability; i++) {
 			assertTrue(test.getPosition().equals(new Position(1, 1)));
 			assertTrue(test2.getPosition().equals(new Position(1, 3)));
-			assertTrue(Game.getMap().getBuildingBlock(2, 0).getID().equals("Iron ore"));
-			assertTrue(Game.getMap().getBuildingBlock(2, 4).getID().equals("Iron ore"));
+			assertTrue(Game.getMap().getBuildingBlock(2, 0).getID().equals(IronOreBlock.id));
+			assertTrue(Game.getMap().getBuildingBlock(2, 4).getID().equals(IronOreBlock.id));
 			test.update();
 			test2.update();
 		}
 		
 		assertTrue(test.getPosition().equals(new Position(1, 1)));
 		assertTrue(test2.getPosition().equals(new Position(1, 3)));
-		assertTrue(Game.getMap().getBuildingBlock(2, 0).getID().equals("Cavern"));
-		assertTrue(Game.getMap().getBuildingBlock(2, 4).getID().equals("Cavern"));
+		assertTrue(Game.getMap().getBuildingBlock(2, 0).getID().equals(CavernBlock.id));
+		assertTrue(Game.getMap().getBuildingBlock(2, 4).getID().equals(CavernBlock.id));
 		
 		for (int i = 0; i < durability; i++) {
 			assertTrue(test.getPosition().equals(new Position(1, 1)));
 			assertTrue(test2.getPosition().equals(new Position(1, 3)));
-			assertTrue(Game.getMap().getBuildingBlock(2, 1).getID().equals("Iron ore"));
-			assertTrue(Game.getMap().getBuildingBlock(2, 3).getID().equals("Iron ore"));
+			assertTrue(Game.getMap().getBuildingBlock(2, 1).getID().equals(IronOreBlock.id));
+			assertTrue(Game.getMap().getBuildingBlock(2, 3).getID().equals(IronOreBlock.id));
 			test.update();
 			test2.update();
 		}
 		
-		assertTrue(test.getPosition().equals(new Position(2, 1)));
-		assertTrue(test2.getPosition().equals(new Position(2, 3)));
-		assertTrue(Game.getMap().getBuildingBlock(2, 1).getID().equals("Cavern"));
-		assertTrue(Game.getMap().getBuildingBlock(2, 3).getID().equals("Cavern"));
+		assertTrue(test.getPosition().equals(new Position(1, 1)));
+		assertTrue(test2.getPosition().equals(new Position(1, 3)));
+		assertTrue(Game.getMap().getBuildingBlock(2, 1).getID().equals(CavernBlock.id));
+		assertTrue(Game.getMap().getBuildingBlock(2, 3).getID().equals(CavernBlock.id));
 		
-		for (int i = 0; i < durability; i++) {
+		test.update();
+		test2.update();
+		
+		for (int i = 0; i < durability-1; i++) {
 			assertTrue(test.getPosition().equals(new Position(2, 1)));
 			assertTrue(test2.getPosition().equals(new Position(2, 3)));
-			assertTrue(Game.getMap().getBuildingBlock(2, 2).getID().equals("Iron ore"));
+			assertTrue(Game.getMap().getBuildingBlock(2, 3).getID().equals(CavernBlock.id));
 			test.update();
 			test2.update();
 		}
 		
 		assertTrue(test.getPosition().equals(new Position(2, 1)));
 		assertTrue(test2.getPosition().equals(new Position(2, 3)));
-		assertTrue(Game.getMap().getBuildingBlock(2, 2).getID().equals("Cavern"));
+		assertTrue(Game.getMap().getBuildingBlock(2, 2).getID().equals(CavernBlock.id));
 	}
 
 }

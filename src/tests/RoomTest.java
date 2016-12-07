@@ -14,6 +14,7 @@ import model.items.IronItem;
 import model.items.Item;
 import model.items.StoneItem;
 import model.items.WheatKernelItem;
+import model.items.WoodItem;
 import model.room.BedRoom;
 import model.room.EntertainmentRoom;
 import model.room.FarmRoom;
@@ -221,7 +222,7 @@ public class RoomTest {
 		assertEquals(2, br.getRequiredHeight());
 		assertEquals(3, br.getRoomCapacity());
 		// store rooms can have 2 upgrades
-		assertEquals(new StoneItem().getClass(), br.getRequiredUpgradeMaterials().get(0).getClass());
+		assertEquals(new WoodItem().getClass(), br.getRequiredUpgradeMaterials().get(0).getClass());
 		assertTrue(br.upgradeRoom());
 		assertEquals(3 + br.increaseCapacityBy(), br.getRoomCapacity());
 		assertEquals(new IronItem().getClass(), br.getRequiredUpgradeMaterials().get(0).getClass());

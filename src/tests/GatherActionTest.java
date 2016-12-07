@@ -86,26 +86,25 @@ public class GatherActionTest {
 										{ 1, 1, 1, 1, 1 } };
 		Game.setMap(generateMap(mapGen));
 		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 1));
-		test.addToActionQueue(new GatherAction(new Position(1, 4)));
-		test.addToActionQueue(new MoveAction(new Position(3, 2)));
+		test.addToActionQueue(new GatherAction(new Position(1, 3)));
 
 		assertEquals(1, test.getPosition().getRow());
 		assertEquals(1, test.getPosition().getCol());
 
 		test.update();
-		assertEquals(2, test.getPosition().getRow());
-		assertEquals(0, test.getPosition().getCol());
-
-		test.update();
-		assertEquals(3, test.getPosition().getRow());
-		assertEquals(1, test.getPosition().getCol());
-
-		test.update();
-		assertEquals(3, test.getPosition().getRow());
+		assertEquals(1, test.getPosition().getRow());
 		assertEquals(2, test.getPosition().getCol());
 
 		test.update();
-		assertEquals(3, test.getPosition().getRow());
+		assertEquals(1, test.getPosition().getRow());
+		assertEquals(2, test.getPosition().getCol());
+
+		test.update();
+		assertEquals(1, test.getPosition().getRow());
+		assertEquals(2, test.getPosition().getCol());
+
+		test.update();
+		assertEquals(1, test.getPosition().getRow());
 		assertEquals(2, test.getPosition().getCol());
 	}
 
