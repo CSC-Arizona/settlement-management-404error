@@ -21,7 +21,6 @@ import model.room.FarmRoom;
 import model.room.HorizontalTunnel;
 import model.room.IncubationRoom;
 import model.room.InfirmaryRoom;
-import model.room.CraftingRoom;
 import model.room.Room;
 import model.room.StoreRoom;
 import model.room.VerticalTunnel;
@@ -47,8 +46,6 @@ public class RoomTest {
 		assertFalse(ht.needsWalls());
 		IncubationRoom ir = new IncubationRoom(p);
 		assertTrue(ir.needsWalls());
-		CraftingRoom kr = new CraftingRoom(p);
-		assertTrue(kr.needsWalls());
 		StoreRoom sr = new StoreRoom(p);
 		assertTrue(sr.needsWalls());
 		VerticalTunnel vt = new VerticalTunnel(p);
@@ -178,30 +175,6 @@ public class RoomTest {
 		assertEquals(8 + br.increaseCapacityBy() + br.increaseCapacityBy(), br.getRoomCapacity());
 		assertFalse(br.upgradeRoom());
 		assertEquals(8 + br.increaseCapacityBy() + br.increaseCapacityBy(), br.getRoomCapacity());
-		assertEquals(0, br.getNumAgentsInRoom());
-		br.increaseNumAgentsInRoom();
-		assertEquals(1, br.getNumAgentsInRoom());
-		br.decreaseNumAgentsInRoom();
-		assertEquals(0, br.getNumAgentsInRoom());
-		br.decreaseNumAgentsInRoom();
-		assertEquals(0, br.getNumAgentsInRoom());
-		assertEquals(new LinkedList<Item>().getClass(), br.getRequiredBuildMaterials().getClass());
-		assertEquals(new LinkedList<Item>().getClass(), br.getRequiredUpgradeMaterials().getClass());
-	}
-	
-	@Test
-	public void testKitchenRoom() {
-		Game.reset();
-		Room br = new CraftingRoom(new Position(0,0));
-		assertEquals(0, br.getPosition().compareTo(new Position(0,0)));
-		assertEquals(6, br.getRequiredWidth());
-		assertEquals(2, br.getRequiredHeight());
-		assertEquals(3, br.getRoomCapacity());
-		// kitchens can have 1 upgrades
-		assertTrue(br.upgradeRoom());
-		assertEquals(3 + br.increaseCapacityBy(), br.getRoomCapacity());
-		assertFalse(br.upgradeRoom());
-		assertEquals(3 + br.increaseCapacityBy(), br.getRoomCapacity());
 		assertEquals(0, br.getNumAgentsInRoom());
 		br.increaseNumAgentsInRoom();
 		assertEquals(1, br.getNumAgentsInRoom());

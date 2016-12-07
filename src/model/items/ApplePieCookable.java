@@ -3,7 +3,7 @@ package model.items;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ApplePieCookable extends CookableItem {
+public class ApplePieCookable extends Item { //CookableItem {
 
 	/**
 	 * 
@@ -11,11 +11,10 @@ public class ApplePieCookable extends CookableItem {
 	private static final long serialVersionUID = -5921506440012280810L;
 
 	public ApplePieCookable() {
-		super(10);
+		super(true, 0, 10, 0.5, null);
 	}
 
-	@Override
-	public List<Item> getRequiredIngredients() {
+	public static List<Item> getRequiredMaterials() {
 		List<Item> reqIngredients = new LinkedList<>();
 		for (int i = 0; i < 3; i++)
 		    reqIngredients.add(new AppleItem());
@@ -23,7 +22,6 @@ public class ApplePieCookable extends CookableItem {
 		return reqIngredients;
 	}
 
-	@Override
 	public String toString() {
 		return "Apple pie (heals 10 hp)";
 	}

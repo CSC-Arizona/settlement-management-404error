@@ -18,10 +18,10 @@ public class FortifiedIronAxe extends Weapon {
 	 */
 	private static final long serialVersionUID = -5154963681454698902L;
 	private final static int attackMod = 21;
-	private List<Item> fortifiedIronAxeList;
+	private static List<Item> fortifiedIronAxeList;
 	
 	public FortifiedIronAxe() {
-		super(attackMod, 0, 25.0, "Fortified iron axe");
+		super(attackMod, 0, 25.0, "Fortified iron axe", null);
 		fortifiedIronAxeList = new LinkedList<>();
 		fortifiedIronAxeList.add(new WoodItem());
 		fortifiedIronAxeList.add(new WoodItem());
@@ -30,8 +30,7 @@ public class FortifiedIronAxe extends Weapon {
 		fortifiedIronAxeList.add(new IronItem());
 	}
 
-	@Override
-	public List<Item> getRequiredMaterials() {
+	public static List<Item> getRequiredMaterials() {
 		return fortifiedIronAxeList;
 	}
 }

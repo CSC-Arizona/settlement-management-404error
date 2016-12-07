@@ -24,7 +24,9 @@ public enum ImageEnum {
 			new String[] { "tunnel.png" }), MEDBED(
 			new String[] { "medbed.png" }), SPACESHIPCENTER(
 			new String[] { "spaceship_center.png" }), SPACESHIPLIGHT(
-			new String[] { "spaceship_light.png" }), SPACESHIPBODY(
+			new String[] { "spaceship_light_1.png" }), SPACESHIPLIGHT_FINAL(
+			new String[] { "spaceship_light_1.png", "spaceship_light_2.png",
+					"spaceship_light_3.png", "spaceship_light_4.png" }), SPACESHIPBODY(
 			new String[] { "spaceship_body.png" }), SPACESHIPPARTBLOCK(
 			new String[] { "space_ship_block.png" }), SEED(
 			new String[] { "seed.png" }), ANTIMATTERDEFENESTRATOR(
@@ -36,8 +38,9 @@ public enum ImageEnum {
 			new String[] { "mushroomblock.png" }), MUSHROOMFRUITBLOCK(
 			new String[] { "mushroomfruitblock.png" }), EGG(
 			new String[] { "egg.png" }), MATERIALPILE(
-		    new String[] { "materialPile.png" }), TRAPDOOR(
-		    new String[] { "trapdoor.png" });
+			new String[] { "materialPile.png" }), TRAPDOOR(
+			new String[] { "trapdoor.png" }), HUNGER(
+			new String[] { "hunger.png" }), TIRED(new String[] { "tired.png" });
 
 	private String[] filenames;
 	private ArrayList<BufferedImage> images;

@@ -1,10 +1,11 @@
 package model.weapons;
 
-import model.items.Craftable;
+import images.ImageEnum;
+import model.items.Item;
 
 //Author: Maxwell Faridian
 //This class defines the Weapon object
-public abstract class Weapon extends Craftable {
+public abstract class Weapon extends Item { //extends Craftable {
 
 	/**
 	 * 
@@ -15,8 +16,8 @@ public abstract class Weapon extends Craftable {
 	private double weight;
 
 	//Weapons can not be eaten
-	public Weapon(int attackModifier, int healthPts, double weight, String id) {
-		super(false, attackModifier, healthPts, weight);
+	public Weapon(int attackModifier, int healthPts, double weight, String id, ImageEnum img) {
+		super(false, attackModifier, healthPts, weight, img);
 		this.attackModifier = attackModifier;
 		this.weight = weight;
 		this.id = id;

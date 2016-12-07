@@ -17,10 +17,10 @@ public class StoneChestPlate extends Armor {
 	private static final long serialVersionUID = 7012014956367967621L;
 	private final static int attackMod = 12;
 	private final static int defenseMod = 14;
-	private List<Item> scpList;
+	private static List<Item> scpList;
 	
 	public StoneChestPlate() {
-		super(false, attackMod, 0, 20.0, defenseMod, "Stone chestplate");
+		super(false, attackMod, 0, 20.0, defenseMod, "Stone chestplate", null);
 		scpList = new LinkedList<>();
 		scpList.add(new StoneItem());
 		scpList.add(new StoneItem());
@@ -28,8 +28,7 @@ public class StoneChestPlate extends Armor {
 		scpList.add(new StoneItem());
 	}
 
-	@Override
-	public List<Item> getRequiredMaterials() {
+	public static List<Item> getRequiredMaterials() {
 		return scpList;
 	}
 }

@@ -12,7 +12,6 @@ import model.room.EntertainmentRoom;
 import model.room.FarmRoom;
 import model.room.HorizontalTunnel;
 import model.room.InfirmaryRoom;
-import model.room.CraftingRoom;
 import model.room.StoreRoom;
 import model.room.VerticalTunnel;
 
@@ -48,7 +47,6 @@ public class ConstructMenu implements TableModel {
 		rooms.put("Farm Room", new FarmRoom(new Position(0,0)).reqMaterialsToString());
 		rooms.put("Horizontal Tunnel", new HorizontalTunnel(new Position(0,0)).reqMaterialsToString());
 		rooms.put("Infirmary", new InfirmaryRoom(new Position(0,0)).reqMaterialsToString());
-		rooms.put("Kitchen", new CraftingRoom(new Position(0,0)).reqMaterialsToString());
 		rooms.put("Storeroom", new StoreRoom(new Position(0,0)).reqMaterialsToString());
 		rooms.put("Vertical Tunnel", new VerticalTunnel(new Position(0,0)).reqMaterialsToString());
 	}

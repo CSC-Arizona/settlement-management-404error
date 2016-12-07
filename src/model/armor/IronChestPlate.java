@@ -18,10 +18,10 @@ public class IronChestPlate extends Armor {
 	private static final long serialVersionUID = 8725107513330446951L;
 	private final static int attackMod = 20;
 	private final static int defenseMod = 16;
-	private List<Item> icpList;
+	private static List<Item> icpList;
 	
 	public IronChestPlate() {
-		super(false, attackMod, 0, 28.0, defenseMod, "Iron chestplate");
+		super(false, attackMod, 0, 28.0, defenseMod, "Iron chestplate", null);
 		icpList = new LinkedList<>();
 		icpList.add(new IronItem());
 		icpList.add(new IronItem());
@@ -29,8 +29,7 @@ public class IronChestPlate extends Armor {
 		icpList.add(new IronItem());
 	}
 
-	@Override
-	public List<Item> getRequiredMaterials() {
+	public static List<Item> getRequiredMaterials() {
 		return icpList;
 	}
 }

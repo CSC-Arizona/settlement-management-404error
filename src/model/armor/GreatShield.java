@@ -20,10 +20,10 @@ public class GreatShield extends Armor {
 	private static final long serialVersionUID = 6119046218741156100L;
 	private final static int attackMod = 20;
 	private final static int defenseMod = 16;
-	private List<Item> gsList;
+	private static List<Item> gsList;
 	
 	public GreatShield() {
-		super(false, attackMod, 0, 22.0, defenseMod, "Great shield");
+		super(false, attackMod, 0, 22.0, defenseMod, "Great shield", null);
 		gsList = new LinkedList<>();
 		gsList.add(new WoodItem());
 		gsList.add(new StoneItem());
@@ -31,9 +31,7 @@ public class GreatShield extends Armor {
 		gsList.add(new IronItem());
 	}
 
-
-	@Override
-	public List<Item> getRequiredMaterials() {
+	public static List<Item> getRequiredMaterials() {
 		return gsList;
 	}
 }

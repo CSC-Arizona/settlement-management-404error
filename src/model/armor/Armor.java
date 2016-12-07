@@ -1,10 +1,13 @@
 package model.armor;
 
-import model.items.Craftable;
+import java.util.List;
+
+import images.ImageEnum;
+import model.items.Item;
 
 //Author: Maxwell Faridian
 //This class constructs Armor objects, which are themselves extensions of the Item class
-public abstract class Armor extends Craftable {
+public abstract class Armor extends Item {//extends Craftable {
 
 	/**
 	 * 
@@ -13,8 +16,8 @@ public abstract class Armor extends Craftable {
 	private int defenseModifier;
 	private String id;
 	
-	public Armor (boolean edible, int attackModifier, int healthPts, double weight, int defenseMod, String id) {
-		super(edible, attackModifier, healthPts, weight);
+	public Armor (boolean edible, int attackModifier, int healthPts, double weight, int defenseMod, String id, ImageEnum img) {
+		super(false, attackModifier, healthPts, weight, null);
 		this.defenseModifier = defenseMod;
 		this.id = id;
 	}

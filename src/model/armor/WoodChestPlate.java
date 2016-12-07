@@ -18,10 +18,10 @@ public class WoodChestPlate extends Armor {
 	private static final long serialVersionUID = 4751978466416272138L;
 	private final static int attackMod = 6;
 	private final static int defenseMod = 12;
-	private List<Item> wcpList;
+	private static List<Item> wcpList;
 	
 	public WoodChestPlate() {
-		super(false, attackMod, 0, 9.0, defenseMod, "Wood chestplate");
+		super(false, attackMod, 0, 9.0, defenseMod, "Wood chestplate", null);
 		wcpList = new LinkedList<>();
 		wcpList.add(new WoodItem());
 		wcpList.add(new WoodItem());
@@ -29,8 +29,7 @@ public class WoodChestPlate extends Armor {
 		wcpList.add(new WoodItem());
 	}
 
-	@Override
-	public List<Item> getRequiredMaterials() {
+	public static List<Item> getRequiredMaterials() {
 		return wcpList;
 	}
 }

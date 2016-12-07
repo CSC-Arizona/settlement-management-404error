@@ -3,7 +3,7 @@ package model.items;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AntLarvaPieCookable extends CookableItem {
+public class AntLarvaPieCookable extends Item {//CookableItem {
 	
 	/**
 	 * 
@@ -11,11 +11,10 @@ public class AntLarvaPieCookable extends CookableItem {
 	private static final long serialVersionUID = -6230505512703031570L;
 
 	public AntLarvaPieCookable() {
-		super(10);
+		super(true, 0, 10, 0.5, null);
 	}
 
-	@Override
-	public List<Item> getRequiredIngredients() {
+	public static List<Item> getRequiredMaterials() {
 		List<Item> reqIngredients = new LinkedList<>();
 		for (int i = 0; i < 3; i++)
 		    reqIngredients.add(new AntLarvaItem());
