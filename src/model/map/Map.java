@@ -477,7 +477,9 @@ public class Map implements Serializable {
 
 	private void addAntColonies() {
 		for (int i = 0; i < mapParameters.numberOfAntColonies; i++) {
-			int startX = random.nextInt(getTotalWidth());
+			int startX = mapParameters.mapWidth * (i+1) / (mapParameters.numberOfAntColonies+1);
+			startX += random.nextInt(20) - 40;
+			startX = Math.floorMod(startX, mapParameters.mapWidth);
 			int height = random.nextInt(2) + 5;
 
 			int startY = mapParameters.airHeight;
