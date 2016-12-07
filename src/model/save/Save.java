@@ -26,6 +26,7 @@ public class Save implements Serializable {
 	private List<EnemyActor> enemyActors;
 	private ActionPool playerActionPool;
 	private ActionPool enemyActionPool;
+	private int parts;
 	
 	public Save(){
 		map = Game.getMap();
@@ -34,6 +35,7 @@ public class Save implements Serializable {
 		enemyActors = EnemyActor.allActors;
 		playerActionPool = PlayerControlledActor.playerActionPool;
 		enemyActionPool = EnemyActor.enemyActionPool;
+		parts = PlayerControlledActor.remaingParts;
 	}
 	
 	public void setState(){
@@ -43,6 +45,7 @@ public class Save implements Serializable {
 		EnemyActor.enemyActionPool = enemyActionPool;
 		PlayerControlledActor.allActors = playerActors;
 		EnemyActor.allActors = enemyActors;
+		PlayerControlledActor.remaingParts = parts;
 	}
 
 }

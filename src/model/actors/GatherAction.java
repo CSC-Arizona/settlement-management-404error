@@ -104,17 +104,17 @@ public class GatherAction extends Action {
 			lootList = block.lootBlock();
 		}
 		if (lootList != null)
-			for (Item i : lootList)
+			for (Item i : lootList) {
 				// place the loot in the inventory if possible otherwise the
 				// ground
 				if (!performer.getInventory().addItem(i)) {
 					Game.getMap().addItemToGround(position, i);
-					performer.getActionPool().add(
-							new PickUpItemAction(position, i));
+					performer.getActionPool().add(new PickUpItemAction(position, i));
 					return;
 				}
-		if(block.getID().equals("Space ship part"))
-			performer.priorityAddToActionQueue(new DropOffAction());
+				if (block.getID().equals("Space ship part"))
+					performer.addToActionQueue(new DropOffAction(i));
+			}
 	}
 
 	/*

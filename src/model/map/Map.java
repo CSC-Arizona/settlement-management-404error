@@ -159,13 +159,13 @@ public class Map implements Serializable {
 
 		int col = 0;
 		int row = mapParameters.airHeight;
-		ship = new Position(row,0);
 
 		while (!map[row][col].getID().equals(AirBlock.id)) {
 			row -= 1;
 			if (row < 0)
 				break;
 		}
+		ship = new Position(row+3,0);
 
 		for (int[] offset : body) {
 			map[row + offset[0]][Math.floorMod(col + offset[1],

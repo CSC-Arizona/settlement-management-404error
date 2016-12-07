@@ -98,8 +98,11 @@ public abstract class Actor implements Serializable {
 				queue.addFirst((getActionPool().get()));
 				currentAction = queue.peek();
 			}
-			if (currentAction == null)
+			if (currentAction == null){
+				queue.poll();
+				performAction(attempts+1);
 				return;
+			}
 		}
 
 		// Store the result of the execution

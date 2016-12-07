@@ -303,6 +303,23 @@ public class Controller extends JFrame {
 				revalidate();
 				repaint();
 			}
+			
+			if (PlayerControlledActor.allActors != null
+					&& PlayerControlledActor.remaingParts <= 0) {
+				if (!isPaused())
+					togglePaused();
+				final JOptionPane pane = new JOptionPane(
+						"You are going home!");
+				final JDialog d = pane.createDialog((JFrame) null, "You Win!");
+				d.setLocation(400, 300);
+				d.setVisible(true);
+				getContentPane().removeAll();
+				startingView = new StartingView(thisController);
+				SongPlayer.setNewSong(SongPlayer.MAIN);
+				add(startingView);
+				revalidate();
+				repaint();
+			}
 
 			updateFarmRooms();
 			basicView.updateLog();

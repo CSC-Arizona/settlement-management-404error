@@ -27,6 +27,7 @@ public class PlayerControlledActor extends Actor {
 	public static List<PlayerControlledActor> allActors;
 	public static ActionPool playerActionPool;
 	private Random random = new Random();
+	public static int remaingParts = 3;
 
 	/**
 	 * Creates a player controlled actor which will execute commands given to
