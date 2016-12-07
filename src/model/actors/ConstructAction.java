@@ -1,12 +1,6 @@
 package model.actors;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import model.building_blocks.RoomWallBlock;
-import model.building_blocks.TrapDoorBlock;
 import model.furniture.ConstructionMaterialPile;
-import model.furniture.Furniture;
 import model.game.Game;
 import model.game.Log;
 import model.room.HorizontalTunnel;

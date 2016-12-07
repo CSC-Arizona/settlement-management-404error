@@ -25,7 +25,7 @@ public class FarmingScenario {
 	
 	public FarmingScenario() {
 		Game.reset();
-		Controller controller = new Controller(MapParameters.getThreeActorParameters(), new Random(seed), true);
+		Controller controller = new Controller(MapParameters.getDefaultParameters(), new Random(seed), true);
 		Game.setMap(controller.getMap());
 		
 		//TODO: Hardcode seeds into all dragons' inventories for testing

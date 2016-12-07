@@ -26,7 +26,7 @@ public class EnemyActor extends Actor {
 	public static ActionPool enemyActionPool;
 	public static boolean attack = false;
 	private int timeSinceLastAttack = 0;
-	private int timeTillAttack = 15000;
+	public static int timeTillAttack = 15000;
 	public static ArrayList<Position> antTunnels;
 	private static int attackTime = 500;
 
@@ -115,7 +115,7 @@ public class EnemyActor extends Actor {
 				}
 			}
 		}
-		if(allActors.size() <= Game.getMap().getMapParameters().numberOfStartingActors){
+		if(allActors.size() <= Game.getMap().getMapParameters().numberOfEnemyActors){
 			Random rand = new Random();
 			for(int i = allActors.size(); i <= Game.getMap().getMapParameters().numberOfStartingActors; i++){
 				new EnemyActor(antTunnels.get(rand.nextInt(antTunnels.size())));

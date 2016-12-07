@@ -82,7 +82,7 @@ public class Map implements Serializable {
 
 	public Map(BuildingBlock[][] mapTypes) {
 		this.mapParameters = new MapParameters(mapTypes[0].length,
-				mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+				mapTypes.length, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		this.hardCodedFurniture = new HashMap<>();
 		this.blocksMarkedAsDesignated = new HashMap<>();
 		this.map = mapTypes;
@@ -670,7 +670,7 @@ public class Map implements Serializable {
 
 	private void addEnemyActors() {
 		if (anthillLocations.size() != 0) {
-			for (int i = 0; i < mapParameters.numberOfStartingActors; i++) {
+			for (int i = 0; i < mapParameters.numberOfEnemyActors; i++) {
 				new EnemyActor(anthillLocations.get(random
 						.nextInt(anthillLocations.size())));
 			}
