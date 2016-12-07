@@ -29,6 +29,14 @@ public class PlayerControlledActor extends Actor {
 	private Random random = new Random();
 	public static int remaingParts = 3;
 
+	public boolean isHungry() {
+		return hunger > threshold;
+	}
+	
+	public boolean isTired() {
+		return fatigue > threshold;
+	}
+	
 	/**
 	 * Creates a player controlled actor which will execute commands given to
 	 * them by the Player

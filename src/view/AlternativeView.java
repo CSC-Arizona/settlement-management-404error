@@ -319,6 +319,20 @@ public class AlternativeView extends JPanel {
 						+ blockSizeX / 2, (i + 1) * blockSizeY);
 				g2.setColor(Color.BLACK);
 			}
+			List<PlayerControlledActor> playerActors = PlayerControlledActor.allActors;
+			Iterator<PlayerControlledActor> playerIter = playerActors.iterator();
+			while (playerIter.hasNext()) {
+				PlayerControlledActor p = playerIter.next();
+				if (p.getPosition().equals(new Position(row, col))) {
+					if (p.isHungry()) {
+						g2.drawImage(ImageEnum.HUNGER.getRandomBufferedImage(), j
+								* blockSizeX, (i-1) * blockSizeY, null);
+					} else if (p.isTired()) {
+						g2.drawImage(ImageEnum.TIRED.getRandomBufferedImage(), (j-1)
+								* blockSizeX, (i-1) * blockSizeY, null);
+					}
+				}
+			}
 		}
 	}
 
