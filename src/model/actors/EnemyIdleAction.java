@@ -5,6 +5,7 @@ package model.actors;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import model.game.Game;
@@ -32,9 +33,9 @@ public class EnemyIdleAction extends Action {
 			new AttackAction(near).execute(performer);
 			return Action.MADE_PROGRESS;
 		}
-
+		List<Position> antTunnels = Game.getMap().antTunnelLocations;
 		if (move == null)
-			move = new MoveAction(EnemyActor.antTunnels.get(rand.nextInt(EnemyActor.antTunnels.size())));
+			move = new MoveAction(antTunnels.get(rand.nextInt(antTunnels.size())));
 
 		if (move != null)
 			return move.execute(performer);

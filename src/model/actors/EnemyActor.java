@@ -29,7 +29,6 @@ public class EnemyActor extends Actor {
 	public static boolean attack = false;
 	private int timeSinceLastAttack = 0;
 	public static int timeTillAttack = 15000;
-	public static ArrayList<Position> antTunnels;
 	private static int attackTime = 500;
 
 	/**
@@ -61,7 +60,6 @@ public class EnemyActor extends Actor {
 		}
 		allActors = null;
 		enemyActionPool = null;
-		antTunnels = null;
 	}
 
 	@Override
@@ -75,7 +73,8 @@ public class EnemyActor extends Actor {
 				this.getActionPool().add(new EnemyHuntAction());
 			if ((timeSinceLastAttack) >= timeTillAttack + attackTime){
 				attack = false;
-				timeSinceLastAttack = 0;
+				for(EnemyActor a : allActors)
+					a.timeSinceLastAttack = 0;
 				SongPlayer.setNewSong(SongPlayer.MAIN);
 			}
 		}
@@ -110,16 +109,7 @@ public class EnemyActor extends Actor {
 
 	//spawns new actors if not alive
 	public void spawn(){
-		if(antTunnels == null){
-			antTunnels = new ArrayList<>();
-			for(int row = 0; row < Game.getMap().getTotalHeight(); row++){
-				for(int col = 0; col < Game.getMap().getTotalWidth(); col ++){
-					if(Game.getMap().getBuildingBlock(row, col).getID().equals("Ant tunnel")){
-						antTunnels.add(new Position(row, col));
-					}
-				}
-			}
-		}
+		List<Position> antTunnels = Game.getMap().antTunnelLocations;
 		if(allActors.size() <= Game.getMap().getMapParameters().numberOfEnemyActors){
 			Random rand = new Random();
 			for(int i = allActors.size(); i <= Game.getMap().getMapParameters().numberOfStartingActors; i++){

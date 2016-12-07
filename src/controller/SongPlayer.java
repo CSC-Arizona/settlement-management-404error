@@ -57,7 +57,6 @@ public class SongPlayer extends Thread {
 				if(getNewSong() == ATTACK)
 					thread.playingSong = attack;
 				thread.run();
-				thread.playingSong.loop(Clip.LOOP_CONTINUOUSLY);
 				setCurrentSong(getNewSong());
 			}
 		}
@@ -93,6 +92,7 @@ public class SongPlayer extends Thread {
 		 */
 		@Override
 		public void run() {
+			playingSong.loop(Clip.LOOP_CONTINUOUSLY);
 			playingSong.start();
 		}
 		
