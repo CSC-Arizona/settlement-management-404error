@@ -544,8 +544,9 @@ public class AlternativeView extends JPanel {
 					// adding the rows for room walls with every room type
 					// except tunnels
 					controller.applyDesignation(roomY, roomX, pixHeight / blockSizeY, roomWidth / blockSizeX);
-					PlayerControlledActor.playerActionPool
-							.add(new ConstructAction(room.constructObject(new Position(roomY, roomX))));
+//					PlayerControlledActor.playerActionPool
+//							.add(new ConstructAction(room.constructObject(new Position(roomY, roomX))));
+                    Game.getMap().addNewDesignatedRoom(room.constructObject(new Position(roomY,	roomX)));
 
 					controller.setDesignatingAction(Designation.NONE);
 
@@ -782,5 +783,7 @@ public class AlternativeView extends JPanel {
 			logText.setText(Log.getLog());
 		repaint();
 	}
+	
+	
 
 }

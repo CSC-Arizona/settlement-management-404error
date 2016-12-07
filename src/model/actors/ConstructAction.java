@@ -30,6 +30,7 @@ public class ConstructAction extends Action {
 	private Position pileLoc;
 
 	public ConstructAction(Room room) {
+		System.out.println("New construct action created");
 		this.room = room;
 		this.blocksToChange = new LinkedList<>();
 		this.trapDoorBlocks = new LinkedList<>();

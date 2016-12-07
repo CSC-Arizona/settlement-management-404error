@@ -208,14 +208,17 @@ public abstract class Room {
 			h += 2;
 		int row = this.getPosition().getRow();
 		for (int c = this.getPosition().getCol(); c < this.getPosition().getCol() + w; c++) {
-			if (MoveAction.getMoveLocationNear(new Position(row, Math.floorMod(c, Game.getMap().getTotalWidth()))) != null)
+			if (MoveAction.getMoveLocationNear(new Position(row, Math.floorMod(c, Game.getMap().getTotalWidth()))) != null) {
+				//System.out.println("Room at " + this.getPosition() + " is accessible at " + new Position(row, Math.floorMod(c, Game.getMap().getTotalWidth())));
 				return true;
+			}
 		}
 		for (int r = row + 1; r < row + h; r++) {
 			Position pos1 = new Position(r, this.getPosition().getCol());
 			Position pos2 = new Position(r, Math.floorMod(this.getPosition().getCol() + w - 1, Game.getMap().getTotalWidth()));
-			if (MoveAction.getMoveLocationNear(pos1) != null || MoveAction.getMoveLocationNear(pos2) != null)
+			if (MoveAction.getMoveLocationNear(pos1) != null || MoveAction.getMoveLocationNear(pos2) != null) {
 				return true;
+			}
 		}
 		return false;
 	}
