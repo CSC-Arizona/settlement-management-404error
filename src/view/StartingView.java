@@ -80,6 +80,7 @@ public class StartingView extends JPanel {
 			e.createBufferedImages(blockSizeY, blockSizeX);
 		}
 		update = new Timer(30, e -> {
+			visibleCornerX++;
 			this.repaint();
 		});
 		this.setLayout(new GridBagLayout());
@@ -134,7 +135,7 @@ public class StartingView extends JPanel {
 		mapLabelTable.put(new Integer(100), new JLabel("XL"));
 		mapSize.setLabelTable(mapLabelTable);
 		mapSize.addChangeListener(e->{
-			mapSize.revalidate();;
+			repaint();
 		});
 		mapSize.setPaintLabels(true);
 
@@ -156,6 +157,9 @@ public class StartingView extends JPanel {
 		difficulty.setLabelTable(difficultyLabelTable);
 		difficulty.setPaintLabels(true);
 		difficulty.setBackground(new Color(0, 0, 0, 0));
+		difficulty.addChangeListener(e->{
+			repaint();
+		});
 		difficultyPanel.add(difficulty);
 		difficultyPanel.setBorder(BorderFactory.createTitledBorder("Select the difficulty"));
 
@@ -336,7 +340,6 @@ public class StartingView extends JPanel {
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
-		visibleCornerX++;
 		g.setColor(Color.white);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
