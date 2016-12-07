@@ -52,7 +52,7 @@ public class Map implements Serializable {
 	private Random random;
 
 	private HashMap<Position, AppleTree> trees;
-	private int treeCount;
+	private int treeCount = 0;
 	private ArrayList<Integer[]> cavernFloorBlocks;
 
 	private BuildingBlock[][] map;
@@ -201,10 +201,12 @@ public class Map implements Serializable {
 				int j = Math.floorMod(col + offset[1], mapParameters.mapWidth);
 				if (!map[i][j].getID().equals(SpaceShipBlock.id)
 						&& !map[i][j].getID().equals(SpaceShipCenterBlock.id)) {
+					if (getTree(new Position(i,j)) != null) {
+						getTree(new Position(i,j)).removeFromMap();
+					}
 					map[i][j] = new AirBlock();
 				}
 			}
-
 		}
 	}
 

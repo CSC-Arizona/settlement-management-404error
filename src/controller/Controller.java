@@ -115,6 +115,7 @@ public class Controller extends JFrame {
 							}
 						}
 					}
+
 				}
 
 				if (getDesignatingAction() == Designation.ATTACKING) {
