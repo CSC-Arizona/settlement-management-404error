@@ -66,6 +66,7 @@ public class Map implements Serializable {
 	private ArrayList<Position> anthillLocations = new ArrayList<>();
 	private TreeMap<Position, FarmRoom> mapOfFarmRooms = new TreeMap<>();
 	public ArrayList<Position> antTunnelLocations = new ArrayList<>();
+	public Position ship;
 
 	private int time;
 
@@ -158,6 +159,7 @@ public class Map implements Serializable {
 
 		int col = 0;
 		int row = mapParameters.airHeight;
+		ship = new Position(row,0);
 
 		while (!map[row][col].getID().equals(AirBlock.id)) {
 			row -= 1;

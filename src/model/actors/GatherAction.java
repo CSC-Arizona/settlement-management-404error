@@ -30,11 +30,8 @@ public class GatherAction extends Action {
 	public GatherAction(Position position) {
 		this.position = position;
 		durability = Integer.MAX_VALUE;
-		if (Game.getMap()
-				.getBuildingBlock(position.getRow(), position.getCol())
-				.isDestroyable()) {
-			this.designation = Game.getMap().getBuildingBlock(position)
-					.getDesignation();
+		if (Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable()) {
+			this.designation = Game.getMap().getBuildingBlock(position).getDesignation();
 
 		}
 	}
@@ -47,14 +44,11 @@ public class GatherAction extends Action {
 	@Override
 	public int execute(Actor performer) {
 		// if the block can't be gathered cancel the action
-		if (!Game.getMap()
-				.getBuildingBlock(position.getRow(), position.getCol())
-				.isDestroyable())
+		if (!Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable())
 			return Action.COMPLETED;
 
 		if (position.isAdjacent(performer.getPosition())) {
-			BuildingBlock block = Game.getMap().getBuildingBlock(
-					position.getRow(), position.getCol());
+			BuildingBlock block = Game.getMap().getBuildingBlock(position.getRow(), position.getCol());
 			// reduce the durability
 			gather(performer, block);
 			if (durability <= 0) {
@@ -92,7 +86,7 @@ public class GatherAction extends Action {
 			moveLocation = null;
 			return Action.Pool;
 		}
-		if(result == Action.DELAY)
+		if (result == Action.DELAY)
 			return Action.Pool;
 		return Action.MADE_PROGRESS;
 	}
@@ -117,7 +111,10 @@ public class GatherAction extends Action {
 					Game.getMap().addItemToGround(position, i);
 					performer.getActionPool().add(
 							new PickUpItemAction(position, i));
+					return;
 				}
+		if(block.getID().equals("Space ship part"))
+			performer.priorityAddToActionQueue(new DropOffAction());
 	}
 
 	/*
@@ -145,7 +142,8 @@ public class GatherAction extends Action {
 		} else {
 			BuildingBlock inQuestion = Game.getMap().getBuildingBlock(position.getRow(), position.getCol());
 			Game.getMap().setBuildingBlock(position, inQuestion.getAppropriateReplacement());
-			// Game.getMap().setBuildingBlock(position, new AirBlock()); TODO: get appropriate block from BuildingBlock
+			// Game.getMap().setBuildingBlock(position, new AirBlock()); TODO:
+			// get appropriate block from BuildingBlock
 		}
 	}
 
