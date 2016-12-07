@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
@@ -20,9 +19,8 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -41,6 +39,7 @@ import model.save.SaveFile;
  * This is what is shown when the game is started
  * 
  * @author Ethan Ward
+ * @author Jonathon Davis
  *
  */
 public class StartingView extends JPanel {
@@ -60,6 +59,7 @@ public class StartingView extends JPanel {
 	private int blockSizeY = (windowHeight) / visibleHeight;
 	private int blockSizeX = windowWidth / visibleWidth;
 	private Image menu;
+	private Box mainMenu;
 
 	public StartingView(Controller controller) {
 				
@@ -77,8 +77,15 @@ public class StartingView extends JPanel {
 		this.setLayout(new GridBagLayout());
 		Game.setMap(new Map(MapParameters.getCustumMapParameters(new Settings(Settings.SMALL,Settings.NORMAL)), new Random()));
 		visibleCornerX = (Game.getMap().getTotalWidth() - visibleWidth / 2);
-		Box verticalBox = Box.createVerticalBox();
-		verticalBox.add(Box.createVerticalGlue());
+		controller.setVisible(true);
+		createMainMenu();
+		setContent(mainMenu);
+		update.start();
+	}
+	
+	private void createMainMenu(){
+		mainMenu = Box.createVerticalBox();
+		mainMenu.add(Box.createVerticalGlue());
 		JPanel newGame = new JPanel();
 		newGameButton = new JButton("New game");
 		newGameButton.setForeground(Color.black);
@@ -92,17 +99,16 @@ public class StartingView extends JPanel {
 		loadGameButton.addKeyListener(new MyKeyListener());
 		loadGameButton.addActionListener(new MyButtonListener());
 		loadGame.add(loadGameButton);
-		verticalBox.add(newGame);
-		verticalBox.add(loadGame);
+		mainMenu.add(newGame);
+		mainMenu.add(loadGame);
 		loadGame.setBackground(new Color(255,255,255,0));
-		this.add(verticalBox);
-		verticalBox.setBorder(BorderFactory.createTitledBorder("Start A Game"));
+		mainMenu.setBorder(BorderFactory.createTitledBorder("Start A Game"));
 		controller.getContentPane().add(this);
 		controller.pack();
-		newGameButton.requestFocusInWindow();
-		controller.setVisible(true);
-		
-		update.start();
+	}
+	
+	private void setContent(JComponent content){
+		this.add(content);
 	}
 
 	private void newGame() {
