@@ -196,17 +196,23 @@ public class Map implements Serializable {
 			if (row < 0)
 				break;
 		}
+		ArrayList<AppleTree> treesToRemove = new ArrayList<>();
 		for (int[] offset : definition) {
 			for (int i = row + offset[0]; i > 0; i--) {
 				int j = Math.floorMod(col + offset[1], mapParameters.mapWidth);
 				if (!map[i][j].getID().equals(SpaceShipBlock.id)
 						&& !map[i][j].getID().equals(SpaceShipCenterBlock.id)) {
-					if (getTree(new Position(i,j)) != null) {
-						getTree(new Position(i,j)).removeFromMap();
+					AppleTree tree = getTree(new Position(i, j));
+					if (tree != null) {
+						treesToRemove.add(tree);
+					} else {
+						map[i][j] = new AirBlock();
 					}
-					map[i][j] = new AirBlock();
 				}
 			}
+		}
+		for (AppleTree tree : treesToRemove) {
+			tree.removeFromMap();
 		}
 	}
 
@@ -358,7 +364,7 @@ public class Map implements Serializable {
 				} else if (testValue < 0.95) {
 					X += 1;
 				} else {
-					//Y -= 1;
+					// Y -= 1;
 				}
 				if (Y < 0)
 					Y++;
@@ -380,7 +386,7 @@ public class Map implements Serializable {
 				} else if (testValue < 0.95) {
 					X += 1;
 				} else {
-					//Y += 1;
+					// Y += 1;
 				}
 				if (Y < 0)
 					Y++;
@@ -416,7 +422,7 @@ public class Map implements Serializable {
 
 	private void addSingleTree() {
 		AppleTree tree = new AppleTree(getTotalWidth(),
-				mapParameters.airHeight, map, random);
+				mapParameters.airHeight, this, random);
 		tree.addToMap();
 
 		for (Position pos : tree.getTrunk()) {
@@ -479,7 +485,8 @@ public class Map implements Serializable {
 
 	private void addAntColonies() {
 		for (int i = 0; i < mapParameters.numberOfAntColonies; i++) {
-			int startX = mapParameters.mapWidth * (i+1) / (mapParameters.numberOfAntColonies+1);
+			int startX = mapParameters.mapWidth * (i + 1)
+					/ (mapParameters.numberOfAntColonies + 1);
 			startX += random.nextInt(20) - 40;
 			startX = Math.floorMod(startX, mapParameters.mapWidth);
 			int height = random.nextInt(2) + 5;
@@ -662,7 +669,8 @@ public class Map implements Serializable {
 		}
 
 		if (PlayerControlledActor.allActors != null) {
-			Iterator<PlayerControlledActor> iter = PlayerControlledActor.allActors.iterator();
+			Iterator<PlayerControlledActor> iter = PlayerControlledActor.allActors
+					.iterator();
 			while (iter.hasNext()) {
 				Actor actor = iter.next();
 
@@ -755,10 +763,11 @@ public class Map implements Serializable {
 	}
 
 	public boolean removeItemFromGround(Position position, Item item) {
-		int newCol = Math.floorMod(position.getCol(), Game.getMap().getTotalWidth());
+		int newCol = Math.floorMod(position.getCol(), Game.getMap()
+				.getTotalWidth());
 		Position newPos = new Position(position.getRow(), newCol);
 		if (getBuildingBlock(newPos).removeItemFromGround(item)) {
-			itemsOnGround.remove(0); //TODO: How does this work?
+			itemsOnGround.remove(0); // TODO: How does this work?
 			return true;
 		}
 		return false;
@@ -793,11 +802,11 @@ public class Map implements Serializable {
 	public int getTime() {
 		return time;
 	}
-	
+
 	public TreeMap<Position, FarmRoom> getFarmRooms() {
 		return mapOfFarmRooms;
 	}
-	
+
 	public void addFarmRoom(Position p, FarmRoom fr) {
 		mapOfFarmRooms.put(p, fr);
 	}
