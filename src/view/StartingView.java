@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
@@ -13,17 +12,20 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.Timer;
 
 import controller.Controller;
@@ -40,6 +42,7 @@ import model.save.SaveFile;
  * This is what is shown when the game is started
  * 
  * @author Ethan Ward
+ * @author Jonathon Davis
  *
  */
 public class StartingView extends JPanel {
@@ -59,49 +62,155 @@ public class StartingView extends JPanel {
 	private int blockSizeY = (windowHeight) / visibleHeight;
 	private int blockSizeX = windowWidth / visibleWidth;
 	private Image menu;
+	private Box mainMenu;
+	private Box options;
+	private JSlider mapSize;
+	private JSlider difficulty;
 
 	public StartingView(Controller controller) {
-				
+
 		this.controller = controller;
 		try {
-		    menu = ImageIO.read(new File("src/resources/images/scroll.png"));
+			menu = ImageIO.read(new File("src/resources/images/scroll.png"));
 		} catch (IOException e) {
 		}
 		for (ImageEnum e : ImageEnum.values()) {
 			e.createBufferedImages(blockSizeY, blockSizeX);
 		}
-		update = new Timer(30, e->{
+		update = new Timer(30, e -> {
 			this.repaint();
 		});
 		this.setLayout(new GridBagLayout());
-		Game.setMap(new Map(MapParameters.getCustumMapParameters(new Settings(Settings.SMALL,Settings.NORMAL)), new Random()));
+		Game.setMap(new Map(MapParameters.getCustumMapParameters(new Settings(Settings.SMALL, Settings.NORMAL)),
+				new Random()));
 		visibleCornerX = (Game.getMap().getTotalWidth() - visibleWidth / 2);
-		Box verticalBox = Box.createVerticalBox();
-		verticalBox.add(Box.createVerticalGlue());
-		newGameButton = new JButton("New game");
-		newGameButton.setForeground(Color.green);
-		newGameButton.addKeyListener(new MyKeyListener());
-		newGameButton.addActionListener(new MyButtonListener());
-		loadGameButton = new JButton("Load game");
-		loadGameButton.setForeground(Color.green);
-		loadGameButton.addKeyListener(new MyKeyListener());
-		loadGameButton.addActionListener(new MyButtonListener());
-		verticalBox.add(newGameButton);
-		verticalBox.add(loadGameButton);
-		this.add(verticalBox);
-		controller.getContentPane().add(this);
-		controller.pack();
-		newGameButton.requestFocusInWindow();
 		controller.setVisible(true);
-		
+		createMainMenu();
+		createOptionMenu();
+		setContent(mainMenu);
 		update.start();
 	}
 
-	private void newGame() {
+	private void createMainMenu() {
+		mainMenu = Box.createVerticalBox();
+		mainMenu.add(Box.createVerticalGlue());
+		JPanel newGame = new JPanel();
+		newGameButton = new JButton("New game");
+		newGameButton.setForeground(Color.black);
+		newGameButton.addKeyListener(new MyKeyListener());
+		newGameButton.addActionListener(new MyButtonListener());
+		newGame.add(newGameButton);
+		newGame.setBackground(new Color(255, 255, 255, 0));
+		JPanel loadGame = new JPanel();
+		loadGameButton = new JButton("Load game");
+		loadGameButton.setForeground(Color.black);
+		loadGameButton.addKeyListener(new MyKeyListener());
+		loadGameButton.addActionListener(new MyButtonListener());
+		loadGame.add(loadGameButton);
+		mainMenu.add(newGame);
+		mainMenu.add(loadGame);
+		loadGame.setBackground(new Color(255, 255, 255, 0));
+		mainMenu.setBorder(BorderFactory.createTitledBorder("Start A Game"));
+		controller.getContentPane().add(this);
+		controller.pack();
+	}
+
+	private void createOptionMenu() {
+		options = Box.createVerticalBox();
+		options.add(Box.createVerticalGlue());
+
+		JPanel size = new JPanel();
+		size.setBackground(new Color(0, 0, 0, 0));
+		mapSize = new JSlider();
+		mapSize.setSnapToTicks(true);
+		mapSize.setMajorTickSpacing(33);
+		mapSize.setPaintTicks(true);
+		Hashtable<Integer, JLabel> mapLabelTable = new Hashtable<Integer, JLabel>();
+		mapLabelTable.put(new Integer(0), new JLabel("SM"));
+		mapLabelTable.put(new Integer(33), new JLabel("MD"));
+		mapLabelTable.put(new Integer(66), new JLabel("LG"));
+		mapLabelTable.put(new Integer(100), new JLabel("XL"));
+		mapSize.setLabelTable(mapLabelTable);
+		mapSize.setPaintLabels(true);
+
+		mapSize.setBackground(new Color(0, 0, 0, 0));
+		size.add(mapSize);
+		size.setBorder(BorderFactory.createTitledBorder("Select the size of the map"));
+
+		JPanel difficultyPanel = new JPanel();
+		difficultyPanel.setBackground(new Color(0, 0, 0, 0));
+		difficulty = new JSlider();
+		difficulty.setSnapToTicks(true);
+		difficulty.setMajorTickSpacing(33);
+		difficulty.setPaintTicks(true);
+		Hashtable<Integer, JLabel> difficultyLabelTable = new Hashtable<Integer, JLabel>();
+		difficultyLabelTable.put(new Integer(0), new JLabel("Easy"));
+		difficultyLabelTable.put(new Integer(33), new JLabel("Normal"));
+		difficultyLabelTable.put(new Integer(66), new JLabel("Hard"));
+		difficultyLabelTable.put(new Integer(100), new JLabel("Nope"));
+		difficulty.setLabelTable(difficultyLabelTable);
+		difficulty.setPaintLabels(true);
+		difficulty.setBackground(new Color(0, 0, 0, 0));
+		difficultyPanel.add(difficulty);
+		difficultyPanel.setBorder(BorderFactory.createTitledBorder("Select the difficulty"));
+
+		JPanel buttons = new JPanel();
+		buttons.setBackground(new Color(0, 0, 0, 0));
+		JButton goBack = new JButton("Back");
+		goBack.addActionListener(e -> {
+			setContent(mainMenu);
+		});
+		JButton create = new JButton("Start!");
+		create.addActionListener(e -> {
+			createGame();
+		});
+		buttons.add(goBack);
+		buttons.add(create);
+
+		options.add(size);
+		options.add(difficultyPanel);
+		options.add(buttons);
+		controller.getContentPane().add(this);
+		controller.pack();
+	}
+
+	private void setContent(JComponent content) {
+		this.removeAll();
+		this.add(content);
+		this.revalidate();
+	}
+
+	private void createGame() {
 		update.stop();
 		Game.reset();
 		Log.clear();
-		controller.startNewGame(new Settings(Settings.MEDIUM,Settings.NORMAL));
+		int size = -1;
+		int diff = -1;
+		//set size
+		if (mapSize.getValue() == 0) {
+			size = Settings.SMALL;
+		} else if (mapSize.getValue() == 33) {
+			size = Settings.MEDIUM;
+		} else if (mapSize.getValue() == 66) {
+			size = Settings.LARGE;
+		} else if (mapSize.getValue() == 99) {
+			size = Settings.EXTRA_LARGE;
+		}
+		// set difficulty
+		if (difficulty.getValue() == 0) {
+			diff = Settings.EASY;
+		} else if (difficulty.getValue() == 33) {
+			diff = Settings.NORMAL;
+		} else if (difficulty.getValue() == 66) {
+			diff = Settings.HARD;
+		} else if (difficulty.getValue() == 99) {
+			diff = Settings.IMPOSSIBLE;
+		}
+		controller.startNewGame(new Settings(size, diff));
+	}
+
+	private void newGame() {
+		this.setContent(options);
 	}
 
 	private void loadOldGame() {
@@ -222,7 +331,8 @@ public class StartingView extends JPanel {
 				drawTile(g2, row, col, i, j);
 			}
 		}
-		g2.drawImage(menu, windowWidth/5 , windowHeight/15, windowWidth-windowWidth/3, windowHeight-windowHeight/6, null);
+		g2.drawImage(menu, windowWidth / 6, windowHeight / 15, windowWidth - windowWidth / 3,
+				windowHeight - windowHeight / 6, null);
 	}
 
 	private class MyKeyListener implements KeyListener {

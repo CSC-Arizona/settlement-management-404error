@@ -1,5 +1,6 @@
 package model.actors;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
@@ -23,7 +24,7 @@ public class MoveAction extends Action {
 	 * @author Jonathon Davis
 	 *
 	 */
-	private class Node {
+	private class Node implements Serializable {
 		int distance;
 		Position position;
 		Node prev;

@@ -96,7 +96,7 @@ public class MapParameters implements Serializable {
 			numberOfAntColonies = 2;
 			numberOfEnemyActors = 15;
 			numberOfPlayerActors = 7;
-			EnemyActor.timeTillAttack = 1000;
+			EnemyActor.timeTillAttack = 100;
 		}
 		return new MapParameters(size, 70, 20, 30, 10, 0.01, 0.001, 0.1, 0.1,
 				0.1, 0.005, numberOfAntColonies, numberOfEnemyActors, numberOfPlayerActors, 0.05);
