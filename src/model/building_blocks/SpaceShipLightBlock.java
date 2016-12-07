@@ -12,15 +12,15 @@ import model.items.Item;
 
 public class SpaceShipLightBlock extends BuildingBlock {
 
-
 	private static final long serialVersionUID = 7466847276590138449L;
 	private final static int durability = 7;
 	private List<Actor> actorsInBlock;
 	private List<Item> itemsOnGround;
 	public final static String id = "Space ship";
-	
+
 	public SpaceShipLightBlock() {
-		super(durability, false, true, Color.RED, null, id, ImageEnum.SPACESHIPLIGHT);
+		super(durability, false, true, Color.RED, null, id,
+				ImageEnum.SPACESHIPLIGHT);
 		actorsInBlock = new LinkedList<>();
 		itemsOnGround = new LinkedList<>();
 	}
