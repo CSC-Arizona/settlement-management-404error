@@ -126,7 +126,7 @@ public class StartingView extends JPanel {
 		JSlider difficulty = new JSlider();
 		difficulty.setBackground(new Color(0,0,0,0));
 		difficultyPanel.add(difficulty);
-		difficultyPanel.setBorder(BorderFactory.createTitledBorder("Select the size of the map"));
+		difficultyPanel.setBorder(BorderFactory.createTitledBorder("Select the difficulty"));
 		
 		JPanel buttons = new JPanel();
 		buttons.setBackground(new Color(0,0,0,0));
