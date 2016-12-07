@@ -2,11 +2,9 @@ package model.actors;
 
 import images.ImageEnum;
 import model.armor.AntArmor;
-import model.building_blocks.BuildingBlock;
 import model.game.Game;
 import model.weapons.AntSword;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;

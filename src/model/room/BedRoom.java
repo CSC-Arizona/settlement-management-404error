@@ -11,7 +11,6 @@ import model.furniture.Bed;
 import model.furniture.Furniture;
 import model.furniture.Ladder;
 import model.items.Item;
-import model.items.WoodItem;
 
 /**
  * The BedRoom contains 3 Beds and has an initial max occupancy of six. An

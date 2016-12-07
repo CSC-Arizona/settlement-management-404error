@@ -5,7 +5,6 @@ import java.util.List;
 
 import images.ImageEnum;
 import model.items.Item;
-import model.items.WoodItem;
 
 public class Ladder extends Furniture {
 

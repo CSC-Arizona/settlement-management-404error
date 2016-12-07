@@ -26,7 +26,6 @@ import model.items.Item;
 public class InfirmaryRoom extends Room {
 
 	private TreeMap<Position, Furniture> reqFurniture;
-	private List<Furniture> furniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
 

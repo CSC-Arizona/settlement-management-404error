@@ -3,7 +3,6 @@ package model.furniture;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.items.IronItem;
 import model.items.Item;
 import model.items.StoneItem;
 import model.items.WheatStemItem;

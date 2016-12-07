@@ -13,9 +13,7 @@ import model.furniture.Furniture;
 import model.furniture.Ladder;
 import model.furniture.MetalCrate;
 import model.furniture.ReinforcedCrate;
-import model.items.IronItem;
 import model.items.Item;
-import model.items.StoneItem;
 
 /**
  * The StoreRoom contains 4 small Chests and has an initial max occupancy of three. 

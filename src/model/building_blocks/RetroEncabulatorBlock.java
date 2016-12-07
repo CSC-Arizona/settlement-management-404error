@@ -8,12 +8,15 @@ import java.util.List;
 
 import model.actors.Actor;
 import model.furniture.Furniture;
-import model.items.BlackHoleGeneratorItem;
 import model.items.Item;
 import model.items.RetroencabulatorItem;
 
 public class RetroEncabulatorBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -760848763802167344L;
 	private final static int durability = 7;
 	private List<Item> itemsInBlock;
 	private List<Actor> actorsInBlock;

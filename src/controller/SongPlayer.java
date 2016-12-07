@@ -20,7 +20,7 @@ public class SongPlayer extends Thread {
 	public static int MAIN = 0, ATTACK = 1;
 	private static int currentSong;
 	private static int newSong;
-	private static Clip current, main, attack;
+	private static Clip main, attack;
 	private static SongPlayerThread thread;
 	
 	public SongPlayer(){

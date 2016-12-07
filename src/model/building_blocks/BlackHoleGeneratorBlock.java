@@ -8,12 +8,15 @@ import java.util.List;
 
 import model.actors.Actor;
 import model.furniture.Furniture;
-import model.items.AntimatterDefenestratorItem;
 import model.items.BlackHoleGeneratorItem;
 import model.items.Item;
 
 public class BlackHoleGeneratorBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2065948723298192968L;
 	private final static int durability = 7;
 	private List<Item> itemsInBlock;
 	private List<Actor> actorsInBlock;

@@ -13,6 +13,10 @@ import model.items.Item;
 
 public class AntimatterDefenestratorBlock extends BuildingBlock {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -797816092765450648L;
 	private final static int durability = 7;
 	private List<Item> itemsInBlock;
 	private List<Actor> actorsInBlock;

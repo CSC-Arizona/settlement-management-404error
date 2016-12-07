@@ -95,9 +95,6 @@ public class AlternativeView extends JPanel {
 	private int roomX;
 	private int roomY;
 
-	private Item craftSelection;
-	private Graphics craftItemComboBox;
-	private JButton craftItemButton;
 	private JComboBox<String> constructRoomComboBox;
 	private JButton constructRoomButton;
 
@@ -272,9 +269,8 @@ public class AlternativeView extends JPanel {
 	private void drawActors(Graphics2D g2, int row, int col, int i, int j) {
 		List<Actor> actors = Game.getMap().getBuildingBlock(row, col).getActors();
 		if (actors != null) {
-			List<Actor> actorsClone = new ArrayList(actors);
 			int count = 0;
-			Iterator<Actor> iter = actorsClone.iterator();
+			Iterator<Actor> iter = actors.iterator();
 			while (iter.hasNext()) {
 				Actor p = iter.next();
 				if (p.getImage() != null && p.isAlive()) {
