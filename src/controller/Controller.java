@@ -38,6 +38,7 @@ import model.map.Map;
 import model.map.MapParameters;
 import model.room.FarmRoom;
 import model.save.SaveFile;
+import view.AlternativeView;
 import view.BasicView;
 import view.StartingView;
 
@@ -62,7 +63,7 @@ public class Controller extends JFrame {
 	private Random random;
 
 	private StartingView startingView;
-	private BasicView basicView;
+	private AlternativeView basicView;
 
 	private Timer gameTimer;
 	private int timeDelta = 100;
@@ -226,7 +227,7 @@ public class Controller extends JFrame {
 
 	private void setUpMap() {
 		getContentPane().removeAll();
-		basicView = new BasicView(this, mapParameters);
+		basicView = new AlternativeView(this, mapParameters);
 		this.add(basicView);
 
 		startTimer();
@@ -245,15 +246,11 @@ public class Controller extends JFrame {
 		@Override
 		public void run() {
 			time += 1;
-			basicView.updateLog();
 			Game.getMap().updateActors(timeDelta);
 			if (time % 100 == 0) {
 				Game.getMap().regrowTrees();
 			}
 			Game.getMap().setTime(time);
-			basicView.setTimeLabel(time, paused);
-			basicView.setMouseDescriptionLabel();
-			basicView.repaint();
 			if (PlayerControlledActor.allActors != null && PlayerControlledActor.allActors.size() <= 0) {
 				if (!isPaused())
 					togglePaused();
@@ -270,6 +267,10 @@ public class Controller extends JFrame {
 			}
 
 			updateFarmRooms();
+			basicView.updateLog();
+			basicView.setTimeLabel(time, paused);
+			basicView.setMouseDescriptionLabel();
+			basicView.repaint();
 
 		}
 
