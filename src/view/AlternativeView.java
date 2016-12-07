@@ -214,13 +214,15 @@ public class AlternativeView extends JPanel {
 
 	private void addLogPanel() {
 		logPanel = new JPanel();
-		logPanel.setSize(300, 100);
+		logPanel.setSize(350, 200);
 		logPanel.setBackground(new Color(0, 0, 0, 0));
 		logPanel.setOpaque(true);
 		logText = new JTextArea();
 		logText.setBackground(new Color(0, 0, 0, 0));
 		logText.setOpaque(true);
-		logPanel.setBounds(650, 0, 300, 100);
+		logText.setLineWrap(true);
+		logText.setSize(350,200);
+		logPanel.setBounds(650, 0, 350, 200);
 		logText.setEditable(false);
 		logPanel.add(logText);
 		this.add(logPanel);
