@@ -67,10 +67,10 @@ public class Map implements Serializable {
 	// using anthillLocations to determine "random" spawn points for ants
 	private ArrayList<Position> anthillLocations = new ArrayList<>();
 	private TreeMap<Position, FarmRoom> mapOfFarmRooms = new TreeMap<>();
-	private ArrayList<Position> antTunnelLocations = new ArrayList<>();
 	
 	private volatile LinkedList<Room> completedRooms = new LinkedList<>();
 	private volatile LinkedList<Room> designatedRooms = new LinkedList<>();
+	public ArrayList<Position> antTunnelLocations = new ArrayList<>();
 
 	private int time;
 
@@ -383,7 +383,7 @@ public class Map implements Serializable {
 				} else if (testValue < 0.95) {
 					X += 1;
 				} else {
-					Y += 1;
+					//Y += 1;
 				}
 				if (Y < 0)
 					Y++;
