@@ -48,7 +48,7 @@ public class CraftingActionTest {
 		Game.setMap(generateMap(mapGen));
 		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 1));
 		BasicSword item = new BasicSword();
-		test.addToActionQueue(new CraftAction(item, item.getRequiredMaterials()));
+		test.addToActionQueue(new CraftAction(item, BasicSword.getRequiredMaterials()));
 		test.getInventory().addItem(new WoodItem());
 		test.getInventory().addItem(new WoodItem());
 		test.getInventory().addItem(new StoneItem());

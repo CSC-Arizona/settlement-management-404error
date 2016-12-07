@@ -12,7 +12,6 @@ import model.game.Game;
 import model.items.AppleItem;
 import model.items.IronItem;
 import model.items.Item;
-import model.items.StoneItem;
 import model.items.WheatKernelItem;
 import model.items.WoodItem;
 import model.room.BedRoom;

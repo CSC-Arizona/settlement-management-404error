@@ -5,7 +5,6 @@ import java.util.Random;
 
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
-import model.building_blocks.CavernBlock;
 import model.building_blocks.MushroomBlock;
 import model.building_blocks.MushroomFruitBlock;
 import model.map.Map;
@@ -16,6 +15,10 @@ import model.map.Map;
  */
 public class Mushroom extends Tree {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Map map;
 	private Random random;
 	private Position startingPos;
