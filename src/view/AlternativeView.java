@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -19,10 +20,9 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 
 import controller.Controller;
@@ -40,7 +40,6 @@ import model.game.Log;
 import model.items.Item;
 import model.map.MapParameters;
 import model.room.RoomEnum;
-
 public class AlternativeView extends JPanel {
 
 	private static final long serialVersionUID = -8807654664923090784L;
@@ -78,8 +77,6 @@ public class AlternativeView extends JPanel {
 	private customDesignationButton plantsButton;
 	private customDesignationButton attackButton;
 	private customDesignationButton removeButton;
-	private customDesignationButton constructionButton;
-	private customDesignationButton craftButton;
 	private ArrayList<customDesignationButton> buttons;
 
 	private Point designationStart;
@@ -99,6 +96,10 @@ public class AlternativeView extends JPanel {
 	private int roomY;
 
 	private Item craftSelection;
+	private Graphics craftItemComboBox;
+	private JButton craftItemButton;
+	private JComboBox<String> constructRoomComboBox;
+	private JButton constructRoomButton;
 
 	public void setTimeLabel(int time, boolean paused) {
 		if (paused) {
@@ -168,13 +169,26 @@ public class AlternativeView extends JPanel {
 
 	private void addButtonPanel() {
 		buttonPanel = new JPanel();
-		buttonPanel.setSize(500, 50);
+		buttonPanel.setSize(500, 70);
 		buttonPanel.setBackground(new Color(0, 0, 0, 0));
-		buttonPanel.setBounds(250, 625, 500, 50);
+		buttonPanel.setBounds(250, 600, 500, 70);
+		
+		
+		constructRoomComboBox = new JComboBox<String>(
+				RoomEnum.getAllRoomNames());
+		constructRoomComboBox
+				.addActionListener(new ConstructionComboBoxListener());
+		constructRoomComboBox.setFocusable(false);
+		constructRoomComboBox.setPreferredSize(new Dimension(100, 30));
+		constructRoomComboBox.setFont(new Font("Arial", Font.PLAIN, 10));
+		constructRoomButton = new JButton(
+				"<html><center>Construct rooms (c)</center></html>");
+		buttonPanel.add(constructRoomComboBox);
 
 		buttons = new ArrayList<>();
-		constructionButton = new customDesignationButton(controller, this, Designation.CONSTRUCTING, buttons);
-		craftButton = new customDesignationButton(controller, this, Designation.NONE, buttons);
+		constructRoomButton = new customDesignationButton(controller, this, Designation.CONSTRUCTING, buttons);		
+		constructRoomButton.addActionListener(new ConstructionButtonListener());
+		//craftButton = new customDesignationButton(controller, this, Designation.NONE, buttons);
 		upgradeRoomButton = new customDesignationButton(controller, this, Designation.UPGRADING, buttons);
 		cutDownTreeButton = new customDesignationButton(controller, this, Designation.CUTTING_DOWN_TREES, buttons);
 		upgradeRoomButton = new customDesignationButton(controller, this, Designation.UPGRADING, buttons);
@@ -183,8 +197,9 @@ public class AlternativeView extends JPanel {
 		plantsButton = new customDesignationButton(controller, this, Designation.GATHERING_PLANTS, buttons);
 		attackButton = new customDesignationButton(controller, this, Designation.ATTACKING, buttons);
 		removeButton = new customDesignationButton(controller, this, Designation.REMOVING_DESIGNATIONS, buttons);
-
-		buttonPanel.add(constructionButton);
+		
+		
+		buttonPanel.add(constructRoomButton);
 		buttonPanel.add(cutDownTreeButton);
 		buttonPanel.add(upgradeRoomButton);
 		buttonPanel.add(fruitButton);
@@ -192,6 +207,7 @@ public class AlternativeView extends JPanel {
 		buttonPanel.add(plantsButton);
 		buttonPanel.add(attackButton);
 		buttonPanel.add(removeButton);
+		buttonPanel.add(constructRoomComboBox);
 
 		this.add(buttonPanel);
 	}
@@ -615,6 +631,48 @@ public class AlternativeView extends JPanel {
 		public boolean isActive() {
 			return active;
 		}
+		
+		public boolean constructionSelected() {
+			return currentlyPlacingRoom;
+		}
+
+		public void toggleConstructionSelection() {
+			if (currentlyPlacingRoom) {
+				deactivateConstructionSelection();
+			} else {
+				activateConstructionSelection();
+			}
+		}
+
+		public void activateConstructionSelection() {
+			for (customDesignationButton button : buttons) {
+				button.deactivate();
+			}
+			currentlyPlacingRoom = true;
+			constructRoomButton.setBackground(new Color(124, 163, 226));
+			controller.setDesignatingAction(Designation.CONSTRUCTING);
+
+			String roomChoice = constructRoomComboBox.getSelectedItem().toString();
+
+			if (roomChoice != null) {
+				room = RoomEnum.getRoomFromString(roomChoice);
+				roomHeight = room.getHeight() * blockSizeY - 1;
+				roomWidth = room.getWidth() * blockSizeX - 1;
+
+				roomCorner = new Point(0, 0);
+				roomX = 0;
+				roomY = 0;
+
+			}
+			repaint();
+
+		}
+		
+		public void deactivateConstructionSelection() {
+			currentlyPlacingRoom = false;
+			controller.setDesignatingAction(Designation.NONE);
+			repaint();
+		}
 
 		public customDesignationButton(Controller controller, AlternativeView view, Designation designation,
 				ArrayList<customDesignationButton> buttons) {
@@ -648,35 +706,70 @@ public class AlternativeView extends JPanel {
 			}
 		}
 	}
-
-	class PopUpDemo extends JPopupMenu {
-		JMenuItem anItem;
-
-		public PopUpDemo() {
-			anItem = new JMenuItem("Click Me!");
-			add(anItem);
-		}
-	}
-
-	class PopClickListener extends MouseAdapter {
-		public void mousePressed(MouseEvent e) {
-			if (e.isPopupTrigger())
-				doPop(e);
-		}
-
-		public void mouseReleased(MouseEvent e) {
-			if (e.isPopupTrigger())
-				doPop(e);
-		}
-
-		private void doPop(MouseEvent e) {
-			PopUpDemo menu = new PopUpDemo();
-			menu.show(e.getComponent(), e.getX(), e.getY());
-		}
-	}
-
 	public boolean constructionSelected() {
 		return currentlyPlacingRoom;
+	}
+
+	public void toggleConstructionSelection() {
+		if (currentlyPlacingRoom) {
+			deactivateConstructionSelection();
+		} else {
+			activateConstructionSelection();
+		}
+	}
+
+	public void activateConstructionSelection() {
+		
+		currentlyPlacingRoom = true;
+		controller.setDesignatingAction(Designation.CONSTRUCTING);
+
+		String roomChoice = constructRoomComboBox.getSelectedItem().toString();
+
+		if (roomChoice != null) {
+			room = RoomEnum.getRoomFromString(roomChoice);
+			roomHeight = room.getHeight() * blockSizeY - 1;
+			roomWidth = room.getWidth() * blockSizeX - 1;
+
+			roomCorner = new Point(0, 0);
+			roomX = 0;
+			roomY = 0;
+
+		}
+		repaint();
+
+	}
+
+	public void deactivateConstructionSelection() {
+		currentlyPlacingRoom = false;
+		controller.setDesignatingAction(Designation.NONE);
+		repaint();
+	}
+
+	private class ConstructionButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			toggleConstructionSelection();
+
+			String roomChoice = constructRoomComboBox.getSelectedItem()
+					.toString();
+
+			if (roomChoice != null) {
+				room = RoomEnum.getRoomFromString(roomChoice);
+				roomHeight = room.getHeight() * blockSizeY - 1;
+				roomWidth = room.getWidth() * blockSizeX - 1;
+			}
+
+		}
+	}
+
+	private class ConstructionComboBoxListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			activateConstructionSelection();
+		}
+
 	}
 
 	public void updateLog() {
