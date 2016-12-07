@@ -221,7 +221,7 @@ public class Controller extends JFrame {
 		this.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		this.setSize(new Dimension(windowWidth, windowHeight));
 		this.setVisible(true);
-		new SongPlayer().run();
+		new SongPlayer().start();
 		if (skipLoadScreen) {
 			startNewGame(new Settings(Settings.MEDIUM,Settings.NORMAL));
 		} else {
@@ -327,26 +327,6 @@ public class Controller extends JFrame {
 		return map;
 	}
 	
-	private class SongPlayer implements Runnable{
-
-		/* (non-Javadoc)
-		 * @see java.lang.Runnable#run()
-		 */
-		@Override
-		public void run() {
-			try {
-				AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/resources/sounds/song.wav").getAbsoluteFile());
-				Clip clip = AudioSystem.getClip();
-				clip.open(audioInputStream);
-				clip.start();
-				clip.loop(Clip.LOOP_CONTINUOUSLY);
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-	}
 
 	private class WindowCloser implements WindowListener {
 
