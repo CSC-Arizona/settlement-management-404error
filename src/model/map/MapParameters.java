@@ -79,7 +79,7 @@ public class MapParameters implements Serializable {
 		
 		if(settings.getDifficulty() == Settings.EASY){
 			numberOfAntColonies = 1;
-			numberOfEnemyActors = 4;
+			numberOfEnemyActors = 0;
 			numberOfPlayerActors = 7;
 			EnemyActor.timeTillAttack = Integer.MAX_VALUE;
 		} else if(settings.getDifficulty() == Settings.NORMAL){

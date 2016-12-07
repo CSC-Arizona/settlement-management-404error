@@ -79,7 +79,6 @@ public class Map implements Serializable {
 
 	private int time;
 
-	private int spaceShipRepairLevel = 0;
 
 	public Map(MapParameters mapParameters, Random random) {
 		this.blocksMarkedAsDesignated = new HashMap<>();
@@ -185,11 +184,11 @@ public class Map implements Serializable {
 					mapParameters.mapWidth)] = new SpaceShipCenterBlock();
 		}
 
-		setSpaceShipLights();
+		setSpaceShipLights(3);
 
 	}
 
-	private void setSpaceShipLights() {
+	public void setSpaceShipLights(int spaceShipRepairLevel) {
 		int col = ship.getCol();
 		int row = ship.getRow()-3;
 
@@ -199,11 +198,11 @@ public class Map implements Serializable {
 				{ 0, -2 }, { 0, -1 }, { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 },
 				{ 0, 4 }, { 0, 5 } };
 
-		if (spaceShipRepairLevel == 0) {
+		if (spaceShipRepairLevel == 3) {
 			return;
 		}
 
-		if (spaceShipRepairLevel == 1) {
+		if (spaceShipRepairLevel == 2) {
 			for (int[] offset : lightsLevel1) {
 				map[row + offset[0]][Math.floorMod(col + offset[1],
 						mapParameters.mapWidth)] = new SpaceShipLightBlock();
@@ -211,7 +210,7 @@ public class Map implements Serializable {
 			return;
 		}
 
-		if (spaceShipRepairLevel == 2) {
+		if (spaceShipRepairLevel == 1) {
 			for (int[] offset : lightsLevel2) {
 				map[row + offset[0]][Math.floorMod(col + offset[1],
 						mapParameters.mapWidth)] = new SpaceShipLightBlock();
@@ -219,7 +218,7 @@ public class Map implements Serializable {
 			return;
 		}
 
-		if (spaceShipRepairLevel == 3) {
+		if (spaceShipRepairLevel == 0) {
 			for (int[] offset : lightsLevel2) {
 				map[row + offset[0]][Math.floorMod(col + offset[1],
 						mapParameters.mapWidth)] = new SpaceShipLightBlock();
