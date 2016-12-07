@@ -220,9 +220,8 @@ public class Controller extends JFrame {
 		this.setLocation(20, 20);
 		this.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		this.setSize(new Dimension(windowWidth, windowHeight));
-		new SongPlayer().run();
 		this.setVisible(true);
-
+		new SongPlayer().run();
 		if (skipLoadScreen) {
 			startNewGame(new Settings(Settings.MEDIUM,Settings.NORMAL));
 		} else {
@@ -340,6 +339,7 @@ public class Controller extends JFrame {
 				Clip clip = AudioSystem.getClip();
 				clip.open(audioInputStream);
 				clip.start();
+				clip.loop(Clip.LOOP_CONTINUOUSLY);
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
