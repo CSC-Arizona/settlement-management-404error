@@ -13,6 +13,8 @@ import model.building_blocks.FarmRoomBlock;
 import model.building_blocks.WheatBlock;
 import model.furniture.Furniture;
 import model.furniture.Ladder;
+import model.furniture.WheatPlantPlot;
+import model.game.Game;
 import model.items.Item;
 
 /**
@@ -26,7 +28,7 @@ public class FarmRoom extends Room {
 	private TreeMap<Position, Furniture> reqFurniture;
 	private List<Item> requiredBuildingMaterials;
 	private List<Item> requiredUpgradeMaterials;
-	// state of 0 = empty plots, state of 1 = growing plots, state of 2 = ready to harvest
+	// state of 0 = empty plots, state of 1-199 = growing plots, state of 200 = ready to harvest
 	private int state;
 	private List<BuildingBlock> plantedBlocks;
 	private Random rand;
@@ -47,6 +49,8 @@ public class FarmRoom extends Room {
 		state = 0;
 		plantedBlocks = new LinkedList<>();
 		rand = new Random();
+		//Add new farm room to list of farm rooms
+		Game.getMap().addFarmRoom(p, this);
 	}
 	
 	private void addInitialFurniture() {
@@ -59,6 +63,9 @@ public class FarmRoom extends Room {
 		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
 		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
 		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+		
+		//Add hard coded wheat plot to room on row 2
+		reqFurniture.put(new Position(2, getWidth()-2), new WheatPlantPlot());
 	}
 
 	@Override
@@ -83,7 +90,10 @@ public class FarmRoom extends Room {
 	 */
 	public boolean plant(int numWheat, int numApples) {
 		if (state == 0) {
-			int plantedWheat = rand.nextInt(numWheat/2 + 1) + (numWheat/2);
+			//TODO: Change how the next line randomizes output or increase numWheat
+			//int plantedWheat = rand.nextInt(numWheat/2 + 1) + (numWheat/2);
+			int plantedWheat = numWheat;
+			
 			int plantedApples = rand.nextInt(numApples/2 + 1) + (numApples/2);
 		    for (int i = 0; i < plantedWheat; i++)
 			    plantedBlocks.add(new WheatBlock());
@@ -115,7 +125,7 @@ public class FarmRoom extends Room {
 	 * in the Room, and sets the state to 0 and the plantedBlocks list back to an empty list.
 	 */
 	public List<Item> harvest() {
-		if (state == 2) {
+		if (state >= 200) {
 			List<Item> yield = new LinkedList<>();
 			for (BuildingBlock b : plantedBlocks) {
 				for (Item i : b.lootBlock())

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.TreeMap;
 
 import controller.Designation;
 import model.actors.Actor;
@@ -31,7 +32,9 @@ import model.building_blocks.SpaceShipCenterBlock;
 import model.building_blocks.SpaceShipLightBlock;
 import model.building_blocks.StoneBlock;
 import model.furniture.Furniture;
+import model.game.Game;
 import model.items.Item;
+import model.room.FarmRoom;
 
 /**
  * Constructs a random map with various geographical features
@@ -61,6 +64,7 @@ public class Map implements Serializable {
 	private ArrayList<Position> itemsOnGround = new ArrayList<>();
 	// using anthillLocations to determine "random" spawn points for ants
 	private ArrayList<Position> anthillLocations = new ArrayList<>();
+	private TreeMap<Position, FarmRoom> mapOfFarmRooms = new TreeMap<>();
 	private ArrayList<Position> antTunnelLocations = new ArrayList<>();
 
 	private int time;
@@ -747,8 +751,10 @@ public class Map implements Serializable {
 	}
 
 	public boolean removeItemFromGround(Position position, Item item) {
-		if (getBuildingBlock(position).removeItemFromGround(item)) {
-			itemsOnGround.remove(0);
+		int newCol = Math.floorMod(position.getCol(), Game.getMap().getTotalWidth());
+		Position newPos = new Position(position.getRow(), newCol);
+		if (getBuildingBlock(newPos).removeItemFromGround(item)) {
+			itemsOnGround.remove(0); //TODO: How does this work?
 			return true;
 		}
 		return false;
@@ -782,6 +788,14 @@ public class Map implements Serializable {
 
 	public int getTime() {
 		return time;
+	}
+	
+	public TreeMap<Position, FarmRoom> getFarmRooms() {
+		return mapOfFarmRooms;
+	}
+	
+	public void addFarmRoom(Position p, FarmRoom fr) {
+		mapOfFarmRooms.put(p, fr);
 	}
 
 	public MapParameters getMapParameters() {

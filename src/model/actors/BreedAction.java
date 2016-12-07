@@ -55,6 +55,7 @@ public class BreedAction extends Action{
 				if (f.getID().equals("incubation chamber")) {
 					if (f.getRemainingWeightCapacity() == 3) {
 						toGoTo = mapFurniture.get(f);
+						return;
 					}
 				}
 			}

@@ -3,14 +3,19 @@ package controller;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.TreeMap;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import model.actors.GatherAction;
+import model.actors.PickUpItemAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.AirBlock;
@@ -19,14 +24,21 @@ import model.building_blocks.AnthillBlock;
 import model.building_blocks.AntimatterDefenestratorBlock;
 import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
+import model.building_blocks.BuildingBlock;
 import model.building_blocks.EarthBlock;
+import model.building_blocks.FarmRoomBlock;
 import model.building_blocks.GrassBlock;
+import model.furniture.Furniture;
 import model.game.Game;
 import model.game.Log;
+import model.items.DragonEggItem;
+import model.items.Item;
+import model.items.WheatKernelItem;
 import model.game.Settings;
 import model.map.AppleTree;
 import model.map.Map;
 import model.map.MapParameters;
+import model.room.FarmRoom;
 import model.save.SaveFile;
 import view.BasicView;
 import view.StartingView;
@@ -263,6 +275,45 @@ public class Controller extends JFrame {
 			basicView.setMouseDescriptionLabel();
 			basicView.repaint();
 
+			updateFarmRooms();
+				
+			}
+
+		private void updateFarmRooms() {
+			TreeMap<Position, FarmRoom> allFarmRooms = Game.getMap().getFarmRooms();
+			Iterator<FarmRoom> it = allFarmRooms.values().iterator();
+			//Only increment state if greater than 0
+			while(it.hasNext()) {
+				FarmRoom fr = it.next();
+				if(fr.getState() > 0) {
+					fr.advanceState();
+					//Harvest if ready
+					if(fr.getState() >= 200) {
+						List<Item> yield = fr.harvest();
+						//Drop items on ground
+						//Drop items at position of wheat plot, not at corner of room
+						Position positionOfRoom = fr.getPosition();
+						int newRow = positionOfRoom.getRow() + 2;
+						int newCol = positionOfRoom.getCol() + (FarmRoom.getWidth()-2);
+						Position plotPosition = new Position(newRow, newCol);
+						BuildingBlock wherePlotIs = Game.getMap().getBuildingBlock(plotPosition);
+						//Issue pick up item command for each item dropped
+						for(Item curr : yield) {
+							wherePlotIs.addItemToGround(curr);
+							//TODO: Make sure item is actually being added to itemsOnGround arrayList
+							//TODO: Need to remove item from ground when picked up
+							Game.getMap().addItemToGround(plotPosition, curr);
+							PlayerControlledActor.addActionToPlayerPool(new PickUpItemAction(plotPosition, curr));
+						}
+						//Remove seed from furniture
+						Furniture plot = wherePlotIs.getFurniture();
+						plot.removeItem(new WheatKernelItem());
+						
+					}
+				}
+				//it.remove(); //This is so that we don't get a ConcurrentModificationException
+				//Commented out previous line because it was removing room from Map's list of farm rooms
+			}
 		}
 	}
 

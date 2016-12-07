@@ -5,16 +5,21 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -53,10 +58,15 @@ public class StartingView extends JPanel {
 	private int visibleCornerX;
 	private int blockSizeY = (windowHeight) / visibleHeight;
 	private int blockSizeX = windowWidth / visibleWidth;
+	private Image menu;
 
 	public StartingView(Controller controller) {
 				
 		this.controller = controller;
+		try {
+		    menu = ImageIO.read(new File("src/images/resources/scroll.png"));
+		} catch (IOException e) {
+		}
 		for (ImageEnum e : ImageEnum.values()) {
 			e.createBufferedImages(blockSizeY, blockSizeX);
 		}
@@ -68,9 +78,6 @@ public class StartingView extends JPanel {
 		visibleCornerX = (Game.getMap().getTotalWidth() - visibleWidth / 2);
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.add(Box.createVerticalGlue());
-		JLabel titleLabel = new JLabel("This is the name of the game");
-		titleLabel.setFont(new Font("Courier", Font.PLAIN, 30));
-		titleLabel.setForeground(Color.red);
 		newGameButton = new JButton("New game");
 		newGameButton.setForeground(Color.green);
 		newGameButton.addKeyListener(new MyKeyListener());
@@ -79,7 +86,6 @@ public class StartingView extends JPanel {
 		loadGameButton.setForeground(Color.green);
 		loadGameButton.addKeyListener(new MyKeyListener());
 		loadGameButton.addActionListener(new MyButtonListener());
-		verticalBox.add(titleLabel);
 		verticalBox.add(newGameButton);
 		verticalBox.add(loadGameButton);
 		this.add(verticalBox);
@@ -216,7 +222,7 @@ public class StartingView extends JPanel {
 				drawTile(g2, row, col, i, j);
 			}
 		}
-
+		g2.drawImage(menu, windowWidth/5 , windowHeight/15, windowWidth-windowWidth/3, windowHeight-windowHeight/6, null);
 	}
 
 	private class MyKeyListener implements KeyListener {

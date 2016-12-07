@@ -17,14 +17,14 @@ public abstract class Furniture implements Serializable {
 	 */
 	private static final long serialVersionUID = 6642154062478447160L;
 	private int capacity;
-	private int weightCapacity;
+	private double weightCapacity;
 	private String id;
-	public int contentsWeight = 0;
+	public double contentsWeight = 0;
 	private List<Item> contentsList;
 	private PrintableItemsList ril;
 	private ImageEnum img;
 
-	public Furniture(int capacity, int weightCapacity, String id, ImageEnum img) {
+	public Furniture(int capacity, double weightCapacity, String id, ImageEnum img) {
 		contentsList = new LinkedList<>();
 		this.capacity = capacity;
 		this.weightCapacity = weightCapacity;
@@ -46,11 +46,11 @@ public abstract class Furniture implements Serializable {
 		return this.capacity;
 	}
 	
-	public int getWeightCapacity() {
+	public double getWeightCapacity() {
 		return this.weightCapacity;
 	}
 	
-	public int getRemainingWeightCapacity() {
+	public double getRemainingWeightCapacity() {
 		return this.weightCapacity - contentsWeight;
 	}
 	
@@ -73,7 +73,11 @@ public abstract class Furniture implements Serializable {
     }
 
 	public boolean removeItem(Item item) {
+		if(contentsWeight >= item.getWeight()) {
+			contentsWeight-=item.getWeight();
+		}
 		return contentsList.remove(item);
+		
 	}
 	
 	public ImageEnum getImage(){

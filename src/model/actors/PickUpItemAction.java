@@ -1,5 +1,6 @@
 package model.actors;
 
+import model.building_blocks.BuildingBlock;
 import model.game.Game;
 import model.items.Item;
 
@@ -22,8 +23,13 @@ public class PickUpItemAction extends Action {
 	public int execute(Actor performer) {
 		if(performer.getInventory().canAdd(item)){
 			if (performer.getPosition().equals(itemPosition)) {
-				Game.getMap().removeItemFromGround(itemPosition, item);
-				performer.getInventory().addItem(item);
+				BuildingBlock bb = Game.getMap().getBuildingBlock(itemPosition);
+				if(bb.contains(item)) {
+					int newCol = Math.floorMod(itemPosition.getCol(), Game.getMap().getTotalWidth());
+					Position newPos = new Position(itemPosition.getRow(), newCol);
+					Game.getMap().removeItemFromGround(newPos, item);
+					performer.getInventory().addItem(item);
+				}
 				return Action.COMPLETED;
 			} else {
 				if(movement == null)
