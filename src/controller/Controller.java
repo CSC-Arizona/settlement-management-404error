@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 
 import model.actors.Actor;
 import model.actors.AttackAction;
+import model.actors.BreedAction;
 import model.actors.EnemyActor;
 import model.actors.GatherAction;
 import model.actors.PickUpItemAction;
@@ -319,6 +320,13 @@ public class Controller extends JFrame {
 				add(startingView);
 				revalidate();
 				repaint();
+			}
+			
+			//Check if less than half of initial pop is alive
+			//If so, add new BreedAction to pool
+			int initialActors = Game.getMap().getMapParameters().numberOfStartingActors;
+			if(PlayerControlledActor.allActors.size() <= (initialActors/2)) { 
+				PlayerControlledActor.addActionToPlayerPool(new BreedAction());
 			}
 
 			updateFarmRooms();
