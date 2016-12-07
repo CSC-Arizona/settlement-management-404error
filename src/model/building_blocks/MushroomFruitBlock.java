@@ -1,5 +1,7 @@
 package model.building_blocks;
 
+import images.ImageEnum;
+
 import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,7 +25,8 @@ public class MushroomFruitBlock extends BuildingBlock {
 	public final static String id = "Mushroom fruit";
 
 	public MushroomFruitBlock() {
-		super(durability, true, false, new Color(72, 249, 229), null, id, null);
+		super(durability, true, false, new Color(72, 249, 229), null, id,
+				ImageEnum.MUSHROOMFRUITBLOCK);
 		itemsInBlock = new LinkedList<>();
 
 	}
@@ -47,7 +50,7 @@ public class MushroomFruitBlock extends BuildingBlock {
 	public List<Actor> getActors() {
 		return null;
 	}
-	
+
 	@Override
 	public boolean addFurniture(Furniture furniture) {
 		return false;

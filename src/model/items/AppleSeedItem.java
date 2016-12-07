@@ -1,5 +1,7 @@
 package model.items;
 
+import images.ImageEnum;
+
 /**
  * AppleSeedItem is an inedible seed dropped when AppleTreeLeafBlocks are
  * destroyed. It can be used to plant more apple trees.
@@ -16,7 +18,7 @@ public class AppleSeedItem extends Item {
 	private final static int healthPts = 0;
 	
 	public AppleSeedItem() {
-		super(false, attackMod, healthPts, 0.2, null);
+		super(false, attackMod, healthPts, 0.2, ImageEnum.APPLESEED);
 	}
 
 	@Override

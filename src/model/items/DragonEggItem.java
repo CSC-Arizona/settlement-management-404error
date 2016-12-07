@@ -1,5 +1,7 @@
 package model.items;
 
+import images.ImageEnum;
+
 //Author: Maxwell Faridian
 //This class defines the Dragon Egg Item, which is formed when 2 dragons breed. The egg will hatch after incubating for a set amount of
 //time
@@ -16,7 +18,7 @@ public class DragonEggItem extends Item {
 	private final static double weight = 3.0;
 
 	public DragonEggItem() {
-		super(edible, attackMod, healthPts, weight, null);
+		super(edible, attackMod, healthPts, weight, ImageEnum.EGG);
 	}
 
 	@Override
