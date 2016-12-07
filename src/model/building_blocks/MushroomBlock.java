@@ -1,5 +1,7 @@
 package model.building_blocks;
 
+import images.ImageEnum;
+
 import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class MushroomBlock extends BuildingBlock {
 	
 	
 	public MushroomBlock() {
-		super(durability, true, true, new Color(173, 33, 183), null, id, null);
+		super(durability, true, true, new Color(173, 33, 183), null, id, ImageEnum.MUSHROOMBLOCK);
 		itemsInBlock = new LinkedList<>();
 		actorsInBlock = new LinkedList<>();
 	}

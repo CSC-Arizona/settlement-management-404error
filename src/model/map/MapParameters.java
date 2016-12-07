@@ -111,9 +111,4 @@ public class MapParameters implements Serializable {
 		return new MapParameters(1000, 70, 20, 30, 10, 0.01, 0.001, 0.1, 0.1,
 				0.1, 0.005, 2, 7, 7, 0.05);
 	}
-
-	public static MapParameters getCutsceneParameters() {
-		return new MapParameters(50, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-	}
-
 }

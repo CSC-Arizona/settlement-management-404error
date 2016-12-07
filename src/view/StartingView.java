@@ -61,9 +61,10 @@ public class StartingView extends JPanel {
 	private Image menu;
 
 	public StartingView(Controller controller) {
+				
 		this.controller = controller;
 		try {
-		    menu = ImageIO.read(new File("src/images/resources/scroll.png"));
+		    menu = ImageIO.read(new File("src/resources/images/scroll.png"));
 		} catch (IOException e) {
 		}
 		for (ImageEnum e : ImageEnum.values()) {
@@ -92,6 +93,7 @@ public class StartingView extends JPanel {
 		controller.pack();
 		newGameButton.requestFocusInWindow();
 		controller.setVisible(true);
+		
 		update.start();
 	}
 

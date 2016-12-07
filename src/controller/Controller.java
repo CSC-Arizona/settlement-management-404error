@@ -3,6 +3,8 @@ package controller;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +13,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -21,6 +28,7 @@ import model.actors.Position;
 import model.building_blocks.AirBlock;
 import model.building_blocks.AntTunnelBlock;
 import model.building_blocks.AnthillBlock;
+import model.building_blocks.AntimatterDefenestratorBlock;
 import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
 import model.building_blocks.BuildingBlock;
@@ -72,7 +80,7 @@ public class Controller extends JFrame {
 	private int windowHeight = 700;
 
 	private SaveFile saveFile;
-	
+
 	public void togglePaused() {
 		if (isPaused()) {
 			startTimer();
@@ -98,7 +106,7 @@ public class Controller extends JFrame {
 				// todo: attack, remove rooms
 
 				if (getDesignatingAction() == Designation.REMOVING_DESIGNATIONS) {
-					
+
 					map.getBuildingBlock(row, col).removeDesignation();
 
 					if (map.getBuildingBlock(row, col).getID()
@@ -112,12 +120,12 @@ public class Controller extends JFrame {
 						}
 					}
 				}
-				
+
 				if (getDesignatingAction() == Designation.CONSTRUCTING) {
 					map.getBuildingBlock(row, col).addDesignation(
 							Designation.CONSTRUCTING);
 				}
-				
+
 				if (getDesignatingAction() == Designation.UPGRADING) {
 					map.getBuildingBlock(row, col).addDesignation(
 							Designation.UPGRADING);
@@ -125,14 +133,19 @@ public class Controller extends JFrame {
 
 				if (getDesignatingAction() == Designation.DIGGING) {
 					String bbID = map.getBuildingBlock(row, col).getID();
-					if ((bbID.equals(AntTunnelBlock.id) || bbID.equals(AnthillBlock.id) || bbID.equals(EarthBlock.id))) {
-						if (!map.getBuildingBlock(row, row).getDesignation().equals(Designation.CONSTRUCTING)) {
+					if ((bbID.equals(AntTunnelBlock.id)
+							|| bbID.equals(AnthillBlock.id)
+							|| bbID.equals(EarthBlock.id) || bbID
+								.equals(AntimatterDefenestratorBlock.id))) {
+						if (!(map.getBuildingBlock(row, col).getDesignation() == Designation.CONSTRUCTING)) {
 							map.getBuildingBlock(row, col).addDesignation(
 									Designation.DIGGING);
 							PlayerControlledActor.playerActionPool
-									.add(new GatherAction(new Position(row, col)));
+									.add(new GatherAction(
+											new Position(row, col)));
 						} else {
-							System.out.println("Can designate this for digging.");
+							System.out
+									.println("Can designate this for digging.");
 						}
 					}
 				}
@@ -207,7 +220,7 @@ public class Controller extends JFrame {
 		this.setLocation(20, 20);
 		this.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		this.setSize(new Dimension(windowWidth, windowHeight));
-
+		new SongPlayer().run();
 		this.setVisible(true);
 
 		if (skipLoadScreen) {
@@ -247,11 +260,11 @@ public class Controller extends JFrame {
 
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowCloser());
-		
+
 		basicView.setFocusable(true);
 		basicView.setRequestFocusEnabled(true);
 		basicView.grabFocus();
-        
+
 	}
 
 	private class GameTimerTask extends TimerTask {
@@ -268,6 +281,7 @@ public class Controller extends JFrame {
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();
 			basicView.repaint();
+
 			updateFarmRooms();
 				
 			}
@@ -312,6 +326,26 @@ public class Controller extends JFrame {
 
 	public Map getMap() {
 		return map;
+	}
+	
+	private class SongPlayer implements Runnable{
+
+		/* (non-Javadoc)
+		 * @see java.lang.Runnable#run()
+		 */
+		@Override
+		public void run() {
+			try {
+				AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/resources/sounds/song.wav").getAbsoluteFile());
+				Clip clip = AudioSystem.getClip();
+				clip.open(audioInputStream);
+				clip.start();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 	private class WindowCloser implements WindowListener {
