@@ -116,12 +116,7 @@ public class Controller extends JFrame {
 					map.getBuildingBlock(row, col).addDesignation(
 							Designation.CONSTRUCTING);
 				}
-
-				if (getDesignatingAction() == Designation.UPGRADING) {
-					map.getBuildingBlock(row, col).addDesignation(
-							Designation.UPGRADING);
-				}
-
+				
 				if (getDesignatingAction() == Designation.DIGGING) {
 					String bbID = map.getBuildingBlock(row, col).getID();
 					if ((bbID.equals(AntTunnelBlock.id)

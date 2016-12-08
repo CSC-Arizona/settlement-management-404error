@@ -38,7 +38,7 @@ public class InfirmaryRoom extends Room {
 	}
 
 	public InfirmaryRoom(Position p) {
-		super(getHeight(), getWidth(), 8, 2, p);
+		super(getHeight(), getWidth(), 8, 2, p, true);
 		addInitialFurniture();
 		requiredBuildingMaterials = makeBuildMaterialsList();
 		this.requiredUpgradeMaterials = new LinkedList<>();
