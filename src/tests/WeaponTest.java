@@ -35,7 +35,7 @@ public class WeaponTest {
 	    assertEquals(15, bsa.getAttackModifier());
 	    assertEquals(0, bsa.getHealthPoints());
 	    assertEquals(11.0, bsa.getWeight(), 0.00001);
-	    List<Item> bsaList = bsa.getRequiredMaterials();
+	    List<Item> bsaList = BasicStoneAxe.getRequiredMaterials();
 	    ListIterator<Item> li = bsaList.listIterator();
 	    assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(wi.getClass(), li.next().getClass());
@@ -49,7 +49,7 @@ public class WeaponTest {
 	    assertEquals(17, fsa.getAttackModifier());
 	    assertEquals(0, fsa.getHealthPoints());
 	    assertEquals(16.0, fsa.getWeight(), 0.00001);
-	    List<Item> fsaList = fsa.getRequiredMaterials();
+	    List<Item> fsaList = FortifiedStoneAxe.getRequiredMaterials();
 	    ListIterator<Item> li = fsaList.listIterator();
 	    assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(wi.getClass(), li.next().getClass());
@@ -64,7 +64,7 @@ public class WeaponTest {
 	    assertEquals(19, bia.getAttackModifier());
 	    assertEquals(0, bia.getHealthPoints());
 	    assertEquals(18.0, bia.getWeight(), 0.00001);
-	    List<Item> biaList = bia.getRequiredMaterials();
+	    List<Item> biaList = BasicIronAxe.getRequiredMaterials();
 	    ListIterator<Item> li = biaList.listIterator();
 	    assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(wi.getClass(), li.next().getClass());
@@ -79,7 +79,7 @@ public class WeaponTest {
 	    assertEquals(21, fia.getAttackModifier());
 	    assertEquals(0, fia.getHealthPoints());
 	    assertEquals(25.0, fia.getWeight(), 0.00001);
-	    List<Item> fiaList = fia.getRequiredMaterials();
+	    List<Item> fiaList = FortifiedIronAxe.getRequiredMaterials();
 	    ListIterator<Item> li = fiaList.listIterator();
 	    assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(wi.getClass(), li.next().getClass());
@@ -95,7 +95,7 @@ public class WeaponTest {
 	    assertEquals(12, la.getAttackModifier());
 	    assertEquals(1, la.getHealthPoints());
 	    assertEquals(11.5, la.getWeight(), 0.00001);
-	    List<Item> laList = la.getRequiredMaterials();
+	    List<Item> laList = LureAxe.getRequiredMaterials();
 	    ListIterator<Item> li = laList.listIterator();
 	    assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(wi.getClass(), li.next().getClass());
@@ -110,7 +110,7 @@ public class WeaponTest {
 	    assertEquals(23, bs.getAttackModifier());
 	    assertEquals(0, bs.getHealthPoints());
 	    assertEquals(27.0, bs.getWeight(), 0.00001);
-	    List<Item> bsList = bs.getRequiredMaterials();
+	    List<Item> bsList = BasicSword.getRequiredMaterials();
 	    ListIterator<Item> li = bsList.listIterator();
 	    assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
@@ -126,7 +126,7 @@ public class WeaponTest {
 	    assertEquals(27, us.getAttackModifier());
 	    assertEquals(0, us.getHealthPoints());
 	    assertEquals(39.0, us.getWeight(), 0.00001);
-	    List<Item> usList = us.getRequiredMaterials();
+	    List<Item> usList = UltraSword.getRequiredMaterials();
 	    ListIterator<Item> li = usList.listIterator();
 	    assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());

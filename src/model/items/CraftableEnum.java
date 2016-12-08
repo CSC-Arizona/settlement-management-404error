@@ -4,13 +4,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import model.actors.Position;
 import model.armor.GreatChestPlate;
 import model.armor.*;
 import model.weapons.*;
-import model.room.BedRoom;
-import model.room.Room;
-import model.room.RoomEnum;
 
 public enum CraftableEnum {
     ANTLARVAPIE(AntLarvaPieCookable.getRequiredMaterials(), "Ant larva pie", AntLarvaPieCookable.class),

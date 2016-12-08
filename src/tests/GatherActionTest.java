@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import model.actors.GatherAction;
-import model.actors.MoveAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.AirBlock;

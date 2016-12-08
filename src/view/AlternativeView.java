@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,7 +29,6 @@ import controller.Controller;
 import controller.Designation;
 import images.ImageEnum;
 import model.actors.Actor;
-import model.actors.ConstructAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.AirBlock;
@@ -148,7 +145,6 @@ public class AlternativeView extends JPanel {
 		for (ImageEnum e : ImageEnum.values()) {
 			e.createBufferedImages(blockSizeY, blockSizeX);
 		}
-
 		repaint();
 	}
 
@@ -159,6 +155,7 @@ public class AlternativeView extends JPanel {
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
 		timeLabel = new JLabel();
 		labelPanel.add(timeLabel);
+		//timeLabel.
 		windowCoordinatesLabel = new JLabel();
 		setWindowCoordinateLabel();
 		labelPanel.add(windowCoordinatesLabel);
@@ -168,6 +165,8 @@ public class AlternativeView extends JPanel {
 		mouseDescriptionLabel = new JLabel();
 		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
+		//labelPanel.setOpaque(true);
+		//labelPanel.setBackground(new Color(0, 0, 0, 50));
 		this.add(labelPanel);
 
 	}
@@ -431,6 +430,7 @@ public class AlternativeView extends JPanel {
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
+		
 		g.setColor(Color.white);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
@@ -853,7 +853,7 @@ public class AlternativeView extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//activateConstructionSelection();
+			constructRoomButton.doClick();
 		}
 
 	}

@@ -7,14 +7,6 @@ import java.util.LinkedList;
 import org.junit.Test;
 
 import model.actors.Position;
-import model.armor.GreatChestPlate;
-import model.armor.GreatShield;
-import model.armor.IronChestPlate;
-import model.armor.IronShield;
-import model.armor.StoneChestPlate;
-import model.armor.StoneShield;
-import model.armor.WoodChestPlate;
-import model.armor.WoodShield;
 import model.furniture.AppleTreePlot;
 import model.furniture.BasicCrate;
 import model.furniture.Bed;
@@ -28,22 +20,12 @@ import model.furniture.CraftingMachine;
 import model.furniture.PoolTable;
 import model.furniture.ReinforcedCrate;
 import model.furniture.WheatPlantPlot;
-import model.items.AntLarvaPieCookable;
-import model.items.ApplePieCookable;
-import model.items.BreadCookable;
 import model.items.Item;
 import model.room.BedRoom;
 import model.room.EntertainmentRoom;
 import model.room.HorizontalTunnel;
 import model.room.IncubationRoom;
 import model.room.InfirmaryRoom;
-import model.weapons.BasicIronAxe;
-import model.weapons.BasicStoneAxe;
-import model.weapons.BasicSword;
-import model.weapons.FortifiedIronAxe;
-import model.weapons.FortifiedStoneAxe;
-import model.weapons.LureAxe;
-import model.weapons.UltraSword;
 
 /**
  * Tests the output of the reqItemsToString that exists in the CookableItem, Craftable, Furniture, 
