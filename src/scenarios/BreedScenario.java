@@ -15,7 +15,6 @@ import model.map.MapParameters;
 //This class models the breed action in the GUI
 public class BreedScenario {
 
-	//private int seed = 369403108;
 	private int seed = 369403105;
 	public static void main(String[] args) {
 		new BreedScenario();

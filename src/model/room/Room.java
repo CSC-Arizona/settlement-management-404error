@@ -1,8 +1,10 @@
 package model.room;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
+
 import model.actors.MoveAction;
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
@@ -39,7 +41,7 @@ import model.menus.PrintableItemsList;
  *        
  * @author Katherine Walters
  */
-public abstract class Room {
+public abstract class Room implements Serializable {
 
 	private int requiredHeight;
 	private int requiredWidth;

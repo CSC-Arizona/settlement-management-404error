@@ -524,8 +524,6 @@ public class AlternativeView extends JPanel {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 	}
@@ -534,8 +532,6 @@ public class AlternativeView extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
