@@ -33,7 +33,7 @@ public class IncubationRoom extends Room {
 	}
 	
 	public IncubationRoom(Position p) {
-		super(getHeight(), getWidth(), 4, 3, p);
+		super(getHeight(), getWidth(), 4, 3, p, true);
 		addInitialFurniture();
 		requiredBuildingMaterials = makeBuildMaterialsList();
 		this.requiredUpgradeMaterials = new LinkedList<>();

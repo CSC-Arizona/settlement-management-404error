@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -31,6 +32,7 @@ import images.ImageEnum;
 import model.actors.Actor;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
+import model.actors.UpgradeRoomAction;
 import model.building_blocks.AirBlock;
 import model.building_blocks.BuildingBlock;
 import model.furniture.Furniture;
@@ -38,6 +40,7 @@ import model.game.Game;
 import model.game.Log;
 import model.items.Item;
 import model.map.MapParameters;
+import model.room.Room;
 import model.room.RoomEnum;
 
 public class AlternativeView extends JPanel {
@@ -69,9 +72,9 @@ public class AlternativeView extends JPanel {
 	private int blockSizeX = windowWidth / visibleWidth;
 
 	private Controller controller;
+	
 
 	private customDesignationButton cutDownTreeButton;
-	private customDesignationButton upgradeRoomButton;
 	private customDesignationButton digButton;
 	private customDesignationButton plantsButton;
 	private customDesignationButton attackButton;
@@ -86,6 +89,8 @@ public class AlternativeView extends JPanel {
 	private boolean currentlyDrawingDesignation = false;
 
 	private boolean currentlyPlacingRoom = false;
+	private boolean currentlyChoosingUpgrade = false;
+	private TreeMap<Position, Room> highlightMe = new TreeMap<>();
 	private Point roomCorner;
 	private RoomEnum room;
 	private int roomWidth;
@@ -95,6 +100,7 @@ public class AlternativeView extends JPanel {
 
 	private JComboBox<String> constructRoomComboBox;
 	private JButton constructRoomButton;
+	private JButton upgradeRoomButton;
 	private JComboBox<String> craftComboBox;
 	private JButton craftButton;
 
@@ -186,22 +192,17 @@ public class AlternativeView extends JPanel {
 		constructRoomComboBox.setFocusable(false);
 		constructRoomComboBox.setPreferredSize(new Dimension(100, 30));
 		constructRoomComboBox.setFont(new Font("Arial", Font.PLAIN, 10));
-		constructRoomButton = new JButton(
-				"<html><center>Construct rooms (c)</center></html>");
+		upgradeRoomButton = new JButton("<html><center>Upgrade rooms (u)</center></html>");
+		upgradeRoomButton.setFocusable(false);
+		upgradeRoomButton.addActionListener(new UpdateButtonListener());
 		buttonPanel.add(constructRoomComboBox);
 
 		buttons = new ArrayList<>();
 		constructRoomButton = new customDesignationButton(controller, this,
 				Designation.CONSTRUCTING, buttons);
 		constructRoomButton.addActionListener(new ConstructionButtonListener());
-		// craftButton = new customDesignationButton(controller, this,
-		// Designation.NONE, buttons);
-		upgradeRoomButton = new customDesignationButton(controller, this,
-				Designation.UPGRADING, buttons);
 		cutDownTreeButton = new customDesignationButton(controller, this,
 				Designation.CUTTING_DOWN_TREES, buttons);
-		upgradeRoomButton = new customDesignationButton(controller, this,
-				Designation.UPGRADING, buttons);
 		digButton = new customDesignationButton(controller, this,
 				Designation.DIGGING, buttons);
 		plantsButton = new customDesignationButton(controller, this,
@@ -294,8 +295,9 @@ public class AlternativeView extends JPanel {
 		List<Actor> actors = Game.getMap().getBuildingBlock(row, col)
 				.getActors();
 		if (actors != null) {
+			List<Actor> actorCopy = new ArrayList<>(actors);
 			int count = 0;
-			Iterator<Actor> iter = actors.iterator();
+			Iterator<Actor> iter = actorCopy.iterator();
 			while (iter.hasNext()) {
 				Actor p = iter.next();
 				if (p.getImage() != null && p.isAlive()) {
@@ -376,6 +378,14 @@ public class AlternativeView extends JPanel {
 			}
 		}
 	}
+	
+	private void drawUpgradingHighlights(Graphics2D g2, int row, int col, int i, int j) {
+		if (highlightMe.containsKey(new Position(row, col))) {
+			g2.setColor(Color.GREEN);
+			g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
+					blockSizeY);
+		}
+	}
 
 	private void drawDesignation(Graphics2D g2, int row, int col, int i, int j) {
 		if (Game.getMap().getBuildingBlock(row, col).isDesignated()) {
@@ -399,6 +409,10 @@ public class AlternativeView extends JPanel {
 			drawActors(g2, row, col, i, j);
 
 			drawItemsOnGround(g2, row, col, i, j);
+			
+			// TODO: add draw highlighted blocks here
+			if (currentlyChoosingUpgrade)
+				drawUpgradingHighlights(g2, row, col, i, j);
 
 		} else {
 			g2.setColor(Color.black);
@@ -529,8 +543,6 @@ public class AlternativeView extends JPanel {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 	}
@@ -539,8 +551,6 @@ public class AlternativeView extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
@@ -633,6 +643,18 @@ public class AlternativeView extends JPanel {
 					Log.add(err);
 				}
 
+			} else if (currentlyChoosingUpgrade) {
+				Room room = highlightMe.get(new Position(mouseY, mouseX));
+				if (room != null) {
+					System.out.println("You have chosen to upgrade the " + room.getID() + " at " + room.getPosition());
+					PlayerControlledActor.addActionToPlayerPool(new UpgradeRoomAction(room));
+					deactivateUpgradeSelection();
+				}
+				else {
+					System.out.println("You clicked on a space that wasn't a room.");
+				    deactivateUpgradeSelection();
+				}
+				    
 			} else {
 				if (controller.getDesignatingAction() != Designation.NONE) {
 					if (currentlyDrawingDesignation) {
@@ -668,7 +690,7 @@ public class AlternativeView extends JPanel {
 					}
 					currentlyDrawingDesignation = !currentlyDrawingDesignation;
 				} else {
-					// test if clicked on a crafting room
+					
 				}
 			}
 			repaint();
@@ -808,6 +830,46 @@ public class AlternativeView extends JPanel {
 			activateConstructionSelection();
 		}
 	}
+	
+	public void toggleUpgradeSelection() {
+		if (currentlyChoosingUpgrade) {
+			System.out.println("deactivating upgrade selection");
+			deactivateUpgradeSelection();
+		} else {
+			System.out.println("activating upgrade selection");
+			activateUpgradeSelection();
+		}
+	}
+	
+	public void activateUpgradeSelection() {
+		for (customDesignationButton button : buttons) {
+			button.deactivate();
+		}
+		
+		currentlyChoosingUpgrade = true;
+		upgradeRoomButton.setBackground(new Color(124, 163, 226));
+		
+		List<Room> rooms = Game.getMap().getCompletedRooms();
+		List<Room> upgradeableRooms = new ArrayList<>(rooms);
+		for (Room r : upgradeableRooms) {
+			if (r.getUpgradesAllowed() > 0) {
+				System.out.println("Adding a room to highlightMe");
+				addToHighlightMe(r);
+			}
+		}
+		repaint();
+	}
+	
+	private void addToHighlightMe(Room room) {
+		for (Position p : room.getBlocksInThisRoom())
+			highlightMe.put(p, room);
+	}
+	
+	public void deactivateUpgradeSelection() {
+		currentlyChoosingUpgrade = false;
+		highlightMe = new TreeMap<>();
+		repaint();
+	}
 
 	public void activateConstructionSelection() {
 
@@ -834,6 +896,21 @@ public class AlternativeView extends JPanel {
 		currentlyPlacingRoom = false;
 		controller.setDesignatingAction(Designation.NONE);
 		repaint();
+	}
+	
+	private class UpdateButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			
+			for (customDesignationButton button : buttons) {
+				button.deactivate();
+			}
+			controller.setDesignatingAction(Designation.NONE);
+			System.out.println("In actionPerformed method");
+			toggleUpgradeSelection();
+		}
+		
 	}
 
 	private class ConstructionButtonListener implements ActionListener {

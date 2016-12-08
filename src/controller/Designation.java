@@ -12,7 +12,6 @@ public enum Designation {
 	CONSTRUCTING         ("Stop constructing",          "Construct",           'c'),
 	DIGGING              ("Stop digging",               "Dig",                 'd'),
 	GATHERING_PLANTS     ("Stop gathering plants",      "Gather plants",       'g'),
-	UPGRADING            ("Stop upgrading room",        "Upgrade room",        'u'),
 	CUTTING_DOWN_TREES   ("Stop cutting trees",         "Cut trees",           't');
 
 	public String active;

@@ -217,8 +217,6 @@ public class BasicView extends JPanel {
 		buttons = new ArrayList<>();
 		cutDownTreeButton = new DesignationButton(controller, this,
 				Designation.CUTTING_DOWN_TREES, buttons);
-		upgradeRoomButton = new DesignationButton(controller, this,
-				Designation.UPGRADING, buttons);
 		digButton = new DesignationButton(controller, this,
 				Designation.DIGGING, buttons);
 		plantsButton = new DesignationButton(controller, this,
