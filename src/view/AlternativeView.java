@@ -171,7 +171,7 @@ public class AlternativeView extends JPanel {
 	private void addLabelPanel() {
 		labelPanel = new JPanel();
 		labelPanel.setSize(300, 300);
-		labelPanel.setBackground(new Color(125, 50, 50, 50));
+		labelPanel.setBackground(new Color(125, 50, 50, 0));
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
 		timeLabel = new JLabel();
 		timeLabel.setForeground(new Color(255, 0, 0));
@@ -261,8 +261,7 @@ public class AlternativeView extends JPanel {
 
 		logText.setForeground(new Color(255, 0, 0));
 		logText.setBackground(new Color(0, 0, 0, 0));
-		
-		logText.setOpaque(true);
+		logPanel.setBackground(new Color(0, 0, 0, 0));
 		logText.setLineWrap(true);
 		logText.setSize(350, 200);
 		logPanel.setBounds(650, 0, 350, 200);
