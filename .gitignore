@@ -11,7 +11,7 @@ tmp/
 *.jar
 *.mp3
 local.properties
-.classpath
+
 .project
 .settings/*
 .loadpath
@@ -29,7 +29,7 @@ local.properties
 .cproject
 
 # JDT-specific (Eclipse Java Development Tools)
-.classpath
+
 
 # Java annotation processor (APT)
 .factorypath
