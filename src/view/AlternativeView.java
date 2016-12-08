@@ -170,8 +170,8 @@ public class AlternativeView extends JPanel {
 
 	private void addLabelPanel() {
 		labelPanel = new JPanel();
-		labelPanel.setSize(500, 500);
-		labelPanel.setBackground(new Color(0, 0, 0, 0));
+		labelPanel.setSize(300, 300);
+		labelPanel.setBackground(new Color(125, 50, 50, 50));
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
 		timeLabel = new JLabel();
 		timeLabel.setForeground(new Color(255, 0, 0));
@@ -256,11 +256,12 @@ public class AlternativeView extends JPanel {
 	private void addLogPanel() {
 		logPanel = new JPanel();
 		logPanel.setSize(350, 200);
-		logPanel.setBackground(new Color(0, 0, 0, 0));
-		logPanel.setOpaque(true);
+
 		logText = new JTextArea();
+
 		logText.setForeground(new Color(255, 0, 0));
 		logText.setBackground(new Color(0, 0, 0, 0));
+		
 		logText.setOpaque(true);
 		logText.setLineWrap(true);
 		logText.setSize(350, 200);
@@ -603,6 +604,7 @@ public class AlternativeView extends JPanel {
 				char keyboardSelection = '\u0000';
 				boolean madeSelection = false;
 				for (customDesignationButton button : buttons) {
+
 					if (button.designation.keyboardShortcut == (char) e.getKeyChar()) {
 						if (!button.isEnabled())
 							for (customDesignationButton button2 : buttons)
