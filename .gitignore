@@ -11,7 +11,10 @@ tmp/
 *.jar
 *.mp3
 local.properties
-.classpath
+<<<<<<< HEAD
+
+=======
+>>>>>>> branch 'master' of https://github.com/CSC-Arizona/settlement-management-404error
 .project
 .settings/*
 .loadpath
@@ -29,7 +32,7 @@ local.properties
 .cproject
 
 # JDT-specific (Eclipse Java Development Tools)
-.classpath
+
 
 # Java annotation processor (APT)
 .factorypath

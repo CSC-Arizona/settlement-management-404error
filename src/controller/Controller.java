@@ -59,7 +59,7 @@ import view.StartingView;
 public class Controller extends JFrame {
 
 	/**
-	 * 
+	 * comment
 	 */
 	private static final long serialVersionUID = 6949081386517721969L;
 	int time = 0;
