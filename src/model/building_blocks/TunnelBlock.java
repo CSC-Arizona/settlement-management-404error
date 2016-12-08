@@ -8,6 +8,12 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
+/**
+ * Provides a background for both kinds of built tunnels.
+ * 
+ * @author Katherine Walters
+ *
+ */
 public class TunnelBlock extends BuildingBlock {
 
 	/**

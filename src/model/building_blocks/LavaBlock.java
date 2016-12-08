@@ -13,8 +13,6 @@ import model.items.Item;
  * destroyed, and thus does not yield any resources.
  * 
  * @author Katherine Walters
- * 
- * todo: make it kill actors if they touch it
  */
 public class LavaBlock extends BuildingBlock {
 

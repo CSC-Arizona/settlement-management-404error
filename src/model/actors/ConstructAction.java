@@ -15,7 +15,14 @@ import model.game.Game;
 import model.game.Log;
 import model.items.Item;
 import model.room.Room;
-
+/**
+ * This action gives the appropriate commands to actors to build a given room, which is passed
+ * into the constructor. This action takes care of digging out the room, building the floor and 
+ * ceiling, adding wallpaper, and adding the furniture. It also makes sure that actors compile
+ * the appropriate resources before the room is completed. * 
+ * 
+ * @author Katherine Walters
+ */
 public class ConstructAction extends Action {
 
 	private static final long serialVersionUID = 1979882260923785059L;
@@ -29,6 +36,9 @@ public class ConstructAction extends Action {
 	private ConstructionMaterialPile cmp;
 	private Position pileLoc;
 
+	/**
+	 * Sets up the area at which "room" will be constructed.
+	 */
 	public ConstructAction(Room room) {
 		System.out.println("New construct action created");
 		this.room = room;
@@ -44,6 +54,7 @@ public class ConstructAction extends Action {
 		this.wallpapered = false;
 		this.furniturePlaced = false;
 
+		// allocates space for the rooms ceiling and floor
 		int startRow = room.getPosition().getRow();
 		if (room.needsWalls()) {
 			startRow++;
@@ -52,6 +63,7 @@ public class ConstructAction extends Action {
 			height = room.getRequiredHeight();
 		}
 
+		// digs out the room itself
 		for (int r = startRow; r < startRow + room.getRequiredHeight(); r++) {
 			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
 				Position p = new Position(r, Math.floorMod(c, Game.getMap().getTotalWidth()));
@@ -59,6 +71,7 @@ public class ConstructAction extends Action {
 				PlayerControlledActor.addActionToPlayerPool(new GatherAction(p));
 			}
 		}
+		// adds the ceilings and floors, and takes a first pass at placing the appropriate furniture
 		if (room.needsWalls()) {
 			for (int c = room.getPosition().getCol(); c < room.getPosition().getCol() + room.getRequiredWidth(); c++) {
 				Position roof = new Position(room.getPosition().getRow(),
@@ -74,6 +87,10 @@ public class ConstructAction extends Action {
 		}
 	}
 
+	/**
+	 * Every time this function is executed, it starts at the beginning of the action to
+	 * make sure that everything up to this point has been completed. 
+	 */
 	@Override
 	public int execute(Actor performer) {
 		
@@ -138,6 +155,9 @@ public class ConstructAction extends Action {
 		return cleared;
 	}
 
+	/*
+	 * If the floor and ceiling isn't already built, does so
+	 */
 	private boolean wallsBuilt() {
 		if (!room.needsWalls())
 			return true;
@@ -156,6 +176,9 @@ public class ConstructAction extends Action {
 		return true;
 	}
 
+	/*
+	 * if the 'scaffolding' isn't already placed, does so
+	 */
 	private boolean scaffoldingPlaced(Actor performer) {
 		if (!room.needsWalls())
 			return true;
@@ -184,6 +207,10 @@ public class ConstructAction extends Action {
 		return scaffoldingPlaced;
 	}
 
+	/*
+	 * creates the construction material pile, which organizes which items are still
+	 * needed for the room to be built
+	 */
 	private boolean makePile() {
 		cmp = new ConstructionMaterialPile(room.getRequiredBuildMaterials());
 		if (!room.needsWalls())
@@ -201,6 +228,9 @@ public class ConstructAction extends Action {
 		}
 	}
 	
+	/*
+	 * checks the inventory of the actors to see if any of them have the needed item
+	 */
 	private void checkForActorContributions() {
 		List<Item> orig = cmp.getRequiredMaterials();
 		List<Item> reqMaterials = new ArrayList<>(orig);
@@ -219,6 +249,9 @@ public class ConstructAction extends Action {
 		}
 	}
 
+	/*
+	 * checks the inventory of the crates to see if any of them have the needed item
+	 */
 	private void checkForCrateContributions(Actor performer) {
 		List<Item> orig = cmp.getRequiredMaterials();
 		List<Item> reqMat = new ArrayList<>(orig);
@@ -250,6 +283,9 @@ public class ConstructAction extends Action {
 		}
 	}
 
+	/*
+	 * checks to make sure all of the room's wallpaper is up
+	 */
 	private boolean wallpaper(Actor performer) {
 		for (Position p : blocksToChange)
 			performer.getActionPool().add(new PlaceRoomBlockAction(p, room.getAppropriateBlock()));
@@ -262,6 +298,9 @@ public class ConstructAction extends Action {
 		return true;
 	}
 	
+	/*
+	 * checks to make sure the furniture is all placed appropriately in the room
+	 */
 	private boolean placeFurniture(Actor performer) {
 		for (Position p : room.getFurniture().keySet()) {
 			Position fp = new Position(room.getPosition().getRow() + p.getRow(), 

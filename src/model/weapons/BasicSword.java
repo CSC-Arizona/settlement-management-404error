@@ -23,15 +23,15 @@ public class BasicSword extends Weapon {
 	
 	public BasicSword() {
 		super(attackMod, 0, 27.0, "Basic sword", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		basicSwordList = new LinkedList<>();
 		basicSwordList.add(new WoodItem());
 		basicSwordList.add(new StoneItem());
 		basicSwordList.add(new StoneItem());
 		basicSwordList.add(new IronItem());
 		basicSwordList.add(new IronItem());
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return basicSwordList;
 	}
 }

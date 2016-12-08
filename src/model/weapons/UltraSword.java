@@ -24,6 +24,9 @@ public class UltraSword extends Weapon {
 	
 	public UltraSword() {
 		super(attackMod, 0, 39.0, "Ultra sword", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		usList = new LinkedList<>();
 		usList.add(new WoodItem());
 		usList.add(new StoneItem());
@@ -33,9 +36,6 @@ public class UltraSword extends Weapon {
 		usList.add(new IronItem());
 		usList.add(new IronItem());
 		usList.add(new GoldItem());
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return usList;
 	}
 

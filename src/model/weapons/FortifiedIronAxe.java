@@ -22,15 +22,15 @@ public class FortifiedIronAxe extends Weapon {
 	
 	public FortifiedIronAxe() {
 		super(attackMod, 0, 25.0, "Fortified iron axe", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		fortifiedIronAxeList = new LinkedList<>();
 		fortifiedIronAxeList.add(new WoodItem());
 		fortifiedIronAxeList.add(new WoodItem());
 		fortifiedIronAxeList.add(new StoneItem());
 		fortifiedIronAxeList.add(new IronItem());
 		fortifiedIronAxeList.add(new IronItem());
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return fortifiedIronAxeList;
 	}
 }

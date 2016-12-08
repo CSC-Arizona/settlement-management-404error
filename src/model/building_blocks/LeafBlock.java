@@ -9,11 +9,13 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
+/**
+ * Plain leaf block (doesn't drop actors)
+ * 
+ * @author Katherine Walters
+ */
 public class LeafBlock extends BuildingBlock {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5173711288174564277L;
 	private List<Item> itemsInBlock;
 	private final static int durability = 1;

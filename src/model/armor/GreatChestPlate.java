@@ -24,6 +24,10 @@ public class GreatChestPlate extends Armor {
 	
 	public GreatChestPlate() {
 		super(false, attackMod, 0, 30.0, defenseMod, "Great chestplate", null);
+		
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		gcpList = new LinkedList<>();;
 		gcpList.add(new WoodItem());
 		gcpList.add(new WoodItem());
@@ -32,10 +36,6 @@ public class GreatChestPlate extends Armor {
 		gcpList.add(new IronItem());
 		gcpList.add(new IronItem());
 		gcpList.add(new IronItem());
-		
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return gcpList;
 	}
 }

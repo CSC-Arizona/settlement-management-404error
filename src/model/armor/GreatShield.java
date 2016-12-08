@@ -24,14 +24,14 @@ public class GreatShield extends Armor {
 	
 	public GreatShield() {
 		super(false, attackMod, 0, 22.0, defenseMod, "Great shield", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		gsList = new LinkedList<>();
 		gsList.add(new WoodItem());
 		gsList.add(new StoneItem());
 		gsList.add(new IronItem());
 		gsList.add(new IronItem());
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return gsList;
 	}
 }

@@ -22,13 +22,13 @@ public class WoodShield extends Armor {
 	
 	public WoodShield() {
 		super(false, attackMod, 0, 9.0, defenseMod, "Wood shield", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		wsList = new LinkedList<>();
 		wsList.add(new WoodItem());
 		wsList.add(new WoodItem());
 		wsList.add(new WoodItem());
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return wsList;
 	}
 }

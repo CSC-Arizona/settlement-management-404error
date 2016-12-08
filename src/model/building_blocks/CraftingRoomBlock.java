@@ -8,6 +8,11 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
+/**
+ * Provides the background to the crafting room.
+ * 
+ * @author Katherine Walters
+ */
 public class CraftingRoomBlock extends BuildingBlock {
 
 	/**

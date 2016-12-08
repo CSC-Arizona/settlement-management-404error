@@ -11,12 +11,6 @@ import model.items.Item;
 //This class defines the Ant Armor, which ants wear and are dropped when an ant dies
 public class AntArmor extends Armor{
 	
-	/**
-	 * 
-	 */
-	
-	//TODO: Test cases
-	
 	private static final long serialVersionUID = 6162833299006847256L;
 	private final static int attackMod = 10;
 	private final static int defenseMod = 10;

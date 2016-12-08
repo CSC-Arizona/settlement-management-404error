@@ -12,6 +12,13 @@ import model.game.Log;
 import model.items.Item;
 import model.room.Room;
 
+/**
+ * UpgradeRoomAction upgrades a room to it's next level, whether this means adding
+ * more furniture, or improving existing.
+ * 
+ * @author Katherine Walters
+ *
+ */
 public class UpgradeRoomAction extends Action {
 
 	private Room room;
@@ -23,11 +30,14 @@ public class UpgradeRoomAction extends Action {
 	
 	private static final long serialVersionUID = 2426959828400570427L;
 
+	/**
+	 * This constructor upgrades the given room by whatever standards that room
+	 * follows
+	 * 
+	 * @param toUpgrade
+	 */
 	public UpgradeRoomAction(Room toUpgrade) {
-		System.out.println("Creating a new upgradeRoomAction");
 		this.room = toUpgrade;
-		if (!room.upgradeRoom())
-			System.out.println("the room couldn't be upgraded");
 		reqMaterials = room.getRequiredUpgradeMaterials();
 		roomFurniture = room.getFurniture();
 		cmp = new ConstructionMaterialPile(reqMaterials);
@@ -36,6 +46,11 @@ public class UpgradeRoomAction extends Action {
 		this.pileRemoved = false;
 	}
 	
+	/**
+	 * Creates a Construction Material Pile, fills it with the necessary materials, 
+	 * and then adds/improves the appropriate furniture for the given room.
+	 * @param performer
+	 */
 	@Override
 	public int execute(Actor performer) {
 		System.out.println("Executing upgradeRoomaction");
@@ -105,6 +120,9 @@ public class UpgradeRoomAction extends Action {
 		}
 	}
 
+	/*
+	 * checks to see if the performer has any of the needed items
+	 */
 	private void checkForCrateContributions(Actor performer) {
 		List<Item> orig = cmp.getRequiredMaterials();
 		List<Item> reqMat = new ArrayList<>(orig);
@@ -136,6 +154,9 @@ public class UpgradeRoomAction extends Action {
 		}
 	}
 	
+	/*
+	 * places the furniture in the appropriate places
+	 */
 	private boolean placeFurniture(Actor performer) {
 		for (Position p : room.getFurniture().keySet()) {
 			Position fp = new Position(room.getPosition().getRow() + p.getRow(), 
@@ -152,6 +173,9 @@ public class UpgradeRoomAction extends Action {
 		return true;
 	}
 
+	/*
+	 * removes the pile after the construction is complete
+	 */
 	private boolean removePile() {
 		if (Game.getMap().getBuildingBlock(pileLoc).getFurniture() != null &&
 				Game.getMap().getBuildingBlock(pileLoc).getFurniture().getID().equals("Construction material pile"))

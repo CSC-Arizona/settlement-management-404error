@@ -60,7 +60,7 @@ public enum CraftableEnum {
     	return result;
     }
     
-    public static CraftableEnum getRoomFromString(String roomName) {
+    public static CraftableEnum getCraftableEnumFromString(String roomName) {
 		CraftableEnum[] craftables = getAllCraftables();
 		String[] craftableNames = getAllCraftableNames();
 		for (int i = 0; i < craftableNames.length; i++) {

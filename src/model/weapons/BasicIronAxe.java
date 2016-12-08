@@ -22,14 +22,14 @@ public class BasicIronAxe extends Weapon {
 	
 	public BasicIronAxe() {
 		super(attackMod, 0, 18.0, "Basic iron axe", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		basicIronAxeList = new LinkedList<>();
 		basicIronAxeList.add(new WoodItem());
 		basicIronAxeList.add(new WoodItem());
 		basicIronAxeList.add(new StoneItem());
 		basicIronAxeList.add(new IronItem());
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return basicIronAxeList;
 	}
 

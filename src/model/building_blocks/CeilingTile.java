@@ -8,6 +8,12 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
+/**
+ * CeilingTile makes up the ceiling (top row) of rooms.
+ * 
+ * @author Katherine Walters
+ *
+ */
 public class CeilingTile extends BuildingBlock {
 	/**
 	 * 
