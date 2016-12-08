@@ -5,8 +5,6 @@ public enum Designation {
 	ATTACKING            ("Stop attacking",             "Attack",              'a'),
 	CONSTRUCTING         ("Stop constructing",          "Construct",           'c'),
 	DIGGING              ("Stop digging",               "Dig",                 'd'),
-	REMOVING_DESIGNATIONS("Stop removing designations", "Remove designations", 'e'),
-	GATHERING_FRUIT      ("Stop gathering fruit",       "Gather fruit",        'f'),
 	GATHERING_PLANTS     ("Stop gathering plants",      "Gather plants",       'g'),
 	REMOVING_FURNITURE   ("Stop removing furniture",    "Remove furniture",    'r'),
 	CUTTING_DOWN_TREES   ("Stop cutting trees",         "Cut trees",           't');

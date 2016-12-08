@@ -120,8 +120,10 @@ public class MoveAction extends Action {
 	 */
 	@Override
 	public int execute(Actor performer) {
-		if(!Game.validActorLocation(performer.getPosition().getRow(),performer.getPosition().getCol()))
+		if(!Game.validActorLocation(performer.getPosition().getRow(),performer.getPosition().getCol())){
+			visited = null;
 			return Action.DELAY;
+		}
 		if (visited == null) {
 			calculatePath();
 		}
@@ -136,6 +138,7 @@ public class MoveAction extends Action {
 			}
 			performer.setPosition(visited.get(performer.getPosition()).prev.position);
 		} else {
+			visited = null;
 			return Action.Pool;
 		}
 		return (performer.getPosition().equals(desiredDestination)) ? Action.COMPLETED : Action.MADE_PROGRESS;

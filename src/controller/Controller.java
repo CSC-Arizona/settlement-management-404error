@@ -99,25 +99,6 @@ public class Controller extends JFrame {
 			for (int j = startCol; j <= startCol + width; j++) {
 				int col = Math.floorMod(j, map.getTotalWidth());
 
-				// todo: attack, remove rooms
-
-				if (getDesignatingAction() == Designation.REMOVING_DESIGNATIONS) {
-
-					map.getBuildingBlock(row, col).removeDesignation();
-
-					if (map.getBuildingBlock(row, col).getID()
-							.equals(AppleTreeTrunkBlock.id)) {
-						for (Position pos : map.getTrees().keySet()) {
-							if (pos.getRow() == row && pos.getCol() == col) {
-								AppleTree tree = map.getTrees().get(pos);
-								tree.removeDesignation();
-								break;
-							}
-						}
-					}
-
-				}
-
 				if (getDesignatingAction() == Designation.ATTACKING) {
 					if (map.getBuildingBlock(row, col).getActors() != null) {
 						for (Actor actor : map.getBuildingBlock(row, col)
@@ -164,14 +145,6 @@ public class Controller extends JFrame {
 
 					}
 
-				}
-
-				if (getDesignatingAction() == Designation.GATHERING_FRUIT) {
-					if (map.getBuildingBlock(row, col).getID()
-							.equals(AppleTreeLeafBlock.id)) {
-						map.getBuildingBlock(row, col).addDesignation(
-								Designation.GATHERING_FRUIT);
-					}
 				}
 
 				if (getDesignatingAction() == Designation.CUTTING_DOWN_TREES) {

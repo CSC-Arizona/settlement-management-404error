@@ -87,7 +87,6 @@ public class BasicView extends JPanel {
 	private DesignationButton digButton;
 	private DesignationButton plantsButton;
 	private DesignationButton attackButton;
-	private DesignationButton removeButton;
 	private ArrayList<DesignationButton> buttons;
 
 	private Point designationStart;
@@ -218,16 +217,12 @@ public class BasicView extends JPanel {
 		buttons = new ArrayList<>();
 		cutDownTreeButton = new DesignationButton(controller, this,
 				Designation.CUTTING_DOWN_TREES, buttons);
-		fruitButton = new DesignationButton(controller, this,
-				Designation.GATHERING_FRUIT, buttons);
 		digButton = new DesignationButton(controller, this,
 				Designation.DIGGING, buttons);
 		plantsButton = new DesignationButton(controller, this,
 				Designation.GATHERING_PLANTS, buttons);
 		attackButton = new DesignationButton(controller, this,
 				Designation.ATTACKING, buttons);
-		removeButton = new DesignationButton(controller, this,
-				Designation.REMOVING_DESIGNATIONS, buttons);
 
 		buttonPanel.add(constructRoomPanel);
 		buttonPanel.add(craftPanel);
@@ -237,7 +232,6 @@ public class BasicView extends JPanel {
 		buttonPanel.add(digButton);
 		buttonPanel.add(plantsButton);
 		buttonPanel.add(attackButton);
-		buttonPanel.add(removeButton);
 
 		guiPanel.add(buttonPanel);
 	}

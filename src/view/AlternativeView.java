@@ -74,11 +74,9 @@ public class AlternativeView extends JPanel {
 	
 
 	private customDesignationButton cutDownTreeButton;
-	private customDesignationButton fruitButton;
 	private customDesignationButton digButton;
 	private customDesignationButton plantsButton;
 	private customDesignationButton attackButton;
-	private customDesignationButton removeButton;
 	private ArrayList<customDesignationButton> buttons;
 
 	private Point designationStart;
@@ -180,7 +178,7 @@ public class AlternativeView extends JPanel {
 		buttonPanel = new JPanel();
 		buttonPanel.setSize(500, 70);
 		buttonPanel.setBackground(new Color(0, 0, 0, 0));
-		buttonPanel.setBounds(250, 600, 400, 70);
+		buttonPanel.setBounds(250, 600, 330, 70);
 
 		constructRoomComboBox = new JComboBox<String>(
 				RoomEnum.getAllRoomNames());
@@ -189,8 +187,6 @@ public class AlternativeView extends JPanel {
 		constructRoomComboBox.setFocusable(false);
 		constructRoomComboBox.setPreferredSize(new Dimension(100, 30));
 		constructRoomComboBox.setFont(new Font("Arial", Font.PLAIN, 10));
-//		constructRoomButton = new JButton(
-//				"<html><center>Construct rooms (c)</center></html>");
 		upgradeRoomButton = new JButton("<html><center>Upgrade rooms (u)</center></html>");
 		upgradeRoomButton.addActionListener(new UpdateButtonListener());
 		buttonPanel.add(constructRoomComboBox);
@@ -199,35 +195,23 @@ public class AlternativeView extends JPanel {
 		constructRoomButton = new customDesignationButton(controller, this,
 				Designation.CONSTRUCTING, buttons);
 		constructRoomButton.addActionListener(new ConstructionButtonListener());
-		// craftButton = new customDesignationButton(controller, this,
-		// Designation.NONE, buttons);
-		//upgradeRoomButton = new customDesignationButton(controller, this,
-			//	Designation.UPGRADING, buttons);
 		cutDownTreeButton = new customDesignationButton(controller, this,
 				Designation.CUTTING_DOWN_TREES, buttons);
-		//upgradeRoomButton = new customDesignationButton(controller, this,
-			//	Designation.UPGRADING, buttons);
-		fruitButton = new customDesignationButton(controller, this,
-				Designation.GATHERING_FRUIT, buttons);
 		digButton = new customDesignationButton(controller, this,
 				Designation.DIGGING, buttons);
 		plantsButton = new customDesignationButton(controller, this,
 				Designation.GATHERING_PLANTS, buttons);
 		attackButton = new customDesignationButton(controller, this,
 				Designation.ATTACKING, buttons);
-		removeButton = new customDesignationButton(controller, this,
-				Designation.REMOVING_DESIGNATIONS, buttons);
 
 		craftComboBox = new JComboBox<String>(new String[] {"item 1", "item 2", "item 3"});
 		craftButton = new JButton("Craft item: ");
 		
 		buttonPanel.add(cutDownTreeButton);
 		buttonPanel.add(upgradeRoomButton);
-		buttonPanel.add(fruitButton);
 		buttonPanel.add(digButton);
 		buttonPanel.add(plantsButton);
 		buttonPanel.add(attackButton);
-		buttonPanel.add(removeButton);
 		buttonPanel.add(constructRoomButton);
 		buttonPanel.add(constructRoomComboBox);
 		buttonPanel.add(craftButton);
