@@ -26,7 +26,7 @@ public class SaveFile {
 	}
 	
 	public SaveFile(String savename) {
-		this.savename = getFilePath(savename+".ser").toString();
+		this.savename = getFilePath(savename).toString();
 	}
 	
 	public String getSavename() {
@@ -46,19 +46,20 @@ public class SaveFile {
 		}	
 	}
 	
-	public static ArrayList<String> getSavedFiles() {
+	public static ArrayList<String> listFilesForFolder(final File folder) {
 		ArrayList<String> result = new ArrayList<>();
-		int count = 1;
-		while (true) {
-			String savename = "save"+count+".ser";
-			if (!(new File(getFilePath(savename).toString())).exists()) {
-				break;
-			} else {
-				result.add(savename.substring(0,savename.length()-4));
-			}
-			count += 1;
-		}
-		return result;
+		
+	    for (final File fileEntry : folder.listFiles()) {
+	        if (!fileEntry.isDirectory()) {
+	        	result.add(fileEntry.getName());
+	        }
+	    }
+	    return result;
+	}
+	
+	public static ArrayList<String> getSavedFiles() {
+		String workingDirectory = System.getProperty("user.dir");		
+		return listFilesForFolder(Paths.get(workingDirectory, "src", "saves").toFile());
 	}
 
 	private static Path getFilePath(String savename) {
