@@ -7,6 +7,7 @@ import model.building_blocks.AirBlock;
 import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
 import model.building_blocks.BuildingBlock;
+import model.building_blocks.EarthBlock;
 import model.building_blocks.LeafBlock;
 import model.map.Map;
 
@@ -31,16 +32,23 @@ public class AppleTree extends Tree {
 			random = super.getRandom();
 		}
 
-		int treeX = random.nextInt(map.getTotalWidth());
+		while (true) {
+			int treeX = random.nextInt(map.getTotalWidth());
 
-		// move up until we are no longer underground
-		int treeY = map.getMapParameters().airHeight;
-		while (!map.getBuildingBlock(treeY, treeX).getID().equals(AirBlock.id)) {
-			treeY -= 1;
-			if (treeY < 0)
+			// move up until we are no longer underground
+			int treeY = map.getMapParameters().airHeight;
+			while (!map.getBuildingBlock(treeY, treeX).getID()
+					.equals(AirBlock.id)) {
+				treeY -= 1;
+				if (treeY < 0)
+					continue;
+			}
+			if (map.getBuildingBlock(treeY + 1, treeX).getID()
+					.equals(EarthBlock.id)) {
+				this.startingPos = new Position(treeY, treeX);
 				break;
+			}
 		}
-		this.startingPos = new Position(treeY, treeX);
 		return startingPos;
 	}
 
