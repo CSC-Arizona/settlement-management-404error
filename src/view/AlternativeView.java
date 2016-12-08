@@ -29,16 +29,35 @@ import controller.Controller;
 import controller.Designation;
 import images.ImageEnum;
 import model.actors.Actor;
+import model.actors.CraftAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
+import model.armor.GreatChestPlate;
+import model.armor.GreatShield;
+import model.armor.IronChestPlate;
+import model.armor.IronShield;
+import model.armor.StoneChestPlate;
+import model.armor.StoneShield;
+import model.armor.WoodChestPlate;
+import model.armor.WoodShield;
 import model.building_blocks.AirBlock;
 import model.building_blocks.BuildingBlock;
 import model.furniture.Furniture;
 import model.game.Game;
 import model.game.Log;
+import model.items.AntLarvaPieCookable;
+import model.items.ApplePieCookable;
+import model.items.BreadCookable;
+import model.items.CraftableEnum;
 import model.items.Item;
 import model.map.MapParameters;
 import model.room.RoomEnum;
+import model.weapons.BasicIronAxe;
+import model.weapons.BasicStoneAxe;
+import model.weapons.BasicSword;
+import model.weapons.FortifiedIronAxe;
+import model.weapons.FortifiedStoneAxe;
+import model.weapons.UltraSword;
 
 public class AlternativeView extends JPanel {
 
@@ -141,6 +160,7 @@ public class AlternativeView extends JPanel {
 		this.addKeyListener(new MyKeyListener());
 		this.addMouseMotionListener(new MyMotionListener());
 		this.addMouseListener(new MyMouseListener());
+		
 
 		for (ImageEnum e : ImageEnum.values()) {
 			e.createBufferedImages(blockSizeY, blockSizeX);
@@ -211,8 +231,13 @@ public class AlternativeView extends JPanel {
 		removeButton = new customDesignationButton(controller, this,
 				Designation.REMOVING_DESIGNATIONS, buttons);
 
-		craftComboBox = new JComboBox<String>(new String[] {"item 1", "item 2", "item 3"});
+		//String representation of items taken from text field of CraftableEnum
+		craftComboBox = new JComboBox<String>(new String[] {"Ant larva pie (heals 10 hp)", "Apple pie (heals 10 hp)", "Bread (heals 10 hp)", "Great chestplate", "Greatshield",
+				"Iron chestplate", "Iron shield", "Stone chestplate", "Stone shield", "Wood chestplate", "Wood shield", "Basic iron axe",
+				"Basic stone axe", "Basic sword", "Fortified iron axe", "Fortified stone axe", "Ultra sword"});
 		craftButton = new JButton("Craft item: ");
+		
+		craftButton.addActionListener(new CraftButtonListener());
 		
 		buttonPanel.add(cutDownTreeButton);
 		buttonPanel.add(upgradeRoomButton);
@@ -444,6 +469,91 @@ public class AlternativeView extends JPanel {
 			}
 		}
 
+	}
+	
+	private class CraftButtonListener implements ActionListener {
+		private AntLarvaPieCookable alp = new AntLarvaPieCookable();
+		private ApplePieCookable apc = new ApplePieCookable();
+		private BasicIronAxe bia = new BasicIronAxe();
+		private BasicStoneAxe bsa = new BasicStoneAxe();
+		private BasicSword bs = new BasicSword();
+		private BreadCookable b = new BreadCookable();
+		private FortifiedIronAxe fia = new FortifiedIronAxe();
+		private FortifiedStoneAxe fsa = new FortifiedStoneAxe();
+		private GreatChestPlate gcp = new GreatChestPlate();
+		private GreatShield gs = new GreatShield();
+		private IronChestPlate icp = new IronChestPlate();
+		private IronShield is = new IronShield();
+		private StoneChestPlate scp = new StoneChestPlate();
+		private StoneShield ss = new StoneShield();
+		private UltraSword us = new UltraSword();
+		private WoodChestPlate wcp = new WoodChestPlate();
+		private WoodShield ws = new WoodShield();
+		
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			Item toBeCrafted = null;
+			List<Item> requiredItems = null;
+			String itemToCraft = (String) craftComboBox.getSelectedItem();
+			if(itemToCraft.equals(alp.toString())) {
+				toBeCrafted = alp;
+				requiredItems = AntLarvaPieCookable.getRequiredMaterials();
+			} else if (itemToCraft.equals(apc.toString())) {
+				toBeCrafted = apc;
+				requiredItems = ApplePieCookable.getRequiredMaterials();
+			}else if (itemToCraft.equals(bia)) {
+				toBeCrafted = bia;
+				requiredItems = BasicIronAxe.getRequiredMaterials();
+			}else if (itemToCraft.equals(bsa.toString())) {
+				toBeCrafted = bsa;
+				requiredItems = BasicStoneAxe.getRequiredMaterials();
+			}else if (itemToCraft.equals(bs.toString())) {
+				toBeCrafted = bs;
+				requiredItems = BasicSword.getRequiredMaterials();
+			}else if (itemToCraft.equals(b)) {
+				toBeCrafted = b;
+				requiredItems = BreadCookable.getRequiredMaterials();
+			}else if (itemToCraft.equals(fia.toString())) {
+				toBeCrafted = fia;
+				requiredItems = FortifiedIronAxe.getRequiredMaterials();
+			}else if (itemToCraft.equals(fsa.toString())) {
+				toBeCrafted = fsa;
+				requiredItems = FortifiedStoneAxe.getRequiredMaterials();
+			}else if (itemToCraft.equals(gcp.toString())) {
+				toBeCrafted = gcp;
+				requiredItems = GreatChestPlate.getRequiredMaterials();
+			}else if (itemToCraft.equals(gs)) {
+				toBeCrafted = gs;
+				requiredItems = GreatShield.getRequiredMaterials();
+			}else if (itemToCraft.equals(icp.toString())) {
+				toBeCrafted = icp;
+				requiredItems = IronChestPlate.getRequiredMaterials();
+			}else if (itemToCraft.equals(is.toString())) {
+				toBeCrafted = is;
+				requiredItems = IronShield.getRequiredMaterials();
+			}else if (itemToCraft.equals(scp.toString())) {
+				toBeCrafted = scp;
+				requiredItems = StoneChestPlate.getRequiredMaterials();
+			}else if (itemToCraft.equals(ss.toString())) {
+				toBeCrafted = ss;
+				requiredItems = StoneShield.getRequiredMaterials();
+			}else if (itemToCraft.equals(us.toString())) {
+				toBeCrafted = us;
+				requiredItems = UltraSword.getRequiredMaterials();
+			}else if (itemToCraft.equals(wcp.toString())) {
+				toBeCrafted = wcp;
+				requiredItems = WoodChestPlate.getRequiredMaterials();
+			}else {
+				toBeCrafted = ws;
+				requiredItems = WoodShield.getRequiredMaterials();
+				if(requiredItems == null) {
+					System.out.println("WHY?");
+				}
+			}
+			PlayerControlledActor.addActionToPlayerPool(new CraftAction(toBeCrafted, requiredItems));
+		}
+		
 	}
 
 	private class MyKeyListener implements KeyListener {

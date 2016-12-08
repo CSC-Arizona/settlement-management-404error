@@ -18,14 +18,13 @@ public enum CraftableEnum {
 			    IRONSHIELD(IronShield.getRequiredMaterials(), "Iron shield", IronShield.class),
 			    STONECHESTPLATE(StoneChestPlate.getRequiredMaterials(), "Stone chestplate", StoneChestPlate.class),
 			    STONESHIELD(StoneShield.getRequiredMaterials(), "Stone shield", StoneShield.class),
-			    WOODCHESTPLATE(WoodChestPlate.getRequiredMaterials(), "Wood chest", WoodChestPlate.class),
+			    WOODCHESTPLATE(WoodChestPlate.getRequiredMaterials(), "Wood chestplate", WoodChestPlate.class),
 			    WOODSHIELD(WoodShield.getRequiredMaterials(), "Wood shield", WoodShield.class),
 			    BASICIRONAXE(BasicIronAxe.getRequiredMaterials(), "Basic iron axe", BasicIronAxe.class),
 			    BASICSTONEAXE(BasicStoneAxe.getRequiredMaterials(), "Basic stone axe", BasicStoneAxe.class),
 			    BASICSWORD(BasicSword.getRequiredMaterials(), "Basic sword", BasicSword.class),
 			    FORTIFIEDIRONAXE(FortifiedIronAxe.getRequiredMaterials(), "Fortified iron axe", FortifiedIronAxe.class),
 			    FORTIFIEDSTONEAXE(FortifiedStoneAxe.getRequiredMaterials(), "Fortified stone axe", FortifiedStoneAxe.class),
-			    LUREAXE(LureAxe.getRequiredMaterials(), "Lure axe", LureAxe.class),
 			    ULTRASWORD(UltraSword.getRequiredMaterials(), "Ultra sword", UltraSword.class);
     
     private List<Item> reqItems;
@@ -55,7 +54,7 @@ public enum CraftableEnum {
     	String[] result = new String[craftables.length];
     	
     	for (int i = 0; i < craftables.length; i++) {
-    		result[i] = craftables[i].toString();
+    		result[i] = craftables[i].getText();
     	}
     	
     	return result;

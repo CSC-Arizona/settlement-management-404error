@@ -133,9 +133,9 @@ public class RoomTest {
 		int apple;
 		for (int i = 0; i < 100; i++) {
 			assertEquals(0, er.getState());
-			assertTrue(er.plant(20, 20));
+			assertTrue(er.plant(20));
 			assertEquals(1, er.getState());
-			assertFalse(er.plant(1, 1));
+			assertFalse(er.plant(1));
 			assertEquals(null, er.harvest());
 			er.advanceState();
 			assertEquals(2, er.getState());
