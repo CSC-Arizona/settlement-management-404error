@@ -120,6 +120,7 @@ public class ConstructAction extends Action {
         	furniturePlaced = placeFurniture(performer);
         }
         
+        Game.getMap().addNewCompletedRoom(room);
 		return Action.COMPLETED;
 	}
 

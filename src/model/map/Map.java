@@ -79,7 +79,6 @@ public class Map implements Serializable {
 
 	private int time;
 
-
 	public Map(MapParameters mapParameters, Random random) {
 		this.blocksMarkedAsDesignated = new HashMap<>();
 		this.random = random;
@@ -190,7 +189,7 @@ public class Map implements Serializable {
 
 	public void setSpaceShipLights(int spaceShipRepairLevel) {
 		int col = ship.getCol();
-		int row = ship.getRow()-3;
+		int row = ship.getRow() - 3;
 
 		int[][] lightsLevel1 = new int[][] { { 0, -5 }, { 0, -3 }, { 0, -1 },
 				{ 0, 1 }, { 0, 3 }, { 0, 5 } };
@@ -237,7 +236,7 @@ public class Map implements Serializable {
 				{ 0, -2 }, { 0, -1 }, { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 },
 				{ 0, 4 }, { 0, 5 } };
 		int col = ship.getCol();
-		int row = ship.getRow()-3;
+		int row = ship.getRow() - 3;
 
 		ArrayList<AppleTree> treesToRemove = new ArrayList<>();
 		for (int[] offset : definition) {
@@ -474,7 +473,9 @@ public class Map implements Serializable {
 	}
 
 	public void decrementTreeCount() {
-		treeCount -= 1;
+		if (treeCount > 0) {
+			treeCount -= 1;
+		}
 	}
 
 	private void addTrees() {
@@ -876,6 +877,7 @@ public class Map implements Serializable {
 	 */
 	public void addNewCompletedRoom(Room room) {
 		this.completedRooms.add(room);
+		this.designatedRooms.remove(room);
 	}
 
 	/**

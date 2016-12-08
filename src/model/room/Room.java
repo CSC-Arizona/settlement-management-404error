@@ -1,8 +1,11 @@
 package model.room;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
+
 import model.actors.MoveAction;
 import model.actors.Position;
 import model.building_blocks.BuildingBlock;
@@ -39,7 +42,7 @@ import model.menus.PrintableItemsList;
  *        
  * @author Katherine Walters
  */
-public abstract class Room {
+public abstract class Room implements Serializable {
 
 	private int requiredHeight;
 	private int requiredWidth;
@@ -50,8 +53,11 @@ public abstract class Room {
 	private PrintableItemsList ril;
 	private boolean underConstruction;
 	private ConstructionMaterialPile pile;
+	private ArrayList<Position> blocksInThisRoom;
+	private boolean needsWalls;
 	
-	public Room(int requiredHeight, int requiredWidth, int roomCapacity, int upgradesAllowed, Position pos) {
+	public Room(int requiredHeight, int requiredWidth, int roomCapacity, int upgradesAllowed, Position pos,
+			boolean needsWalls) {
 		this.requiredHeight = requiredHeight;
 		this.requiredWidth = requiredWidth;
 		this.roomCapacity = roomCapacity;
@@ -59,6 +65,25 @@ public abstract class Room {
 		this.pos = pos;
 		this.numAgentsInRoom = 0;
 		this.underConstruction = false;
+		this.needsWalls = needsWalls;
+		setUpBlocksInThisRoom();
+	}
+	
+	private void setUpBlocksInThisRoom() {
+		System.out.println("Called set up blocks in this room");
+		blocksInThisRoom = new ArrayList<>();
+		int limitR;
+		if (needsWalls)
+			limitR = 4;
+		else
+			limitR = 2;
+		for (int r = pos.getRow(); r < pos.getRow() + limitR; r++) {
+			for (int c = pos.getCol(); c < (pos.getCol() + requiredWidth); c++) {
+				Position curr = new Position(r, Math.floorMod(c, Game.getMap().getTotalWidth()));
+				//System.out.println("adding block at " + curr.toString() + " to blocksInThisRoom");
+			    blocksInThisRoom.add(curr);
+			}
+		}
 	}
 	
 	public abstract TreeMap<Position, Furniture> getFurniture();
@@ -191,11 +216,7 @@ public abstract class Room {
 	}
 	
 	public boolean needsWalls() {
-		if (this.getClass().equals(new VerticalTunnel(new Position(0,0)).getClass()) || 
-				this.getClass().equals(new HorizontalTunnel(new Position(0,0)).getClass())) {
-			return false;
-		}
-		return true;
+		return needsWalls;
 	}
 	
 	public boolean isAccessible() {
@@ -226,6 +247,10 @@ public abstract class Room {
 	
 	public void setUnderConstruction(boolean b) {
 		this.underConstruction = b;
+	}
+	
+	public ArrayList<Position> getBlocksInThisRoom() {
+		return blocksInThisRoom;
 	}
 	
 	/*

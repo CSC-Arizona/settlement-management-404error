@@ -29,7 +29,7 @@ public class HorizontalTunnel extends Room {
 	
 	
 	public HorizontalTunnel(Position p) {
-		super(getHeight(), getWidth(), 10, 0, p);
+		super(getHeight(), getWidth(), 10, 0, p, false);
 		reqFurniture = new TreeMap<Position, Furniture>();
 	}
 

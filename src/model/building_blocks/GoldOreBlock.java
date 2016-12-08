@@ -7,6 +7,7 @@ import java.util.List;
 import images.ImageEnum;
 import model.actors.Actor;
 import model.furniture.Furniture;
+import model.items.GoldItem;
 import model.items.Item;
 
 /**
@@ -22,15 +23,16 @@ public class GoldOreBlock extends BuildingBlock {
 	public final static String id = "Gold ore";
 
 	public GoldOreBlock() {
-		super(durability, true, false, new Color(255, 223, 0), null, id, ImageEnum.GOLD);
+		super(durability, true, false, new Color(255, 223, 0), null, id,
+				ImageEnum.GOLD);
 		itemsInBlock = new LinkedList<>();
+		itemsInBlock.add(new GoldItem());
 	}
 
 	@Override
 	public List<Item> lootBlock() {
 		return itemsInBlock;
 	}
-
 
 	@Override
 	public boolean addActor(Actor actor) {
@@ -41,12 +43,12 @@ public class GoldOreBlock extends BuildingBlock {
 	public boolean removeActor(Actor actor) {
 		return false;
 	}
-	
+
 	@Override
 	public List<Actor> getActors() {
 		return null;
 	}
-	
+
 	@Override
 	public boolean addFurniture(Furniture furniture) {
 		return false;

@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -40,6 +41,7 @@ import model.armor.StoneChestPlate;
 import model.armor.StoneShield;
 import model.armor.WoodChestPlate;
 import model.armor.WoodShield;
+import model.actors.UpgradeRoomAction;
 import model.building_blocks.AirBlock;
 import model.building_blocks.BuildingBlock;
 import model.furniture.Furniture;
@@ -51,6 +53,7 @@ import model.items.BreadCookable;
 import model.items.CraftableEnum;
 import model.items.Item;
 import model.map.MapParameters;
+import model.room.Room;
 import model.room.RoomEnum;
 import model.weapons.BasicIronAxe;
 import model.weapons.BasicStoneAxe;
@@ -90,12 +93,9 @@ public class AlternativeView extends JPanel {
 	private Controller controller;
 
 	private customDesignationButton cutDownTreeButton;
-	private customDesignationButton upgradeRoomButton;
-	private customDesignationButton fruitButton;
 	private customDesignationButton digButton;
 	private customDesignationButton plantsButton;
 	private customDesignationButton attackButton;
-	private customDesignationButton removeButton;
 	private ArrayList<customDesignationButton> buttons;
 
 	private Point designationStart;
@@ -107,6 +107,8 @@ public class AlternativeView extends JPanel {
 	private boolean currentlyDrawingDesignation = false;
 
 	private boolean currentlyPlacingRoom = false;
+	private boolean currentlyChoosingUpgrade = false;
+	private TreeMap<Position, Room> highlightMe = new TreeMap<>();
 	private Point roomCorner;
 	private RoomEnum room;
 	private int roomWidth;
@@ -116,6 +118,7 @@ public class AlternativeView extends JPanel {
 
 	private JComboBox<String> constructRoomComboBox;
 	private JButton constructRoomButton;
+	private JButton upgradeRoomButton;
 	private JComboBox<String> craftComboBox;
 	private JButton craftButton;
 
@@ -128,18 +131,15 @@ public class AlternativeView extends JPanel {
 	}
 
 	private void setWindowCoordinateLabel() {
-		windowCoordinatesLabel.setText("Window coordinates: (" + visibleCornerY
-				+ ", " + visibleCornerX + ")");
+		windowCoordinatesLabel.setText("Window coordinates: (" + visibleCornerY + ", " + visibleCornerX + ")");
 	}
 
 	private void setMouseCoordinatesLabel() {
-		mouseCoordinatesLabel.setText("Mouse coordinates: (" + mouseY + ", "
-				+ mouseX + ")");
+		mouseCoordinatesLabel.setText("Mouse coordinates: (" + mouseY + ", " + mouseX + ")");
 	}
 
 	public void setMouseDescriptionLabel() {
-		String mouseDescription = Game.getMap()
-				.getBuildingBlock(mouseY, mouseX).toString();
+		String mouseDescription = Game.getMap().getBuildingBlock(mouseY, mouseX).toString();
 
 		mouseDescription += "</html>";
 
@@ -174,43 +174,45 @@ public class AlternativeView extends JPanel {
 		labelPanel.setBackground(new Color(0, 0, 0, 0));
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
 		timeLabel = new JLabel();
+		timeLabel.setForeground(new Color(255, 0, 0));
 		labelPanel.add(timeLabel);
-		//timeLabel.
+		// timeLabel.
 		windowCoordinatesLabel = new JLabel();
+		windowCoordinatesLabel.setForeground(new Color(255, 0, 0));
 		setWindowCoordinateLabel();
 		labelPanel.add(windowCoordinatesLabel);
 		mouseCoordinatesLabel = new JLabel();
+		mouseCoordinatesLabel.setForeground(new Color(255, 0, 0));
 		setMouseCoordinatesLabel();
 		labelPanel.add(mouseCoordinatesLabel);
 		mouseDescriptionLabel = new JLabel();
+		mouseDescriptionLabel.setForeground(new Color(255, 0, 0));
 		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
-		//labelPanel.setOpaque(true);
-		//labelPanel.setBackground(new Color(0, 0, 0, 50));
+		// labelPanel.setOpaque(true);
+		// labelPanel.setBackground(new Color(0, 0, 0, 50));
 		this.add(labelPanel);
 
 	}
 
 	private void addButtonPanel() {
 		buttonPanel = new JPanel();
-		buttonPanel.setSize(500, 70);
+		buttonPanel.setSize(330, 70);
 		buttonPanel.setBackground(new Color(0, 0, 0, 0));
-		buttonPanel.setBounds(250, 600, 400, 70);
+		buttonPanel.setBounds(350, 600, 330, 70);
 
-		constructRoomComboBox = new JComboBox<String>(
-				RoomEnum.getAllRoomNames());
-		constructRoomComboBox
-				.addActionListener(new ConstructionComboBoxListener());
+		constructRoomComboBox = new JComboBox<String>(RoomEnum.getAllRoomNames());
+		constructRoomComboBox.addActionListener(new ConstructionComboBoxListener());
 		constructRoomComboBox.setFocusable(false);
 		constructRoomComboBox.setPreferredSize(new Dimension(100, 30));
 		constructRoomComboBox.setFont(new Font("Arial", Font.PLAIN, 10));
-		constructRoomButton = new JButton(
-				"<html><center>Construct rooms (c)</center></html>");
+		upgradeRoomButton = new JButton("<html><center>Upgrade rooms (u)</center></html>");
+		upgradeRoomButton.setFocusable(false);
+		upgradeRoomButton.addActionListener(new UpdateButtonListener());
 		buttonPanel.add(constructRoomComboBox);
 
 		buttons = new ArrayList<>();
-		constructRoomButton = new customDesignationButton(controller, this,
-				Designation.CONSTRUCTING, buttons);
+		constructRoomButton = new customDesignationButton(controller, this, Designation.CONSTRUCTING, buttons);
 		constructRoomButton.addActionListener(new ConstructionButtonListener());
 		// craftButton = new customDesignationButton(controller, this,
 		// Designation.NONE, buttons);
@@ -220,16 +222,12 @@ public class AlternativeView extends JPanel {
 				Designation.CUTTING_DOWN_TREES, buttons);
 		upgradeRoomButton = new customDesignationButton(controller, this,
 				Designation.UPGRADING, buttons);
-		fruitButton = new customDesignationButton(controller, this,
-				Designation.GATHERING_FRUIT, buttons);
 		digButton = new customDesignationButton(controller, this,
 				Designation.DIGGING, buttons);
 		plantsButton = new customDesignationButton(controller, this,
 				Designation.GATHERING_PLANTS, buttons);
 		attackButton = new customDesignationButton(controller, this,
 				Designation.ATTACKING, buttons);
-		removeButton = new customDesignationButton(controller, this,
-				Designation.REMOVING_DESIGNATIONS, buttons);
 
 		//String representation of items taken from text field of CraftableEnum
 		craftComboBox = new JComboBox<String>(new String[] {"Ant larva pie (heals 10 hp)", "Apple pie (heals 10 hp)", "Bread (heals 10 hp)", "Great chestplate", "Greatshield",
@@ -239,13 +237,18 @@ public class AlternativeView extends JPanel {
 		
 		craftButton.addActionListener(new CraftButtonListener());
 		
+		cutDownTreeButton = new customDesignationButton(controller, this, Designation.CUTTING_DOWN_TREES, buttons);
+		digButton = new customDesignationButton(controller, this, Designation.DIGGING, buttons);
+		plantsButton = new customDesignationButton(controller, this, Designation.GATHERING_PLANTS, buttons);
+		attackButton = new customDesignationButton(controller, this, Designation.ATTACKING, buttons);
+
+		craftComboBox = new JComboBox<String>(new String[] { "item 1", "item 2", "item 3" });
+		craftButton = new JButton("Craft item: ");
 		buttonPanel.add(cutDownTreeButton);
 		buttonPanel.add(upgradeRoomButton);
-		buttonPanel.add(fruitButton);
 		buttonPanel.add(digButton);
 		buttonPanel.add(plantsButton);
 		buttonPanel.add(attackButton);
-		buttonPanel.add(removeButton);
 		buttonPanel.add(constructRoomButton);
 		buttonPanel.add(constructRoomComboBox);
 		buttonPanel.add(craftButton);
@@ -260,6 +263,7 @@ public class AlternativeView extends JPanel {
 		logPanel.setBackground(new Color(0, 0, 0, 0));
 		logPanel.setOpaque(true);
 		logText = new JTextArea();
+		logText.setForeground(new Color(255, 0, 0));
 		logText.setBackground(new Color(0, 0, 0, 0));
 		logText.setOpaque(true);
 		logText.setLineWrap(true);
@@ -276,18 +280,15 @@ public class AlternativeView extends JPanel {
 
 	private void setVisibleTiles(int row, int col) {
 		if (Game.getMap().getBuildingBlock(row, col).isOccupiable()
-				|| Game.getMap().getBuildingBlock(row, col).getID()
-						.equals("Room wall")) {
+				|| Game.getMap().getBuildingBlock(row, col).getID().equals("Room wall")) {
 			for (int k = -1; k < 2; k++) {
 				for (int l = -1; l < 2; l++) {
 					int newRow = row + k;
 					int newCol = col + l;
-					newCol = Math.floorMod(newCol, Game.getMap()
-							.getTotalWidth());
+					newCol = Math.floorMod(newCol, Game.getMap().getTotalWidth());
 					if (newRow >= 0 && newRow < Game.getMap().getTotalHeight()) {
 
-						Game.getMap().getBuildingBlock(newRow, newCol)
-								.setVisibility(true);
+						Game.getMap().getBuildingBlock(newRow, newCol).setVisibility(true);
 					}
 				}
 			}
@@ -301,37 +302,32 @@ public class AlternativeView extends JPanel {
 			g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
 
 		} else {
-			Color bgcolor = Game.getMap().getBuildingBlock(row, col)
-					.getBackgroundColor();
+			Color bgcolor = Game.getMap().getBuildingBlock(row, col).getBackgroundColor();
 			if (bgcolor != null) {
 				g2.setColor(bgcolor);
-				g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX,
-						blockSizeY);
+				g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
 
 			}
 
-			BufferedImage img = Game.getMap().getBuildingBlock(row, col)
-					.getImage().getRandomBufferedImage();
+			BufferedImage img = Game.getMap().getBuildingBlock(row, col).getImage().getRandomBufferedImage();
 			g2.drawImage(img, j * blockSizeX, i * blockSizeY, null);
 
 		}
 	}
 
 	private void drawActors(Graphics2D g2, int row, int col, int i, int j) {
-		List<Actor> actors = Game.getMap().getBuildingBlock(row, col)
-				.getActors();
+		List<Actor> actors = Game.getMap().getBuildingBlock(row, col).getActors();
 		if (actors != null) {
+			List<Actor> actorCopy = new ArrayList<>(actors);
 			int count = 0;
-			Iterator<Actor> iter = actors.iterator();
+			Iterator<Actor> iter = actorCopy.iterator();
 			while (iter.hasNext()) {
 				Actor p = iter.next();
 				if (p.getImage() != null && p.isAlive()) {
-					g2.drawImage(p.getImage().getRandomBufferedImage(), j
-							* blockSizeX, i * blockSizeY, null);
+					g2.drawImage(p.getImage().getRandomBufferedImage(), j * blockSizeX, i * blockSizeY, null);
 					if (p.isMarkedForAttack()) {
 						g2.setColor(Color.RED);
-						g2.drawString("A", j * blockSizeX + blockSizeX / 2,
-								(i + 1) * blockSizeY);
+						g2.drawString("A", j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
 						g2.setColor(Color.BLACK);
 					}
 				} else {
@@ -340,8 +336,7 @@ public class AlternativeView extends JPanel {
 			}
 			if (count != 0) {
 				g2.setColor(Color.RED);
-				g2.drawString(Integer.toString(count), j * blockSizeX
-						+ blockSizeX / 2, (i + 1) * blockSizeY);
+				g2.drawString(Integer.toString(count), j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
 				g2.setColor(Color.BLACK);
 			}
 			List<PlayerControlledActor> playerActors = PlayerControlledActor.allActors;
@@ -350,11 +345,14 @@ public class AlternativeView extends JPanel {
 				PlayerControlledActor p = playerIter.next();
 				if (p.getPosition().equals(new Position(row, col))) {
 					if (p.isHungry()) {
-						g2.drawImage(ImageEnum.HUNGER.getRandomBufferedImage(), j
-								* blockSizeX, (i-1) * blockSizeY, null);
+						g2.drawImage(ImageEnum.HUNGER.getRandomBufferedImage(), j * blockSizeX, (i - 1) * blockSizeY,
+								null);
 					} else if (p.isTired()) {
-						g2.drawImage(ImageEnum.TIRED.getRandomBufferedImage(), (j-1)
-								* blockSizeX, (i-1) * blockSizeY, null);
+						g2.drawImage(ImageEnum.TIRED.getRandomBufferedImage(), (j - 1) * blockSizeX,
+								(i - 1) * blockSizeY, null);
+					} else if (p.isHurt()) {
+						g2.drawImage(ImageEnum.BANDAGE.getRandomBufferedImage(), (j - 1) * blockSizeX,
+								(i - 1) * blockSizeY, null);
 					}
 				}
 			}
@@ -362,34 +360,28 @@ public class AlternativeView extends JPanel {
 	}
 
 	private void drawFurniture(Graphics2D g2, int row, int col, int i, int j) {
-		Furniture furniture = Game.getMap().getBuildingBlock(row, col)
-				.getFurniture();
+		Furniture furniture = Game.getMap().getBuildingBlock(row, col).getFurniture();
 		if (furniture != null) {
 			ImageEnum furnitureType = furniture.getImage();
 			BufferedImage furnitureIcon = null;
 			if (furnitureType != null)
 				furnitureIcon = furniture.getImage().getRandomBufferedImage();
 			if (furnitureIcon != null)
-				g2.drawImage(furnitureIcon, j * blockSizeX, i * blockSizeY,
-						null);
+				g2.drawImage(furnitureIcon, j * blockSizeX, i * blockSizeY, null);
 			else
-				g2.drawString("f", j * blockSizeX + blockSizeX / 2, (i + 1)
-						* blockSizeY);
+				g2.drawString("f", j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
 		}
 	}
 
 	private void drawItemsOnGround(Graphics2D g2, int row, int col, int i, int j) {
-		List<Item> itemsOnGround = Game.getMap().getBuildingBlock(row, col)
-				.itemsOnGround();
+		List<Item> itemsOnGround = Game.getMap().getBuildingBlock(row, col).itemsOnGround();
 		if (itemsOnGround != null) {
 			if (itemsOnGround.size() != 0) {
 				for (Item item : itemsOnGround) {
 					if (item.getImage() != null) {
-						g2.drawImage(item.getImage().getRandomBufferedImage(),
-								j * blockSizeX, i * blockSizeY, null);
+						g2.drawImage(item.getImage().getRandomBufferedImage(), j * blockSizeX, i * blockSizeY, null);
 					} else {
-						g2.drawString("#", j * blockSizeX + blockSizeX / 2,
-								(i + 1) * blockSizeY);
+						g2.drawString("#", j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
 					}
 				}
 
@@ -397,14 +389,18 @@ public class AlternativeView extends JPanel {
 		}
 	}
 
+	private void drawUpgradingHighlights(Graphics2D g2, int row, int col, int i, int j) {
+		if (highlightMe.containsKey(new Position(row, col))) {
+			g2.setColor(Color.GREEN);
+			g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
+		}
+	}
+
 	private void drawDesignation(Graphics2D g2, int row, int col, int i, int j) {
 		if (Game.getMap().getBuildingBlock(row, col).isDesignated()) {
 			g2.setColor(Color.WHITE);
-			g2.drawString(
-					""
-							+ Game.getMap().getBuildingBlock(row, col)
-									.getDesignation().keyboardShortcut, j
-							* blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
+			g2.drawString("" + Game.getMap().getBuildingBlock(row, col).getDesignation().keyboardShortcut,
+					j * blockSizeX + blockSizeX / 2, (i + 1) * blockSizeY);
 		}
 	}
 
@@ -420,6 +416,10 @@ public class AlternativeView extends JPanel {
 
 			drawItemsOnGround(g2, row, col, i, j);
 
+			// TODO: add draw highlighted blocks here
+			if (currentlyChoosingUpgrade)
+				drawUpgradingHighlights(g2, row, col, i, j);
+
 		} else {
 			g2.setColor(Color.black);
 			g2.fillRect(j * blockSizeX, i * blockSizeY, blockSizeX, blockSizeY);
@@ -427,20 +427,16 @@ public class AlternativeView extends JPanel {
 
 		if (currentlyDrawingDesignation) {
 			g2.setColor(Color.WHITE);
-			g2.drawRect(Math.min(designationStart.x, designationEnd.x),
-					Math.min(designationStart.y, designationEnd.y),
-					Math.abs(designationStart.x - designationEnd.x),
-					Math.abs(designationStart.y - designationEnd.y));
+			g2.drawRect(Math.min(designationStart.x, designationEnd.x), Math.min(designationStart.y, designationEnd.y),
+					Math.abs(designationStart.x - designationEnd.x), Math.abs(designationStart.y - designationEnd.y));
 
 		}
 		if (currentlyPlacingRoom) {
 			g2.setColor(Color.WHITE);
-			if (room.toString().equals("Vertical tunnel")
-					|| room.toString().equals("Horizontal tunnel")) {
+			if (room.toString().equals("Vertical tunnel") || room.toString().equals("Horizontal tunnel")) {
 				g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, roomHeight);
 			} else {
-				g2.drawRect(roomCorner.x, roomCorner.y, roomWidth,
-						(roomHeight * 2));
+				g2.drawRect(roomCorner.x, roomCorner.y, roomWidth, (roomHeight * 2));
 			}
 		}
 
@@ -452,7 +448,7 @@ public class AlternativeView extends JPanel {
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
-		
+
 		g.setColor(Color.white);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
@@ -599,18 +595,26 @@ public class AlternativeView extends JPanel {
 			}
 
 			if ((char) e.getKeyChar() == 'c') {
-				for (customDesignationButton button : buttons) {
-					button.deactivate();
-				}
+				if (!constructRoomButton.isEnabled())
+					for (customDesignationButton button : buttons)
+						if (button.isActive()) {
+							button.doClick();
+							break;
+						}
+				constructRoomButton.doClick();
 			} else {
 
 				char keyboardSelection = '\u0000';
 				boolean madeSelection = false;
 				for (customDesignationButton button : buttons) {
-					if (button.designation.keyboardShortcut == (char) e
-							.getKeyChar()) {
-						keyboardSelection = (char) e.getKeyChar();
-						madeSelection = true;
+					if (button.designation.keyboardShortcut == (char) e.getKeyChar()) {
+						if (!button.isEnabled())
+							for (customDesignationButton button2 : buttons)
+								if (button2.isActive()) {
+									button2.doClick();
+									break;
+								}
+						button.doClick();
 						break;
 					}
 				}
@@ -634,8 +638,6 @@ public class AlternativeView extends JPanel {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 	}
@@ -644,8 +646,6 @@ public class AlternativeView extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
@@ -684,8 +684,7 @@ public class AlternativeView extends JPanel {
 				// Position appropriatePileLoc = null;
 				int blockHeight = room.getHeight();
 				int pixHeight = roomHeight;
-				if (!room.toString().equals("Vertical tunnel")
-						&& !room.toString().equals("Horizontal tunnel")) {
+				if (!room.toString().equals("Vertical tunnel") && !room.toString().equals("Horizontal tunnel")) {
 					blockHeight *= 2;
 					pixHeight *= 2;
 				}
@@ -693,15 +692,13 @@ public class AlternativeView extends JPanel {
 					for (int c = roomY; c < roomY + blockHeight; c++) {
 						int x = c; // x = row
 						int y = Math.floorMod(r, mapWidth); // y = col
-						BuildingBlock inQuestion = Game.getMap()
-								.getBuildingBlock(x, y);
+						BuildingBlock inQuestion = Game.getMap().getBuildingBlock(x, y);
 						if (!inQuestion.isDestroyable()) {
 							canBuildHere = false;
 							obstacle = inQuestion;
 							break;
 						}
-						if (!inQuestion.getDesignation().equals(
-								Designation.NONE)) {
+						if (!inQuestion.getDesignation().equals(Designation.NONE)) {
 							canBuildHere = false;
 							obstacle = null; // not a room yet, the message
 												// needs to be different
@@ -713,13 +710,11 @@ public class AlternativeView extends JPanel {
 					controller.setDesignatingAction(Designation.CONSTRUCTING);
 					// adding the rows for room walls with every room type
 					// except tunnels
-					controller.applyDesignation(roomY, roomX, pixHeight
-							/ blockSizeY, roomWidth / blockSizeX);
+					controller.applyDesignation(roomY, roomX, pixHeight / blockSizeY, roomWidth / blockSizeX);
 					// PlayerControlledActor.playerActionPool
 					// .add(new ConstructAction(room.constructObject(new
 					// Position(roomY, roomX))));
-					Game.getMap().addNewDesignatedRoom(
-							room.constructObject(new Position(roomY, roomX)));
+					Game.getMap().addNewDesignatedRoom(room.constructObject(new Position(roomY, roomX)));
 
 					controller.setDesignatingAction(Designation.NONE);
 
@@ -728,14 +723,23 @@ public class AlternativeView extends JPanel {
 					String err = "";
 					if (obstacle == null)
 						err = "There is already a room under construction here.";
-					else if (obstacle.getClass().equals(
-							new AirBlock().getClass()))
+					else if (obstacle.getClass().equals(new AirBlock().getClass()))
 						err = "You can't build a room above ground.";
 					else
-						err = "You can't build a room over a "
-								+ obstacle.getID() + " block.";
+						err = "You can't build a room over a " + obstacle.getID() + " block.";
 					System.out.println(err);
 					Log.add(err);
+				}
+
+			} else if (currentlyChoosingUpgrade) {
+				Room room = highlightMe.get(new Position(mouseY, mouseX));
+				if (room != null) {
+					System.out.println("You have chosen to upgrade the " + room.getID() + " at " + room.getPosition());
+					PlayerControlledActor.addActionToPlayerPool(new UpgradeRoomAction(room));
+					deactivateUpgradeSelection();
+				} else {
+					System.out.println("You clicked on a space that wasn't a room.");
+					deactivateUpgradeSelection();
 				}
 
 			} else {
@@ -743,37 +747,28 @@ public class AlternativeView extends JPanel {
 					if (currentlyDrawingDesignation) {
 						designationEnd = e.getPoint();
 
-						designationEndCol = designationEnd.x / blockSizeX
-								+ visibleCornerX;
-						designationEndRow = designationEnd.y / blockSizeY
-								+ visibleCornerY;
+						designationEndCol = designationEnd.x / blockSizeX + visibleCornerX;
+						designationEndRow = designationEnd.y / blockSizeY + visibleCornerY;
 
-						int startRow = Math.min(designationStartRow,
-								designationEndRow);
-						int startCol = Math.min(designationStartCol,
-								designationEndCol);
-						int height = Math.abs(designationStartRow
-								- designationEndRow);
-						int width = Math.abs(designationStartCol
-								- designationEndCol);
+						int startRow = Math.min(designationStartRow, designationEndRow);
+						int startCol = Math.min(designationStartCol, designationEndCol);
+						int height = Math.abs(designationStartRow - designationEndRow);
+						int width = Math.abs(designationStartCol - designationEndCol);
 
-						controller.applyDesignation(startRow, startCol, height,
-								width);
+						controller.applyDesignation(startRow, startCol, height, width);
 
 						repaint();
 					} else {
 						designationStart = e.getPoint();
 
-						designationStartCol = designationStart.x / blockSizeX
-								+ visibleCornerX;
-						designationStartRow = designationStart.y / blockSizeY
-								+ visibleCornerY;
+						designationStartCol = designationStart.x / blockSizeX + visibleCornerX;
+						designationStartRow = designationStart.y / blockSizeY + visibleCornerY;
 
 						designationEnd = e.getPoint();
 					}
 					currentlyDrawingDesignation = !currentlyDrawingDesignation;
 				} else {
-					// test if clicked on a crafting room
+
 				}
 			}
 			repaint();
@@ -797,6 +792,8 @@ public class AlternativeView extends JPanel {
 
 		public void deactivate() {
 			active = false;
+			currentlyDrawingDesignation = false;
+			controller.setDesignatingAction(Designation.NONE);
 			setButtonText();
 		}
 
@@ -842,8 +839,7 @@ public class AlternativeView extends JPanel {
 			constructRoomButton.setBackground(new Color(124, 163, 226));
 			controller.setDesignatingAction(Designation.CONSTRUCTING);
 
-			String roomChoice = constructRoomComboBox.getSelectedItem()
-					.toString();
+			String roomChoice = constructRoomComboBox.getSelectedItem().toString();
 
 			if (roomChoice != null) {
 				room = RoomEnum.getRoomFromString(roomChoice);
@@ -862,11 +858,11 @@ public class AlternativeView extends JPanel {
 		public void deactivateConstructionSelection() {
 			currentlyPlacingRoom = false;
 			controller.setDesignatingAction(Designation.NONE);
+
 			repaint();
 		}
 
-		public customDesignationButton(Controller controller,
-				AlternativeView view, Designation designation,
+		public customDesignationButton(Controller controller, AlternativeView view, Designation designation,
 				ArrayList<customDesignationButton> buttons) {
 			this.controller = controller;
 			this.designation = designation;
@@ -911,6 +907,46 @@ public class AlternativeView extends JPanel {
 		}
 	}
 
+	public void toggleUpgradeSelection() {
+		if (currentlyChoosingUpgrade) {
+			System.out.println("deactivating upgrade selection");
+			deactivateUpgradeSelection();
+		} else {
+			System.out.println("activating upgrade selection");
+			activateUpgradeSelection();
+		}
+	}
+
+	public void activateUpgradeSelection() {
+		for (customDesignationButton button : buttons) {
+			button.deactivate();
+		}
+
+		currentlyChoosingUpgrade = true;
+		upgradeRoomButton.setBackground(new Color(124, 163, 226));
+
+		List<Room> rooms = Game.getMap().getCompletedRooms();
+		List<Room> upgradeableRooms = new ArrayList<>(rooms);
+		for (Room r : upgradeableRooms) {
+			if (r.getUpgradesAllowed() > 0) {
+				System.out.println("Adding a room to highlightMe");
+				addToHighlightMe(r);
+			}
+		}
+		repaint();
+	}
+
+	private void addToHighlightMe(Room room) {
+		for (Position p : room.getBlocksInThisRoom())
+			highlightMe.put(p, room);
+	}
+
+	public void deactivateUpgradeSelection() {
+		currentlyChoosingUpgrade = false;
+		highlightMe = new TreeMap<>();
+		repaint();
+	}
+
 	public void activateConstructionSelection() {
 
 		currentlyPlacingRoom = true;
@@ -938,14 +974,28 @@ public class AlternativeView extends JPanel {
 		repaint();
 	}
 
+	private class UpdateButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+
+			for (customDesignationButton button : buttons) {
+				button.deactivate();
+			}
+			controller.setDesignatingAction(Designation.NONE);
+			System.out.println("In actionPerformed method");
+			toggleUpgradeSelection();
+		}
+
+	}
+
 	private class ConstructionButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			toggleConstructionSelection();
 
-			String roomChoice = constructRoomComboBox.getSelectedItem()
-					.toString();
+			String roomChoice = constructRoomComboBox.getSelectedItem().toString();
 
 			if (roomChoice != null) {
 				room = RoomEnum.getRoomFromString(roomChoice);

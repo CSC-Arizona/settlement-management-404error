@@ -28,9 +28,13 @@ import model.building_blocks.AnthillBlock;
 import model.building_blocks.AntimatterDefenestratorBlock;
 import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
+import model.building_blocks.BlackHoleGeneratorBlock;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.EarthBlock;
+import model.building_blocks.GoldOreBlock;
 import model.building_blocks.GrassBlock;
+import model.building_blocks.GrassEarthBlock;
+import model.building_blocks.LeafBlock;
 import model.furniture.Furniture;
 import model.game.Game;
 import model.game.Log;
@@ -46,7 +50,8 @@ import view.AlternativeView;
 import view.StartingView;
 
 /**
- * Display a map
+ * Keeps track of time- updates game every tick. Also has constructors to create
+ * a new map or load an existing map.
  * 
  * @author Ethan Ward
  *
@@ -69,7 +74,7 @@ public class Controller extends JFrame {
 	private AlternativeView basicView;
 
 	private Timer gameTimer;
-	private int timeDelta = 100;
+	private int timeDelta = 150;
 
 	private int windowWidth = 1000;
 	private int windowHeight = 700;
@@ -99,25 +104,6 @@ public class Controller extends JFrame {
 			for (int j = startCol; j <= startCol + width; j++) {
 				int col = Math.floorMod(j, map.getTotalWidth());
 
-				// todo: attack, remove rooms
-
-				if (getDesignatingAction() == Designation.REMOVING_DESIGNATIONS) {
-
-					map.getBuildingBlock(row, col).removeDesignation();
-
-					if (map.getBuildingBlock(row, col).getID()
-							.equals(AppleTreeTrunkBlock.id)) {
-						for (Position pos : map.getTrees().keySet()) {
-							if (pos.getRow() == row && pos.getCol() == col) {
-								AppleTree tree = map.getTrees().get(pos);
-								tree.removeDesignation();
-								break;
-							}
-						}
-					}
-
-				}
-
 				if (getDesignatingAction() == Designation.ATTACKING) {
 					if (map.getBuildingBlock(row, col).getActors() != null) {
 						for (Actor actor : map.getBuildingBlock(row, col)
@@ -134,18 +120,23 @@ public class Controller extends JFrame {
 					map.getBuildingBlock(row, col).addDesignation(
 							Designation.CONSTRUCTING);
 				}
-
-				if (getDesignatingAction() == Designation.UPGRADING) {
-					map.getBuildingBlock(row, col).addDesignation(
-							Designation.UPGRADING);
-				}
-
+				
 				if (getDesignatingAction() == Designation.DIGGING) {
-					String bbID = map.getBuildingBlock(row, col).getID();
-					if ((bbID.equals(AntTunnelBlock.id)
-							|| bbID.equals(AnthillBlock.id)
-							|| bbID.equals(EarthBlock.id) || bbID
-								.equals(AntimatterDefenestratorBlock.id))) {
+//					String bbID = map.getBuildingBlock(row, col).getID();
+//					if ((bbID.equals(AntTunnelBlock.id)
+//							|| bbID.equals(AnthillBlock.id)
+//							|| bbID.equals(EarthBlock.id) 
+//							|| bbID.equals(AntimatterDefenestratorBlock.id)
+//							|| bbID.equals(BlackHoleGeneratorBlock.id)
+//							|| bbID.equals(GoldOreBlock.id)
+//							|| bbID.equals(GrassEarthBlock.id)
+//							|| bbID.equals(IronOreBlock.id)
+//							|| bbID.equals(MushroomBlock))) {
+					BuildingBlock bb = map.getBuildingBlock(row,col);
+					if (bb.isDestroyable() && !bb.getID().equals(AppleTreeTrunkBlock.id)
+							&& !bb.getID().equals(GrassBlock.id)
+							&& !bb.getID().equals(AppleTreeLeafBlock.id)
+							&& !bb.getID().equals(LeafBlock.id)) {
 						if (!(map.getBuildingBlock(row, col).getDesignation() == Designation.CONSTRUCTING)) {
 							map.getBuildingBlock(row, col).addDesignation(
 									Designation.DIGGING);
@@ -169,14 +160,6 @@ public class Controller extends JFrame {
 
 					}
 
-				}
-
-				if (getDesignatingAction() == Designation.GATHERING_FRUIT) {
-					if (map.getBuildingBlock(row, col).getID()
-							.equals(AppleTreeLeafBlock.id)) {
-						map.getBuildingBlock(row, col).addDesignation(
-								Designation.GATHERING_FRUIT);
-					}
 				}
 
 				if (getDesignatingAction() == Designation.CUTTING_DOWN_TREES) {
@@ -232,7 +215,7 @@ public class Controller extends JFrame {
 		this.setVisible(true);
 		new SongPlayer().start();
 		if (skipLoadScreen) {
-			startNewGame(new Settings(Settings.MEDIUM, Settings.NORMAL),random);
+			startNewGame(new Settings(Settings.MEDIUM, Settings.NORMAL), random);
 		} else {
 			startingView = new StartingView(this);
 			this.add(startingView);
@@ -288,7 +271,7 @@ public class Controller extends JFrame {
 			}
 			Game.getMap().setTime(time);
 			if (time % 35 == 0) {
-			    Game.getMap().checkOnDesignatedRooms();
+				Game.getMap().checkOnDesignatedRooms();
 			}
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();
@@ -309,13 +292,12 @@ public class Controller extends JFrame {
 				revalidate();
 				repaint();
 			}
-			
+
 			if (PlayerControlledActor.allActors != null
 					&& PlayerControlledActor.remaingParts <= 0) {
 				if (!isPaused())
 					togglePaused();
-				final JOptionPane pane = new JOptionPane(
-						"You are going home!");
+				final JOptionPane pane = new JOptionPane("You are going home!");
 				final JDialog d = pane.createDialog((JFrame) null, "You Win!");
 				d.setLocation(400, 300);
 				d.setVisible(true);
@@ -326,11 +308,11 @@ public class Controller extends JFrame {
 				revalidate();
 				repaint();
 			}
-			
-			//Check if less than half of initial pop is alive
-			//If so, add new BreedAction to pool
+
+			// Check if less than half of initial pop is alive
+			// If so, add new BreedAction to pool
 			int initialActors = Game.getMap().getMapParameters().numberOfStartingActors;
-			if(PlayerControlledActor.allActors.size() <= (initialActors/2)) { 
+			if (PlayerControlledActor.allActors.size() <= (initialActors / 2)) {
 				PlayerControlledActor.addActionToPlayerPool(new BreedAction());
 			}
 
@@ -379,10 +361,11 @@ public class Controller extends JFrame {
 						plot.removeItem(new WheatKernelItem());
 
 					}
-				}
-				else {
-					//If farm room is not in the process of growing something, send action to plant things
-					PlayerControlledActor.addActionToPlayerPool(new PlantAction());
+				} else {
+					// If farm room is not in the process of growing something,
+					// send action to plant things
+					PlayerControlledActor
+							.addActionToPlayerPool(new PlantAction());
 				}
 			}
 		}

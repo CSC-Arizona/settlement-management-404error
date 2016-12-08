@@ -21,7 +21,7 @@ public class Spaceship extends Room {
 	private List<Item> requiredUpgradeMaterials;
 	
 	public Spaceship(Position pos) {
-		super(5, 5, 5, 1, pos);
+		super(5, 5, 5, 1, pos, true);
 	}
 
 	@Override

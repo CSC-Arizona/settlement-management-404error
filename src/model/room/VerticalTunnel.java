@@ -31,7 +31,7 @@ public class VerticalTunnel extends Room {
 	}
 	
 	public VerticalTunnel(Position p) {
-		super(getHeight(), getWidth(), 20, 0, p);
+		super(getHeight(), getWidth(), 20, 0, p, false);
 		addInitialFurniture();
 		requiredBuildingMaterials = makeBuildMaterialsList();
 	}
