@@ -3,6 +3,7 @@ package model.furniture;
 import java.util.LinkedList;
 import java.util.List;
 
+import images.ImageEnum;
 import model.items.IronItem;
 import model.items.Item;
 import model.items.StoneItem;
@@ -20,7 +21,7 @@ public class CraftingMachine extends Furniture{
 	private List<Item> millingMachineList;
 	
 	public CraftingMachine() {
-		super(capacity, 0, "milling machine", null);
+		super(capacity, 0, "milling machine", ImageEnum.MACHINE);
 		millingMachineList = new LinkedList<>();
 		millingMachineList.add(new StoneItem());
 		millingMachineList.add(new IronItem());
