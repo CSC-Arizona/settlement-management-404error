@@ -45,15 +45,7 @@ public class StoreRoom extends Room {
 	}
 	
 	private void addInitialFurniture() {
-		reqFurniture = new TreeMap<Position, Furniture>();
-		reqFurniture.put(new Position(0,0), new Ladder());
-		reqFurniture.put(new Position(1,0), new Ladder());
-		reqFurniture.put(new Position(2,0), new Ladder());
-		reqFurniture.put(new Position(3,0), new Ladder());
-		reqFurniture.put(new Position(0,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(1,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(2,getWidth() - 1), new Ladder());
-		reqFurniture.put(new Position(3,getWidth() - 1), new Ladder());
+		reqFurniture = new TreeMap<>();
 		reqFurniture.put(new Position(2,1), new BasicCrate());
 		reqFurniture.put(new Position(2,3), new BasicCrate());
 		reqFurniture.put(new Position(2,5), new BasicCrate());
@@ -103,14 +95,12 @@ public class StoreRoom extends Room {
 	public void performUpgrade(int upgradeNum) {
 		if (upgradeNum == 2 || upgradeNum == 1) {
 		    for (Position p : reqFurniture.keySet()) {
-		    	if (!reqFurniture.get(p).getID().equals("ladder")) {
-			    	Crate crate = (Crate) reqFurniture.remove(p);
+			    	Crate crate = (Crate) reqFurniture.get(p);
 			    	LinkedList<Item> currContents = crate.getItemsContained();
 			    	if (upgradeNum == 2)
 			    	    reqFurniture.put(p, new ReinforcedCrate(currContents));
 			    	else 
 			    		reqFurniture.put(p,  new MetalCrate(currContents));
-		    	}
 		    }
 		}
 	}

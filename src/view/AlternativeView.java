@@ -32,6 +32,7 @@ import images.ImageEnum;
 import model.actors.Actor;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
+import model.actors.UpgradeRoomAction;
 import model.building_blocks.AirBlock;
 import model.building_blocks.BuildingBlock;
 import model.furniture.Furniture;
@@ -188,6 +189,7 @@ public class AlternativeView extends JPanel {
 		constructRoomComboBox.setPreferredSize(new Dimension(100, 30));
 		constructRoomComboBox.setFont(new Font("Arial", Font.PLAIN, 10));
 		upgradeRoomButton = new JButton("<html><center>Upgrade rooms (u)</center></html>");
+		upgradeRoomButton.setFocusable(false);
 		upgradeRoomButton.addActionListener(new UpdateButtonListener());
 		buttonPanel.add(constructRoomComboBox);
 
@@ -632,10 +634,12 @@ public class AlternativeView extends JPanel {
 				}
 
 			} else if (currentlyChoosingUpgrade) {
-				System.out.println("Inside the currentlyChoosingUpgrade. Going to call deactiveUpgradeSelection()");
 				Room room = highlightMe.get(new Position(mouseY, mouseX));
-				if (room != null)
-					System.out.println("The room selected is the room located at " + room.getPosition());
+				if (room != null) {
+					System.out.println("You have chosen to upgrade the " + room.getID() + " at " + room.getPosition());
+					PlayerControlledActor.addActionToPlayerPool(new UpgradeRoomAction(room));
+					deactivateUpgradeSelection();
+				}
 				else {
 					System.out.println("You clicked on a space that wasn't a room.");
 				    deactivateUpgradeSelection();
@@ -885,6 +889,11 @@ public class AlternativeView extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			
+			for (customDesignationButton button : buttons) {
+				button.deactivate();
+			}
+			controller.setDesignatingAction(Designation.NONE);
 			System.out.println("In actionPerformed method");
 			toggleUpgradeSelection();
 		}
