@@ -158,15 +158,19 @@ public class AlternativeView extends JPanel {
 		labelPanel.setBackground(new Color(125, 50, 50, 50));
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
 		timeLabel = new JLabel();
+		timeLabel.setForeground(new Color(255,0,0));
 		labelPanel.add(timeLabel);
 		// timeLabel.
 		windowCoordinatesLabel = new JLabel();
+		windowCoordinatesLabel.setForeground(new Color(255,0,0));
 		setWindowCoordinateLabel();
 		labelPanel.add(windowCoordinatesLabel);
 		mouseCoordinatesLabel = new JLabel();
+		mouseCoordinatesLabel.setForeground(new Color(255,0,0));
 		setMouseCoordinatesLabel();
 		labelPanel.add(mouseCoordinatesLabel);
 		mouseDescriptionLabel = new JLabel();
+		mouseDescriptionLabel.setForeground(new Color(255,0,0));
 		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
 		// labelPanel.setOpaque(true);
@@ -226,8 +230,13 @@ public class AlternativeView extends JPanel {
 	private void addLogPanel() {
 		logPanel = new JPanel();
 		logPanel.setSize(350, 200);
-		logPanel.setBackground(new Color(125, 50, 50, 50));
+
 		logText = new JTextArea();
+
+		logText.setForeground(new Color(255,0,0));
+		logText.setBackground(new Color(0, 0, 0, 0));
+		
+		logText.setOpaque(true);
 		logText.setLineWrap(true);
 		logText.setSize(350, 200);
 		logPanel.setBounds(650, 0, 350, 200);
@@ -512,6 +521,7 @@ public class AlternativeView extends JPanel {
 							.getKeyChar()) {
 						keyboardSelection = (char) e.getKeyChar();
 						madeSelection = true;
+						button.doClick();
 						break;
 					}
 				}
