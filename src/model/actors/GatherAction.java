@@ -44,6 +44,8 @@ public class GatherAction extends Action {
 	@Override
 	public int execute(Actor performer) {
 		// if the block can't be gathered cancel the action
+		if(position.equals(new Position(70,17)))
+			System.out.println();
 		if (!Game.getMap().getBuildingBlock(position.getRow(), position.getCol()).isDestroyable())
 			return Action.COMPLETED;
 
@@ -81,13 +83,11 @@ public class GatherAction extends Action {
 			movement = new MoveAction(moveLocation);
 		int result = movement.execute(performer);
 		// cancel the action if this actor can not perform
-		if (result == Action.Pool) {
+		if (result == Action.Pool || result == Action.DELAY) {
 			movement = null;
 			moveLocation = null;
 			return Action.Pool;
 		}
-		if (result == Action.DELAY)
-			return Action.Pool;
 		return Action.MADE_PROGRESS;
 	}
 
