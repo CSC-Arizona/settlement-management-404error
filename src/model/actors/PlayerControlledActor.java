@@ -22,7 +22,7 @@ public class PlayerControlledActor extends Actor {
 
 	private static final long serialVersionUID = 7431678886074775948L;
 	private int fatigue, hunger;
-	private static final int threshold = 1000;
+	private static final int threshold = 5000;
 	private static final int death_threshold = 10000;
 	private static final int health_threshold = 90;
 	public static List<PlayerControlledActor> allActors;

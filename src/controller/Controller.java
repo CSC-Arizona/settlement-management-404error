@@ -28,9 +28,13 @@ import model.building_blocks.AnthillBlock;
 import model.building_blocks.AntimatterDefenestratorBlock;
 import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
+import model.building_blocks.BlackHoleGeneratorBlock;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.EarthBlock;
+import model.building_blocks.GoldOreBlock;
 import model.building_blocks.GrassBlock;
+import model.building_blocks.GrassEarthBlock;
+import model.building_blocks.LeafBlock;
 import model.furniture.Furniture;
 import model.game.Game;
 import model.game.Log;
@@ -118,11 +122,21 @@ public class Controller extends JFrame {
 				}
 				
 				if (getDesignatingAction() == Designation.DIGGING) {
-					String bbID = map.getBuildingBlock(row, col).getID();
-					if ((bbID.equals(AntTunnelBlock.id)
-							|| bbID.equals(AnthillBlock.id)
-							|| bbID.equals(EarthBlock.id) || bbID
-								.equals(AntimatterDefenestratorBlock.id))) {
+//					String bbID = map.getBuildingBlock(row, col).getID();
+//					if ((bbID.equals(AntTunnelBlock.id)
+//							|| bbID.equals(AnthillBlock.id)
+//							|| bbID.equals(EarthBlock.id) 
+//							|| bbID.equals(AntimatterDefenestratorBlock.id)
+//							|| bbID.equals(BlackHoleGeneratorBlock.id)
+//							|| bbID.equals(GoldOreBlock.id)
+//							|| bbID.equals(GrassEarthBlock.id)
+//							|| bbID.equals(IronOreBlock.id)
+//							|| bbID.equals(MushroomBlock))) {
+					BuildingBlock bb = map.getBuildingBlock(row,col);
+					if (bb.isDestroyable() && !bb.getID().equals(AppleTreeTrunkBlock.id)
+							&& !bb.getID().equals(GrassBlock.id)
+							&& !bb.getID().equals(AppleTreeLeafBlock.id)
+							&& !bb.getID().equals(LeafBlock.id)) {
 						if (!(map.getBuildingBlock(row, col).getDesignation() == Designation.CONSTRUCTING)) {
 							map.getBuildingBlock(row, col).addDesignation(
 									Designation.DIGGING);
