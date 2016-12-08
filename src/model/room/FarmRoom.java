@@ -6,8 +6,6 @@ import java.util.Random;
 import java.util.TreeMap;
 
 import model.actors.Position;
-import model.building_blocks.AppleTreeLeafBlock;
-import model.building_blocks.AppleTreeTrunkBlock;
 import model.building_blocks.BuildingBlock;
 import model.building_blocks.FarmRoomBlock;
 import model.building_blocks.WheatBlock;
@@ -88,19 +86,12 @@ public class FarmRoom extends Room {
 	 * be the place to implement a randomized (aka more realistic) yield per seed rate/
 	 * put a limit on how many seeds can be planted at once.
 	 */
-	public boolean plant(int numWheat, int numApples) {
+	public boolean plant(int numWheat) {
 		if (state == 0) {
-			//TODO: Change how the next line randomizes output or increase numWheat
-			//int plantedWheat = rand.nextInt(numWheat/2 + 1) + (numWheat/2);
-			int plantedWheat = numWheat;
-			
-			int plantedApples = rand.nextInt(numApples/2 + 1) + (numApples/2);
+			//Randomize yield of wheat kernels
+			int plantedWheat = rand.nextInt(numWheat/2 + 1) + (numWheat/2);
 		    for (int i = 0; i < plantedWheat; i++)
 			    plantedBlocks.add(new WheatBlock());
-		    for (int a = 0; a < plantedApples; a++) {
-			    plantedBlocks.add(new AppleTreeLeafBlock());
-	            plantedBlocks.add(new AppleTreeTrunkBlock());
-		    }
 		    this.state++;
 		    return true;
 		} else {

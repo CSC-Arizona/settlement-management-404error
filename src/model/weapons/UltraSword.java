@@ -3,6 +3,7 @@ package model.weapons;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.items.GoldItem;
 import model.items.IronItem;
 import model.items.Item;
 import model.items.StoneItem;
@@ -31,6 +32,7 @@ public class UltraSword extends Weapon {
 		usList.add(new IronItem());
 		usList.add(new IronItem());
 		usList.add(new IronItem());
+		usList.add(new GoldItem());
 	}
 
 	public static List<Item> getRequiredMaterials() {

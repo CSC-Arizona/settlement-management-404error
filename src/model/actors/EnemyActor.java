@@ -108,7 +108,7 @@ public class EnemyActor extends Actor {
 	//spawns new actors if not alive
 	public void spawn(){
 		List<Position> antTunnels = Game.getMap().antTunnelLocations;
-		if(allActors.size() <= Game.getMap().getMapParameters().numberOfEnemyActors){
+		if(allActors.size() < Game.getMap().getMapParameters().numberOfEnemyActors){
 			Random rand = new Random();
 			for(int i = allActors.size(); i <= Game.getMap().getMapParameters().numberOfStartingActors; i++){
 				new EnemyActor(antTunnels.get(rand.nextInt(antTunnels.size())));

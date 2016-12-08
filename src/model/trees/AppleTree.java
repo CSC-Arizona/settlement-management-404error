@@ -1,25 +1,21 @@
 package model.trees;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
-import controller.Designation;
 import model.actors.Position;
 import model.building_blocks.AirBlock;
 import model.building_blocks.AppleTreeLeafBlock;
 import model.building_blocks.AppleTreeTrunkBlock;
 import model.building_blocks.BuildingBlock;
-import model.building_blocks.EarthBlock;
 import model.building_blocks.LeafBlock;
-import model.game.Game;
-import model.items.Item;
 import model.map.Map;
 
 public class AppleTree extends Tree {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Map map;
 	private Random random;
 	private Position startingPos;

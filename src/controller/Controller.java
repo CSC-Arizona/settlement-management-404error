@@ -20,6 +20,7 @@ import model.actors.BreedAction;
 import model.actors.EnemyActor;
 import model.actors.GatherAction;
 import model.actors.PickUpItemAction;
+import model.actors.PlantAction;
 import model.actors.PlayerControlledActor;
 import model.actors.Position;
 import model.building_blocks.AntTunnelBlock;
@@ -374,10 +375,10 @@ public class Controller extends JFrame {
 
 					}
 				}
-				// it.remove(); //This is so that we don't get a
-				// ConcurrentModificationException
-				// Commented out previous line because it was removing room from
-				// Map's list of farm rooms
+				else {
+					//If farm room is not in the process of growing something, send action to plant things
+					PlayerControlledActor.addActionToPlayerPool(new PlantAction());
+				}
 			}
 		}
 	}

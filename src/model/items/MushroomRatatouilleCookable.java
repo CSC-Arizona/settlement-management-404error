@@ -5,27 +5,30 @@ import images.ImageEnum;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AntLarvaPieCookable extends Item {//CookableItem {
-	
+public class MushroomRatatouilleCookable extends Item {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6230505512703031570L;
+	private static final long serialVersionUID = 5470812726511462446L;
 
-	public AntLarvaPieCookable() {
-		super(true, 0, 10, 0.5, ImageEnum.APPLEPIE);
+	public MushroomRatatouilleCookable() {
+
+		super(true, 0, 100, 10.5, ImageEnum.APPLEPIE);
+
 	}
 
 	public static List<Item> getRequiredMaterials() {
 		List<Item> reqIngredients = new LinkedList<>();
 		for (int i = 0; i < 3; i++)
-		    reqIngredients.add(new AntLarvaItem());
+			reqIngredients.add(new MushroomFruitItem());
 		reqIngredients.add(new WheatItem());
 		return reqIngredients;
 	}
 
 	@Override
 	public String toString() {
-		return "Ant larva pie (heals 10 hp)";
+		return "Mushroom ratatouille";
 	}
+
 }

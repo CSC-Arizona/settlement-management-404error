@@ -40,7 +40,7 @@ public class ArmorTest {
 	    assertEquals(10, ws.getDefenseModifier());
 	    assertEquals(0, ws.getHealthPoints());
 	    assertEquals(9.0, ws.getWeight(), 0.00001);
-	    List<Item> wsList = ws.getRequiredMaterials();
+	    List<Item> wsList = WoodShield.getRequiredMaterials();
 	    ListIterator<Item> li = wsList.listIterator();
 	    assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(wi.getClass(), li.next().getClass());
@@ -55,7 +55,7 @@ public class ArmorTest {
 	    assertEquals(12, ss.getDefenseModifier());
 	    assertEquals(0, ss.getHealthPoints());
 	    assertEquals(15.0, ss.getWeight(), 0.00001);
-	    List<Item> ssList = ss.getRequiredMaterials();
+	    List<Item> ssList = StoneShield.getRequiredMaterials();
 	    ListIterator<Item> li = ssList.listIterator();
 	    assertEquals(si.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
@@ -70,7 +70,7 @@ public class ArmorTest {
 	    assertEquals(14, is.getDefenseModifier());
 	    assertEquals(0, is.getHealthPoints());
 	    assertEquals(21.0, is.getWeight(), 0.00001);
-	    List<Item> isList = is.getRequiredMaterials();
+	    List<Item> isList = IronShield.getRequiredMaterials();
 	    ListIterator<Item> li = isList.listIterator();
 	    assertEquals(ii.getClass(), li.next().getClass());
 		assertEquals(ii.getClass(), li.next().getClass());
@@ -85,7 +85,7 @@ public class ArmorTest {
 	    assertEquals(16, gs.getDefenseModifier());
 	    assertEquals(0, gs.getHealthPoints());
 	    assertEquals(22.0, gs.getWeight(), 0.00001);
-	    List<Item> gsList = gs.getRequiredMaterials();
+	    List<Item> gsList = GreatShield.getRequiredMaterials();
 	    ListIterator<Item> li = gsList.listIterator();
 	    assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
@@ -101,7 +101,7 @@ public class ArmorTest {
 	    assertEquals(12, wcp.getDefenseModifier());
 	    assertEquals(0, wcp.getHealthPoints());
 	    assertEquals(9.0, wcp.getWeight(), 0.00001);
-	    List<Item> wcpList = wcp.getRequiredMaterials();
+	    List<Item> wcpList = WoodChestPlate.getRequiredMaterials();
 	    ListIterator<Item> li = wcpList.listIterator();
 	    assertEquals(wi.getClass(), li.next().getClass());
 		assertEquals(wi.getClass(), li.next().getClass());
@@ -117,7 +117,7 @@ public class ArmorTest {
 	    assertEquals(14, scp.getDefenseModifier());
 	    assertEquals(0, scp.getHealthPoints());
 	    assertEquals(20.0, scp.getWeight(), 0.00001);
-	    List<Item> scpList = scp.getRequiredMaterials();
+	    List<Item> scpList = StoneChestPlate.getRequiredMaterials();
 	    ListIterator<Item> li = scpList.listIterator();
 	    assertEquals(si.getClass(), li.next().getClass());
 		assertEquals(si.getClass(), li.next().getClass());
@@ -133,7 +133,7 @@ public class ArmorTest {
 	    assertEquals(16, icp.getDefenseModifier());
 	    assertEquals(0, icp.getHealthPoints());
 	    assertEquals(28.0, icp.getWeight(), 0.00001);
-	    List<Item> icpList = icp.getRequiredMaterials();
+	    List<Item> icpList = IronChestPlate.getRequiredMaterials();
 	    ListIterator<Item> li = icpList.listIterator();
 	    assertEquals(ii.getClass(), li.next().getClass());
 		assertEquals(ii.getClass(), li.next().getClass());
@@ -149,7 +149,7 @@ public class ArmorTest {
 	    assertEquals(18, gcp.getDefenseModifier());
 	    assertEquals(0, gcp.getHealthPoints());
 	    assertEquals(30.0, gcp.getWeight(), 0.00001);
-	    List<Item> gcpList = gcp.getRequiredMaterials();
+	    List<Item> gcpList = GreatChestPlate.getRequiredMaterials();
 	    ListIterator<Item> li = gcpList.listIterator();
 	    assertEquals(wi.getClass(), li.next().getClass());
 	    assertEquals(wi.getClass(), li.next().getClass());

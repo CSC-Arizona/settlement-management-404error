@@ -1,7 +1,5 @@
 package model.armor;
 
-import java.util.List;
-
 import images.ImageEnum;
 import model.items.Item;
 

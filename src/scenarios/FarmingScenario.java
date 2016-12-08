@@ -33,7 +33,7 @@ public class FarmingScenario {
 			a.getInventory().addItem(new WheatKernelItem());
 		}
 		//For this to work, need to add new room, not just new furniture
-		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new FarmRoom(new Position(48, 22))));
+		PlayerControlledActor.addActionToPlayerPool(new ConstructAction(new FarmRoom(new Position(60, 22))));
 		//Once that is done, have actor plant something
 		PlayerControlledActor.addActionToPlayerPool(new PlantAction());
 	}
