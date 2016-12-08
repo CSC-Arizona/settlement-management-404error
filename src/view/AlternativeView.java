@@ -155,6 +155,7 @@ public class AlternativeView extends JPanel {
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
 		timeLabel = new JLabel();
 		labelPanel.add(timeLabel);
+		//timeLabel.
 		windowCoordinatesLabel = new JLabel();
 		setWindowCoordinateLabel();
 		labelPanel.add(windowCoordinatesLabel);
@@ -164,6 +165,8 @@ public class AlternativeView extends JPanel {
 		mouseDescriptionLabel = new JLabel();
 		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
+		//labelPanel.setOpaque(true);
+		//labelPanel.setBackground(new Color(0, 0, 0, 50));
 		this.add(labelPanel);
 
 	}
@@ -326,6 +329,9 @@ public class AlternativeView extends JPanel {
 								* blockSizeX, (i-1) * blockSizeY, null);
 					} else if (p.isTired()) {
 						g2.drawImage(ImageEnum.TIRED.getRandomBufferedImage(), (j-1)
+								* blockSizeX, (i-1) * blockSizeY, null);
+					} else if (p.isHurt()) {
+						g2.drawImage(ImageEnum.BANDAGE.getRandomBufferedImage(), (j-1)
 								* blockSizeX, (i-1) * blockSizeY, null);
 					}
 				}

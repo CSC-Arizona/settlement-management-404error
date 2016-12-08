@@ -24,6 +24,7 @@ public class PlayerControlledActor extends Actor {
 	private int fatigue, hunger;
 	private static final int threshold = 1000;
 	private static final int death_threshold = 10000;
+	private static final int health_threshold = 90;
 	public static List<PlayerControlledActor> allActors;
 	public static ActionPool playerActionPool;
 	private Random random = new Random();
@@ -35,6 +36,10 @@ public class PlayerControlledActor extends Actor {
 	
 	public boolean isTired() {
 		return fatigue > threshold;
+	}
+	
+	public boolean isHurt() {
+		return getHealth() < health_threshold;
 	}
 	
 	/**
@@ -77,7 +82,7 @@ public class PlayerControlledActor extends Actor {
 			this.priorityAddToActionQueue(new HungerAction());
 		if (fatigue == threshold)
 			this.priorityAddToActionQueue(new SleepAction());
-		if (this.getHealth() < 90)
+		if (this.getHealth() < health_threshold)
 			this.priorityAddToActionQueue(new HealAction());
 		// if one of the needs get to high, then the actor dies
 		if (hunger >= death_threshold || fatigue >= death_threshold) {
