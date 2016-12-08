@@ -331,6 +331,9 @@ public class AlternativeView extends JPanel {
 					} else if (p.isTired()) {
 						g2.drawImage(ImageEnum.TIRED.getRandomBufferedImage(), (j-1)
 								* blockSizeX, (i-1) * blockSizeY, null);
+					} else if (p.isHurt()) {
+						g2.drawImage(ImageEnum.BANDAGE.getRandomBufferedImage(), (j-1)
+								* blockSizeX, (i-1) * blockSizeY, null);
 					}
 				}
 			}
