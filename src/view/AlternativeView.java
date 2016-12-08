@@ -199,7 +199,7 @@ public class AlternativeView extends JPanel {
 		buttonPanel = new JPanel();
 		buttonPanel.setSize(330, 70);
 		buttonPanel.setBackground(new Color(0, 0, 0, 0));
-		buttonPanel.setBounds(350, 600, 330, 70);
+		buttonPanel.setBounds(350, 600, 500, 70);
 
 		constructRoomComboBox = new JComboBox<String>(RoomEnum.getAllRoomNames());
 		constructRoomComboBox.addActionListener(new ConstructionComboBoxListener());
@@ -229,7 +229,9 @@ public class AlternativeView extends JPanel {
 		craftComboBox = new JComboBox<String>(new String[] {"Ant larva pie (heals 10 hp)", "Apple pie (heals 10 hp)", "Bread (heals 10 hp)", "Great chestplate", "Greatshield",
 				"Iron chestplate", "Iron shield", "Stone chestplate", "Stone shield", "Wood chestplate", "Wood shield", "Basic iron axe",
 				"Basic stone axe", "Basic sword", "Fortified iron axe", "Fortified stone axe", "Ultra sword"});
+		craftComboBox.setFocusable(false);
 		craftButton = new JButton("Craft item: ");
+		craftButton.setFocusable(false);
 		
 		craftButton.addActionListener(new CraftButtonListener());
 		
@@ -238,8 +240,6 @@ public class AlternativeView extends JPanel {
 		plantsButton = new customDesignationButton(controller, this, Designation.GATHERING_PLANTS, buttons);
 		attackButton = new customDesignationButton(controller, this, Designation.ATTACKING, buttons);
 
-		craftComboBox = new JComboBox<String>(new String[] { "item 1", "item 2", "item 3" });
-		craftButton = new JButton("Craft item: ");
 		buttonPanel.add(cutDownTreeButton);
 		buttonPanel.add(upgradeRoomButton);
 		buttonPanel.add(digButton);
@@ -249,7 +249,7 @@ public class AlternativeView extends JPanel {
 		buttonPanel.add(constructRoomComboBox);
 		buttonPanel.add(craftButton);
 		buttonPanel.add(craftComboBox);
-
+		buttonPanel.setFocusable(false);
 		this.add(buttonPanel);
 	}
 
