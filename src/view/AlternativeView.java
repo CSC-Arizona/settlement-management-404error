@@ -159,7 +159,7 @@ public class AlternativeView extends JPanel {
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
 		timeLabel = new JLabel();
 		labelPanel.add(timeLabel);
-		//timeLabel.
+		// timeLabel.
 		windowCoordinatesLabel = new JLabel();
 		setWindowCoordinateLabel();
 		labelPanel.add(windowCoordinatesLabel);
@@ -169,8 +169,8 @@ public class AlternativeView extends JPanel {
 		mouseDescriptionLabel = new JLabel();
 		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
-		//labelPanel.setOpaque(true);
-		//labelPanel.setBackground(new Color(0, 0, 0, 50));
+		// labelPanel.setOpaque(true);
+		// labelPanel.setBackground(new Color(0, 0, 0, 50));
 		this.add(labelPanel);
 
 	}
@@ -206,9 +206,10 @@ public class AlternativeView extends JPanel {
 		attackButton = new customDesignationButton(controller, this,
 				Designation.ATTACKING, buttons);
 
-		craftComboBox = new JComboBox<String>(new String[] {"item 1", "item 2", "item 3"});
+		craftComboBox = new JComboBox<String>(new String[] { "item 1",
+				"item 2", "item 3" });
 		craftButton = new JButton("Craft item: ");
-		
+
 		buttonPanel.add(cutDownTreeButton);
 		buttonPanel.add(upgradeRoomButton);
 		buttonPanel.add(digButton);
@@ -314,19 +315,23 @@ public class AlternativeView extends JPanel {
 				g2.setColor(Color.BLACK);
 			}
 			List<PlayerControlledActor> playerActors = PlayerControlledActor.allActors;
-			Iterator<PlayerControlledActor> playerIter = playerActors.iterator();
+			Iterator<PlayerControlledActor> playerIter = playerActors
+					.iterator();
 			while (playerIter.hasNext()) {
 				PlayerControlledActor p = playerIter.next();
 				if (p.getPosition().equals(new Position(row, col))) {
 					if (p.isHungry()) {
-						g2.drawImage(ImageEnum.HUNGER.getRandomBufferedImage(), j
-								* blockSizeX, (i-1) * blockSizeY, null);
+						g2.drawImage(ImageEnum.HUNGER.getRandomBufferedImage(),
+								j * blockSizeX, (i - 1) * blockSizeY, null);
 					} else if (p.isTired()) {
-						g2.drawImage(ImageEnum.TIRED.getRandomBufferedImage(), (j-1)
-								* blockSizeX, (i-1) * blockSizeY, null);
+						g2.drawImage(ImageEnum.TIRED.getRandomBufferedImage(),
+								(j - 1) * blockSizeX, (i - 1) * blockSizeY,
+								null);
 					} else if (p.isHurt()) {
-						g2.drawImage(ImageEnum.BANDAGE.getRandomBufferedImage(), (j-1)
-								* blockSizeX, (i-1) * blockSizeY, null);
+						g2.drawImage(
+								ImageEnum.BANDAGE.getRandomBufferedImage(),
+								(j - 1) * blockSizeX, (i - 1) * blockSizeY,
+								null);
 					}
 				}
 			}
@@ -436,7 +441,7 @@ public class AlternativeView extends JPanel {
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
-		
+
 		g.setColor(Color.white);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
@@ -704,6 +709,8 @@ public class AlternativeView extends JPanel {
 
 		public void deactivate() {
 			active = false;
+			currentlyDrawingDesignation = false;
+			controller.setDesignatingAction(Designation.NONE);
 			setButtonText();
 		}
 
@@ -769,6 +776,7 @@ public class AlternativeView extends JPanel {
 		public void deactivateConstructionSelection() {
 			currentlyPlacingRoom = false;
 			controller.setDesignatingAction(Designation.NONE);
+
 			repaint();
 		}
 

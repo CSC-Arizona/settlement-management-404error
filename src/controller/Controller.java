@@ -46,7 +46,8 @@ import view.AlternativeView;
 import view.StartingView;
 
 /**
- * Display a map
+ * Keeps track of time- updates game every tick. Also has constructors to create
+ * a new map or load an existing map.
  * 
  * @author Ethan Ward
  *
@@ -69,7 +70,7 @@ public class Controller extends JFrame {
 	private AlternativeView basicView;
 
 	private Timer gameTimer;
-	private int timeDelta = 100;
+	private int timeDelta = 150;
 
 	private int windowWidth = 1000;
 	private int windowHeight = 700;
@@ -200,7 +201,7 @@ public class Controller extends JFrame {
 		this.setVisible(true);
 		new SongPlayer().start();
 		if (skipLoadScreen) {
-			startNewGame(new Settings(Settings.MEDIUM, Settings.NORMAL),random);
+			startNewGame(new Settings(Settings.MEDIUM, Settings.NORMAL), random);
 		} else {
 			startingView = new StartingView(this);
 			this.add(startingView);
@@ -256,7 +257,7 @@ public class Controller extends JFrame {
 			}
 			Game.getMap().setTime(time);
 			if (time % 35 == 0) {
-			    Game.getMap().checkOnDesignatedRooms();
+				Game.getMap().checkOnDesignatedRooms();
 			}
 			basicView.setTimeLabel(time, paused);
 			basicView.setMouseDescriptionLabel();
@@ -277,13 +278,12 @@ public class Controller extends JFrame {
 				revalidate();
 				repaint();
 			}
-			
+
 			if (PlayerControlledActor.allActors != null
 					&& PlayerControlledActor.remaingParts <= 0) {
 				if (!isPaused())
 					togglePaused();
-				final JOptionPane pane = new JOptionPane(
-						"You are going home!");
+				final JOptionPane pane = new JOptionPane("You are going home!");
 				final JDialog d = pane.createDialog((JFrame) null, "You Win!");
 				d.setLocation(400, 300);
 				d.setVisible(true);
@@ -294,11 +294,11 @@ public class Controller extends JFrame {
 				revalidate();
 				repaint();
 			}
-			
-			//Check if less than half of initial pop is alive
-			//If so, add new BreedAction to pool
+
+			// Check if less than half of initial pop is alive
+			// If so, add new BreedAction to pool
 			int initialActors = Game.getMap().getMapParameters().numberOfStartingActors;
-			if(PlayerControlledActor.allActors.size() <= (initialActors/2)) { 
+			if (PlayerControlledActor.allActors.size() <= (initialActors / 2)) {
 				PlayerControlledActor.addActionToPlayerPool(new BreedAction());
 			}
 
@@ -347,10 +347,11 @@ public class Controller extends JFrame {
 						plot.removeItem(new WheatKernelItem());
 
 					}
-				}
-				else {
-					//If farm room is not in the process of growing something, send action to plant things
-					PlayerControlledActor.addActionToPlayerPool(new PlantAction());
+				} else {
+					// If farm room is not in the process of growing something,
+					// send action to plant things
+					PlayerControlledActor
+							.addActionToPlayerPool(new PlantAction());
 				}
 			}
 		}

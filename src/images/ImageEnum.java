@@ -8,6 +8,12 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Images that can be used elsewhere. Cached for performance.
+ * 
+ * @author Ethan Ward
+ *
+ */
 public enum ImageEnum {
 	APPLE(new String[] { "apple.png" }), GRASS(new String[] { "grass.png" }), LEAF(
 			new String[] { "foliage.png" }), WOOD(new String[] { "wood.png" }), DIRT(
@@ -44,7 +50,7 @@ public enum ImageEnum {
 			new String[] { "bread.png" }), STONEITEM(
 			new String[] { "stone_item.png" }), BANDAGE(
 			new String[] { "bandaid.png" }), MUSHROOMFRUIT(
-			new String[] { "mushroom_fruit.png" });
+			new String[] { "mushroom_fruit.png" }), COUCH(new String[]{"couch.png"}), MACHINE(new String[]{"theMachine.png"});
 
 	private String[] filenames;
 	private ArrayList<BufferedImage> images;

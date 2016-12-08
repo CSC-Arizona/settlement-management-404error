@@ -11,11 +11,14 @@ import model.building_blocks.EarthBlock;
 import model.building_blocks.LeafBlock;
 import model.map.Map;
 
+/**
+ * Apple trees: wood and apples
+ * 
+ * @author Ethan Ward
+ *
+ */
 public class AppleTree extends Tree {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Map map;
 	private Random random;

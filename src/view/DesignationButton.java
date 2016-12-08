@@ -87,9 +87,6 @@ public class DesignationButton extends JButton {
 					button.deactivate();
 				}
 			}
-			
-
 		}
-
 	}
 }
