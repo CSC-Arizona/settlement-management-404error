@@ -876,6 +876,7 @@ public class Map implements Serializable {
 	 */
 	public void addNewCompletedRoom(Room room) {
 		this.completedRooms.add(room);
+		this.designatedRooms.remove(room);
 	}
 
 	/**

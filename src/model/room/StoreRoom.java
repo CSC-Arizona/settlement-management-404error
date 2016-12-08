@@ -24,7 +24,7 @@ import model.items.Item;
  * 
  * @author Katherine Walters
  */
-public class StoreRoom extends Room{
+public class StoreRoom extends Room {
 
 	private TreeMap<Position, Furniture> reqFurniture;
 	private List<Item> requiredBuildingMaterials;
@@ -39,7 +39,7 @@ public class StoreRoom extends Room{
 	}
 	
 	public StoreRoom(Position p) {
-        super(getHeight(), getWidth(), 3, 2, p);
+        super(getHeight(), getWidth(), 3, 2, p, true);
 		addInitialFurniture();
 		this.requiredBuildingMaterials = makeBuildMaterialsList();
 	}

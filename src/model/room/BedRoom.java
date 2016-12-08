@@ -36,7 +36,7 @@ public class BedRoom extends Room {
 	}
 
 	public BedRoom(Position p) {
-		super(getHeight(), getWidth(), 6, 3, p);
+		super(getHeight(), getWidth(), 6, 3, p, true);
 		addInitialFurniture();
 		requiredBuildingMaterials = makeBuildMaterialsList();
 		this.requiredUpgradeMaterials = new LinkedList<>();

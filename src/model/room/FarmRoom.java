@@ -42,7 +42,7 @@ public class FarmRoom extends Room {
 	}
 	
 	public FarmRoom(Position p) {
-		super(getHeight(), getWidth(), 4, 0, p);
+		super(getHeight(), getWidth(), 4, 0, p, true);
         addInitialFurniture();
         this.requiredBuildingMaterials = makeBuildMaterialsList();
         this.requiredUpgradeMaterials = new LinkedList<>();

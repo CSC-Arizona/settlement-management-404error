@@ -36,7 +36,7 @@ public class EntertainmentRoom extends Room{
 	}
 	
 	public EntertainmentRoom(Position p) {
-        super(getHeight(), getWidth(), 8, 2, p);
+        super(getHeight(), getWidth(), 8, 2, p, true);
 		addInitialFurniture();
 		this.requiredBuildingMaterials = makeBuildMaterialsList();
 		this.requiredUpgradeMaterials = new LinkedList<>();
