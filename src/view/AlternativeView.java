@@ -72,11 +72,9 @@ public class AlternativeView extends JPanel {
 
 	private customDesignationButton cutDownTreeButton;
 	private customDesignationButton upgradeRoomButton;
-	private customDesignationButton fruitButton;
 	private customDesignationButton digButton;
 	private customDesignationButton plantsButton;
 	private customDesignationButton attackButton;
-	private customDesignationButton removeButton;
 	private ArrayList<customDesignationButton> buttons;
 
 	private Point designationStart;
@@ -175,7 +173,7 @@ public class AlternativeView extends JPanel {
 		buttonPanel = new JPanel();
 		buttonPanel.setSize(500, 70);
 		buttonPanel.setBackground(new Color(0, 0, 0, 0));
-		buttonPanel.setBounds(250, 600, 400, 70);
+		buttonPanel.setBounds(250, 600, 330, 70);
 
 		constructRoomComboBox = new JComboBox<String>(
 				RoomEnum.getAllRoomNames());
@@ -200,27 +198,21 @@ public class AlternativeView extends JPanel {
 				Designation.CUTTING_DOWN_TREES, buttons);
 		upgradeRoomButton = new customDesignationButton(controller, this,
 				Designation.UPGRADING, buttons);
-		fruitButton = new customDesignationButton(controller, this,
-				Designation.GATHERING_FRUIT, buttons);
 		digButton = new customDesignationButton(controller, this,
 				Designation.DIGGING, buttons);
 		plantsButton = new customDesignationButton(controller, this,
 				Designation.GATHERING_PLANTS, buttons);
 		attackButton = new customDesignationButton(controller, this,
 				Designation.ATTACKING, buttons);
-		removeButton = new customDesignationButton(controller, this,
-				Designation.REMOVING_DESIGNATIONS, buttons);
 
 		craftComboBox = new JComboBox<String>(new String[] {"item 1", "item 2", "item 3"});
 		craftButton = new JButton("Craft item: ");
 		
 		buttonPanel.add(cutDownTreeButton);
 		buttonPanel.add(upgradeRoomButton);
-		buttonPanel.add(fruitButton);
 		buttonPanel.add(digButton);
 		buttonPanel.add(plantsButton);
 		buttonPanel.add(attackButton);
-		buttonPanel.add(removeButton);
 		buttonPanel.add(constructRoomButton);
 		buttonPanel.add(constructRoomComboBox);
 		buttonPanel.add(craftButton);
