@@ -18,7 +18,6 @@ import model.weapons.BasicStoneAxe;
 import model.weapons.BasicSword;
 import model.weapons.FortifiedIronAxe;
 import model.weapons.FortifiedStoneAxe;
-import model.weapons.LureAxe;
 import model.weapons.UltraSword;
 
 public class WeaponTest {
@@ -86,21 +85,6 @@ public class WeaponTest {
 		assertEquals(si.getClass(), li.next().getClass());
 		assertEquals(ii.getClass(), li.next().getClass());
 		assertEquals(ii.getClass(), li.next().getClass());
-	}
-	
-	@Test
-	public void testLureAxe() {
-	    LureAxe la = new LureAxe();
-	    assertFalse(la.getIsEdible());
-	    assertEquals(12, la.getAttackModifier());
-	    assertEquals(1, la.getHealthPoints());
-	    assertEquals(11.5, la.getWeight(), 0.00001);
-	    List<Item> laList = LureAxe.getRequiredMaterials();
-	    ListIterator<Item> li = laList.listIterator();
-	    assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(wi.getClass(), li.next().getClass());
-		assertEquals(si.getClass(), li.next().getClass());
-		assertEquals(ali.getClass(), li.next().getClass());
 	}
 	
 	@Test
