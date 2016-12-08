@@ -11,10 +11,6 @@ import java.util.List;
 import model.game.Game;
 
 /**
- * 
- */
-
-/**
  * @author Jonathon Davis
  *
  */
@@ -97,9 +93,9 @@ public abstract class Actor implements Serializable {
 				queue.addFirst((getActionPool().get()));
 				currentAction = queue.peek();
 			}
-			if (currentAction == null){
+			if (currentAction == null) {
 				queue.poll();
-				performAction(attempts+1);
+				performAction(attempts + 1);
 				return;
 			}
 		}
@@ -226,7 +222,7 @@ public abstract class Actor implements Serializable {
 	public static void reset() {
 		PlayerControlledActor.reset();
 		EnemyActor.reset();
-		if(allActors == null)
+		if (allActors == null)
 			return;
 		Iterator<Actor> actors = allActors.iterator();
 		while (actors.hasNext()) {
@@ -265,11 +261,11 @@ public abstract class Actor implements Serializable {
 	public ImageEnum getImage() {
 		return image;
 	}
-	
+
 	public boolean isMarkedForAttack() {
 		return markedForAttack;
 	}
-	
+
 	public void setAttack(boolean attack) {
 		this.markedForAttack = attack;
 	}

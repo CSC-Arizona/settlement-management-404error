@@ -8,6 +8,12 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Images that can be used elsewhere. Cached for performance.
+ * 
+ * @author Ethan Ward
+ *
+ */
 public enum ImageEnum {
 	APPLE(new String[] { "apple.png" }), GRASS(new String[] { "grass.png" }), LEAF(
 			new String[] { "foliage.png" }), WOOD(new String[] { "wood.png" }), DIRT(

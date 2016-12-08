@@ -15,12 +15,15 @@ import model.building_blocks.LeafBlock;
 import model.items.Item;
 import model.map.Map;
 
+/**
+ * Abstract class for various trees that can be added to the map.
+ * 
+ * @author Ethan Ward
+ *
+ */
 public abstract class Tree implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7607855414801160781L;
 	private Map map;
 	private Random random;
 	private int[] heightParameters;
