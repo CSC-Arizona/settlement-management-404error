@@ -158,15 +158,19 @@ public class AlternativeView extends JPanel {
 		labelPanel.setBackground(new Color(0, 0, 0, 0));
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
 		timeLabel = new JLabel();
+		timeLabel.setForeground(new Color(255,0,0));
 		labelPanel.add(timeLabel);
 		// timeLabel.
 		windowCoordinatesLabel = new JLabel();
+		windowCoordinatesLabel.setForeground(new Color(255,0,0));
 		setWindowCoordinateLabel();
 		labelPanel.add(windowCoordinatesLabel);
 		mouseCoordinatesLabel = new JLabel();
+		mouseCoordinatesLabel.setForeground(new Color(255,0,0));
 		setMouseCoordinatesLabel();
 		labelPanel.add(mouseCoordinatesLabel);
 		mouseDescriptionLabel = new JLabel();
+		mouseDescriptionLabel.setForeground(new Color(255,0,0));
 		setMouseDescriptionLabel();
 		labelPanel.add(mouseDescriptionLabel);
 		// labelPanel.setOpaque(true);
@@ -229,6 +233,7 @@ public class AlternativeView extends JPanel {
 		logPanel.setBackground(new Color(0, 0, 0, 0));
 		logPanel.setOpaque(true);
 		logText = new JTextArea();
+		logText.setForeground(new Color(255,0,0));
 		logText.setBackground(new Color(0, 0, 0, 0));
 		logText.setOpaque(true);
 		logText.setLineWrap(true);
