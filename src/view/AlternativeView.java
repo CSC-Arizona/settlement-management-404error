@@ -482,7 +482,6 @@ public class AlternativeView extends JPanel {
 		private WoodChestPlate wcp = new WoodChestPlate();
 		private WoodShield ws = new WoodShield();
 		
-
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Item toBeCrafted = null;

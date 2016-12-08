@@ -11,7 +11,10 @@ tmp/
 *.jar
 *.mp3
 local.properties
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/CSC-Arizona/settlement-management-404error
 .project
 .settings/*
 .loadpath
