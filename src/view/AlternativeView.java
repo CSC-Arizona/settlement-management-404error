@@ -648,14 +648,8 @@ public class AlternativeView extends JPanel {
 				}
 
 			} else if (currentlyChoosingUpgrade) {
-				// TODO: if click is on an upgradeable room, apply designation, create upgradeRoomAction and 
-				// call this.deactivateUpgradeSelection
 				System.out.println("Inside the currentlyChoosingUpgrade. Going to call deactiveUpgradeSelection()");
-				int col = e.getX() / blockSizeX
-						+ visibleCornerX;
-				int row = e.getY() / blockSizeY
-						+ visibleCornerY;
-				Room room = highlightMe.get(new Position(row, col));
+				Room room = highlightMe.get(new Position(mouseY, mouseX));
 				if (room != null)
 					System.out.println("The room selected is the room located at " + room.getPosition());
 				else {
