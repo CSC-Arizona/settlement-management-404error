@@ -215,13 +215,9 @@ public class AlternativeView extends JPanel {
 		constructRoomButton = new customDesignationButton(controller, this, Designation.CONSTRUCTING, buttons);
 		constructRoomButton.addActionListener(new ConstructionButtonListener());
 		// craftButton = new customDesignationButton(controller, this,
-		// Designation.NONE, buttons);
-		upgradeRoomButton = new customDesignationButton(controller, this,
-				Designation.UPGRADING, buttons);
+		// Designation.NONE, buttons);=
 		cutDownTreeButton = new customDesignationButton(controller, this,
 				Designation.CUTTING_DOWN_TREES, buttons);
-		upgradeRoomButton = new customDesignationButton(controller, this,
-				Designation.UPGRADING, buttons);
 		digButton = new customDesignationButton(controller, this,
 				Designation.DIGGING, buttons);
 		plantsButton = new customDesignationButton(controller, this,
