@@ -14,7 +14,7 @@ import model.map.Map;
  */
 public final class Game {
 	private static Map map;
-	
+
 	/**
 	 * @return the map
 	 */
@@ -52,12 +52,13 @@ public final class Game {
 		if (col1 == Game.getMap().getTotalWidth())
 			col1 = 0;
 		return row >= 0 && row1 + 1 < map.getTotalHeight() && map.getBuildingBlock(row1, col1).isOccupiable()
-				&& row < Game.getMap().getTotalHeight() &&
-				(!map.getBuildingBlock(row1 + 1, col1).isOccupiable()
-						|| (map.getBuildingBlock(row1, col1).getFurniture() != null
-								&& (map.getBuildingBlock(row1, col1).getFurniture().getID().equals("ladder") ||
-						            (map.getBuildingBlock(row1, col1).getFurniture().getID().equals("trap door")))) ||
-										map.getBuildingBlock(row1, col1).getID().equals("Ant tunnel"));
+				&& row < Game.getMap().getTotalHeight() && (!map.getBuildingBlock(row1 + 1, col1).isOccupiable()
+						|| ((map.getBuildingBlock(row1, col1).getFurniture() != null && (map.getBuildingBlock(row1, col1)
+								.getFurniture().getID().equals("ladder")
+								|| (map.getBuildingBlock(row1, col1).getFurniture().getID().equals("trap door"))))
+						|| map.getBuildingBlock(row1, col1).getID().equals("Ant tunnel"))
+				|| (!map.getBuildingBlock(row1, Math.floorMod(col1 - 1,map.getTotalWidth())).isOccupiable() ||
+				!map.getBuildingBlock(row1, Math.floorMod(col1 + 1,map.getTotalWidth())).isOccupiable()));
 	}
 
 }

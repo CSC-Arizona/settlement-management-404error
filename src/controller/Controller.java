@@ -69,7 +69,7 @@ public class Controller extends JFrame {
 	private AlternativeView basicView;
 
 	private Timer gameTimer;
-	private int timeDelta = 100;
+	private int timeDelta = 150;
 
 	private int windowWidth = 1000;
 	private int windowHeight = 700;

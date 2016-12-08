@@ -79,7 +79,7 @@ public class MoveAction extends Action {
 				col = (currentPos.getCol() > 0) ? Math.floorMod(currentPos.getCol(), Game.getMap().getTotalWidth())
 						: Game.getMap().getTotalWidth() + currentPos.getCol();
 		int prow = Integer.MIN_VALUE, pcol = Integer.MIN_VALUE;
-		if(currentNode.prev != null){
+		if (currentNode.prev != null) {
 			prow = currentNode.prev.position.getRow();
 			pcol = currentNode.prev.position.getCol();
 		}
@@ -101,11 +101,10 @@ public class MoveAction extends Action {
 			for (int r = row - 1; r <= row + 1; r++)
 				for (int c = col - 1; c <= col + 1; c++)
 					if (!(r == row && c == col) && Game.validActorLocation(r, c))
-						if((currentNode.prev != null && !(r == prow && c == pcol)) || currentNode.prev == null)
+						if ((currentNode.prev != null && !(r == prow && c == pcol)) || currentNode.prev == null)
 							searchQueue.add(new Node(currentNode.distance + 1, new Position(r, c), currentNode));
 		}
 	}
-
 
 	private int getLeftOrRight(Position oldPosition, Position newPosition) {
 		if (oldPosition.getCol() < newPosition.getCol()) {
@@ -113,6 +112,7 @@ public class MoveAction extends Action {
 		}
 		return -1;
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -120,17 +120,12 @@ public class MoveAction extends Action {
 	 */
 	@Override
 	public int execute(Actor performer) {
-		if(!Game.validActorLocation(performer.getPosition().getRow(),performer.getPosition().getCol())){
-			visited = null;
-			return Action.DELAY;
-		}
-		if (visited == null) {
-			calculatePath();
-		}
 		if (performer.getPosition().equals(desiredDestination))
 			return Action.COMPLETED;
+		calculatePath();
 		if (visited.containsKey(performer.getPosition())) {
-			int leftOrRight = getLeftOrRight(performer.getPosition(), visited.get(performer.getPosition()).prev.position);
+			int leftOrRight = getLeftOrRight(performer.getPosition(),
+					visited.get(performer.getPosition()).prev.position);
 			if (leftOrRight == -1) {
 				performer.setLeft();
 			} else {
@@ -143,7 +138,7 @@ public class MoveAction extends Action {
 		}
 		return (performer.getPosition().equals(desiredDestination)) ? Action.COMPLETED : Action.MADE_PROGRESS;
 	}
-	
+
 	/**
 	 * Finds an adjacent valid location near the block to move the actor to
 	 * 
@@ -158,7 +153,7 @@ public class MoveAction extends Action {
 				if (Game.validActorLocation(r, Math.floorMod(c, Game.getMap().getTotalWidth()))) {
 					Position p = new Position(r, Math.floorMod(c, Game.getMap().getTotalWidth()));
 					double calc = p.distance(position);
-					if(calc < distance){
+					if (calc < distance) {
 						distance = calc;
 						nearest = p;
 					}
