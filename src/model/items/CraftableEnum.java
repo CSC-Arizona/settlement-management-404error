@@ -91,6 +91,6 @@ public enum CraftableEnum {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new AntLarvaPieCookable();
+		return null;
 	}
 }
