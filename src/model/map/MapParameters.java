@@ -5,6 +5,10 @@ import java.io.Serializable;
 import model.actors.EnemyActor;
 import model.game.Settings;
 
+/**
+ * @author Ethan Ward
+ *
+ */
 public class MapParameters implements Serializable {
 
 	/**
@@ -62,7 +66,7 @@ public class MapParameters implements Serializable {
 
 	}
 
-	public static MapParameters getCustumMapParameters(Settings settings){
+	public static MapParameters getCustomMapParameters(Settings settings){
 		int size = 0;
 		if (settings.getSize() == Settings.SMALL)
 			size = 200;

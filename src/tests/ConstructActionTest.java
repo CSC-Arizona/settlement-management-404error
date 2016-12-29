@@ -88,16 +88,16 @@ public class ConstructActionTest {
 		test.addToActionQueue(new MoveAction(new Position(1,1)));
 		
 		test.update();
-		assertEquals(3, test.getPosition().getRow());
-		assertEquals(3,test.getPosition().getCol());
+		assertEquals(1, test.getPosition().getRow());
+		assertEquals(2,test.getPosition().getCol());
 		
 		test.update();
-		assertEquals(3,test.getPosition().getRow());
-		assertEquals(3,test.getPosition().getCol());
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(1,test.getPosition().getCol());
 		
 		test.update();
-		assertEquals(3,test.getPosition().getRow());
-		assertEquals(3,test.getPosition().getCol());
+		assertEquals(1,test.getPosition().getRow());
+		assertEquals(1,test.getPosition().getCol());
 
 	}
 

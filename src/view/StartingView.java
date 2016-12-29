@@ -84,7 +84,7 @@ public class StartingView extends JPanel {
 			this.repaint();
 		});
 		this.setLayout(new GridBagLayout());
-		Game.setMap(new Map(MapParameters.getCustumMapParameters(new Settings(Settings.SMALL, Settings.NORMAL)),
+		Game.setMap(new Map(MapParameters.getCustomMapParameters(new Settings(Settings.SMALL, Settings.NORMAL)),
 				new Random()));
 		visibleCornerX = (Game.getMap().getTotalWidth() - visibleWidth / 2);
 		controller.setVisible(true);

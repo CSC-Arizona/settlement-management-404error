@@ -11,8 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
- * Represents a SaveFile and writes a Save to that file Only allows one save
- * currently however this can be expanded
+ * Represents a SaveFile and writes a Save to that file
  * 
  * @author Jonathon Davis
  *
@@ -20,46 +19,47 @@ import java.util.ArrayList;
 public class SaveFile {
 
 	private String savename;
-	
+
 	public SaveFile() {
 		setSaveName();
 	}
-	
+
 	public SaveFile(String savename) {
 		this.savename = getFilePath(savename).toString();
 	}
-	
+
 	public String getSavename() {
 		return savename;
 	}
-	
+
 	private void setSaveName() {
 		int result = 1;
-		
+
 		while (true) {
-			String savename = "save"+result+".ser";
+			String savename = "save" + result + ".ser";
 			if (!(new File(getFilePath(savename).toString())).exists()) {
 				this.savename = getFilePath(savename).toString();
 				return;
 			}
 			result += 1;
-		}	
+		}
 	}
-	
+
 	public static ArrayList<String> listFilesForFolder(final File folder) {
 		ArrayList<String> result = new ArrayList<>();
-		
-	    for (final File fileEntry : folder.listFiles()) {
-	        if (!fileEntry.isDirectory()) {
-	        	result.add(fileEntry.getName());
-	        }
-	    }
-	    return result;
+
+		for (final File fileEntry : folder.listFiles()) {
+			if (!fileEntry.isDirectory()) {
+				result.add(fileEntry.getName());
+			}
+		}
+		return result;
 	}
-	
+
 	public static ArrayList<String> getSavedFiles() {
-		String workingDirectory = System.getProperty("user.dir");		
-		return listFilesForFolder(Paths.get(workingDirectory, "src", "saves").toFile());
+		String workingDirectory = System.getProperty("user.dir");
+		return listFilesForFolder(Paths.get(workingDirectory, "src", "saves")
+				.toFile());
 	}
 
 	private static Path getFilePath(String savename) {
@@ -83,7 +83,8 @@ public class SaveFile {
 	public void load(String savename) {
 		Save s = null;
 		try {
-			FileInputStream fileIn = new FileInputStream(savename);
+			FileInputStream fileIn = new FileInputStream(getFilePath(savename)
+					.toString());
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			s = (Save) in.readObject();
 			s.setState();

@@ -49,7 +49,7 @@ public class SleepActionTest {
 		PlayerControlledActor.allActors = null;
 		Actor.allActors = null;
 		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 4));
-		test.setFatigue(990);
+		test.setFatigue(4990);
 		
 		for(int i = 0; i < 9; i++){
 			test.update();

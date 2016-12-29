@@ -236,7 +236,7 @@ public class Controller extends JFrame {
 	 */
 	public void startNewGame(Settings settings, Random random) {
 		this.saveFile = new SaveFile();
-		this.mapParameters = MapParameters.getCustumMapParameters(settings);
+		this.mapParameters = MapParameters.getCustomMapParameters(settings);
 		Game.reset();
 		map = new Map(mapParameters, random);
 		Game.setMap(map);

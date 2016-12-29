@@ -200,7 +200,9 @@ public abstract class Actor implements Serializable {
 	}
 
 	public void remove() {
-		allActors.remove(this);
+		if (allActors != null) {
+			allActors.remove(this);
+		}
 	}
 
 	public int getHealth() {

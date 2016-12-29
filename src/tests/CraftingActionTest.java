@@ -48,7 +48,7 @@ public class CraftingActionTest {
 		Game.setMap(generateMap(mapGen));
 		PlayerControlledActor test = new PlayerControlledActor(new Position(1, 1));
 		BasicSword item = new BasicSword();
-		//test.addToActionQueue(new CraftAction(item, BasicSword.getRequiredMaterials()));
+		test.addToActionQueue(new CraftAction(item, BasicSword.getRequiredMaterials(), "Sword"));
 		test.getInventory().addItem(new WoodItem());
 		test.getInventory().addItem(new WoodItem());
 		test.getInventory().addItem(new StoneItem());
@@ -56,14 +56,14 @@ public class CraftingActionTest {
 		test.getInventory().addItem(new IronItem());
 		test.update();
 		assertTrue(test.getInventory().contains(new WoodItem()));
-		assertFalse(test.getInventory().contains(new StoneItem()));
-		assertFalse(test.getInventory().contains(new IronItem()));
-		assertFalse(test.getInventory().contains(new BasicSword()));
+		assertTrue(test.getInventory().contains(new StoneItem()));
+		assertTrue(test.getInventory().contains(new IronItem()));
+		assertTrue(test.getInventory().contains(new BasicSword()));
 		test.getInventory().addItem(new IronItem());
 		test.update();
 		assertTrue(test.getInventory().contains(new WoodItem()));
-		assertFalse(test.getInventory().contains(new StoneItem()));
-		assertFalse(test.getInventory().contains(new IronItem()));
+		assertTrue(test.getInventory().contains(new StoneItem()));
+		assertTrue(test.getInventory().contains(new IronItem()));
 		assertTrue(test.getInventory().contains(new BasicSword()));
 	}
 

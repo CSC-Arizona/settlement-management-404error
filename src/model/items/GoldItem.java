@@ -14,7 +14,7 @@ public class GoldItem extends Item {
 
 	@Override
 	public String toString() {
-		return "Iron";
+		return "Gold";
 	}
 
 }

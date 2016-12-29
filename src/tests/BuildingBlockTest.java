@@ -21,6 +21,7 @@ import model.building_blocks.IronOreBlock;
 import model.building_blocks.LavaBlock;
 import model.building_blocks.StoneBlock;
 import model.items.AntLarvaItem;
+import model.items.GoldItem;
 import model.items.IronItem;
 import model.items.StoneItem;
 import model.items.WoodItem;
@@ -59,7 +60,7 @@ public class BuildingBlockTest {
 		GoldOreBlock gob = new GoldOreBlock();
 		assertFalse(gob.isOccupiable());
 		assertTrue(gob.isDestroyable());
-		assertEquals(new LinkedList<Object>(), gob.lootBlock());
+		assertEquals(new GoldItem().getClass(), gob.lootBlock().get(0).getClass());
 		assertEquals(10, gob.getDurability());
 		assertEquals(new Color(255, 223, 0), gob.getColor());
 	}
@@ -106,7 +107,6 @@ public class BuildingBlockTest {
 		EarthBlock eb = new EarthBlock();
 		assertFalse(eb.isOccupiable());
 		assertTrue(eb.isDestroyable());
-		assertEquals(null, eb.lootBlock());
 		assertEquals(3, eb.getDurability());
 	}
 	

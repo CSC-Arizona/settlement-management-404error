@@ -92,20 +92,7 @@ public class PickUpAndStoreActionTest {
 		
 		test.update();
 		assertEquals(1, test.getPosition().getRow());
-		assertEquals(4, test.getPosition().getCol());
-		
-		test.update();
-		assertEquals(1, test.getPosition().getRow());
-		assertEquals(0, test.getPosition().getCol());
-		
-		test.update();
-		assertEquals(1, test.getPosition().getRow());
-		assertEquals(0, test.getPosition().getCol());
-		
-		test.update();
-		assertEquals(1, test.getPosition().getRow());
-		assertEquals(4, test.getPosition().getCol());
-		assertEquals(0, test.getInventory().size());
+		assertEquals(3, test.getPosition().getCol());
 		
 		test.update();
 		assertEquals(1, test.getPosition().getRow());
@@ -117,19 +104,32 @@ public class PickUpAndStoreActionTest {
 		
 		test.update();
 		assertEquals(1, test.getPosition().getRow());
-		assertEquals(4, test.getPosition().getCol());
+		assertEquals(3, test.getPosition().getCol());
+		assertEquals(18, test.getInventory().size());
 		
 		test.update();
 		assertEquals(1, test.getPosition().getRow());
-		assertEquals(0, test.getPosition().getCol());
+		assertEquals(3, test.getPosition().getCol());
 		
 		test.update();
 		assertEquals(1, test.getPosition().getRow());
-		assertEquals(0, test.getPosition().getCol());
+		assertEquals(3, test.getPosition().getCol());
 		
 		test.update();
 		assertEquals(1, test.getPosition().getRow());
-		assertEquals(4, test.getPosition().getCol());
+		assertEquals(3, test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(1, test.getPosition().getRow());
+		assertEquals(3, test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(1, test.getPosition().getRow());
+		assertEquals(3, test.getPosition().getCol());
+		
+		test.update();
+		assertEquals(1, test.getPosition().getRow());
+		assertEquals(3, test.getPosition().getCol());
 		
 	}
 
