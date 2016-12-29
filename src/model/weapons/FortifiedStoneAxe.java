@@ -22,14 +22,14 @@ public class FortifiedStoneAxe extends Weapon {
 	
 	public FortifiedStoneAxe() {
 		super(attackMod, 0, 16.0, "Fortified stone axe", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		fsaList = new LinkedList<>();
 		fsaList.add(new WoodItem());
 		fsaList.add(new WoodItem());
 		fsaList.add(new StoneItem());
 		fsaList.add(new StoneItem());	
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return fsaList;
 	}
 	

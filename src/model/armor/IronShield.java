@@ -22,13 +22,13 @@ public class IronShield extends Armor {
 	
 	public IronShield() {
 		super(false, attackMod, 0, 21.0, defenseMod, "Iron shield", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		isList = new LinkedList<>();
 		isList.add(new IronItem());
 		isList.add(new IronItem());
 		isList.add(new IronItem());
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return isList;
 	}
 }

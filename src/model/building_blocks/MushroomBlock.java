@@ -11,6 +11,7 @@ import model.furniture.Furniture;
 import model.items.Item;
 
 /**
+ * Provides blocks for mushrooms which grown in ant caverns.
  * 
  * @author Ethan Ward
  */

@@ -12,8 +12,10 @@ import model.items.WheatKernelItem;
 import model.items.WheatStemItem;
 
 /**
- * Grass blocks drop wheat kernels (and other things? material to make clothes?)
- *
+ * Grass blocks decorate the top layer of the game and are the source of wheat stems and
+ * seeds which can be planted in Farm Rooms
+ * 
+ * @author Katherine Walters
  */
 public class GrassBlock extends BuildingBlock {
 

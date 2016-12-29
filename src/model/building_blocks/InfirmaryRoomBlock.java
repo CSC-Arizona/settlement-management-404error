@@ -8,6 +8,12 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
+/**
+ * Provides the background for the Infirmary
+ * 
+ * @author Katherine Walters
+ *
+ */
 public class InfirmaryRoomBlock extends BuildingBlock {
 
 	/**

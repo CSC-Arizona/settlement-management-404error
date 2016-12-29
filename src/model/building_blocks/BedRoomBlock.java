@@ -8,6 +8,11 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
+/**
+ * Provides the background for the Bedroom.
+ * 
+ * @author Katherine Walters
+ */
 public class BedRoomBlock extends BuildingBlock {
 
 	/**

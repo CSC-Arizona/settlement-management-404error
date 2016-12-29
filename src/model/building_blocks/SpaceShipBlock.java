@@ -10,6 +10,9 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
+/*
+ * @author Ethan Ward
+ */
 public class SpaceShipBlock extends BuildingBlock {
 
 	/**

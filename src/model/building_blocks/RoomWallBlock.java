@@ -8,6 +8,12 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
+/**
+ * Room wall block is actuall the floor of rooms.
+ * 
+ * @author Katherine Walters
+ *
+ */
 public class RoomWallBlock extends BuildingBlock {
 	private static final long serialVersionUID = 8963951396251379906L;
 	private Furniture furniture;

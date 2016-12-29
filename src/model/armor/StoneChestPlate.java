@@ -21,14 +21,14 @@ public class StoneChestPlate extends Armor {
 	
 	public StoneChestPlate() {
 		super(false, attackMod, 0, 20.0, defenseMod, "Stone chestplate", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		scpList = new LinkedList<>();
 		scpList.add(new StoneItem());
 		scpList.add(new StoneItem());
 		scpList.add(new StoneItem());
 		scpList.add(new StoneItem());
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return scpList;
 	}
 }

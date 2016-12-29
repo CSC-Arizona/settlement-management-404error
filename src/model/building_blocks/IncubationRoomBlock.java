@@ -8,11 +8,14 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
+/**
+ * Provides the background for the Incubation Room.
+ * 
+ * @author Katherine Walters
+ *
+ */
 public class IncubationRoomBlock extends BuildingBlock {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8963951396251379906L;
 	private Furniture furniture;
 	private List<Actor> actorsInBlock;

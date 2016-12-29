@@ -22,14 +22,14 @@ public class WoodChestPlate extends Armor {
 	
 	public WoodChestPlate() {
 		super(false, attackMod, 0, 9.0, defenseMod, "Wood chestplate", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		wcpList = new LinkedList<>();
 		wcpList.add(new WoodItem());
 		wcpList.add(new WoodItem());
 		wcpList.add(new WoodItem());
 		wcpList.add(new WoodItem());
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return wcpList;
 	}
 }

@@ -226,14 +226,18 @@ public class AlternativeView extends JPanel {
 				Designation.ATTACKING, buttons);
 
 		//String representation of items taken from text field of CraftableEnum
-		craftComboBox = new JComboBox<String>(new String[] {"Ant larva pie (heals 10 hp)", "Apple pie (heals 10 hp)", "Bread (heals 10 hp)", "Great chestplate", "Greatshield",
-				"Iron chestplate", "Iron shield", "Stone chestplate", "Stone shield", "Wood chestplate", "Wood shield", "Basic iron axe",
-				"Basic stone axe", "Basic sword", "Fortified iron axe", "Fortified stone axe", "Ultra sword"});
+
+//		craftComboBox = new JComboBox<String>(new String[] {"Ant larva pie (heals 10 hp)", "Apple pie (heals 10 hp)", "Bread (heals 10 hp)", "Great chestplate", "Greatshield",
+//				"Iron chestplate", "Iron shield", "Stone chestplate", "Stone shield", "Wood chestplate", "Wood shield", "Basic iron axe",
+//				"Basic stone axe", "Basic sword", "Fortified iron axe", "Fortified stone axe", "Ultra sword"});
+		craftComboBox = new JComboBox<String>(CraftableEnum.getAllCraftableNames());
+		craftComboBox.addActionListener(new CraftableComboBoxListener());
 		craftComboBox.setFocusable(false);
+		craftComboBox.setPreferredSize(new Dimension(100, 30));
+		craftComboBox.setFont(new Font("Arial", Font.PLAIN, 10));
 		craftButton = new JButton("Craft item: ");
 		craftButton.setFocusable(false);
-		
-		craftButton.addActionListener(new CraftButtonListener());
+		craftButton.addActionListener(new CraftableComboBoxListener());
 		
 		cutDownTreeButton = new customDesignationButton(controller, this, Designation.CUTTING_DOWN_TREES, buttons);
 		digButton = new customDesignationButton(controller, this, Designation.DIGGING, buttons);
@@ -461,90 +465,6 @@ public class AlternativeView extends JPanel {
 			}
 		}
 
-	}
-	
-	private class CraftButtonListener implements ActionListener {
-		private AntLarvaPieCookable alp = new AntLarvaPieCookable();
-		private ApplePieCookable apc = new ApplePieCookable();
-		private BasicIronAxe bia = new BasicIronAxe();
-		private BasicStoneAxe bsa = new BasicStoneAxe();
-		private BasicSword bs = new BasicSword();
-		private BreadCookable b = new BreadCookable();
-		private FortifiedIronAxe fia = new FortifiedIronAxe();
-		private FortifiedStoneAxe fsa = new FortifiedStoneAxe();
-		private GreatChestPlate gcp = new GreatChestPlate();
-		private GreatShield gs = new GreatShield();
-		private IronChestPlate icp = new IronChestPlate();
-		private IronShield is = new IronShield();
-		private StoneChestPlate scp = new StoneChestPlate();
-		private StoneShield ss = new StoneShield();
-		private UltraSword us = new UltraSword();
-		private WoodChestPlate wcp = new WoodChestPlate();
-		private WoodShield ws = new WoodShield();
-		
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			Item toBeCrafted = null;
-			List<Item> requiredItems = null;
-			String itemToCraft = (String) craftComboBox.getSelectedItem();
-			if(itemToCraft.equals(alp.toString())) {
-				toBeCrafted = alp;
-				requiredItems = AntLarvaPieCookable.getRequiredMaterials();
-			} else if (itemToCraft.equals(apc.toString())) {
-				toBeCrafted = apc;
-				requiredItems = ApplePieCookable.getRequiredMaterials();
-			}else if (itemToCraft.equals(bia)) {
-				toBeCrafted = bia;
-				requiredItems = BasicIronAxe.getRequiredMaterials();
-			}else if (itemToCraft.equals(bsa.toString())) {
-				toBeCrafted = bsa;
-				requiredItems = BasicStoneAxe.getRequiredMaterials();
-			}else if (itemToCraft.equals(bs.toString())) {
-				toBeCrafted = bs;
-				requiredItems = BasicSword.getRequiredMaterials();
-			}else if (itemToCraft.equals(b)) {
-				toBeCrafted = b;
-				requiredItems = BreadCookable.getRequiredMaterials();
-			}else if (itemToCraft.equals(fia.toString())) {
-				toBeCrafted = fia;
-				requiredItems = FortifiedIronAxe.getRequiredMaterials();
-			}else if (itemToCraft.equals(fsa.toString())) {
-				toBeCrafted = fsa;
-				requiredItems = FortifiedStoneAxe.getRequiredMaterials();
-			}else if (itemToCraft.equals(gcp.toString())) {
-				toBeCrafted = gcp;
-				requiredItems = GreatChestPlate.getRequiredMaterials();
-			}else if (itemToCraft.equals(gs)) {
-				toBeCrafted = gs;
-				requiredItems = GreatShield.getRequiredMaterials();
-			}else if (itemToCraft.equals(icp.toString())) {
-				toBeCrafted = icp;
-				requiredItems = IronChestPlate.getRequiredMaterials();
-			}else if (itemToCraft.equals(is.toString())) {
-				toBeCrafted = is;
-				requiredItems = IronShield.getRequiredMaterials();
-			}else if (itemToCraft.equals(scp.toString())) {
-				toBeCrafted = scp;
-				requiredItems = StoneChestPlate.getRequiredMaterials();
-			}else if (itemToCraft.equals(ss.toString())) {
-				toBeCrafted = ss;
-				requiredItems = StoneShield.getRequiredMaterials();
-			}else if (itemToCraft.equals(us.toString())) {
-				toBeCrafted = us;
-				requiredItems = UltraSword.getRequiredMaterials();
-			}else if (itemToCraft.equals(wcp.toString())) {
-				toBeCrafted = wcp;
-				requiredItems = WoodChestPlate.getRequiredMaterials();
-			}else {
-				toBeCrafted = ws;
-				requiredItems = WoodShield.getRequiredMaterials();
-				if(requiredItems == null) {
-					System.out.println("WHY?");
-				}
-			}
-			PlayerControlledActor.addActionToPlayerPool(new CraftAction(toBeCrafted, requiredItems));
-		}
-		
 	}
 
 	private class MyKeyListener implements KeyListener {
@@ -1009,6 +929,19 @@ public class AlternativeView extends JPanel {
 			constructRoomButton.doClick();
 		}
 
+	}
+	
+	private class CraftableComboBoxListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("You clicked on the craftButton");
+			String text = (String) craftComboBox.getSelectedItem();
+			Item i = CraftableEnum.getCraftableEnumFromString((String) craftComboBox.getSelectedItem()).constructObject();
+			List<Item> req = CraftableEnum.getCraftableEnumFromString((String) craftComboBox.getSelectedItem()).getReqItems();
+			System.out.println("the selected item is " + i.toString());
+			PlayerControlledActor.addActionToPlayerPool(new CraftAction(i, req, text));
+		}
 	}
 
 	public void updateLog() {

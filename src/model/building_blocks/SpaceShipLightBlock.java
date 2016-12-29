@@ -10,6 +10,10 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
+
+/*
+ * author: Ethan Ward
+ */
 public class SpaceShipLightBlock extends BuildingBlock {
 
 	private static final long serialVersionUID = 7466847276590138449L;

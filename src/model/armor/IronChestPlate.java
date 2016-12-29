@@ -22,14 +22,14 @@ public class IronChestPlate extends Armor {
 	
 	public IronChestPlate() {
 		super(false, attackMod, 0, 28.0, defenseMod, "Iron chestplate", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		icpList = new LinkedList<>();
 		icpList.add(new IronItem());
 		icpList.add(new IronItem());
 		icpList.add(new IronItem());
 		icpList.add(new IronItem());
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return icpList;
 	}
 }

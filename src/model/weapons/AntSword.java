@@ -23,14 +23,14 @@ public class AntSword extends Weapon{
 
 	public AntSword() {
 		super(attackMod, 0, 18.0, "Ant sword", null);
+	}
+
+	public List<Item> getRequiredMaterials() {
 		basicAntSwordList = new LinkedList<>();
 		basicAntSwordList.add(new StoneItem());
 		basicAntSwordList.add(new StoneItem());
 		basicAntSwordList.add(new AntLarvaItem());
 		basicAntSwordList.add(new AntLarvaItem());
-	}
-
-	public List<Item> getRequiredMaterials() {
 		return basicAntSwordList;
 	}
 

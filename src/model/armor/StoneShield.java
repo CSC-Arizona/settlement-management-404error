@@ -22,13 +22,13 @@ public class StoneShield extends Armor {
 	
 	public StoneShield() {
 		super(false, attackMod, 0, 15.0, defenseMod, "Stone shield", null);
+	}
+
+	public static List<Item> getRequiredMaterials() {
 		ssList = new LinkedList<>();
 		ssList.add(new StoneItem());
 		ssList.add(new StoneItem());
 		ssList.add(new StoneItem());
-	}
-
-	public static List<Item> getRequiredMaterials() {
 		return ssList;
 	}
 }

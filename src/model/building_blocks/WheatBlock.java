@@ -11,6 +11,11 @@ import model.items.WheatItem;
 import model.items.WheatKernelItem;
 import model.items.WheatStemItem;
 
+/*
+ * Grows in the farms. 
+ * 
+ * @author: Katherine Walters
+ */
 public class WheatBlock extends BuildingBlock {
 
 	/**

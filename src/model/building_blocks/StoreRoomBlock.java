@@ -8,6 +8,12 @@ import model.actors.Actor;
 import model.furniture.Furniture;
 import model.items.Item;
 
+/**
+ * Provides a background for the Store room
+ * 
+ * @author Katherine Walters
+ *
+ */
 public class StoreRoomBlock extends BuildingBlock {
 
 	/**
